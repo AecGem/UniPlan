@@ -55,8 +55,11 @@ const app = new Elysia()
         exp: '7d'
     }))
     .use(cors())
-    .get("/", () => "Hello Elysia")
-    .listen(3000);
+    .get("/", () => "Hello Elysia!")
+    .get("/registrar", () => "Hello Elysia! Welcome to the registrar page.")
+    .get("/registrant", () => "Hello Elysia! Welcome to the registrant page.")
+    .get("/login", () => "Hello Elysia! Welcome to the login page.")
+    .listen(80);
 
 console.log(
     `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`
