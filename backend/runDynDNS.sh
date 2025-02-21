@@ -1,0 +1,1 @@
+python3 /var/www/AecDNS/Dynamic-DNS-Client/UpdateDNS.py
