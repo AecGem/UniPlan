@@ -2,6 +2,9 @@ import { Elysia } from "elysia";
 import { swagger } from "@elysiajs/swagger";
 import { jwt } from "@elysiajs/jwt";
 import { cors } from "@elysiajs/cors";
+import { AuthenticationError } from "./exceptions/AuthenticationError";
+import { AuthorizationError } from "./exceptions/AuthorizationError";
+import { InvariantError } from "./exceptions/InvariantError";
 
 const app = new Elysia()
     .use(
