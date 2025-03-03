@@ -59,7 +59,15 @@ const app = new Elysia()
     .get("/registrar", () => "Hello Elysia! Welcome to the registrar page.")
     .get("/registrant", () => "Hello Elysia! Welcome to the registrant page.")
     .get("/login", () => "Hello Elysia! Welcome to the login page.")
-    .listen(443); 
+    .listen({
+        port: 443,
+        tls: {
+            key: Bun.file("/etc/letsencrypt/live/uniplanner.ca/privkey.pem"),
+            cert: Bun.file("/etc/letsencrypt/live/uniplanner.ca/fullchain.pem"),
+        },
+        hostname: "uniplanner.ca",
+
+    }); 
 
 console.log(
     `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`
