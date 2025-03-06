@@ -62,8 +62,8 @@ const app = new Elysia()
     .listen({
         port: 443,
         tls: {
-            key: Bun.file("/etc/letsencrypt/live/uniplanner.ca/privkey.pem"),
-            cert: Bun.file("/etc/letsencrypt/live/uniplanner.ca/fullchain.pem"),
+            key: Bun.file("/var/www/ssl/privkey.pem"),
+            cert: Bun.file("/var/www/ssl/fullchain.pem"),
         },
         hostname: "uniplanner.ca",
 
