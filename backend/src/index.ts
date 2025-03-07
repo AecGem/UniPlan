@@ -65,7 +65,7 @@ const app = new Elysia()
             key: Bun.file("/var/www/ssl/privkey.pem"),
             cert: Bun.file("/var/www/ssl/fullchain.pem"),
         },
-        hostname: "uniplanner.ca",
+        //hostname: "uniplanner.ca",
 
     }); 
 
