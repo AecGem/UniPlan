@@ -8,7 +8,7 @@ function App() {
   const [showModal, setShowModal] = useState(false);
 
   return (
-      <div className="app-container">
+      <body className="app-container">
         <h1 className="heading">UniPlan: A Degree Planner</h1>
         <p className="description">
            Welcome to UniPlan, your personal degree-planning tool. Drag and drop courses, add semesters
@@ -39,7 +39,7 @@ function App() {
           </div>
         </div>
       )}
-    </div>
+    </body>
   );
 }
 

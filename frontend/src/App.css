@@ -36,7 +36,7 @@
 .get-planning-btn {
   font-size: 1.2rem;
   padding: 1rem 2rem;
-  background-color: #fff;
+  background-color: #e8efdc;
   color: #556B2F;
   border: none;
   border-radius: 8px;
@@ -44,7 +44,7 @@
 }
 
 .get-planning-btn:hover {
-  background-color: #ddd;
+  background-color: #e8efdc;
 }
 
 /* --- Modal backdrop --- */
@@ -63,8 +63,8 @@
 
 /* --- Modal content --- */
 .modal-content {
-  background: #fff;
-  color: 556B2F;
+  background: #e8efdc;
+  color: #38471f;
   padding: 2rem;
   border-radius: 8px;
   width: 300px;
