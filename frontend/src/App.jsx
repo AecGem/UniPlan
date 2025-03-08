@@ -4,32 +4,41 @@ import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  //const [count, setCount] = useState(0)
+  const [showModal, setShowModal] = useState(false);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
+      <div className="app-container">
+        <h1 className="heading">UniPlan: A Degree Planner</h1>
+        <p className="description">
+           Welcome to UniPlan, your personal degree-planning tool. Drag and drop courses, add semesters
+           and keep track of your journey-all in one place.
         </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+
+        <div className="button-container">
+          <button onClick={()=> setShowModal(true)}>Get Planning!</button>
+        </div>
+
+        {showModal && (
+        <div className="modal-backdrop">
+          <div className="modal-content">
+            <h2>Log In</h2>
+            <div className="login-form">
+              <input type="email" placeholder="Email" />
+              <input type="password" placeholder="Password" />
+              <button>Log In</button>
+              <p>
+                Don’t have an account? <a href="#">Sign Up</a>
+              </p>
+            </div>
+            <button className="close-button" onClick={() => setShowModal(false)}>
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
 }
 
-export default App
+export default App;
