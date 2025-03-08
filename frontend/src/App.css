@@ -1,47 +1,72 @@
 .app-container {
+  /* Fully fill the browser window with a green background */
   background: #556B2F;
-  min-height: 100vh;
-  padding: 2rem;
   color: #fff;
-  position: relative;
-  font-family:Georgia, 'Times New Roman', Times, serif;
+  min-height: 100vh;
+  margin: 0;
+  padding: 2rem;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
+/* --- Heading styles --- */
 .heading {
+  font-size: 6rem;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+/* --- Description styles --- */
+.description {
   font-size: 3rem;
   text-align: center;
-  margin-bottom: 1rem;
-}
-
-.description {
- text-align: center;
- margin-bottom: 2rem;
+  max-width: 600px;
+  line-height: 1.4;
+  margin-bottom: 2rem;
 }
 
 .button-container {
-  position: fixed;
-  bottom: 2rem;
-  left: 2rem;
+  margin-top: 1rem;
 }
 
+.get-planning-btn {
+  font-size: 1.2rem;
+  padding: 1rem 2rem;
+  background-color: #fff;
+  color: #556B2F;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.get-planning-btn:hover {
+  background-color: #ddd;
+}
+
+/* --- Modal backdrop --- */
 .modal-backdrop {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0,0,0,0.7);
+  background-color: 556B2F;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 999;
 }
 
+/* --- Modal content --- */
 .modal-content {
   background: #fff;
-  color: #000;
+  color: 556B2F;
   padding: 2rem;
-  border-radius: 4px;
+  border-radius: 8px;
   width: 300px;
   max-width: 80%;
   text-align: center;

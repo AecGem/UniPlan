@@ -2,7 +2,6 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
-console.log('Using the new UniPlan code!')
 
 function App() {
   //const [count, setCount] = useState(0)
@@ -17,8 +16,10 @@ function App() {
         </p>
 
         <div className="button-container">
-          <button onClick={()=> setShowModal(true)}>Get Planning!</button>
-        </div>
+        <button className="get-planning-btn" onClick={() => setShowModal(true)}>
+          Get Planning!
+        </button>
+      </div>
 
         {showModal && (
         <div className="modal-backdrop">
@@ -29,7 +30,7 @@ function App() {
               <input type="password" placeholder="Password" />
               <button>Log In</button>
               <p>
-                Don’t have an account? <a href="#">Sign Up</a>
+                Don't have an account? <a href="#">Sign Up</a>
               </p>
             </div>
             <button className="close-button" onClick={() => setShowModal(false)}>
