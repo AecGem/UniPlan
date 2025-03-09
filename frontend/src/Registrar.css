@@ -36,3 +36,7 @@ html, body {
     align-items:center;
     margin: 0;
 }
+
+.subtitle h1 {
+  margin: 3px;
+}
