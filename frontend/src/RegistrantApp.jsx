@@ -1,6 +1,6 @@
 // RegistrantApp.jsx
 import { useState } from 'react'
-import './RegistrantApp.css'
+import './Registrant.css'
 
 export default function App() {
   // State for all semesters
