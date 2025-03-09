@@ -8,18 +8,20 @@ function App() {
   const [showModal, setShowModal] = useState(false);
 
   return (
-    <div id="centered-page">
-    <header id="subtitle">
+    <body className="centered-page">
+    <header className="subtitle">
       <h1>UniPlan: Registrant's Homepage</h1>
+      <div class="topnav">
+      <a class="active" href="#plan">Plan</a>
+      <a href="#profile">Profile</a>
+      <a href="#saved">Saved</a>
+      <a href="#settings">Settings</a>
+    </div>
     </header>
-      <div id ="centered-page">
-        <div className="app-container">
-      </div>
+    <aside>
       
-
-      
-      </div>
-  </div>
+    </aside>
+  </body>
   );
 }
 
