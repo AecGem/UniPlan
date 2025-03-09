@@ -9,11 +9,11 @@ function App() {
   const [loginEmail, setLoginEmail] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
   const [signupForm, setSignupForm] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
+    firstName: '', //optional input
+    lastName: '', //optional input
+    email: '', //required input
+    password: '', //required input
+    confirmPassword: '', //required input
   });
 
   const [errorMessage, setErrorMessage] = useState('');
@@ -110,7 +110,7 @@ function App() {
                 </form>
                 
                 <p>
-                  Don’t have an account? &nbsp;
+                  Don't have an account? &nbsp;
                   <button className="switch-button" onClick={toggleMode}>
                     Sign Up
                   </button>
