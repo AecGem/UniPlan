@@ -3,8 +3,31 @@ html, body {
   padding: 0;
 }
 
-.topnav
+/* The top-level container for the entire page */
+.page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ----- HEADER / NAV STYLES ----- */
+.subtitle
 {
+    padding-top: 10px;
+    background-color: #128ba1;
+    font-size: 20px;
+    color: white;
+    text-align:center;
+    align-items:center;
+    margin: 0;
+}
+
+.subtitle h1 {
+  margin: 0;
+}
+
+/* The nav bar under the header */
+.topnav {
   background-color: #086374;
   overflow: hidden;
   width: 100%;
@@ -18,7 +41,8 @@ html, body {
   padding: 10px 30px;
   font-weight: bold;
   text-decoration: none;
-  font-size: 24px;
+  font-size: 20px;
+  display: inline-block;
 }
 
 .topnav a:hover {
@@ -26,13 +50,24 @@ html, body {
   color: #0d6373;
 }
 
-.subtitle
-{
-    padding-top: 10px;
-    background-color: #128ba1;
-    font-size: 20px;
-    color: white;
-    text-align:center;
-    align-items:center;
-    margin: 0;
+/* ----- FLEX LAYOUT FOR ASIDE + MAIN ----- */
+.layout-wrapper {
+  display: flex;
+  flex: 1; /* fill remaining space below header */
+  /* optionally add a little gap between aside and main:
+     gap: 1rem; */
+}
+
+/* The aside/requirements panel on the left */
+.requirements {
+  width: 300px;           /* fixed width or adjust to taste */
+  background-color: #eaeaea; /* example background */
+  padding: 1rem;          /* some spacing inside */
+}
+
+/* The main content area on the right */
+.main-content {
+  flex: 1;                /* fill the rest of the horizontal space */
+  background-color: #f9f9f9;
+  padding: 1rem;
 }

@@ -1,27 +1,37 @@
+// RegistrantApp.jsx
+
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './RegistrantApp.css'
 
 function App() {
-  //const [count, setCount] = useState(0)
   const [showModal, setShowModal] = useState(false);
 
   return (
-    <body className="centered-page">
-    <header className="subtitle">
-      <h1>UniPlan: Registrant's Homepage</h1>
-      <div class="topnav">
-        <a class="active" href="#plan">Plan</a>
-        <a href="#profile">Profile</a>
-        <a href="#saved">Saved</a>
-        <a href="#settings">Settings</a>
-      </div>
-    </header>
-    <aside>
+    <div className="page-container">
+      <header className="subtitle">
+        <h1>UniPlan: Registrant's Homepage</h1>
+        <nav className="topnav">
+          <a className="active" href="#plan">Plan</a>
+          <a href="#profile">Profile</a>
+          <a href="#saved">Saved</a>
+          <a href="#settings">Settings</a>
+        </nav>
+      </header>
 
-    </aside>
-  </body>
+      <div className="layout-wrapper">
+        <aside className="requirements">
+          <h2>Major Course Requirements</h2>
+          {/* Eventually put draggable items here */}
+        </aside>
+
+        <main className="main-content">
+          <h2>Your Planner</h2>
+          <p>
+            This is where you might show the schedule, drag courses, etc.
+          </p>
+        </main>
+      </div>
+    </div>
   );
 }
 
