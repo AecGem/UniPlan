@@ -20,6 +20,11 @@
   margin-bottom: 2rem;
 }
 
+.modal-content h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
 /* --- Description styles --- */
 .description {
   font-size: 2rem;
@@ -87,14 +92,16 @@
   margin: 1rem 0;
 }
 
-.login-form input {
-  margin: 0.5rem 0;
+.login-form input,
+.signup-form input {
+  margin: 1rem 0;
   padding: 0.5rem;
 }
 
 .close-button {
   margin-top: 1rem;
-  color:#38471f;
+  color:#d1e0b8;
+  background-color:#38471f;
   padding: 0.5rem 1rem;
   cursor: pointer;
 }
