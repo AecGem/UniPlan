@@ -1,7 +1,6 @@
 body {
   background: url(/src/image.jpg) no-repeat center center fixed;
   background-size: cover;
-  filter: blur(0.5rem);
 }
 .app-container {
   min-height: 100vh;
@@ -11,7 +10,7 @@ body {
   align-items: center;
   justify-content: center;
 
-  background-color: rgba(16, 135, 156, 0.9);
+  background-color: rgba(16, 135, 156, 0.902);
 
   color: #fff;
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
@@ -44,13 +43,22 @@ body {
 }
 
 .get-planning-btn {
-  font-size: 1.2rem;
-  padding: 1rem 2rem;
+  font-size: 2rem;
+  padding: 2rem 3rem;
   background-color: #0d6373;
   color: #a3e9f5;
   border: none;
   border-radius: 8px;
   cursor: pointer;
+  border-color: #0a505c;
+  border-top-width: 4px;
+  border-top-style: solid;
+  border-left-width: 4px;
+  border-left-style: solid;
+  border-bottom-width: 4px;
+  border-bottom-style: solid;
+  border-right-width: 4px;
+  border-right-style: solid;
 }
 
 .get-planning-btn:hover {
@@ -65,7 +73,6 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: 556B2F;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -75,6 +82,15 @@ body {
 /* --- Modal content --- */
 .modal-content {
   background: #d1f4fa;
+  border-color: #0a505c;
+  border-top-width: 4px;
+  border-top-style: solid;
+  border-left-width: 4px;
+  border-left-style: solid;
+  border-bottom-width: 4px;
+  border-bottom-style: solid;
+  border-right-width: 4px;
+  border-right-style: solid;
   color: #0d6373;
   padding: 2rem;
   border-radius: 8px;
@@ -83,14 +99,8 @@ body {
   text-align: center;
 }
 
-.login-form {
-  display: flex;
-  padding: 1rem;
-  flex-direction: column;
-  margin: 1rem 0;
-}
-
-.signup-form {
+.login-form,
+.signup-form  {
   display: flex;
   padding: 1rem;
   flex-direction: column;
@@ -101,6 +111,29 @@ body {
 .signup-form input {
   margin: 1rem 0;
   padding: 0.5rem;
+  font-size: 1rem;
+  background-color: #0a505c;
+  color: #baeef7;
+  border: 1px solid #5ed8ed;
+  border-radius: 4px;
+}
+
+.login-form button[type="submit"],
+.signup-form button[type="submit"] {
+  font-size: 1.2rem;
+  padding: 0.75rem 1.5rem;
+  background-color: #138ba0;
+  color: #a3e9f5;
+  border: 2px solid #0a505c;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.login-form button[type="submit"]:hover,
+.signup-form button[type="submit"]:hover {
+  background-color: #5ed8ed;
+  color: #0d6373;
 }
 
 .close-button {
