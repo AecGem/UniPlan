@@ -2,8 +2,7 @@
   /* Fully fill the browser window with a green background */
   background: #2e5a73;
   color: #fff;
-  height: 100%;
-  width: 100%;
+  min-height: 100vh;
   margin: 0;
   padding: 2rem;
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;

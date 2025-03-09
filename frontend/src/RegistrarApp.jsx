@@ -14,13 +14,11 @@ function App() {
       <header id="subtitle">
         <h1>UniPlan: A Degree Planner</h1>
       </header>
-        <div id ="centered-page">
-          <div className="app-container">
-        </div>
-        
 
-        
-        </div>
+      <div className="app-container">
+
+      </div>    
+      
     </div>
   );
 
@@ -28,3 +26,9 @@ function App() {
 }
 
 export default App;
+
+/*
+<div id ="centered-page">
+          <div className="app-container">
+          </div>
+          */
