@@ -2,8 +2,7 @@
   /* Fully fill the browser window with a green background */
   background: #2e5a73;
   color: #fff;
-  height: 100%;
-  width: 100%;
+  min-height: 100vh;
   margin: 0;
   padding: 2rem;
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
@@ -89,4 +88,50 @@
   margin-top: 1rem;
   padding: 0.5rem 1rem;
   cursor: pointer;
+}
+
+
+/*styling taken from GeeksforGeeks for drag/drop containers*/
+
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+/* Styling for heading */
+h4 {
+  text-align: center;
+  color: green;
+}
+
+
+/* Styling for Boxes */
+.box {
+  border: 2px solid #333;
+  padding: 10px;
+  margin: 10px;
+  width: 250px;
+  height: 300px;
+}
+
+
+
+
+/* Styling for List Items */
+ul {
+  color: black;
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  padding: 8px;
+  margin: 5px;
+  cursor: pointer;
+}
+
+li:hover {
+  background-color: #e0e0e0;
 }
