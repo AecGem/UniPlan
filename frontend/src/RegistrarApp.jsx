@@ -98,12 +98,16 @@ import './RegistrarApp.css'
       }
     };
 
-
-
   return (
-    <div id="centered-page">
-      <header id="subtitle">
-        <h1>UniPlan: A Degree Planner</h1>
+    <div className="centered-page">
+      <header className="subtitle">
+        <h1>UniPlan: Registrar's Homepage</h1>
+        <div class="topnav">
+          <a class="active" href="#plan">Plan</a>
+          <a href="#profile">Profile</a>
+          <a href="#saved">Saved</a>
+          <a href="#settings">Settings</a>
+        </div>
       </header>
 
       <div className="app-container">

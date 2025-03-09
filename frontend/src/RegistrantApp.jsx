@@ -12,14 +12,14 @@ function App() {
     <header className="subtitle">
       <h1>UniPlan: Registrant's Homepage</h1>
       <div class="topnav">
-      <a class="active" href="#plan">Plan</a>
-      <a href="#profile">Profile</a>
-      <a href="#saved">Saved</a>
-      <a href="#settings">Settings</a>
-    </div>
+        <a class="active" href="#plan">Plan</a>
+        <a href="#profile">Profile</a>
+        <a href="#saved">Saved</a>
+        <a href="#settings">Settings</a>
+      </div>
     </header>
     <aside>
-      
+
     </aside>
   </body>
   );
