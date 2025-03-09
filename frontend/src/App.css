@@ -36,15 +36,16 @@
 .get-planning-btn {
   font-size: 1.2rem;
   padding: 1rem 2rem;
-  background-color: #e8efdc;
-  color: #556B2F;
+  background-color: #2a3517;
+  color: #afc983;
   border: none;
   border-radius: 8px;
   cursor: pointer;
 }
 
 .get-planning-btn:hover {
-  background-color: #e8efdc;
+  background-color: #38471f;
+  color: #afc983;
 }
 
 /* --- Modal backdrop --- */
@@ -87,4 +88,21 @@
   margin-top: 1rem;
   padding: 0.5rem 1rem;
   cursor: pointer;
+}
+
+.switch-button {
+  border: none;
+  background: none;
+  color:#718e3e;
+  cursor: pointer;
+  text-decoration: underline;
+  font-size: 1rem;
+  margin: 0;
+  padding: 0;
+}
+
+.switch-button:hover {
+  opacity: 0.8;
+  color: #38471f;
+  
 }
