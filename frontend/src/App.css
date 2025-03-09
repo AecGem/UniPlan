@@ -1,6 +1,7 @@
 body {
   background: url(/src/image.jpg) no-repeat center center fixed;
   background-size: cover;
+  filter: blur(0.5rem);
 }
 .app-container {
   min-height: 100vh;
@@ -10,7 +11,7 @@ body {
   align-items: center;
   justify-content: center;
 
-  background-color: rgba(85, 107, 47, 0.9);
+  background-color: rgba(16, 135, 156, 0.9);
 
   color: #fff;
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
@@ -45,16 +46,16 @@ body {
 .get-planning-btn {
   font-size: 1.2rem;
   padding: 1rem 2rem;
-  background-color: #2a3517;
-  color: #afc983;
+  background-color: #0d6373;
+  color: #a3e9f5;
   border: none;
   border-radius: 8px;
   cursor: pointer;
 }
 
 .get-planning-btn:hover {
-  background-color: #38471f;
-  color: #afc983;
+  background-color: #5ed8ed;
+  color: #0d6373;
 }
 
 /* --- Modal backdrop --- */
@@ -73,8 +74,8 @@ body {
 
 /* --- Modal content --- */
 .modal-content {
-  background: #e8efdc;
-  color: #38471f;
+  background: #d1f4fa;
+  color: #0d6373;
   padding: 2rem;
   border-radius: 8px;
   width: 300px;
@@ -104,8 +105,8 @@ body {
 
 .close-button {
   margin-top: 1rem;
-  color:#d1e0b8;
-  background-color:#38471f;
+  color:#a3e9f5;
+  background-color:#0d6373;
   padding: 0.5rem 1rem;
   cursor: pointer;
 }
@@ -122,7 +123,7 @@ body {
 .switch-button {
   border: none;
   background: none;
-  color:#718e3e;
+  color:#128ba1;
   cursor: pointer;
   text-decoration: underline;
   font-size: 1rem;
@@ -132,5 +133,5 @@ body {
 
 .switch-button:hover {
   opacity: 0.9;
-  color: #38471f;
+  color: #0a505c;
 }
