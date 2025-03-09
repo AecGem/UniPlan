@@ -2,7 +2,8 @@
   /* Fully fill the browser window with a green background */
   background: #2e5a73;
   color: #fff;
-  min-height: 100vh;
+  height: 100%;
+  width: 100%;
   margin: 0;
   padding: 2rem;
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
@@ -16,6 +17,7 @@
 /* --- Heading styles --- */
 .heading {
   font-size: 6rem;
+  text-align: top;
   text-align: center;
   margin-bottom: 2rem;
 }
