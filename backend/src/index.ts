@@ -57,19 +57,21 @@ const app = new Elysia()
         exp: '7d'
     }))
     .use(cors())
+    /*
     .use(staticPlugin({ 
         prefix: '/',
         assets: '/var/www/UniPlan/frontend'
     }))
-    /*
+    */
 
-    Commenting these out for now to test static tooling.
+
+    //Commenting these out for now to test static tooling.
 
     .get("/", () => "Hello Elysia!")
     .get("/registrar", () => "Hello Elysia! Welcome to the registrar page.")
     .get("/registrant", () => "Hello Elysia! Welcome to the registrant page.")
     .get("/login", () => "Hello Elysia! Welcome to the login page.")
-    */
+    
     .listen({
         port: 443,
         //Comment this out and discard git changes if you want to run locally.
