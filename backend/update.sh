@@ -26,7 +26,8 @@ cd /var/www/UniPlan/frontend
 #/home/alex1/.bun/bin/bun install
 echo "Rebuilding frontend dependencies..."
 yarn install
-echo "Done. Rebuilding frontend via vite..."
+echo "Rebuilding frontend via vite..."
 #sudo systemctl start frontend
-bunx vite build $BUILDDIR
-echo "Done. Frontend statics built to $BUILDDIR"
+/home/alex1/.bun/bin/bunx vite build $BUILDDIR
+echo "-----------------------"
+echo "All updates complete!"
