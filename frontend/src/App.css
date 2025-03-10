@@ -1,0 +1,154 @@
+body {
+  background: url(/src/image.jpg) no-repeat center center fixed;
+  background-size: cover;
+}
+.app-container {
+  min-height: 100vh;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  background-color: rgba(16, 135, 156, 0.902);
+
+  color: #fff;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  padding: 2rem;
+}
+
+/* --- Heading styles --- */
+.heading {
+  font-size: 6rem;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.modal-content h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+/* --- Description styles --- */
+.description {
+  font-size: 2rem;
+  text-align: center;
+  max-width: 800px;
+  line-height: 1.4;
+  margin-bottom: 2rem;
+}
+
+.button-container {
+  margin-top: 1rem;
+}
+
+.get-planning-btn {
+  font-size: 2rem;
+  padding: 2rem 3rem;
+  background-color: #0d6373;
+  color: #a3e9f5;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  border: 4px solid #0a505c;
+}
+
+.get-planning-btn:hover {
+  background-color: #5ed8ed;
+  color: #0d6373;
+}
+
+/* --- Modal backdrop --- */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+/* --- Modal content --- */
+.modal-content {
+  background: #d1f4fa;
+  border: 4px solid #0a505c;
+  color: #0d6373;
+  padding: 2rem;
+  border-radius: 8px;
+  width: 300px;
+  max-width: 80%;
+  text-align: center;
+}
+
+.login-form,
+.signup-form  {
+  display: flex;
+  padding: 1rem;
+  flex-direction: column;
+  margin: 1rem 0;
+}
+
+.login-form input,
+.signup-form input {
+  margin: 1rem 0;
+  padding: 0.5rem;
+  font-size: 1rem;
+  background-color: #0a505c;
+  color: #baeef7;
+  border: 1px solid #5ed8ed;
+  border-radius: 4px;
+}
+
+.login-form button[type="submit"],
+.signup-form button[type="submit"] {
+  font-size: 1.2rem;
+  padding: 0.75rem 1.5rem;
+  background-color: #138ba0;
+  color: #a3e9f5;
+  border: 2px solid #0a505c;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.login-form button[type="submit"]:hover,
+.signup-form button[type="submit"]:hover {
+  background-color: #5ed8ed;
+  color: #0d6373;
+}
+
+.close-button {
+  margin-top: 1rem;
+  color:#a3e9f5;
+  background-color:#0d6373;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+
+.error-message {
+  background-color: #ffcccc;
+  color: #b30000;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.switch-button {
+  border: none;
+  background: none;
+  color:#128ba1;
+  cursor: pointer;
+  text-decoration: underline;
+  font-size: 1rem;
+  margin: 0;
+  padding: 0;
+}
+
+.switch-button:hover {
+  opacity: 0.9;
+  color: #0a505c;
+}

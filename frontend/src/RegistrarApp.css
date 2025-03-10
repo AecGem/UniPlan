@@ -1,0 +1,136 @@
+.app-container {
+  background: #2e5a73;
+  color: #fff;
+  min-height: 100vh;
+  margin: 0;
+  padding: 2rem;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* --- Heading styles --- */
+.heading {
+  font-size: 6rem;
+  text-align: top;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+/* --- Description styles --- */
+.description {
+  font-size: 2rem;
+  text-align: center;
+  max-width: 800px;
+  line-height: 1.4;
+  margin-bottom: 2rem;
+}
+
+.button-container {
+  margin-top: 1rem;
+}
+
+.get-planning-btn {
+  font-size: 1.2rem;
+  padding: 1rem 2rem;
+  background-color: #e8efdc;
+  color: #556B2F;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.get-planning-btn:hover {
+  background-color: #e8efdc;
+}
+
+/* --- Modal backdrop --- */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: 556B2F;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+/* --- Modal content --- */
+.modal-content {
+  background: #e8efdc;
+  color: #38471f;
+  padding: 2rem;
+  border-radius: 8px;
+  width: 300px;
+  max-width: 80%;
+  text-align: center;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  margin: 1rem 0;
+}
+
+.login-form input {
+  margin: 0.5rem 0;
+  padding: 0.5rem;
+}
+
+.close-button {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+
+
+/*styling taken from GeeksforGeeks for drag/drop containers*/
+
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+/* Styling for heading */
+h4 {
+  text-align: center;
+  color: green;
+}
+
+
+/* Styling for Boxes */
+.box {
+  border: 2px solid #333;
+  padding: 10px;
+  margin: 10px;
+  width: 250px;
+  height: 300px;
+}
+
+
+
+
+/* Styling for List Items */
+ul {
+  color: black;
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  padding: 8px;
+  margin: 5px;
+  cursor: pointer;
+}
+
+li:hover {
+  background-color: #e0e0e0;
+}
