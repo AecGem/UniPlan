@@ -5,6 +5,8 @@ import { cors } from "@elysiajs/cors";
 import { AuthenticationError } from "./exceptions/AuthenticationError";
 import { AuthorizationError } from "./exceptions/AuthorizationError";
 import { InvariantError } from "./exceptions/InvariantError";
+import { staticPlugin } from '@elysiajs/static';
+import { file } from 'bun'
 
 const app = new Elysia()
     .use(
@@ -55,12 +57,24 @@ const app = new Elysia()
         exp: '7d'
     }))
     .use(cors())
+    .use(staticPlugin({ 
+        prefix: '/',
+        assets: '/var/www/UniPlan/frontend'
+    }))
+    /*
+
+    Commenting these out for now to test static tooling.
+
     .get("/", () => "Hello Elysia!")
     .get("/registrar", () => "Hello Elysia! Welcome to the registrar page.")
     .get("/registrant", () => "Hello Elysia! Welcome to the registrant page.")
     .get("/login", () => "Hello Elysia! Welcome to the login page.")
+    */
     .listen({
         port: 443,
+        //Comment this out and discard git changes if you want to run locally.
+        //SSL keychain only exists on the box.
+        //Ask benevolent dictator gleepglorp if you REALLY need them.
         tls: {
             key: Bun.file("/var/www/ssl/privkey.pem"),
             cert: Bun.file("/var/www/ssl/fullchain.pem"),

@@ -8,18 +8,17 @@
   "dependencies": {
     "@elysiajs/cors": "^1.2.0",
     "@elysiajs/jwt": "^1.2.0",
+    "@elysiajs/static": "^1.2.0",
     "@elysiajs/swagger": "^1.2.1",
-    "elysia": "latest"
+    "elysia": "latest",
+    "file": "^0.2.2"
   },
   "devDependencies": {
     "bun-types": "latest"
-    
   },
-  
-  "prettier":{
+  "prettier": {
     "tabWidth": 4,
     "useTabs": false
   },
-
   "module": "src/index.js"
 }
