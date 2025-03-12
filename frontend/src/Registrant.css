@@ -203,3 +203,52 @@ button:focus {
   outline: none;
   box-shadow: 0 0 0 3px rgba(6, 80, 90, 0.6);
 }
+
+
+
+
+
+/*styling taken from GeeksforGeeks for drag/drop containers*/
+
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+/* Styling for heading */
+h4 {
+  text-align: center;
+  color: green;
+}
+
+
+/* Styling for Boxes */
+.box {
+  border: 2px solid #333;
+  padding: 10px;
+  margin: 10px;
+  width: 250px;
+  height: 300px;
+}
+
+
+
+
+/* Styling for List Items */
+ul {
+  color: black;
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  padding: 8px;
+  margin: 5px;
+  cursor: pointer;
+}
+
+li:hover {
+  background-color: #e0e0e0;
+}

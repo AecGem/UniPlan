@@ -72,6 +72,133 @@ export default function App() {
     setSemesters((prev) => prev.filter((sem) => sem.id !== id));
   };
 
+
+
+
+
+
+
+  
+  //Code for Sean's boxes:
+  //--------------------------------------------
+  const [box1Items, setBox1Items] = useState([
+    { id: 1, text: 'Course 1' },
+    { id: 2, text: 'Course 2' },
+    { id: 3, text: 'Course 3' },
+    { id: 4, text: 'Course 4' },
+    { id: 5, text: 'Course 5' }
+  ]);
+
+  // State for items in Box 2
+  const [box2Items, setBox2Items] = useState([
+    { id: 1, text: 'Elective 1' },
+    { id: 2, text: 'Elective 2' },
+    { id: 3, text: 'Elective 3' },
+    { id: 4, text: 'Elective 4' },
+    { id: 5, text: 'Elective 5' }
+  ]);
+
+  // Function to handle the start of a drag operation
+  const handleDragStart = (e, item) => {
+    // Set the data being dragged as
+    // text/plain with the serialized item
+    e.dataTransfer
+      .setData('text/plain', JSON.stringify(item));
+  };
+
+  // Function to handle the drag over event
+  const handleDragOver = (e) => {
+    // Prevent the default behavior to allow dropping
+    e.preventDefault();
+  };
+
+  // Function to handle the drop event
+  const handleDrop = (e, targetBox) => {
+    // Prevent the default behavior 
+    // to avoid unwanted behavior
+    e.preventDefault();
+
+    // Parse the dropped item from the dataTransfer
+    const droppedItem = JSON.parse(
+      e.dataTransfer
+        .getData('text/plain')
+    );
+
+    // Check the target box and 
+    // update the state accordingly
+    if (targetBox === 'box1') {
+      // Check if the same item is already present in Box 1
+      let isSameItemPresent = box1Items.some(
+        item => item.id === droppedItem.id
+          && item.text === droppedItem.text
+      );
+
+      // Update the state of Box 1 
+      // and remove the item from Box 2
+      setBox1Items((prevItems) =>
+        //If the same item is already present in Box 1 then 
+        //again don't add that item 
+        // else add the new item in Box 1
+        isSameItemPresent ?
+          [...prevItems] :
+          [...prevItems, droppedItem]
+      );
+      setBox2Items((prevItems) =>
+        //Remove the dragged item from Box 2
+        prevItems.filter(
+          (item) =>
+            item.id !== droppedItem.id
+        )
+      );
+    } else if (targetBox === 'box2') {
+      // Check if the same item is already present in Box 2
+      let isSameItemPresent = box2Items.some(
+        item => item.id === droppedItem.id
+          && item.text === droppedItem.text
+      );
+
+      // Update the state of Box 2 and remove the item from Box 1
+      setBox2Items((prevItems) =>
+        //If the same item is already 
+        // present in Box 2 then 
+        //again don't add that item 
+        // else add the new item in Box 2
+        isSameItemPresent ?
+          [...prevItems] :
+          [...prevItems, droppedItem]
+      );
+      setBox1Items((prevItems) =>
+        //Remove the dragged item from Box 1
+        prevItems.filter(
+          (item) =>
+            item.id !== droppedItem.id
+        )
+      );
+    }
+  };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   return (
     <div className="page-container">
       {/* HEADER */}
@@ -89,7 +216,56 @@ export default function App() {
       <div className="layout-wrapper">
         <aside className="requirements">
           <h2>Major Course Requirements</h2>
-          {/* Eventually put draggable items here */}
+          {/* Eventually put draggable items here */
+
+
+
+            <div className="app-container">
+            <div  className="box"
+                onDragOver={(e) => handleDragOver(e)}
+                onDrop={(e) => handleDrop(e, 'box1')}>
+                <h3>Core Courses</h3>
+                <ul>
+                  {box1Items.map((item) => (
+                    <li
+                      key={item.id}
+                      draggable
+                      onDragStart={
+                        (e) =>
+                          handleDragStart(e, item)
+                      }>
+                      {item.text}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div
+                className="box"
+                onDragOver={(e) => handleDragOver(e)}
+                onDrop={(e) => handleDrop(e, 'box2')}>
+                <h3>Electives</h3>
+                <ul>
+                  {
+                    box2Items.map((item) => (
+                      <li
+                        key={item.id}
+                        draggable
+                        onDragStart={
+                          (e) =>
+                            handleDragStart(e, item)
+                        }>
+                        {item.text}
+                      </li>
+                    ))
+                  }
+                </ul>
+              </div>
+
+
+            </div>    
+
+
+          }
         </aside>
 
         <main className="main-content">

@@ -109,57 +109,14 @@ import './RegistrarApp.css'
           <a href="#settings">Settings</a>
         </div>
       </header>
-
-      <div className="app-container">
-      <div
       
-					className="box"
-					onDragOver={(e) => handleDragOver(e)}
-					onDrop={(e) => handleDrop(e, 'box1')}>
-					<h3>Box 1</h3>
-					<ul>
-						{box1Items.map((item) => (
-							<li
-								key={item.id}
-								draggable
-								onDragStart={
-									(e) =>
-										handleDragStart(e, item)
-								}>
-								{item.text}
-							</li>
-						))}
-					</ul>
-				</div>
-				<div
-					className="box"
-					onDragOver={(e) => handleDragOver(e)}
-					onDrop={(e) => handleDrop(e, 'box2')}>
-					<h3>Box 2</h3>
-					<ul>
-						{
-							box2Items.map((item) => (
-								<li
-									key={item.id}
-									draggable
-									onDragStart={
-										(e) =>
-											handleDragStart(e, item)
-									}>
-									{item.text}
-								</li>
-							))
-						}
-					</ul>
-				</div>
+      <div className="app-container">
 
-
-      </div>    
-
-    </div>
-  );
+      </div>
+    </div> 
 
   
+  ); 
 }
 
 export default App;
