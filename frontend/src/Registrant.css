@@ -50,6 +50,8 @@ html, body {
 
 /* ----- FLEX LAYOUT FOR ASIDE + MAIN ----- */
 .layout-wrapper {
+  background: url(/src/image.jpg) no-repeat center center fixed;
+  background-size: cover;
   display: flex;
   flex: 1;
 }
