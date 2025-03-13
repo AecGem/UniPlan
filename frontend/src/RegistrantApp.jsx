@@ -2,6 +2,35 @@
 import { useState } from 'react'
 import './Registrant.css'
 
+// Collapsible Section Sub-Component
+function collapsibleSection({title, items}) {
+  const [expanded, setExpanded] = useState(false);
+  const toggleExpanded = () => {
+    setExpanded((prev) => !(prev));
+  };
+
+  return (
+    <div className="collapsible-section">
+      {/* Button showing arrow and title */}
+      <button className="collapsible-header" onClick={toggleExpand}>
+        {expanded ? '▼' : '▶'} {title}
+      </button>
+
+      {/* If expanded, show the list of requirements */}
+      {expanded && (
+        <ul className="requirement-list">
+          {items.map((item, idx) => (
+            <li key={idx} draggable>
+              {item}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
+
+// Main App Component
 export default function App() {
   // State for all semesters
   const [semesters, setSemesters] = useState([]);
@@ -88,8 +117,44 @@ export default function App() {
       {/* LAYOUT */}
       <div className="layout-wrapper">
         <aside className="requirements">
-          <h2>Major Course Requirements</h2>
-          {/* Eventually put draggable items here */}
+          {/* Your collapsible sections with dummy items */}
+          <CollapsibleSection
+            title="Degree Requirements"
+            items={[
+              'ENGL 100',
+              'ENGL 110',
+              'MATH 110',
+              'MATH 111',
+              'STATS 100',
+              'STATS 160',
+              'STATS 160'
+            ]}
+          />
+          <CollapsibleSection
+            title="Major Requirements"
+            items={[
+              'CS 110',
+              'CS 115',
+              'CS 210',
+              'CS 201',
+              'MATH 221',
+              'MATH 122',
+              'CS 215',
+              'CS 280'
+            ]}
+          />
+          <CollapsibleSection
+            title="Electives"
+            items={[
+              'GEOL 102',
+              'ASTRO 100',
+              'BIOL 101',
+              'PHYS 109',
+              'ART 220',
+              'ART 100',
+              'PSYC 101'
+            ]}
+          />
         </aside>
 
         <main className="main-content">
