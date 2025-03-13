@@ -101,6 +101,133 @@ export default function App() {
     setSemesters((prev) => prev.filter((sem) => sem.id !== id));
   };
 
+
+
+
+
+
+
+  
+  //Code for Sean's boxes:
+  //--------------------------------------------
+  const [box1Items, setBox1Items] = useState([
+    { id: 1, text: 'Course 1' },
+    { id: 2, text: 'Course 2' },
+    { id: 3, text: 'Course 3' },
+    { id: 4, text: 'Course 4' },
+    { id: 5, text: 'Course 5' }
+  ]);
+
+  // State for items in Box 2
+  const [box2Items, setBox2Items] = useState([
+    { id: 1, text: 'Elective 1' },
+    { id: 2, text: 'Elective 2' },
+    { id: 3, text: 'Elective 3' },
+    { id: 4, text: 'Elective 4' },
+    { id: 5, text: 'Elective 5' }
+  ]);
+
+  // Function to handle the start of a drag operation
+  const handleDragStart = (e, item) => {
+    // Set the data being dragged as
+    // text/plain with the serialized item
+    e.dataTransfer
+      .setData('text/plain', JSON.stringify(item));
+  };
+
+  // Function to handle the drag over event
+  const handleDragOver = (e) => {
+    // Prevent the default behavior to allow dropping
+    e.preventDefault();
+  };
+
+  // Function to handle the drop event
+  const handleDrop = (e, targetBox) => {
+    // Prevent the default behavior 
+    // to avoid unwanted behavior
+    e.preventDefault();
+
+    // Parse the dropped item from the dataTransfer
+    const droppedItem = JSON.parse(
+      e.dataTransfer
+        .getData('text/plain')
+    );
+
+    // Check the target box and 
+    // update the state accordingly
+    if (targetBox === 'box1') {
+      // Check if the same item is already present in Box 1
+      let isSameItemPresent = box1Items.some(
+        item => item.id === droppedItem.id
+          && item.text === droppedItem.text
+      );
+
+      // Update the state of Box 1 
+      // and remove the item from Box 2
+      setBox1Items((prevItems) =>
+        //If the same item is already present in Box 1 then 
+        //again don't add that item 
+        // else add the new item in Box 1
+        isSameItemPresent ?
+          [...prevItems] :
+          [...prevItems, droppedItem]
+      );
+      setBox2Items((prevItems) =>
+        //Remove the dragged item from Box 2
+        prevItems.filter(
+          (item) =>
+            item.id !== droppedItem.id
+        )
+      );
+    } else if (targetBox === 'box2') {
+      // Check if the same item is already present in Box 2
+      let isSameItemPresent = box2Items.some(
+        item => item.id === droppedItem.id
+          && item.text === droppedItem.text
+      );
+
+      // Update the state of Box 2 and remove the item from Box 1
+      setBox2Items((prevItems) =>
+        //If the same item is already 
+        // present in Box 2 then 
+        //again don't add that item 
+        // else add the new item in Box 2
+        isSameItemPresent ?
+          [...prevItems] :
+          [...prevItems, droppedItem]
+      );
+      setBox1Items((prevItems) =>
+        //Remove the dragged item from Box 1
+        prevItems.filter(
+          (item) =>
+            item.id !== droppedItem.id
+        )
+      );
+    }
+  };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   return (
     <div className="page-container">
       {/* HEADER */}
@@ -117,44 +244,8 @@ export default function App() {
       {/* LAYOUT */}
       <div className="layout-wrapper">
         <aside className="requirements">
-          {/* Your collapsible sections with dummy items */}
-          <CollapsibleSection
-            title="Degree Requirements"
-            items={[
-              'ENGL 100',
-              'ENGL 110',
-              'MATH 110',
-              'MATH 111',
-              'STATS 100',
-              'STATS 160',
-              'STATS 160'
-            ]}
-          />
-          <CollapsibleSection
-            title="Major Requirements"
-            items={[
-              'CS 110',
-              'CS 115',
-              'CS 210',
-              'CS 201',
-              'MATH 221',
-              'MATH 122',
-              'CS 215',
-              'CS 280'
-            ]}
-          />
-          <CollapsibleSection
-            title="Electives"
-            items={[
-              'GEOL 102',
-              'ASTRO 100',
-              'BIOL 101',
-              'PHYS 109',
-              'ART 220',
-              'ART 100',
-              'PSYC 101'
-            ]}
-          />
+          <h2>Major Course Requirements</h2>
+          {/* Eventually put draggable items here */}
         </aside>
 
         <main className="main-content">
