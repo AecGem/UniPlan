@@ -270,6 +270,16 @@ export default function App() {
             ]}
             onDragStartAside={handleDragStartAside}
           />
+          <CollapsibleSection
+            title="Co-op Workterm"
+            items={[
+              'Workterm 1',
+              'Workterm 2',
+              'Workterm 3',
+              'Workterm 4'
+            ]}
+            onDragStartAside={handleDragStartAside}
+          />
         </aside>
 
         <main className="main-content">

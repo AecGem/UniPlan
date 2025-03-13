@@ -86,6 +86,8 @@ html, body {
 /* Header area in the semester box (title + 3-dot menu) */
 .semester-header {
   display: flex;
+  padding-left: 20px;
+  text-align: center;
   justify-content: space-between;
   align-items: center;
 }
@@ -149,12 +151,13 @@ html, body {
 }
 .semester-course-list li {
   display: flex;
+  align-items: center;
   justify-content: space-between;
   cursor: grab;
   margin-bottom: 0.5rem;
-  color: #333;
+  color: #024652;
   background-color: #b2d5db;
-  border: 1px solid #48767e;
+  border: 2px solid #086374;
   border-radius: 4px;
   padding: 0.25rem 0.5rem;
 }
@@ -218,8 +221,9 @@ button:focus {
 }
 .delete-course-button {
   background: none;
+  align-items: center;
   border: none;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   cursor: pointer;
   color: #cc0000;
   margin-left: 0.75rem;
@@ -256,12 +260,13 @@ button:focus {
   list-style-type: disc;
 }
 .requirement-list li {
+  font-weight: bold;
   margin-bottom: 0.25rem;
   cursor: grab;
-  color: #333;
+  color: #024652;
   background-color: #f9f9f9;
   padding: 0.25rem 0.5rem;
-  border-radius: 4px;
+  border-radius: 5px;
 }
 /* Hover effect on requirement items */
 .requirement-list li:hover {
