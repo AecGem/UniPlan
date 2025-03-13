@@ -36,9 +36,17 @@ function CollapsibleSection({title, items, onDragStartAside}) {
 
 // Main App Component
 export default function App() {
-  /** ---------------------------
+ /** ---------------------------
    *  SEMESTERS + COURSES STATE
-   *  Each semester has an array of course objects: { id, text }
+   *  Each semester in 'semesters' has this shape:
+   *  {
+   *    id: number,
+   *    type: string,   // "Fall", "Spring", etc.
+   *    year: number,
+   *    courses: [{ id: string, text: string }, ...]
+   *  }
+   *  The 'courses' array holds the courses the user has 
+   *  dragged in. 
    * ---------------------------*/
   const [semesters, setSemesters] = useState([]);
 
@@ -54,7 +62,8 @@ export default function App() {
   /** ---------------------------
    *  DRAG & DROP HANDLERS
    * ---------------------------*/
-  // 1) Drag from the aside (strings only) then converts it into an object { id, text }
+ // 1) Drag from the aside (strings only), converting it into 
+  // an object { id, text } so we can store it in 'sem.courses'.
   const handleDragStartAside = (e, itemText) => {
     const payload = {
       course: { id: Date.now().toString(), text: itemText },
@@ -74,7 +83,8 @@ export default function App() {
     e.preventDefault();
   };
 
-  // 4) onDrop to remove from old place and add to new
+  // 4) onDrop: remove from old place and add to the new 
+  // semester. The "targetSemId" is whichever semester was dropped onto.
   const handleDrop = (e, targetSemId) => {
     e.preventDefault();
     const rawData = e.dataTransfer.getData('application/json');
@@ -90,11 +100,11 @@ export default function App() {
     const { course, sourceSemId } = payload;
     if (!course) return;
 
-    // Update state
+    // Update 'semesters' in local state
     setSemesters((prev) => {
       let updated = [...prev];
 
-      // If it came from another semester, remove it there
+      // If it came from another semester, remove it from that semester's courses.
       if (sourceSemId) {
         updated = updated.map((sem) => {
           if (sem.id === sourceSemId) {
@@ -121,6 +131,10 @@ export default function App() {
         }
         return sem;
       });
+
+      // If we wanted to persist changes to the DB, we could do a fetch POST/PUT:
+      //   fetch(`/api/semesters/${targetSemId}`, { ... })
+      // so the backend stores the new course arrangement.
 
       return updated;
     });
@@ -217,7 +231,15 @@ export default function App() {
       {/* LAYOUT */}
       <div className="layout-wrapper">
         <aside className="requirements">
-          {/* Collapsible sections with dummy (TO BE CHANGED BY BACKEND) items */}
+          {/* 
+            Collapsible sections with dummy arrays. 
+            This is where the BACKEND can supply real data. 
+            For instance:
+              fetch('/api/courses?type=degree')
+              .then(...).then(data => setDegreeCourses(data)) 
+            Then pass setDegreeCourses into CollapsibleSection 
+            as 'items={degreeCourses}'.
+          */}
           <CollapsibleSection
             title="Degree Requirements"
             items={[
