@@ -11,22 +11,20 @@ html, body {
   min-height: 100vh;
 }
 
-/* ----- HEADER / NAV STYLES ----- */
-.subtitle
-{
-    padding-top: 10px;
-    background-color: #128ba1;
-    font-size: 20px;
-    color: white;
-    text-align:center;
-    align-items:center;
-    margin: 0;
-}
 
+/* ----- HEADER / NAV STYLES ----- */
+.subtitle {
+  padding-top: 10px;
+  background-color: #128ba1;
+  font-size: 20px;
+  color: white;
+  text-align: center;
+  align-items: center;
+  margin: 0;
+}
 .subtitle h1 {
   margin: 3px;
 }
-
 /* The nav bar under the header */
 .topnav {
   background-color: #086374;
@@ -35,7 +33,6 @@ html, body {
   text-align: center;
   margin: 0;
 }
-
 .topnav a {
   color: #ffffff;
   text-align: center;
@@ -45,26 +42,30 @@ html, body {
   font-size: 20px;
   display: inline-block;
 }
-
 .topnav a:hover {
   background-color: #5ed8ed;
   color: #0d6373;
 }
+
 
 /* ----- FLEX LAYOUT FOR ASIDE + MAIN ----- */
 .layout-wrapper {
   display: flex;
   flex: 1;
 }
-
+/* The aside/requirements panel on the left */
+.requirements {
+  width: 300px;
+  background-color: #eaeaea;
+  padding: 1rem;
+}
 /* The main content area on the right */
 .main-content {
   flex: 1;
-  color:#086374;
+  color: #086374;
   background-color: #ffffff;
   padding: 1rem;
 }
-
 /* Semesters container + semester box */
 .semesters-container {
   display: flex;
@@ -80,14 +81,12 @@ html, body {
   background-color: #fff;
   position: relative;
 }
-
 /* Header area in the semester box (title + 3-dot menu) */
 .semester-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-
 /* 3-dot button */
 .dropdown-container {
   position: relative;
@@ -97,9 +96,8 @@ html, body {
   border: none;
   font-size: 1.5rem;
   cursor: pointer;
-  color:#086374;
+  color: #086374;
 }
-
 /* 3-dot menu items hidden until hovered or clicked */
 .dropdown-content {
   position: absolute;
@@ -109,7 +107,7 @@ html, body {
   border: 2px solid #086374;
   display: none;
   flex-direction: column;
-  border-radius: 0px;
+  border-radius: 0;
 }
 .dropdown-content button {
   background: none;
@@ -118,36 +116,55 @@ html, body {
   width: 100%;
   text-align: left;
   font-size: 12px;
-  border-radius: 0px;
+  border-radius: 0;
   cursor: pointer;
-  color:#086374;
+  color: #086374;
   font-weight: bold;
 }
 .dropdown-content button:hover {
   background-color: #80b1b3;
 }
-
 .dropdown-container:hover .dropdown-content {
   display: flex;
 }
-
-/* Course area */
+/* Course drop zone styling */
 .course-dropzone {
   margin-top: 0.5rem;
   border: 2px dashed #bcc2ce;
   padding: 1rem;
-  text-align: center;
+  text-align: left;
   color: #48767e;
   font-size: 18px;
 }
 .course-dropzone:hover {
   border: 2px dashed #01879e;
 }
+/* Semester course list */
+.semester-course-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.semester-course-list li {
+  display: flex;
+  justify-content: space-between;
+  cursor: grab;
+  margin-bottom: 0.5rem;
+  color: #333;
+  background-color: #b2d5db;
+  border: 1px solid #48767e;
+  border-radius: 4px;
+  padding: 0.25rem 0.5rem;
+}
+.semester-course-list li:hover {
+  background-color: #5ed8ed;
+}
 
-/* --- Modal backdrop + content --- */
+
+/* --- Modal backdrop + Content --- */
 .modal-backdrop {
   position: fixed;
-  top: 0; left: 0; right:0; bottom:0;
+  top: 0; left: 0; right: 0; bottom: 0;
   background: rgba(0,0,0,0.5);
   display: flex;
   align-items: center;
@@ -177,6 +194,8 @@ html, body {
   margin-top: 1rem;
 }
 
+
+/* --- General button styles --- */
 button {
   background-color: #0d6373;
   color: #fff;
@@ -194,4 +213,55 @@ button:hover {
 button:focus {
   outline: none;
   box-shadow: 0 0 0 3px rgba(6, 80, 90, 0.6);
+}
+.delete-course-button {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: #cc0000;
+  margin-left: 0.75rem;
+  padding: 0;
+  outline: none;
+}
+
+/* Hover effect for the trash icon */
+.delete-course-button:hover {
+  color: #ff4444;
+  background: none;
+}
+
+
+/* Collapsible sections in the aside panel */
+.collapsible-section {
+  margin-bottom: 1rem;
+}
+/* The toggle button (with arrow) */
+.collapsible-header {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #086374;
+  cursor: pointer;
+  text-align: left;
+  padding: 0.25rem 0;
+}
+/* The list of items (draggable) inside the expanded area */
+.requirement-list {
+  margin: 0.5rem 0 0 1.5rem;
+  padding: 0;
+  list-style-type: disc;
+}
+.requirement-list li {
+  margin-bottom: 0.25rem;
+  cursor: grab;
+  color: #333;
+  background-color: #f9f9f9;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
+/* Hover effect on requirement items */
+.requirement-list li:hover {
+  background-color: #e0eef0;
 }

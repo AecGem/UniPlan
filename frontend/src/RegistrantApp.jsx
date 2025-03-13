@@ -3,9 +3,9 @@ import { useState } from 'react'
 import './Registrant.css'
 
 // Collapsible Section Sub-Component
-function collapsibleSection({title, items}) {
+function CollapsibleSection({title, items, onDragStartAside}) {
   const [expanded, setExpanded] = useState(false);
-  const toggleExpanded = () => {
+  const toggleExpand = () => {
     setExpanded((prev) => !(prev));
   };
 
@@ -19,9 +19,13 @@ function collapsibleSection({title, items}) {
       {/* If expanded, show the list of requirements */}
       {expanded && (
         <ul className="requirement-list">
-          {items.map((item, idx) => (
-            <li key={idx} draggable>
-              {item}
+          {items.map((itemText, idx) => (
+            <li 
+              key={idx} 
+              draggable
+              onDragStart={(e) => onDragStartAside(e, itemText)}
+            >
+              {itemText}
             </li>
           ))}
         </ul>
@@ -32,18 +36,116 @@ function collapsibleSection({title, items}) {
 
 // Main App Component
 export default function App() {
-  // State for all semesters
+  /** ---------------------------
+   *  SEMESTERS + COURSES STATE
+   *  Each semester has an array of course objects: { id, text }
+   * ---------------------------*/
   const [semesters, setSemesters] = useState([]);
 
-  // State for controlling the modal’s visibility and edit mode
+  /** ---------------------------
+   *  MODAL STATE (Add/Edit)
+   * ---------------------------*/
   const [showModal, setShowModal] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
-
   const [tempSemesterId, setTempSemesterId] = useState(null); // track which semester we're editing
   const [selectedType, setSelectedType] = useState('Fall');
   const [selectedYear, setSelectedYear] = useState('2025');
 
-  // Open the modal in "Add" mode
+  /** ---------------------------
+   *  DRAG & DROP HANDLERS
+   * ---------------------------*/
+  // 1) Drag from the aside (strings only) then converts it into an object { id, text }
+  const handleDragStartAside = (e, itemText) => {
+    const payload = {
+      course: { id: Date.now().toString(), text: itemText },
+      sourceSemId: null,
+    };
+    e.dataTransfer.setData('application/json', JSON.stringify(payload));
+  };
+
+  // 2) Drag from within a semester
+  const handleDragStartSemester = (e, courseObj, sourceSemId) => {
+    const payload = { course: courseObj, sourceSemId };
+    e.dataTransfer.setData('application/json', JSON.stringify(payload));
+  };
+
+  // 3) onDragOver to allow dropping
+  const handleDragOver = (e) => {
+    e.preventDefault();
+  };
+
+  // 4) onDrop to remove from old place and add to new
+  const handleDrop = (e, targetSemId) => {
+    e.preventDefault();
+    const rawData = e.dataTransfer.getData('application/json');
+    if (!rawData) return; 
+
+    let payload;
+    try {
+      payload = JSON.parse(rawData);
+    } catch (err) {
+      return; // not valid data
+    }
+
+    const { course, sourceSemId } = payload;
+    if (!course) return;
+
+    // Update state
+    setSemesters((prev) => {
+      let updated = [...prev];
+
+      // If it came from another semester, remove it there
+      if (sourceSemId) {
+        updated = updated.map((sem) => {
+          if (sem.id === sourceSemId) {
+            return {
+              ...sem,
+              courses: sem.courses.filter((c) => c.id !== course.id),
+            };
+          }
+          return sem;
+        });
+      }
+
+      // Now add it to the target semester, if it's not already there
+      updated = updated.map((sem) => {
+        if (sem.id === targetSemId) {
+          // Check duplicates
+          const alreadyThere = sem.courses.some((c) => c.id === course.id);
+          if (!alreadyThere) {
+            return {
+              ...sem,
+              courses: [...sem.courses, course],
+            };
+          }
+        }
+        return sem;
+      });
+
+      return updated;
+    });
+  };
+
+
+  /** ---------------------------
+   *  HELPER: Remove Single Course
+   * ---------------------------*/
+  const removeSingleCourse = (semesterId, courseId) => {
+    setSemesters((prev) =>
+      prev.map((sem) =>
+        sem.id === semesterId
+          ? {
+              ...sem,
+              courses: sem.courses.filter((c) => c.id !== courseId),
+            }
+          : sem
+      )
+    );
+  };
+
+  /** ---------------------------
+   *  SEMESTER MODAL HANDLERS
+   * ---------------------------*/
   const handleOpenAddModal = () => {
     setIsEditMode(false);
     setSelectedType('Fall');
@@ -52,7 +154,6 @@ export default function App() {
     setShowModal(true);
   };
 
-  // Open the modal in "Edit" mode, prefill with existing semester data
   const handleOpenEditModal = (sem) => {
     setIsEditMode(true);
     setSelectedType(sem.type);
@@ -61,7 +162,6 @@ export default function App() {
     setShowModal(true);
   };
 
-  // User clicks "Add" or "Save" in the modal
   const handleSaveSemester = () => {
     if (isEditMode && tempSemesterId != null) {
       // Update an existing semester
@@ -82,12 +182,9 @@ export default function App() {
       };
       setSemesters((prev) => [...prev, newSem]);
     }
-
-    // Close modal
     setShowModal(false);
   };
 
-  // Clear the courses from a given semester
   const handleClearSemester = (id) => {
     setSemesters((prev) =>
       prev.map((sem) =>
@@ -96,138 +193,14 @@ export default function App() {
     );
   };
 
-  // Delete an entire semester
   const handleDeleteSemester = (id) => {
     setSemesters((prev) => prev.filter((sem) => sem.id !== id));
   };
 
-
-
-
-
-
-
   
-  //Code for Sean's boxes:
-  //--------------------------------------------
-  const [box1Items, setBox1Items] = useState([
-    { id: 1, text: 'Course 1' },
-    { id: 2, text: 'Course 2' },
-    { id: 3, text: 'Course 3' },
-    { id: 4, text: 'Course 4' },
-    { id: 5, text: 'Course 5' }
-  ]);
-
-  // State for items in Box 2
-  const [box2Items, setBox2Items] = useState([
-    { id: 1, text: 'Elective 1' },
-    { id: 2, text: 'Elective 2' },
-    { id: 3, text: 'Elective 3' },
-    { id: 4, text: 'Elective 4' },
-    { id: 5, text: 'Elective 5' }
-  ]);
-
-  // Function to handle the start of a drag operation
-  const handleDragStart = (e, item) => {
-    // Set the data being dragged as
-    // text/plain with the serialized item
-    e.dataTransfer
-      .setData('text/plain', JSON.stringify(item));
-  };
-
-  // Function to handle the drag over event
-  const handleDragOver = (e) => {
-    // Prevent the default behavior to allow dropping
-    e.preventDefault();
-  };
-
-  // Function to handle the drop event
-  const handleDrop = (e, targetBox) => {
-    // Prevent the default behavior 
-    // to avoid unwanted behavior
-    e.preventDefault();
-
-    // Parse the dropped item from the dataTransfer
-    const droppedItem = JSON.parse(
-      e.dataTransfer
-        .getData('text/plain')
-    );
-
-    // Check the target box and 
-    // update the state accordingly
-    if (targetBox === 'box1') {
-      // Check if the same item is already present in Box 1
-      let isSameItemPresent = box1Items.some(
-        item => item.id === droppedItem.id
-          && item.text === droppedItem.text
-      );
-
-      // Update the state of Box 1 
-      // and remove the item from Box 2
-      setBox1Items((prevItems) =>
-        //If the same item is already present in Box 1 then 
-        //again don't add that item 
-        // else add the new item in Box 1
-        isSameItemPresent ?
-          [...prevItems] :
-          [...prevItems, droppedItem]
-      );
-      setBox2Items((prevItems) =>
-        //Remove the dragged item from Box 2
-        prevItems.filter(
-          (item) =>
-            item.id !== droppedItem.id
-        )
-      );
-    } else if (targetBox === 'box2') {
-      // Check if the same item is already present in Box 2
-      let isSameItemPresent = box2Items.some(
-        item => item.id === droppedItem.id
-          && item.text === droppedItem.text
-      );
-
-      // Update the state of Box 2 and remove the item from Box 1
-      setBox2Items((prevItems) =>
-        //If the same item is already 
-        // present in Box 2 then 
-        //again don't add that item 
-        // else add the new item in Box 2
-        isSameItemPresent ?
-          [...prevItems] :
-          [...prevItems, droppedItem]
-      );
-      setBox1Items((prevItems) =>
-        //Remove the dragged item from Box 1
-        prevItems.filter(
-          (item) =>
-            item.id !== droppedItem.id
-        )
-      );
-    }
-  };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  /** ---------------------------
+   *  RENDER
+   * ---------------------------*/
   return (
     <div className="page-container">
       {/* HEADER */}
@@ -244,20 +217,48 @@ export default function App() {
       {/* LAYOUT */}
       <div className="layout-wrapper">
         <aside className="requirements">
-          <h2>Major Course Requirements</h2>
-          {/* Eventually put draggable items here */}
+          {/* Collapsible sections with dummy (TO BE CHANGED BY BACKEND) items */}
+          <CollapsibleSection
+            title="Degree Requirements"
+            items={[
+              'Degree Class 1',
+              'Degree Class 2',
+              'Degree Class 3',
+              'Degree Class 4'
+            ]}
+            onDragStartAside={handleDragStartAside}
+          />
+          <CollapsibleSection
+            title="Major Requirements"
+            items={[
+              'Major Class 1',
+              'Major Class 2',
+              'Major Class 3',
+              'Major Class 4'
+            ]}
+            onDragStartAside={handleDragStartAside}
+          />
+          <CollapsibleSection
+            title="Electives"
+            items={[
+              'Elective 1',
+              'Elective 2',
+              'Elective 3',
+              'Elective 4'
+            ]}
+            onDragStartAside={handleDragStartAside}
+          />
         </aside>
 
         <main className="main-content">
           <h2>Your Planner</h2>
           <p>
-            Add semesters, then drag courses (coming soon) from the left panel.
+            Add semesters, then drag courses from the left panel.
           </p>
 
-          {/* Button that opens the modal to add a new semester */}
           <button onClick={handleOpenAddModal}>Add New Semester</button>
 
-          {/* Render the semester boxes */}
+          {/* Semester Boxes */}
           <div className="semesters-container">
             {semesters.map((sem) => (
               <div key={sem.id} className="semester-box">
@@ -273,8 +274,35 @@ export default function App() {
                   </div>
                 </div>
 
-                <div className="course-dropzone">
-                  Add Course
+                {/* DRAG ZONE for dropping courses */}
+                <div
+                  className="course-dropzone"
+                  onDragOver={handleDragOver}
+                  onDrop={(e) => handleDrop(e, sem.id)}
+                >
+                  {sem.courses.length > 0 ? (
+                    <ul className="semester-course-list">
+                      {sem.courses.map((courseObj) => (
+                        <li
+                          key={courseObj.id}
+                          draggable
+                          onDragStart={(ev) => handleDragStartSemester(ev, courseObj, sem.id)}
+                        >
+                          {courseObj.text}
+                          <button
+                            className="delete-course-button"
+                            onClick={() =>
+                              removeSingleCourse(sem.id, courseObj.id)}
+                              title="Delete Course"                
+                            >
+                              🗑 {/* wee little trashcan! :) */}
+                            </button>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p>Add Course</p>
+                  )}
                 </div>
               </div>
             ))}
@@ -282,7 +310,7 @@ export default function App() {
         </main>
       </div>
 
-      {/* The Modal */}
+      {/* MODAL: Add or Edit Semester */}
       {showModal && (
         <div className="modal-backdrop">
           <div className="modal-content">
