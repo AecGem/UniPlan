@@ -58,14 +58,14 @@ html, body {
 /* The aside/requirements panel on the left */
 .requirements {
   width: 300px;
-  background-color: #eaeaea;
+  background-color: #eaeaeaef;
   padding: 1rem;
 }
 /* The main content area on the right */
 .main-content {
   flex: 1;
   color: #086374;
-  background-color: #ffffff;
+  background-color: #ffffffaf;
   padding: 1rem;
 }
 /* Semesters container + semester box */
