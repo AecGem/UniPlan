@@ -47,7 +47,7 @@ function App() {
 
   const handleSignupSubmit = (e) => {
     e.preventDefault();
-    if(!signupForm.email || !signupForm.password || !signupForm.confirmPassword) {
+    if(!signupForm.userEmail || !signupForm.password || !signupForm.confirmPassword) {
       setErrorMessage("Email and Password are required.");
       return;
     }
