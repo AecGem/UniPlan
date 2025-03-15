@@ -8,13 +8,14 @@ function App() {
   const [isLoginMode, setIsLoginMode] = useState(true);
   const [loginEmail, setLoginEmail] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
-  const [loginUserType, setLoginUserType] = useState('user');
+  const [signUpUserType, setUserType] = useState('user');
   const [signupForm, setSignupForm] = useState({
     firstName: '', //optional input
     lastName: '', //optional input
     userEmail: '', //required input
     password: '', //required input
     confirmPassword: '', //required input
+    userType: 'user' // required radio input
   });
 
   const [errorMessage, setErrorMessage] = useState('');
@@ -32,7 +33,7 @@ function App() {
     }
 
       // If userType is admin -> go to registrar
-    if (loginUserType === 'admin') {
+    if (signUpUserType === 'admin') {
       window.location.href = 'https://uniplanner.ca/registrar';
     } else {
       window.location.href = 'https://uniplanner.ca/registrant';
@@ -61,6 +62,7 @@ function App() {
       confirmPassword: '',
       firstName: '',
       lastName: '',
+      userType: 'user'
     });
     setErrorMessage('');
     setShowModal(false);
@@ -114,31 +116,9 @@ function App() {
                     value={loginPassword}
                     onChange={(e) => setLoginPassword(e.target.value)}
                   />
-                  <div className="user-type-options">
-                    <label>
-                      <input 
-                        type="radio" 
-                        name="userType" 
-                        value="user"
-                        checked={loginUserType === 'user'}
-                        onChange={(e) => setLoginUserType(e.target.value)}
-                        />
-                          Student
-                    </label>
-                    <label>
-                      <input 
-                        type="radio" 
-                        name="userType" 
-                        value="admin"
-                        checked={loginUserType === 'admin'}
-                        onChange={(e) => setLoginUserType(e.target.value)}
-                        />
-                          Admin
-                    </label>
-                  </div>
                   <button type="submit">Log In</button>
                 </form>
-                
+
                 <p>
                   Don't have an account? &nbsp;
                   <button className="switch-button" onClick={toggleMode}>
@@ -185,6 +165,28 @@ function App() {
                     value={signupForm.confirmPassword}
                     onChange={handleSignupChange}
                   />
+                  <div className="user-type-options">
+                    <label>
+                      <input 
+                        type="radio" 
+                        name="userType" 
+                        value="user"
+                        checked={loginUserType === 'user'}
+                        onChange={(e) => setUserType(e.target.value)}
+                        />
+                          Student
+                    </label>
+                    <label>
+                      <input 
+                        type="radio" 
+                        name="userType" 
+                        value="admin"
+                        checked={loginUserType === 'admin'}
+                        onChange={(e) => setUserType(e.target.value)}
+                        />
+                          Admin
+                    </label>
+                  </div>
                   <button type="submit">Sign Up</button>
                 </form>
 
