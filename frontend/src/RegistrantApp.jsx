@@ -327,7 +327,7 @@ export default function App() {
                               removeSingleCourse(sem.id, courseObj.id)}*/
                               title="Course Description"                
                             >
-                              ?{/* We Little Question Mark :) */}
+                              ?{/* wee little question mark :) */}
                             </button>
                             {/*Trashcan Button*/}
                           <button
