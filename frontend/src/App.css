@@ -152,3 +152,11 @@ body {
   opacity: 0.9;
   color: #0a505c;
 }
+
+.user-type-options {
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  display: flex;
+  gap: 2rem;
+}
