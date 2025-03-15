@@ -1,0 +1,15 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["multiSchema"]
+}
+
+datasource postgresql {
+  provider = "postgresql"
+  url      = env("postgresql://uniplanner:OT7e|zdIUiCq2!@34.47.10.230:5432/Uniplanner?sslmode=verify-full&sslcert=/var/www/ssl/SQL/client-cert.pem&sslkey=/var/www/ssl/SQL/client-key.pem&sslrootcert=/var/www/ssl/SQL/server-ca.pem")
+}
