@@ -226,7 +226,7 @@ button:focus {
   font-size: 1.5rem;
   cursor: pointer;
   color: #cc0000;
-  margin-left: 0.75rem;
+  margin-left: 0rem;
   padding: 0;
   outline: none;
 }
