@@ -363,13 +363,18 @@ export default function App() {
         </main>
       </div>
 
-      {/* MODAL: Show description for Class */}
+      {/* MODAL: Show description for Class
+      BERNADETTE, THIS WILL NEED TO CHANGE TO MATCH DATABASE SO IT
+      PROPERLY INPUTS THE DATA INSTEAD OF THIS DUMMY TEXT */}
       {showDescModal && descCourse && (
         <div className="modal-backdrop">
           <div className="modal-content">
             <h2>Course Description</h2>
             <p>
               Course Name:{descCourse.text}
+            </p>
+            <p>
+              Credits:
             </p>
             <p>
               Lorem ipsum or a real course description from DB.
