@@ -140,7 +140,7 @@ function App() {
                   <input
                     type="email"
                     placeholder="Email (required)"
-                    name="email"
+                    name="userEmail"
                     value={signupForm.userEmail}
                     onChange={handleSignupChange}
                   />
