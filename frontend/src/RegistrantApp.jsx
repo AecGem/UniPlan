@@ -335,7 +335,7 @@ export default function App() {
                           <button
                             className="inspect-course-button"
                             onClick={() =>
-                              showDescModal()}
+                              openDescModal(courseObj)}
                               title="Course Description"                
                             >
                               ?{/* wee little question mark :) */}
@@ -369,7 +369,7 @@ export default function App() {
           <div className="modal-content">
             <h2>Course Description</h2>
             <p>
-              <strong>Course Name:</strong> {descCourse.text}
+              Course Name:{descCourse.text}
             </p>
             <p>
               Lorem ipsum or a real course description from DB.
