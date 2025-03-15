@@ -3,15 +3,26 @@ html, body {
   padding: 0;
 }
 
-.topnav
-{
+.subtitle {
+  padding-top: 10px;
+  background-color: #128ba1;
+  font-size: 20px;
+  color: white;
+  text-align: center;
+  align-items: center;
+  margin: 0;
+}
+.subtitle h1 {
+  margin: 3px;
+}
+/* The nav bar under the header */
+.topnav {
   background-color: #086374;
   overflow: hidden;
   width: 100%;
   text-align: center;
   margin: 0;
 }
-
 .topnav a {
   color: #ffffff;
   text-align: center;
@@ -19,24 +30,9 @@ html, body {
   font-weight: bold;
   text-decoration: none;
   font-size: 20px;
+  display: inline-block;
 }
-
 .topnav a:hover {
   background-color: #5ed8ed;
   color: #0d6373;
-}
-
-.subtitle
-{
-    padding-top: 10px;
-    background-color: #128ba1;
-    font-size: 20px;
-    color: white;
-    text-align:center;
-    align-items:center;
-    margin: 0;
-}
-
-.subtitle h1 {
-  margin: 3px;
 }
