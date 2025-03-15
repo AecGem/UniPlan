@@ -131,3 +131,10 @@ li {
 li:hover {
   background-color: #e0e0e0;
 }
+
+
+/*styling for drop-down box*/
+.Degree-Dropdown
+{
+  text-align:center;
+}

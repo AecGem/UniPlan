@@ -97,6 +97,8 @@ import './RegistrarApp.css'
         );
       }
     };
+    const [selectedType, setSelectedType] = useState('Computer Science');
+
 
   return (
     <div className="page-container">
@@ -113,15 +115,23 @@ import './RegistrarApp.css'
       <div className="layout-wrapper">
         <div className="app-container">
           <div className="subtitle2">Select a Degree to View: </div>
+            <div className="Degree-Dropdown">
+              <label>Degree:&nbsp;</label>
+              <select
+                value={selectedType}
+                onChange={(e) => setSelectedType(e.target.value)}>
 
+                <option value="Computer Science">Computer Science</option>
+                <option value="Empty Degree">Empty Degree</option>
 
+              </select>
 
-
-
-
-
+              <br /><br />
+            </div>
+         
         </div>
       </div>
+
     </div> 
 
   
