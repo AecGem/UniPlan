@@ -122,9 +122,8 @@ function App() {
                         value="user"
                         checked={loginUserType === 'user'}
                         onChange={(e) => setLoginUserType(e.target.value)}
-                        >
+                        />
                           Student
-                      </input>
                     </label>
                     <label>
                       <input 
@@ -133,9 +132,8 @@ function App() {
                         value="admin"
                         checked={loginUserType === 'admin'}
                         onChange={(e) => setLoginUserType(e.target.value)}
-                        >
+                        />
                           Admin
-                      </input>
                     </label>
                   </div>
                   <button type="submit">Log In</button>
