@@ -53,6 +53,8 @@ export default function App() {
    *  MODAL STATE (Add/Edit)
    * ---------------------------*/
   const [showModal, setShowModal] = useState(false);
+  const [showDescModal, setShowDescModal] = useState(false);
+  const [descCourse, setDescCourse] = useState(null);
   const [isEditMode, setIsEditMode] = useState(false);
   const [tempSemesterId, setTempSemesterId] = useState(null); // track which semester we're editing
   const [selectedType, setSelectedType] = useState('Fall');
@@ -210,6 +212,15 @@ export default function App() {
     setSemesters((prev) => prev.filter((sem) => sem.id !== id));
   };
 
+  const openDescModal = (courseObj) => {
+    setDescCourse(courseObj);
+    setShowDescModal(true);
+  };
+
+  const closeDescModal = () => {
+    setDescCourse(null);
+    setShowDescModal(false);
+  };
   
   /** ---------------------------
    *  RENDER
@@ -323,8 +334,8 @@ export default function App() {
                           {/*Question Mark Button*/}
                           <button
                             className="inspect-course-button"
-                            /*onClick={() =>
-                              removeSingleCourse(sem.id, courseObj.id)}*/
+                            onClick={() =>
+                              showDescModal()}
                               title="Course Description"                
                             >
                               ?{/* wee little question mark :) */}
@@ -352,6 +363,24 @@ export default function App() {
         </main>
       </div>
 
+      {/* MODAL: Show description for Class */}
+      {showDescModal && descCourse && (
+        <div className="modal-backdrop">
+          <div className="modal-content">
+            <h2>Course Description</h2>
+            <p>
+              <strong>Course Name:</strong> {descCourse.text}
+            </p>
+            <p>
+              Lorem ipsum or a real course description from DB.
+            </p>
+            
+            <div className="modal-buttons">
+              <button onClick={closeDescModal}>Close</button>
+            </div>
+          </div>
+        </div>
+      )}
       {/* MODAL: Add or Edit Semester */}
       {showModal && (
         <div className="modal-backdrop">
