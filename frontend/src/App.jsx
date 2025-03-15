@@ -56,6 +56,13 @@ function App() {
       return;
     }
 
+      // If userType is admin -> go to registrar
+      if (signUpUserType === 'admin') {
+        window.location.href = 'https://uniplanner.ca/registrar';
+      } else {
+        window.location.href = 'https://uniplanner.ca/registrant';
+      }
+
     setSignupForm({
       userEmail: '',
       password: '',
