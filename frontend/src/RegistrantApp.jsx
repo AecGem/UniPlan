@@ -243,12 +243,7 @@ export default function App() {
         <aside className="requirements">
           {/* 
             Collapsible sections with dummy arrays. 
-            This is where the BACKEND can supply real data. 
-            For instance:
-              fetch('/api/courses?type=degree')
-              .then(...).then(data => setDegreeCourses(data)) 
-            Then pass setDegreeCourses into CollapsibleSection 
-            as 'items={degreeCourses}'.
+            This is where the BACKEND can supply real data.
           */}
           <CollapsibleSection
             title="Degree Requirements"
@@ -363,7 +358,9 @@ export default function App() {
         </main>
       </div>
 
-      {/* MODAL: Show description for Class */}
+      {/* MODAL: Show description for Class
+      BERNADETTE, THIS WILL NEED TO CHANGE TO MATCH DATABASE SO IT
+      PROPERLY INPUTS THE DATA INSTEAD OF THIS DUMMY TEXT */}
       {showDescModal && descCourse && (
         <div className="modal-backdrop">
           <div className="modal-content">
@@ -372,7 +369,16 @@ export default function App() {
               Course Name:{descCourse.text}
             </p>
             <p>
-              Lorem ipsum or a real course description from DB.
+              Department: Science
+            </p>
+            <p>
+              Credit Hours: 3
+            </p>
+            <p>
+              Description: Real course description from DataBase.
+            </p>
+            <p>
+              Prerequisites: Class 1, Class 2
             </p>
             
             <div className="modal-buttons">

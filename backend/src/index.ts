@@ -82,7 +82,7 @@ const app = new Elysia()
     //Defining available pages
     .get("/", () => "Hello Elysia!")
     .get("/registrar", () => "Hello Elysia! Welcome to the registrar page.")
-    .get("/registrant", () => "Hello Elysia! Welcome to the registrant page.")
+    .get("/registrant", () => "Hello Elysia! Why won't anything work...")
     .get("/login", () => "Hello Elysia! Welcome to the login page.")
     
 

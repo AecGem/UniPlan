@@ -1,6 +1,4 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
@@ -15,7 +13,7 @@ function App() {
     userEmail: '', //required input
     password: '', //required input
     confirmPassword: '', //required input
-    userType: 'user' // required radio input
+    userType: '' // required radio input
   });
 
   const [errorMessage, setErrorMessage] = useState('');
