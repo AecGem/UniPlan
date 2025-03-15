@@ -7,6 +7,7 @@
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
 /* --- Heading styles --- */
@@ -138,4 +139,14 @@ li:hover {
 {
   text-align:center;
   color: #086374;
+}
+
+/*Styling for degree info:*/
+.displayInfo
+{
+  border: 4px solid #086374;
+  border-radius: 10px;
+  height: 80vh;
+  width: 75vw;
+  background: rgba(255, 255, 255, 0.777);
 }
