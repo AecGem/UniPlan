@@ -171,7 +171,7 @@ function App() {
                         type="radio" 
                         name="userType" 
                         value="user"
-                        checked={loginUserType === 'user'}
+                        checked={signUpUserType === 'user'}
                         onChange={(e) => setUserType(e.target.value)}
                         />
                           Student
@@ -181,7 +181,7 @@ function App() {
                         type="radio" 
                         name="userType" 
                         value="admin"
-                        checked={loginUserType === 'admin'}
+                        checked={signUpUserType === 'admin'}
                         onChange={(e) => setUserType(e.target.value)}
                         />
                           Admin
