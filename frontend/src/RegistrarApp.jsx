@@ -112,6 +112,13 @@ import './RegistrarApp.css'
       
       <div className="layout-wrapper">
         <div className="app-container">
+          <div className="subtitle2">Select a Degree to View: </div>
+
+
+
+
+
+
 
         </div>
       </div>
