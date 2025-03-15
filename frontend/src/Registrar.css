@@ -3,6 +3,20 @@ html, body {
   padding: 0;
 }
 
+.page-container {
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.layout-wrapper {
+  background: url(/src/image3.jpg) no-repeat center center fixed;
+  background-size: cover;
+  display: flex;
+  flex: 1;
+}
+
 .subtitle {
   padding-top: 10px;
   background-color: #128ba1;
@@ -17,7 +31,7 @@ html, body {
 }
 /* The nav bar under the header */
 .topnav {
-  background-color: #086374;
+  background-color: #087474;
   overflow: hidden;
   width: 100%;
   text-align: center;

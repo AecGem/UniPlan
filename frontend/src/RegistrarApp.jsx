@@ -99,7 +99,7 @@ import './RegistrarApp.css'
     };
 
   return (
-    <div className="centered-page">
+    <div className="page-container">
       <header className="subtitle">
         <h1>UniPlan: Registrar's Homepage</h1>
         <div class="topnav">
@@ -110,8 +110,10 @@ import './RegistrarApp.css'
         </div>
       </header>
       
-      <div className="app-container">
+      <div className="layout-wrapper">
+        <div className="app-container">
 
+        </div>
       </div>
     </div> 
 
