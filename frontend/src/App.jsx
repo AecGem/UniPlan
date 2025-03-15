@@ -8,6 +8,7 @@ function App() {
   const [isLoginMode, setIsLoginMode] = useState(true);
   const [loginEmail, setLoginEmail] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
+  const [loginUserType, setLoginUserType] = useState('user');
   const [signupForm, setSignupForm] = useState({
     firstName: '', //optional input
     lastName: '', //optional input
@@ -28,6 +29,13 @@ function App() {
     if(!loginEmail || !loginPassword) {
       setErrorMessage('Please enter an Email and Password.');
       return;
+    }
+
+      // If userType is admin -> go to registrar
+    if (loginUserType === 'admin') {
+      window.location.href = 'https://uniplanner.ca/registrar';
+    } else {
+      window.location.href = 'https://uniplanner.ca/registrant';
     }
 
     setLoginEmail('');
@@ -106,6 +114,30 @@ function App() {
                     value={loginPassword}
                     onChange={(e) => setLoginPassword(e.target.value)}
                   />
+                  <div className="user-type-options">
+                    <label>
+                      <input 
+                        type="radio" 
+                        name="userType" 
+                        value="user"
+                        checked={loginUserType === 'user'}
+                        onChange={(e) => setLoginUserType(e.target.value)}
+                        >
+                          Student
+                      </input>
+                    </label>
+                    <label>
+                      <input 
+                        type="radio" 
+                        name="userType" 
+                        value="admin"
+                        checked={loginUserType === 'admin'}
+                        onChange={(e) => setLoginUserType(e.target.value)}
+                        >
+                          Admin
+                      </input>
+                    </label>
+                  </div>
                   <button type="submit">Log In</button>
                 </form>
                 
