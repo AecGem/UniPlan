@@ -26,9 +26,20 @@ html, body {
   align-items: center;
   margin: 0;
 }
+.subtitle2 {
+  padding-top: 10px;
+  background: none;
+  font-size: 40px;
+  color: #086374;
+  text-align: top;
+  text-align: center;
+  align-items: center;
+  margin: 0;
+}
 .subtitle h1 {
   margin: 3px;
 }
+
 /* The nav bar under the header */
 .topnav {
   background-color: #087474;
