@@ -41,7 +41,6 @@ export default function App() {
    *  Each semester in 'semesters' has this shape:
    *  {
    *    id: number,
-   *    type: string,   // "Fall", "Spring", etc.
    *    year: number,
    *    courses: [{ id: string, text: string }, ...]
    *  }
@@ -321,6 +320,16 @@ export default function App() {
                           onDragStart={(ev) => handleDragStartSemester(ev, courseObj, sem.id)}
                         >
                           {courseObj.text}
+                          {/*Question Mark Button*/}
+                          <button
+                            className="inspect-course-button"
+                            /*onClick={() =>
+                              removeSingleCourse(sem.id, courseObj.id)}*/
+                              title="Course Description"                
+                            >
+                              ?{/* We Little Question Mark :) */}
+                            </button>
+                            {/*Trashcan Button*/}
                           <button
                             className="delete-course-button"
                             onClick={() =>
@@ -329,6 +338,7 @@ export default function App() {
                             >
                               🗑 {/* wee little trashcan! :) */}
                             </button>
+                            
                         </li>
                       ))}
                     </ul>

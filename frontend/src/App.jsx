@@ -11,7 +11,7 @@ function App() {
   const [signupForm, setSignupForm] = useState({
     firstName: '', //optional input
     lastName: '', //optional input
-    email: '', //required input
+    userEmail: '', //required input
     password: '', //required input
     confirmPassword: '', //required input
   });
@@ -26,7 +26,7 @@ function App() {
   const handleLoginSubmit = (e) => {
     e.preventDefault();
     if(!loginEmail || !loginPassword) {
-      setErrorMessage('Please enter email and password.');
+      setErrorMessage('Please enter an Email and Password.');
       return;
     }
 
@@ -39,7 +39,7 @@ function App() {
   const handleSignupSubmit = (e) => {
     e.preventDefault();
     if(!signupForm.email || !signupForm.password || !signupForm.confirmPassword) {
-      setErrorMessage("Email, password, and confirming password are required.");
+      setErrorMessage("Email and Password are required.");
       return;
     }
     if(signupForm.password != signupForm.confirmPassword) {
@@ -48,7 +48,7 @@ function App() {
     }
 
     setSignupForm({
-      email: '',
+      userEmail: '',
       password: '',
       confirmPassword: '',
       firstName: '',
@@ -124,7 +124,7 @@ function App() {
                     type="email"
                     placeholder="Email (required)"
                     name="email"
-                    value={signupForm.email}
+                    value={signupForm.userEmail}
                     onChange={handleSignupChange}
                   />
                   <input

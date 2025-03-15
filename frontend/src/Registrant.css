@@ -230,10 +230,27 @@ button:focus {
   padding: 0;
   outline: none;
 }
+.inspect-course-button {
+  background: none;
+  align-items: center;
+  border: none;
+  border-radius: 0px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  color: #004640;
+  margin-left: 0.75rem;
+  padding-left: 100px;
+  outline: none;
+}
 
 /* Hover effect for the trash icon */
 .delete-course-button:hover {
   color: #ff4444;
+  background: none;
+}
+.inspect-course-button:hover {
+  color: #027269;
   background: none;
 }
 
