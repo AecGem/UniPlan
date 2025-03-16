@@ -144,6 +144,7 @@ li:hover {
 /*Styling for degree info:*/
 .displayInfo
 {
+  visibility: hidden;
   border: 4px solid #086374;
   border-radius: 10px;
   height: 80vh;
