@@ -12,7 +12,7 @@ export default defineConfig({
     allowedHosts: true,
   },
   build: {
-    outDir: './dist/pages',
+    outDir: './dist/pages/',
     rollupOptions: {
       input: {
         RegistrantApp: resolve(__dirname,'Registrant.html'),
