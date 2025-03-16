@@ -265,20 +265,20 @@ export default function App() {
           */}
           <CollapsibleSection
             title="Specific Required Courses"
-            items={
-              courses
+            items={[
+              //courses
                 //.filter(course => course.isambig === false)
                // .map(course => `${course.shortname}: ${course.coursename}`)
-            }
+            ]}
             onDragStartAside={handleDragStartAside}
           />
           <CollapsibleSection
             title="Student Selection Courses"
-            items={
-            courses
+            items={[
+            //courses
               //.filter(course => course.isambig === true)
               //.map(course => `${course.shortname}: ${course.coursename}`)
-            }
+            ]}
           onDragStartAside={handleDragStartAside}
           />
           <CollapsibleSection
