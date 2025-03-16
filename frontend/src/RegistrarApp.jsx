@@ -18,6 +18,7 @@ import './Registrar.css'
   
     // State for items in Box 2
     const [box2Items, setBox2Items] = useState([]);
+    const [degree, setDegree] = useState("1");
   
     // Function to handle the start of a drag operation
     const handleDragStart = (e, item) => {
@@ -98,7 +99,6 @@ import './Registrar.css'
       }
     };
 
-    
     const handleDegreeChange = (degreeValue) => {
       setDegree(degreeValue);
     
@@ -115,8 +115,6 @@ import './Registrar.css'
       }
     };
     
-
-
   return (
     <div className="page-container">
       <header className="subtitle">
