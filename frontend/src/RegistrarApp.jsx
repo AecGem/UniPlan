@@ -143,11 +143,14 @@ import './Registrar.css'
               <br /><br />
           </div>
 
-          <div id="displayInfo" className="displayInfo">
-           {/* Possibly show some text or placeholders */}
+          <div
+            id="displayInfo"
+            className="displayInfo"
+            style={{ visibility: degree === "1" ? "hidden" : "visible" }}
+          >
+            {degree === "2" && <p>Showing Computer Science Info</p>}
+            {degree === "3" && <p>Showing “Empty Degree” Info</p>}
           </div>
-
-            
         </div>
       </div>
     </div> 
