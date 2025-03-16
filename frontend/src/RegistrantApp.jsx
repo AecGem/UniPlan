@@ -1,5 +1,5 @@
 // RegistrantApp.jsx
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './Registrant.css'
 
 // Collapsible Section Sub-Component
@@ -224,7 +224,7 @@ export default function App() {
 
   const handleSaveSemesterToDB = (semId) => {
     console.log(`Saving semester ${semId} to database... (placeholder)`);
-    // In the future, you'd do fetch('/api/saveSemester', { ... })
+    // In the future, do fetch('/api/saveSemester', { ... })
   };
   
   /** ---------------------------

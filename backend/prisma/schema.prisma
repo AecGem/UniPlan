@@ -20,4 +20,12 @@ datasource mongodb {
   url      = env("mongodb+srv://uniplanner:8pTPPqv3g6kjFbiW@uniplanner-cluster.m1kmo.mongodb.net/")
 }
 
+model Course {
+  cid        Int      @id @default(autoincrement())
+  coursenum  String
+  coursename String
+  credits    Int
+  iselective Boolean
+  prereq     Int[]
+}
 

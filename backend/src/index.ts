@@ -8,11 +8,15 @@ import { AuthorizationError } from "./exceptions/AuthorizationError";       // '
 import { InvariantError } from "./exceptions/InvariantError";               // '' 
 import { staticPlugin } from '@elysiajs/static';                            //Support for static serving
 import { file } from 'bun'                                                  //File I/O?
-
-
+import { PrismaClient } from "@prisma/client";
+const prisma = new PrismaClient();
 
 const app = new Elysia()
 
+    .get("/api/course", async () => {
+        const courses = await prisma.course.findMany();
+        return courses;
+    })
     //Adding swagger auto-documentation endpoint
     .use(
         swagger({
