@@ -13,7 +13,7 @@ const prisma = new PrismaClient();
 
 const app = new Elysia()
 
-    .get("/api/courses", async () => {
+    .get("/api/course", async () => {
         const courses = await prisma.course.findMany();
         return courses;
     })
@@ -75,18 +75,19 @@ const app = new Elysia()
 
 
    
-    //Adding static serving plugin.
+    //Adding static serving plugin for regular webpages.
     .use(staticPlugin({ 
         prefix: '/',
         assets: '/var/www/UniPlan/frontend/dist/pages'
     }))
-    
-    /*
-    //Defining available pages
-    .get("/", Bun.file("../frontend/dist/pages/index.html"))
-    .get("/registrar", Bun.file("../frontend/dist/pages/Registrar.html"))
-    .get("/registrant", Bun.file("../frontend/dist/pages/Registrant.html"))
-    */
+
+    //Definitions for /api calls.
+
+    .get("/api/course", async () => {
+        console.log("heyyyy tuts");
+        const courses = await prisma.course.findMany();
+        return courses;
+    })
 
     //Set up server listener + HTTPS attributes
     .listen({
