@@ -12,7 +12,7 @@ generator client {
 //TERRIBLY UNSECURE!!!! Good thing this is just a proof of concept project! :S
 datasource postgresql {
   provider = "postgresql"
-  url      = env("postgresql://uniplanner:OT7e|zdIUiCq2!@34.47.10.230:5432/Uniplanner?sslmode=verify-full&sslcert=/var/www/ssl/SQL/client-cert.pem&sslkey=/var/www/ssl/SQL/client-key.pem&sslrootcert=/var/www/ssl/SQL/server-ca.pem")
+  url      = env("DATABASE_URL")
 }
 
 model Users {
