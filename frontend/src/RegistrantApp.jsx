@@ -263,14 +263,6 @@ export default function App() {
             Collapsible sections with dummy arrays. 
             This is where the BACKEND can supply real data.
           */}
-          <footer>
-            <div className="prereq-check">
-              <label>
-                <input type="checkbox" />
-                Check for Prerequisites
-              </label>
-            </div>
-          </footer>
           <CollapsibleSection
             title="Specific Required Courses"
             items={[
@@ -280,15 +272,15 @@ export default function App() {
             ]}
             onDragStartAside={handleDragStartAside}
           />
-        <CollapsibleSection
-          title="Student Selection Courses"
-          items={[
+          <CollapsibleSection
+            title="Student Selection Courses"
+            items={[
             courses
               .filter(course => course.isambig === true)
-                .map(course => `${course.shortname}: ${course.coursename}`)
+              .map(course => `${course.shortname}: ${course.coursename}`)
             ]}
           onDragStartAside={handleDragStartAside}
-        />
+          />
           <CollapsibleSection
             title="Co-op Terms"
             items={[
@@ -299,6 +291,14 @@ export default function App() {
             ]}
             onDragStartAside={handleDragStartAside}
           />
+          <footer>
+            <div className="prereq-check">
+              <label>
+                <input type="checkbox" />
+                Check for Prerequisites
+              </label>
+            </div>
+          </footer>
         </aside>
 
         <main className="main-content">
