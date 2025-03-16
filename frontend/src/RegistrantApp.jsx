@@ -271,7 +271,24 @@ export default function App() {
               </label>
             </div>
           </footer>
-          
+          <CollapsibleSection
+            title="Specific Required Courses"
+            items={
+              courses
+                .filter(course => course.isambig === false)
+                .map(course => `${course.shortname}: ${course.coursename}`)
+            }
+            onDragStartAside={handleDragStartAside}
+          />
+        <CollapsibleSection
+          title="Student Selection Courses"
+          items={
+            courses
+              .filter(course => course.isambig === true)
+                .map(course => `${course.shortname}: ${course.coursename}`)
+            }
+          onDragStartAside={handleDragStartAside}
+        />
           <CollapsibleSection
             title="Co-op Terms"
             items={[
