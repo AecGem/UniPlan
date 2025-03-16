@@ -97,7 +97,27 @@ import './RegistrarApp.css'
         );
       }
     };
-    const [selectedType, setSelectedType] = useState('No Degree Selected');
+
+    
+    const [degreeSelected, setDegree] = useState('');
+    const handleDegreeChange = (degreeSelected) => 
+    {
+      setDegree(degreeSelected);
+
+      var x = document.getElementById("displayInfo");
+      if(degreeSelected = 1)
+        {
+          x.style.visiblity = "hidden";
+        }
+      if(degreeSelected = 2)
+        {
+          x.style.visiblity = "visible";
+        }
+      if(degreeSelected = 3)
+        {
+          x.style.visiblity = "visible";
+        }
+    }
 
 
   return (
@@ -119,25 +139,23 @@ import './RegistrarApp.css'
           <div className="Degree-Dropdown">
             <label>Degree:&nbsp;</label>
 
-              <select
-                value={selectedType}
-                onChange={(e) => setSelectedType(e.target.value)}>
-                <option value="No Degree Selected">No Degree Selected</option>
-                <option value="Computer Science">Computer Science</option>
-                <option value="Empty Degree">Empty Degree</option>
+              <select onChange={event => handleDegreeChange(event.target.value)}>
+                <option value="1">No Degree Selected</option>
+                <option value="2">Computer Science</option>
+                <option value="3">Empty Degree</option>
               </select>
 
               <br /><br />
           </div>
 
-          <div className = "displayInfo">
-            
+          <div className = "displayInfo" >
 
+            
           </div>
+            
         </div>
       </div>
     </div> 
-
   
   ); 
 }

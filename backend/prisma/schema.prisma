@@ -22,7 +22,7 @@ model Course {
   coursename  String
   credits    Int
   isambig    Boolean
-  prereq     Int[]
+  prereq     String[]
   description String
 }
 

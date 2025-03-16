@@ -1,17 +1,6 @@
 // RegistrantApp.jsx
 import { useState, useEffect } from 'react'
 import './Registrant.css'
-const [courses, setCourses] = useState([]);
-
-// Fetch courses from the backend when the component mounts.
-useEffect(() => {
-  fetch('/api/course')
-    .then(res => res.json())
-    .then(data => {
-      setCourses(data);
-    })
-    .catch(err => console.error('Error fetching courses:', err));
-}, []);
 
 // Collapsible Section Sub-Component
 function CollapsibleSection({title, items, onDragStartAside}) {
@@ -59,6 +48,18 @@ export default function App() {
    *  dragged in. 
    * ---------------------------*/
   const [semesters, setSemesters] = useState([]);
+  const [courses, setCourses] = useState([]);
+
+  // Fetch courses from the backend when the component mounts.
+  useEffect(() => {
+    fetch('/api/courses')
+      .then(res => res.json())
+      .then(data => {
+        setCourses(data);
+      })
+      .catch(err => console.error('Error fetching courses:', err));
+  }, []);
+
 
   /** ---------------------------
    *  MODAL STATE (Add/Edit)
@@ -70,6 +71,7 @@ export default function App() {
   const [tempSemesterId, setTempSemesterId] = useState(null); // track which semester we're editing
   const [selectedType, setSelectedType] = useState('Fall');
   const [selectedYear, setSelectedYear] = useState('2025');
+
 
   /** ---------------------------
    *  DRAG & DROP HANDLERS
@@ -269,13 +271,12 @@ export default function App() {
               </label>
             </div>
           </footer>
-
-          <CollapsibleSection
+          {/*<CollapsibleSection
             title="Specific Required Courses"
             items={
               courses
                 .filter(course => course.isambig === false)
-                .map(course => `${course.coursenum}: ${course.coursename}`)
+                .map(course => `${course.shortname}: ${course.coursename}`)
             }
             onDragStartAside={handleDragStartAside}
           />
@@ -284,10 +285,11 @@ export default function App() {
           items={
             courses
               .filter(course => course.isambig === true)
-                .map(course => `${course.coursenum}: ${course.coursename}`)
+                .map(course => `${course.shortname}: ${course.coursename}`)
             }
           onDragStartAside={handleDragStartAside}
-        />
+        /> */}
+          
           <CollapsibleSection
             title="Co-op Terms"
             items={[
