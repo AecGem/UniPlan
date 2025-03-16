@@ -99,25 +99,22 @@ import './Registrar.css'
     };
 
     
-    const [degreeSelected, setDegree] = useState('');
-    const handleDegreeChange = (degreeSelected) => 
-    {
-      setDegree(degreeSelected);
-
-      var x = document.getElementById("displayInfo");
-      if(degreeSelected === 1)
-        {
-          x.style.visibility = "hidden";
-        }
-      if(degreeSelected === 2)
-        {
-          x.style.visibility = "visible";
-        }
-      if(degreeSelected === 3)
-        {
-          x.style.visibility = "visible";
-        }
-    }
+    const handleDegreeChange = (degreeValue) => {
+      setDegree(degreeValue);
+    
+      // Because you now have <div id="displayInfo" className="displayInfo" />
+      const x = document.getElementById("displayInfo");
+      if (!x) return;
+    
+      if (degreeValue === "1") {
+        x.style.visibility = "hidden";
+      } else if (degreeValue === "2") {
+        x.style.visibility = "visible";
+      } else if (degreeValue === "3") {
+        x.style.visibility = "visible";
+      }
+    };
+    
 
 
   return (
@@ -148,10 +145,10 @@ import './Registrar.css'
               <br /><br />
           </div>
 
-          <div className = "displayInfo" >
-
-            
+          <div id="displayInfo" className="displayInfo">
+           {/* Possibly show some text or placeholders */}
           </div>
+
             
         </div>
       </div>
