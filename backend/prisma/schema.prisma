@@ -15,6 +15,15 @@ datasource postgresql {
   url      = env("postgresql://uniplanner:OT7e|zdIUiCq2!@34.47.10.230:5432/Uniplanner?sslmode=verify-full&sslcert=/var/www/ssl/SQL/client-cert.pem&sslkey=/var/www/ssl/SQL/client-key.pem&sslrootcert=/var/www/ssl/SQL/server-ca.pem")
 }
 
+model Users {
+  userId   Int     @id @default(autoincrement())
+  email    String  @unique @db.VarChar(255)
+  fName    String? @db.VarChar(50)
+  lName    String? @db.VarChar(50)
+  pass     String  @db.VarChar(50)
+  dId      Int?
+  userType Boolean
+}
 
 model Course {
   cId          Int      @id @default(autoincrement())
