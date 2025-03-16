@@ -42,3 +42,6 @@ package-lock.json
 **/*.bun
 
 bun.lockb
+
+#Environment variables
+*.env
