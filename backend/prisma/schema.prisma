@@ -12,16 +12,40 @@ generator client {
 //TERRIBLY UNSECURE!!!! Good thing this is just a proof of concept project! :S
 datasource postgresql {
   provider = "postgresql"
-  url      = env("postgresql://uniplanner:OT7e|zdIUiCq2!@34.47.10.230:5432/Uniplanner?sslmode=verify-full&sslcert=/var/www/ssl/SQL/client-cert.pem&sslkey=/var/www/ssl/SQL/client-key.pem&sslrootcert=/var/www/ssl/SQL/server-ca.pem")
+  url      = env("DATABASE_URL")
 }
 
+model Users {
+  userId   Int     @id @default(autoincrement())
+  email    String  @unique @postgresql.VarChar(255)
+  fName    String? @postgresql.VarChar(50)
+  lName    String? @postgresql.VarChar(50)
+  pass     String  @postgresql.VarChar(50)
+  dId      Int?
+  userType Boolean
+  SavedSem SavedSem[]
+}
 
 model Course {
-  cid        Int      @id @default(autoincrement())
-  coursenum  String
-  coursename String
-  credits    Int
-  iselective Boolean
-  prereq     Int[]
+  cId         Int      @id @default(autoincrement())
+  shortname   String   @postgresql.VarChar(50)
+  coursename  String   @postgresql.VarChar(255)
+  credits     Int
+  isambig     Boolean
+  prereq      String[] @postgresql.VarChar(20)
+  description String?  @postgresql.VarChar(1024)
 }
 
+model Degree {
+  dId     Int      @id @default(autoincrement())
+  degree  String   @postgresql.VarChar(50)
+  courses Int[]
+}
+
+model SavedSem {
+  sem_id  Int     @id @default(autoincrement())
+  u_id    Int
+  users   Users   @relation(fields: [u_id], references: [userId])
+  courses Int[]
+  sname   String  @postgresql.VarChar(50)
+}

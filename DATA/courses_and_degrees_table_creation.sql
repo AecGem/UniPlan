@@ -11,8 +11,8 @@ CREATE TABLE course (
 cId SERIAL PRIMARY KEY,
 shortname VARCHAR(50) NOT NULL,
 coursename VARCHAR(255) NOT NULL,
-credits INT,
-isambig BOOLEAN,
+credits INT NOT NULL,
+isambig BOOLEAN NOT NULL,
 prereq VARCHAR(20)[],
-description VARCHAR(600)
+description VARCHAR(1024),
 );

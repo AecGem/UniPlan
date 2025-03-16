@@ -74,21 +74,20 @@ const app = new Elysia()
     .use(cors())
 
 
-    /* TODO: Fix static serving
-    //Adding static serving plugin.
+   
+    //Adding static serving plugin for regular webpages.
     .use(staticPlugin({ 
         prefix: '/',
-        assets: '/var/www/UniPlan/frontend'
+        assets: '/var/www/UniPlan/frontend/dist/pages'
     }))
-    */
 
+    //Definitions for /api calls.
 
-    //Defining available pages
-    .get("/", () => "Hello Elysia!")
-    .get("/registrar", () => "Hello Elysia! Welcome to the registrar page.")
-    .get("/registrant", () => "Hello Elysia! Why won't anything work...")
-    .get("/login", () => "Hello Elysia! Welcome to the login page.")
-    
+    .get("/api/course", async () => {
+        console.log("heyyyy tuts");
+        const courses = await prisma.course.findMany();
+        return courses;
+    })
 
     //Set up server listener + HTTPS attributes
     .listen({
@@ -100,7 +99,6 @@ const app = new Elysia()
             key: Bun.file("/var/www/ssl/privkey.pem"),
             cert: Bun.file("/var/www/ssl/fullchain.pem"),
         },
-        //hostname: "uniplanner.ca",
 
     }); 
 

@@ -48,6 +48,18 @@ export default function App() {
    *  dragged in. 
    * ---------------------------*/
   const [semesters, setSemesters] = useState([]);
+  const [courses, setCourses] = useState([]);
+
+  // Fetch courses from the backend when the component mounts.
+  useEffect(() => {
+    fetch('/api/courses')
+      .then(res => res.json())
+      .then(data => {
+        setCourses(data);
+      })
+      .catch(err => console.error('Error fetching courses:', err));
+  }, []);
+
 
   /** ---------------------------
    *  MODAL STATE (Add/Edit)
@@ -59,6 +71,7 @@ export default function App() {
   const [tempSemesterId, setTempSemesterId] = useState(null); // track which semester we're editing
   const [selectedType, setSelectedType] = useState('Fall');
   const [selectedYear, setSelectedYear] = useState('2025');
+
 
   /** ---------------------------
    *  DRAG & DROP HANDLERS
@@ -250,47 +263,26 @@ export default function App() {
             Collapsible sections with dummy arrays. 
             This is where the BACKEND can supply real data.
           */}
-          <footer>
-            <div className="prereq-check">
-              <label>
-                <input type="checkbox" />
-                Check for Prerequisites
-              </label>
-            </div>
-          </footer>
-
           <CollapsibleSection
-            title="Degree Requirements"
-            items={[
-              'Degree Class 1',
-              'Degree Class 2',
-              'Degree Class 3',
-              'Degree Class 4'
-            ]}
+            title="Specific Required Courses"
+            items={
+              courses
+                .filter(course => course.isambig === false)
+                .map(course => `${course.shortname}: ${course.coursename}`)
+            }
             onDragStartAside={handleDragStartAside}
           />
           <CollapsibleSection
-            title="Major Requirements"
-            items={[
-              'Major Class 1',
-              'Major Class 2',
-              'Major Class 3',
-              'Major Class 4'
-            ]}
-            onDragStartAside={handleDragStartAside}
+            title="Student Selection Courses"
+            items={
+            courses
+              .filter(course => course.isambig === true)
+              .map(course => `${course.shortname}: ${course.coursename}`)
+            }
+          onDragStartAside={handleDragStartAside}
           />
           <CollapsibleSection
-            title="Electives"
-            items={[
-              'Elective 1',
-              'Elective 2',
-              'Elective 3',
-              'Elective 4'
-            ]}
-            onDragStartAside={handleDragStartAside}
-          />
-          <CollapsibleSection
-            title="Co-op Workterm"
+            title="Co-op Terms"
             items={[
               'Workterm 1',
               'Workterm 2',
