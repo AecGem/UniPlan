@@ -17,34 +17,35 @@ datasource postgresql {
 
 model Users {
   userId   Int     @id @default(autoincrement())
-  email    String  @unique @db.VarChar(255)
-  fName    String? @db.VarChar(50)
-  lName    String? @db.VarChar(50)
-  pass     String  @db.VarChar(50)
+  email    String  @unique @postgresql.VarChar(255)
+  fName    String? @postgresql.VarChar(50)
+  lName    String? @postgresql.VarChar(50)
+  pass     String  @postgresql.VarChar(50)
   dId      Int?
   userType Boolean
+  SavedSem SavedSem[]
 }
 
 model Course {
   cId         Int      @id @default(autoincrement())
-  shortname   String   @db.VarChar(50)
-  coursename  String   @db.VarChar(255)
+  shortname   String   @postgresql.VarChar(50)
+  coursename  String   @postgresql.VarChar(255)
   credits     Int
   isambig     Boolean
-  prereq      String[] @db.VarChar(20)
-  description String?  @db.VarChar(1024)
+  prereq      String[] @postgresql.VarChar(20)
+  description String?  @postgresql.VarChar(1024)
 }
 
 model Degree {
   dId     Int      @id @default(autoincrement())
-  degree  String   @db.VarChar(50)
+  degree  String   @postgresql.VarChar(50)
   courses Int[]
 }
 
 model SavedSem {
   sem_id  Int     @id @default(autoincrement())
   u_id    Int
-  users   Users   @relation(fields: [u_id], references: [userid])
+  users   Users   @relation(fields: [u_id], references: [userId])
   courses Int[]
-  sname   String  @db.VarChar(50)
+  sname   String  @postgresql.VarChar(50)
 }
