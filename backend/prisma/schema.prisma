@@ -17,11 +17,12 @@ datasource postgresql {
 
 
 model Course {
-  cid        Int      @id @default(autoincrement())
-  coursenum  String
-  coursename String
+  cId        Int      @id @default(autoincrement())
+  shortname  String
+  coursename  String
   credits    Int
-  iselective Boolean
+  isambig    Boolean
   prereq     Int[]
+  description String
 }
 
