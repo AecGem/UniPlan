@@ -84,10 +84,9 @@ const app = new Elysia()
 
 
     //Defining available pages
-    .get("/", () => "Hello Elysia!")
-    .get("/registrar", () => "Hello Elysia! Welcome to the registrar page.")
-    .get("/registrant", () => "Hello Elysia! Why won't anything work...")
-    .get("/login", () => "Hello Elysia! Welcome to the login page.")
+    .get("/", Bun.file("../frontend/dist/pages/index.html"))
+    .get("/registrar", Bun.file("../frontend/dist/pages/Registrar.html"))
+    .get("/registrant", Bun.file("../frontend/dist/pages/Registrant.html"))
     
 
     //Set up server listener + HTTPS attributes
