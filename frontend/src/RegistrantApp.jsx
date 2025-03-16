@@ -1,7 +1,6 @@
 // RegistrantApp.jsx
 import { useState, useEffect } from 'react'
 import './Registrant.css'
-const [courses, setCourses] = useState([]);
 
 // Collapsible Section Sub-Component
 function CollapsibleSection({title, items, onDragStartAside}) {
@@ -34,6 +33,8 @@ function CollapsibleSection({title, items, onDragStartAside}) {
     </div>
   );
 }
+
+const [courses, setCourses] = useState([]);
 
 // Fetch courses from the backend when the component mounts.
 useEffect(() => {
@@ -70,6 +71,7 @@ export default function App() {
   const [tempSemesterId, setTempSemesterId] = useState(null); // track which semester we're editing
   const [selectedType, setSelectedType] = useState('Fall');
   const [selectedYear, setSelectedYear] = useState('2025');
+
 
   /** ---------------------------
    *  DRAG & DROP HANDLERS
