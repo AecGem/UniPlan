@@ -13,7 +13,7 @@ const prisma = new PrismaClient();
 
 const app = new Elysia()
 
-    .get("/api/course", async () => {
+    .get("/api/courses", async () => {
         const courses = await prisma.course.findMany();
         return courses;
     })
