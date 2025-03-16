@@ -81,11 +81,12 @@ const app = new Elysia()
         assets: '/var/www/UniPlan/frontend/dist/pages'
     }))
     
+    /*
     //Defining available pages
     .get("/", Bun.file("../frontend/dist/pages/index.html"))
     .get("/registrar", Bun.file("../frontend/dist/pages/Registrar.html"))
     .get("/registrant", Bun.file("../frontend/dist/pages/Registrant.html"))
-    
+    */
 
     //Set up server listener + HTTPS attributes
     .listen({
