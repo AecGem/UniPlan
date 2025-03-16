@@ -277,7 +277,7 @@ export default function App() {
             items={
               courses
                 .filter(course => course.isambig === false)
-                .map(course => `${course.coursenum}: ${course.coursename}`)
+                .map(course => `${course.shortname}: ${course.coursename}`)
             }
             onDragStartAside={handleDragStartAside}
           />
@@ -286,7 +286,7 @@ export default function App() {
           items={
             courses
               .filter(course => course.isambig === true)
-                .map(course => `${course.coursenum}: ${course.coursename}`)
+                .map(course => `${course.shortname}: ${course.coursename}`)
             }
           onDragStartAside={handleDragStartAside}
         />
