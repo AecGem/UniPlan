@@ -14,4 +14,5 @@ coursename VARCHAR(255) NOT NULL,
 credits INT,
 isambig BOOLEAN,
 prereq VARCHAR(20)[],
+description VARCHAR(600)
 );
