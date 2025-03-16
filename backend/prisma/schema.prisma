@@ -26,13 +26,13 @@ model Users {
 }
 
 model Course {
-  cId          Int      @id @default(autoincrement())
-  shortname    String
-  coursename   String
-  credits      Int
-  isambig      Boolean
-  prereq       String[]
-  description  String  @db.VarChar(1024)
+  cId         Int      @id @default(autoincrement())
+  shortname   String   @db.VarChar(50)
+  coursename  String   @db.VarChar(255)
+  credits     Int
+  isambig     Boolean
+  prereq      String[] @db.VarChar(20)
+  description String?  @db.VarChar(1024)
 }
 
 model Degree {
