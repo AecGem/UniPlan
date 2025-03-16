@@ -105,17 +105,17 @@ import './RegistrarApp.css'
       setDegree(degreeSelected);
 
       var x = document.getElementById("displayInfo");
-      if(degreeSelected = 1)
+      if(degreeSelected === 1)
         {
-          x.style.visiblity = "hidden";
+          x.style.visibility = "hidden";
         }
-      if(degreeSelected = 2)
+      if(degreeSelected === 2)
         {
-          x.style.visiblity = "visible";
+          x.style.visibility = "visible";
         }
-      if(degreeSelected = 3)
+      if(degreeSelected === 3)
         {
-          x.style.visiblity = "visible";
+          x.style.visibility = "visible";
         }
     }
 
