@@ -135,7 +135,7 @@ import './Registrar.css'
       <div className="layout-wrapper">
         <div className="app-container">
           <div className="subtitle2">Select a Degree to View: </div>
-
+          {/* Drop-down for selecting what degree to view*/}
           <div className="Degree-Dropdown">
             <label>Degree:&nbsp;</label>
 
