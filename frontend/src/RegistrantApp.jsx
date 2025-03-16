@@ -3,16 +3,6 @@ import { useState, useEffect } from 'react'
 import './Registrant.css'
 const [courses, setCourses] = useState([]);
 
-// Fetch courses from the backend when the component mounts.
-useEffect(() => {
-  fetch('/api/course')
-    .then(res => res.json())
-    .then(data => {
-      setCourses(data);
-    })
-    .catch(err => console.error('Error fetching courses:', err));
-}, []);
-
 // Collapsible Section Sub-Component
 function CollapsibleSection({title, items, onDragStartAside}) {
   const [expanded, setExpanded] = useState(false);
@@ -44,6 +34,16 @@ function CollapsibleSection({title, items, onDragStartAside}) {
     </div>
   );
 }
+
+// Fetch courses from the backend when the component mounts.
+useEffect(() => {
+  fetch('/api/course')
+    .then(res => res.json())
+    .then(data => {
+      setCourses(data);
+    })
+    .catch(err => console.error('Error fetching courses:', err));
+}, []);
 
 // Main App Component
 export default function App() {
