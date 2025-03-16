@@ -48,7 +48,7 @@ export default function App() {
    *  dragged in. 
    * ---------------------------*/
   const [semesters, setSemesters] = useState([]);
-  const [courses, setCourses] = useState([]);
+ /* const [courses, setCourses] = useState([]);
 
   // Fetch courses from the backend when the component mounts.
   useEffect(() => {
@@ -58,7 +58,7 @@ export default function App() {
         setCourses(data);
       })
       .catch(err => console.error('Error fetching courses:', err));
-  }, []);
+  }, []); */
 
 
   /** ---------------------------
