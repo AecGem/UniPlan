@@ -271,8 +271,7 @@ export default function App() {
               </label>
             </div>
           </footer>
-
-          <CollapsibleSection
+          {/*<CollapsibleSection
             title="Specific Required Courses"
             items={
               courses
@@ -289,7 +288,8 @@ export default function App() {
                 .map(course => `${course.shortname}: ${course.coursename}`)
             }
           onDragStartAside={handleDragStartAside}
-        />
+        /> */}
+          
           <CollapsibleSection
             title="Co-op Terms"
             items={[
