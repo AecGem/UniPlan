@@ -289,3 +289,21 @@ button:focus {
 .requirement-list li:hover {
   background-color: #e0eef0;
 }
+
+.prereq-check {
+  margin-bottom: 1rem;
+  font-size: 1rem;
+}
+
+.prereq-check label {
+  cursor: pointer;
+}
+
+/* Example footer styling */
+.footer {
+  text-align: center;
+  margin-top: 2rem;
+  padding: 1rem;
+  color: #117967;
+  background-color: rgba(255, 255, 255, 0.918);
+}

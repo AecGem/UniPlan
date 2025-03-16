@@ -221,6 +221,11 @@ export default function App() {
     setDescCourse(null);
     setShowDescModal(false);
   };
+
+  const handleSaveSemesterToDB = (semId) => {
+    console.log(`Saving semester ${semId} to database... (placeholder)`);
+    // In the future, you'd do fetch('/api/saveSemester', { ... })
+  };
   
   /** ---------------------------
    *  RENDER
@@ -245,6 +250,15 @@ export default function App() {
             Collapsible sections with dummy arrays. 
             This is where the BACKEND can supply real data.
           */}
+          <footer>
+            <div className="prereq-check">
+              <label>
+                <input type="checkbox" />
+                Check for Prerequisites
+              </label>
+            </div>
+          </footer>
+
           <CollapsibleSection
             title="Degree Requirements"
             items={[
@@ -307,6 +321,7 @@ export default function App() {
                       <button onClick={() => handleOpenEditModal(sem)}>Edit</button>
                       <button onClick={() => handleClearSemester(sem.id)}>Clear Courses</button>
                       <button onClick={() => handleDeleteSemester(sem.id)}>Delete</button>
+                      <button onClick={() => handleSaveSemesterToDB(sem.id)}>Save Semester</button>
                     </div>
                   </div>
                 </div>
