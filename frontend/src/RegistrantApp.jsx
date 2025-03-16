@@ -265,20 +265,20 @@ export default function App() {
           */}
           <CollapsibleSection
             title="Specific Required Courses"
-            items={[
-              //courses
-                //.filter(course => course.isambig === false)
-               // .map(course => `${course.shortname}: ${course.coursename}`)
-            ]}
+            items={
+              courses
+                .filter(course => course.isambig === false)
+                .map(course => `${course.shortname}: ${course.coursename}`)
+            }
             onDragStartAside={handleDragStartAside}
           />
           <CollapsibleSection
             title="Student Selection Courses"
-            items={[
-            //courses
-              //.filter(course => course.isambig === true)
-              //.map(course => `${course.shortname}: ${course.coursename}`)
-            ]}
+            items={
+            courses
+              .filter(course => course.isambig === true)
+              .map(course => `${course.shortname}: ${course.coursename}`)
+            }
           onDragStartAside={handleDragStartAside}
           />
           <CollapsibleSection
@@ -291,14 +291,6 @@ export default function App() {
             ]}
             onDragStartAside={handleDragStartAside}
           />
-          <footer>
-            <div className="prereq-check">
-              <label>
-                <input type="checkbox" />
-                Check for Prerequisites
-              </label>
-            </div>
-          </footer>
         </aside>
 
         <main className="main-content">
