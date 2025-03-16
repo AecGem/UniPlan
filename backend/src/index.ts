@@ -74,20 +74,20 @@ const app = new Elysia()
     .use(cors())
 
 
-    /* TODO: Fix static serving
+   
     //Adding static serving plugin.
     .use(staticPlugin({ 
         prefix: '/',
-        assets: '/var/www/UniPlan/frontend'
+        assets: '/var/www/UniPlan/frontend/dist/pages'
     }))
-    */
 
+    /*
 
     //Defining available pages
     .get("/", Bun.file("../frontend/dist/pages/index.html"))
     .get("/registrar", Bun.file("../frontend/dist/pages/Registrar.html"))
     .get("/registrant", Bun.file("../frontend/dist/pages/Registrant.html"))
-    
+    */
 
     //Set up server listener + HTTPS attributes
     .listen({
@@ -99,7 +99,6 @@ const app = new Elysia()
             key: Bun.file("/var/www/ssl/privkey.pem"),
             cert: Bun.file("/var/www/ssl/fullchain.pem"),
         },
-        //hostname: "uniplanner.ca",
 
     }); 
 
