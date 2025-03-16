@@ -34,18 +34,6 @@ function CollapsibleSection({title, items, onDragStartAside}) {
   );
 }
 
-const [courses, setCourses] = useState([]);
-
-// Fetch courses from the backend when the component mounts.
-useEffect(() => {
-  fetch('/api/course')
-    .then(res => res.json())
-    .then(data => {
-      setCourses(data);
-    })
-    .catch(err => console.error('Error fetching courses:', err));
-}, []);
-
 // Main App Component
 export default function App() {
  /** ---------------------------
@@ -60,6 +48,18 @@ export default function App() {
    *  dragged in. 
    * ---------------------------*/
   const [semesters, setSemesters] = useState([]);
+  const [courses, setCourses] = useState([]);
+
+// Fetch courses from the backend when the component mounts.
+useEffect(() => {
+  fetch('/api/course')
+    .then(res => res.json())
+    .then(data => {
+      setCourses(data);
+    })
+    .catch(err => console.error('Error fetching courses:', err));
+}, []);
+
 
   /** ---------------------------
    *  MODAL STATE (Add/Edit)
