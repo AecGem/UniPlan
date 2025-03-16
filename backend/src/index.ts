@@ -8,11 +8,15 @@ import { AuthorizationError } from "./exceptions/AuthorizationError";       // '
 import { InvariantError } from "./exceptions/InvariantError";               // '' 
 import { staticPlugin } from '@elysiajs/static';                            //Support for static serving
 import { file } from 'bun'                                                  //File I/O?
-
-
+import { PrismaClient } from "@prisma/client";
+const prisma = new PrismaClient();
 
 const app = new Elysia()
 
+    .get("/api/course", async () => {
+        const courses = await prisma.course.findMany();
+        return courses;
+    })
     //Adding swagger auto-documentation endpoint
     .use(
         swagger({
@@ -70,21 +74,19 @@ const app = new Elysia()
     .use(cors())
 
 
-    /* TODO: Fix static serving
+   
     //Adding static serving plugin.
     .use(staticPlugin({ 
         prefix: '/',
-        assets: '/var/www/UniPlan/frontend'
+        assets: '/var/www/UniPlan/frontend/dist/pages'
     }))
-    */
-
-
-    //Defining available pages
-    .get("/", () => "Hello Elysia!")
-    .get("/registrar", () => "Hello Elysia! Welcome to the registrar page.")
-    .get("/registrant", () => "Hello Elysia! Why won't anything work...")
-    .get("/login", () => "Hello Elysia! Welcome to the login page.")
     
+    /*
+    //Defining available pages
+    .get("/", Bun.file("../frontend/dist/pages/index.html"))
+    .get("/registrar", Bun.file("../frontend/dist/pages/Registrar.html"))
+    .get("/registrant", Bun.file("../frontend/dist/pages/Registrant.html"))
+    */
 
     //Set up server listener + HTTPS attributes
     .listen({
@@ -96,7 +98,6 @@ const app = new Elysia()
             key: Bun.file("/var/www/ssl/privkey.pem"),
             cert: Bun.file("/var/www/ssl/fullchain.pem"),
         },
-        //hostname: "uniplanner.ca",
 
     }); 
 
