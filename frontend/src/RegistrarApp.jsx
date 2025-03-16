@@ -97,9 +97,11 @@ import './RegistrarApp.css'
         );
       }
     };
+    const [selectedType, setSelectedType] = useState('No Degree Selected');
+
 
   return (
-    <div className="centered-page">
+    <div className="page-container">
       <header className="subtitle">
         <h1>UniPlan: Registrar's Homepage</h1>
         <div class="topnav">
@@ -109,57 +111,35 @@ import './RegistrarApp.css'
           <a href="#settings">Settings</a>
         </div>
       </header>
-
-      <div className="app-container">
-      <div
       
-					className="box"
-					onDragOver={(e) => handleDragOver(e)}
-					onDrop={(e) => handleDrop(e, 'box1')}>
-					<h3>Box 1</h3>
-					<ul>
-						{box1Items.map((item) => (
-							<li
-								key={item.id}
-								draggable
-								onDragStart={
-									(e) =>
-										handleDragStart(e, item)
-								}>
-								{item.text}
-							</li>
-						))}
-					</ul>
-				</div>
-				<div
-					className="box"
-					onDragOver={(e) => handleDragOver(e)}
-					onDrop={(e) => handleDrop(e, 'box2')}>
-					<h3>Box 2</h3>
-					<ul>
-						{
-							box2Items.map((item) => (
-								<li
-									key={item.id}
-									draggable
-									onDragStart={
-										(e) =>
-											handleDragStart(e, item)
-									}>
-									{item.text}
-								</li>
-							))
-						}
-					</ul>
-				</div>
+      <div className="layout-wrapper">
+        <div className="app-container">
+          <div className="subtitle2">Select a Degree to View: </div>
 
+          <div className="Degree-Dropdown">
+            <label>Degree:&nbsp;</label>
 
-      </div>    
+              <select
+                value={selectedType}
+                onChange={(e) => setSelectedType(e.target.value)}>
+                <option value="No Degree Selected">No Degree Selected</option>
+                <option value="Computer Science">Computer Science</option>
+                <option value="Empty Degree">Empty Degree</option>
+              </select>
 
-    </div>
-  );
+              <br /><br />
+          </div>
+
+          <div className = "displayInfo">
+            
+
+          </div>
+        </div>
+      </div>
+    </div> 
 
   
+  ); 
 }
 
 export default App;

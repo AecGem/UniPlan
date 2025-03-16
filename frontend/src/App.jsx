@@ -1,6 +1,4 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
@@ -8,12 +6,14 @@ function App() {
   const [isLoginMode, setIsLoginMode] = useState(true);
   const [loginEmail, setLoginEmail] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
+  const [signUpUserType, setUserType] = useState('user');
   const [signupForm, setSignupForm] = useState({
     firstName: '', //optional input
     lastName: '', //optional input
-    email: '', //required input
+    userEmail: '', //required input
     password: '', //required input
     confirmPassword: '', //required input
+    userType: '' // required radio input
   });
 
   const [errorMessage, setErrorMessage] = useState('');
@@ -26,8 +26,15 @@ function App() {
   const handleLoginSubmit = (e) => {
     e.preventDefault();
     if(!loginEmail || !loginPassword) {
-      setErrorMessage('Please enter email and password.');
+      setErrorMessage('Please enter an Email and Password.');
       return;
+    }
+
+      // If userType is admin -> go to registrar
+    if (signUpUserType === 'admin') {
+      window.location.href = 'https://uniplanner.ca/registrar';
+    } else {
+      window.location.href = 'https://uniplanner.ca/registrant';
     }
 
     setLoginEmail('');
@@ -38,8 +45,8 @@ function App() {
 
   const handleSignupSubmit = (e) => {
     e.preventDefault();
-    if(!signupForm.email || !signupForm.password || !signupForm.confirmPassword) {
-      setErrorMessage("Email, password, and confirming password are required.");
+    if(!signupForm.userEmail || !signupForm.password || !signupForm.confirmPassword) {
+      setErrorMessage("Email and Password are required.");
       return;
     }
     if(signupForm.password != signupForm.confirmPassword) {
@@ -47,12 +54,20 @@ function App() {
       return;
     }
 
+      // If userType is admin -> go to registrar
+      if (signUpUserType === 'admin') {
+        window.location.href = 'https://uniplanner.ca/registrar';
+      } else {
+        window.location.href = 'https://uniplanner.ca/registrant';
+      }
+
     setSignupForm({
-      email: '',
+      userEmail: '',
       password: '',
       confirmPassword: '',
       firstName: '',
       lastName: '',
+      userType: 'user'
     });
     setErrorMessage('');
     setShowModal(false);
@@ -108,7 +123,7 @@ function App() {
                   />
                   <button type="submit">Log In</button>
                 </form>
-                
+
                 <p>
                   Don't have an account? &nbsp;
                   <button className="switch-button" onClick={toggleMode}>
@@ -123,8 +138,8 @@ function App() {
                   <input
                     type="email"
                     placeholder="Email (required)"
-                    name="email"
-                    value={signupForm.email}
+                    name="userEmail"
+                    value={signupForm.userEmail}
                     onChange={handleSignupChange}
                   />
                   <input
@@ -155,6 +170,28 @@ function App() {
                     value={signupForm.confirmPassword}
                     onChange={handleSignupChange}
                   />
+                  <div className="user-type-options">
+                    <label>
+                      <input 
+                        type="radio" 
+                        name="userType" 
+                        value="user"
+                        checked={signUpUserType === 'user'}
+                        onChange={(e) => setUserType(e.target.value)}
+                        />
+                          Student
+                    </label>
+                    <label>
+                      <input 
+                        type="radio" 
+                        name="userType" 
+                        value="admin"
+                        checked={signUpUserType === 'admin'}
+                        onChange={(e) => setUserType(e.target.value)}
+                        />
+                          Admin
+                    </label>
+                  </div>
                   <button type="submit">Sign Up</button>
                 </form>
 

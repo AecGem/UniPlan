@@ -3,15 +3,51 @@ html, body {
   padding: 0;
 }
 
-.topnav
-{
-  background-color: #086374;
+.page-container {
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.layout-wrapper {
+  background: url(/src/image3.jpg) no-repeat center center fixed;
+  background-size: cover;
+  display: flex;
+  flex: 1;
+}
+
+.subtitle {
+  padding-top: 10px;
+  background-color: #12a17d;
+  font-size: 20px;
+  color: white;
+  text-align: center;
+  align-items: center;
+  margin: 0;
+}
+.subtitle2 {
+  padding-top: 10px;
+  background: none;
+  font-size: 40px;
+  color: #086374;
+  text-align: top;
+  text-align: center;
+  align-items: center;
+  margin: 0;
+}
+.subtitle h1 {
+  margin: 3px;
+}
+
+/* The nav bar under the header */
+.topnav {
+  background-color: #087474;
   overflow: hidden;
   width: 100%;
   text-align: center;
   margin: 0;
 }
-
 .topnav a {
   color: #ffffff;
   text-align: center;
@@ -19,24 +55,9 @@ html, body {
   font-weight: bold;
   text-decoration: none;
   font-size: 20px;
+  display: inline-block;
 }
-
 .topnav a:hover {
   background-color: #5ed8ed;
   color: #0d6373;
-}
-
-.subtitle
-{
-    padding-top: 10px;
-    background-color: #128ba1;
-    font-size: 20px;
-    color: white;
-    text-align:center;
-    align-items:center;
-    margin: 0;
-}
-
-.subtitle h1 {
-  margin: 3px;
 }
