@@ -145,11 +145,6 @@ export default function App() {
         }
         return sem;
       });
-
-      // If we wanted to persist changes to the DB, we could do a fetch POST/PUT:
-      //   fetch(`/api/semesters/${targetSemId}`, { ... })
-      // so the backend stores the new course arrangement.
-
       return updated;
     });
   };
