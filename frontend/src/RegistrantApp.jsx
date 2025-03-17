@@ -82,7 +82,11 @@ export default function App() {
   // an object { id, text } so we can store it in 'sem.courses'.
   const handleDragStartAside = (e, itemText) => {
     const payload = {
-      course: { id: Date.now().toString(), text: itemText },
+      course: { 
+        id: Date.now().toString(), 
+        text: itemText,
+        status: ''
+      },
       sourceSemId: null,
     };
     e.dataTransfer.setData('application/json', JSON.stringify(payload));
@@ -165,7 +169,11 @@ export default function App() {
           ...sem,
           courses: sem.courses.map((c) =>
             c.id === updatedInfo.id
-              ? { ...c, text: updatedInfo.text } // or other fields
+              ? {
+                  ...c,
+                  text: updatedInfo.text,
+                  status: updatedInfo.status // Save the new status
+                }
               : c
           ),
         };
@@ -175,7 +183,7 @@ export default function App() {
     setCourseBeingEdited(null);
   };
   
-
+  
 
   /** ---------------------------
    *  HELPER: Remove Single Course
@@ -463,22 +471,37 @@ export default function App() {
         </div>
       )}
       {/* MODAL: Edit Course */}
-    {showEditCourseModal && courseBeingEdited && (
+      {showEditCourseModal && courseBeingEdited && (
       <div className="modal-backdrop">
         <div className="modal-content">
           <h2>Edit Course</h2>
+
           <label>Course Name:</label>
           <input
             type="text"
             value={courseBeingEdited.text}
             onChange={(e) =>
-              setCourseBeingEdited({ 
-                ...courseBeingEdited, 
-                text: e.target.value 
+              setCourseBeingEdited({
+                ...courseBeingEdited,
+                text: e.target.value
               })
             }
           />
-          {/* Possibly a dropdown for "status" or "grade," etc. */}
+
+          <label>Status:</label>
+          <select
+            value={courseBeingEdited.status || 'inprogress'}
+            onChange={(e) =>
+              setCourseBeingEdited({
+                ...courseBeingEdited,
+                status: e.target.value
+              })
+            }
+          >
+            <option value="passed">Passed</option>
+            <option value="failed">Failed</option>
+            <option value="inprogress">In Progress</option>
+          </select>
 
           <div className="modal-buttons">
             <button onClick={() => setShowEditCourseModal(false)}>Cancel</button>

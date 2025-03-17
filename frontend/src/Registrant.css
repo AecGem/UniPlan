@@ -241,7 +241,6 @@ button:focus {
   cursor: pointer;
   color: #004640;
   margin-left: 0.75rem;
-  padding-left: 100px;
   outline: none;
 }
 .edit-course-button {
@@ -254,7 +253,6 @@ button:focus {
   cursor: pointer;
   color: #004640;
   margin-left: 0.75rem;
-  padding-left: 100px;
   outline: none;
 }
 
