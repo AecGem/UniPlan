@@ -76,8 +76,7 @@ html, body {
   margin-top: 1rem;
 }
 .semester-box {
-  width: 300px;
-  display: flex;
+  width: 500px;
   border: 2px solid #086374;
   border-radius: 6px;
   padding: 0.5rem;
