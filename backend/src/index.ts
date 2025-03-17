@@ -9,7 +9,11 @@ import { InvariantError } from "./exceptions/InvariantError";               // '
 import { staticPlugin } from '@elysiajs/static';                            //Support for static serving
 import { file } from 'bun'                                                  //File I/O?
 import { PrismaClient } from "@prisma/client";
+import 'dotenv/config'
+
 const prisma = new PrismaClient();
+
+require('dotenv').config();
 
 const app = new Elysia()
     //Definitions for /api calls.
