@@ -13,9 +13,9 @@ const prisma = new PrismaClient();
 
 const app = new Elysia()
 
-    .get("/api/course", async () => {
-        const course = await prisma.course.findMany();
-        return course;
+    .get("/api/courses", async () => {
+        const courses = await prisma.course.findMany();
+        return courses;
     })
     //Adding swagger auto-documentation endpoint
     .use(
