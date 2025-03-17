@@ -12,6 +12,13 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 const app = new Elysia()
+    //Definitions for /api calls.
+
+    .get("/api/course", async () => {
+        console.log("heyyyy tuts");
+        const course = await prisma.course.findMany();
+        return course;
+    })
     //Adding swagger auto-documentation endpoint
     .use(
         swagger({
@@ -75,14 +82,6 @@ const app = new Elysia()
         prefix: '/',
         assets: '/var/www/UniPlan/frontend/dist/pages'
     }))
-
-    //Definitions for /api calls.
-
-    .get("/api/course", async () => {
-        console.log("heyyyy tuts");
-        const course = await prisma.course.findMany();
-        return course;
-    })
 
     //Set up server listener + HTTPS attributes
     .listen({

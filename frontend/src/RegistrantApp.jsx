@@ -262,7 +262,7 @@ export default function App() {
             title="Specific Required Courses"
             items={
               courses
-                .filter(course => course.isambig === false)
+          
                 .map(course => `${course.shortname}: ${course.coursename}`)
             }
             onDragStartAside={handleDragStartAside}
@@ -271,7 +271,7 @@ export default function App() {
             title="Student Selection Courses"
             items={
             courses
-              .filter(course => course.isambig === true)
+
               .map(course => `${course.shortname}: ${course.coursename}`)
             }
           onDragStartAside={handleDragStartAside}
