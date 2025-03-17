@@ -200,6 +200,7 @@ html, body {
 }
 
 
+
 /* --- General button styles --- */
 button {
   background-color: #0d6373;
@@ -243,6 +244,19 @@ button:focus {
   padding-left: 100px;
   outline: none;
 }
+.edit-course-button {
+  background: none;
+  align-items: center;
+  border: none;
+  border-radius: 0px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  color: #004640;
+  margin-left: 0.75rem;
+  padding-left: 100px;
+  outline: none;
+}
 
 /* Hover effect for the trash icon */
 .delete-course-button:hover {
@@ -253,6 +267,11 @@ button:focus {
   color: #027269;
   background: none;
 }
+.edit-course-button:hover {
+  color: #027269;
+  background: none;
+}
+
 
 
 /* Collapsible sections in the aside panel */

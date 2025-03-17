@@ -71,7 +71,9 @@ export default function App() {
   const [tempSemesterId, setTempSemesterId] = useState(null); // track which semester we're editing
   const [selectedType, setSelectedType] = useState('Fall');
   const [selectedYear, setSelectedYear] = useState('2025');
-
+  const [showEditCourseModal, setShowEditCourseModal] = useState(false);
+  const [courseBeingEdited, setCourseBeingEdited] = useState(null);
+  
 
   /** ---------------------------
    *  DRAG & DROP HANDLERS
@@ -148,6 +150,31 @@ export default function App() {
       return updated;
     });
   };
+
+  const openEditCourseModal = (semesterId, courseObj) => {
+    setCourseBeingEdited({ semesterId, ...courseObj });
+    setShowEditCourseModal(true);
+  };
+  
+  const handleSaveCourseEdits = (updatedInfo) => {
+    setSemesters((prev) =>
+      prev.map((sem) => {
+        if (sem.id !== updatedInfo.semesterId) return sem;
+  
+        return {
+          ...sem,
+          courses: sem.courses.map((c) =>
+            c.id === updatedInfo.id
+              ? { ...c, text: updatedInfo.text } // or other fields
+              : c
+          ),
+        };
+      })
+    );
+    setShowEditCourseModal(false);
+    setCourseBeingEdited(null);
+  };
+  
 
 
   /** ---------------------------
@@ -259,7 +286,7 @@ export default function App() {
             This is where the BACKEND can supply real data.
           */}
           <CollapsibleSection
-            title="Specific Required Courses"
+            title="Required Courses"
             items={
               courses
                 .filter(course => course.isambig === false)
@@ -268,7 +295,7 @@ export default function App() {
             onDragStartAside={handleDragStartAside}
           />
           <CollapsibleSection
-            title="Student Selection Courses"
+            title="Ambiguous Courses"
             items={
             courses
               .filter(course => course.isambig === true)
@@ -337,6 +364,13 @@ export default function App() {
                             >
                               ?{/* wee little question mark :) */}
                             </button>
+                          <button
+                            className="edit-course-button"
+                            onClick={() => openEditCourseModal(sem.id, courseObj)}
+                            title="Edit Course"
+                            >
+                             ⚙️ {/* wee little gear :) */}
+                          </button>
                             {/*Trashcan Button*/}
                           <button
                             className="delete-course-button"
@@ -428,6 +462,33 @@ export default function App() {
           </div>
         </div>
       )}
-    </div>
+      {/* MODAL: Edit Course */}
+    {showEditCourseModal && courseBeingEdited && (
+      <div className="modal-backdrop">
+        <div className="modal-content">
+          <h2>Edit Course</h2>
+          <label>Course Name:</label>
+          <input
+            type="text"
+            value={courseBeingEdited.text}
+            onChange={(e) =>
+              setCourseBeingEdited({ 
+                ...courseBeingEdited, 
+                text: e.target.value 
+              })
+            }
+          />
+          {/* Possibly a dropdown for "status" or "grade," etc. */}
+
+          <div className="modal-buttons">
+            <button onClick={() => setShowEditCourseModal(false)}>Cancel</button>
+            <button onClick={() => handleSaveCourseEdits(courseBeingEdited)}>
+              Save
+            </button>
+          </div>
+        </div>
+      </div>
+    )}
+  </div>
   );
 }
