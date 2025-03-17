@@ -1,3 +1,6 @@
+import dotenv from 'dotenv'
+dotenv.config()
+
 import { Elysia } from "elysia";                                            //Base server library
 import { swagger } from "@elysiajs/swagger";                                //Swagger documentation
 import { jwt } from "@elysiajs/jwt";                                        //Javascript web tokens
