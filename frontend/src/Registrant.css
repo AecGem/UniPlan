@@ -193,6 +193,9 @@ html, body {
 .modal-content h2 {
   text-align: center;
 }
+.modal-content label {
+  margin-left: 50px;
+}
 .modal-buttons {
   display: flex;
   justify-content: space-between;

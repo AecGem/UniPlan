@@ -289,10 +289,6 @@ export default function App() {
       {/* LAYOUT */}
       <div className="layout-wrapper">
         <aside className="requirements">
-          {/* 
-            Collapsible sections with dummy arrays. 
-            This is where the BACKEND can supply real data.
-          */}
           <CollapsibleSection
             title="Required Courses"
             items={
@@ -310,16 +306,6 @@ export default function App() {
               .map(course => `${course.shortname}: ${course.coursename}`)
             }
           onDragStartAside={handleDragStartAside}
-          />
-          <CollapsibleSection
-            title="Co-op Terms"
-            items={[
-              'Workterm 1',
-              'Workterm 2',
-              'Workterm 3',
-              'Workterm 4'
-            ]}
-            onDragStartAside={handleDragStartAside}
           />
         </aside>
 
