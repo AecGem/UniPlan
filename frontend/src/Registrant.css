@@ -154,6 +154,9 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  white-space: normal;
+  overflow-wrap: break-word;
+  max-width: 100%;
   cursor: grab;
   margin-bottom: 0.5rem;
   color: #024652;
@@ -226,10 +229,8 @@ button:focus {
 .delete-course-button {
   background: none;
   border: none;
-  font-size: 1.5rem;
   cursor: pointer;
   color: #cc0000;
-  margin-left: 0rem;
   padding: 0;
   outline: none;
   padding: none;
@@ -238,11 +239,9 @@ button:focus {
   background: none;
   border: none;
   border-radius: 0px;
-  font-size: 1.5rem;
   font-weight: bold;
   cursor: pointer;
   color: #004640;
-  margin-left: 0.75rem;
   outline: none;
   padding: none;
 }
@@ -250,11 +249,9 @@ button:focus {
   background: none;
   border: none;
   border-radius: 0px;
-  font-size: 1.5rem;
   font-weight: bold;
   cursor: pointer;
   color: #004640;
-  margin-left: 0.75rem;
   outline: none;
   padding: none;
 }
