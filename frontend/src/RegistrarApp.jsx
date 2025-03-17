@@ -1,9 +1,5 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './RegistrarApp.css'
-//import React, { useState } from 'react';
-//import './App.css';
 
 
   const App = () => {
@@ -103,18 +99,16 @@ import './RegistrarApp.css'
     const handleDegreeChange = (degreeValue) => {
       setDegree(degreeValue);  // Now we actually have `degree` state
     {
-      setDegree(degreeSelected);
-
-      var x = document.getElementById("displayInfo");
+      const x = document.getElementById("displayInfo");
       if(degreeSelected === 1)
         {
           x.style.visibility = "hidden";
         }
-      if(degreeSelected === 2)
+      else if(degreeSelected === 2)
         {
           x.style.visibility = "visible";
         }
-      if(degreeSelected === 3)
+      else if(degreeSelected === 3)
         {
           x.style.visibility = "visible";
         }
@@ -139,14 +133,12 @@ import './RegistrarApp.css'
 
           <div className="Degree-Dropdown">
             <label>Degree:&nbsp;</label>
-
-              <select onChange={event => handleDegreeChange(event.target.value)}>
-                <option value="1">No Degree Selected</option>
-                <option value="2">Computer Science</option>
-                <option value="3">Empty Degree</option>
-              </select>
-
-              <br /><br />
+            <select value={degree} onChange={(e) => handleDegreeChange(e.target.value)}>
+              <option value="1">No Degree Selected</option>
+              <option value="2">Computer Science</option>
+              <option value="3">Empty Degree</option>
+            </select>
+            <br /><br />
           </div>
 
           <div id="displayInfo" className="displayInfo">
