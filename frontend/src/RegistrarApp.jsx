@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import './RegistrarApp.css'
+import './Registrar.css'
 
 
   const App = () => {
