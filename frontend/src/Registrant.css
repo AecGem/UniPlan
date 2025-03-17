@@ -77,6 +77,7 @@ html, body {
 }
 .semester-box {
   width: 300px;
+  display: flex;
   border: 2px solid #086374;
   border-radius: 6px;
   padding: 0.5rem;
@@ -148,6 +149,9 @@ html, body {
   list-style: none;
   margin: 0;
   padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 .semester-course-list li {
   display: flex;
@@ -232,7 +236,6 @@ button:focus {
   padding: 0;
   outline: none;
   padding: none;
-  justify-content: space-between;
 }
 .inspect-course-button {
   background: none;
@@ -245,7 +248,6 @@ button:focus {
   margin-left: 0.75rem;
   outline: none;
   padding: none;
-  justify-content: space-between;
 }
 .edit-course-button {
   background: none;
@@ -258,7 +260,6 @@ button:focus {
   margin-left: 0.75rem;
   outline: none;
   padding: none;
-  justify-content: space-between;
 }
 
 /* Hover effect for the trash icon */
