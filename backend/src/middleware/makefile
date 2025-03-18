@@ -5,6 +5,9 @@ BuildName = verifier		#Build name
 BuildPath = ./build			#Build path
 CC = g++					#Compiler
 
+#Build all
+all: $(BuildName)
+
 #Main object files
 Algorithm.o: Algorithm.cpp json.hpp
 	$(CC) -c Algorithm.cpp
