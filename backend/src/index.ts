@@ -18,10 +18,15 @@ const app = new Elysia()
     //Definitions for /api calls.
 
     .get("/api/course", async () => {
-        console.log("heyyyy tuts");
         const courses = await prisma.course.findMany();
         return courses;
     })
+
+    .get("/api/degree", async () => {
+        const degrees = await prisma.degree.findMany();
+        return degrees;
+    })
+
     //Adding swagger auto-documentation endpoint
     .use(
         swagger({
