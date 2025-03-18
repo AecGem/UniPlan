@@ -2,7 +2,7 @@
 
 #Defining variables
 BuildName = verifier		#Build name
-BuildPath = ../build		#Build path
+BuildPath = ./build			#Build path
 CC = g++					#Compiler
 
 #Main object files
