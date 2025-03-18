@@ -12,11 +12,14 @@ import { InvariantError } from "./exceptions/InvariantError";               // '
 import { staticPlugin } from '@elysiajs/static';                            //Support for static serving
 import { file } from 'bun'                                                  //File I/O?
 import { PrismaClient } from "@prisma/client";
+import { betterAuth} from "better-auth";
+
+
 const prisma = new PrismaClient();
 
 const app = new Elysia()
-    //Definitions for /api calls.
-
+    
+    //API endpoints
     .get("/api/course", async () => {
         const courses = await prisma.course.findMany();
         return courses;
@@ -27,7 +30,7 @@ const app = new Elysia()
         return degrees;
     })
 
-    //Adding swagger auto-documentation endpoint
+    //Swagger API Auto-Documentation
     .use(
         swagger({
             path: "/v1/swagger",
