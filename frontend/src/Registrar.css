@@ -21,6 +21,14 @@ html, body {
   flex-direction: column;
   align-items: stretch;
 }
+.app-container
+{
+  height: 100%;
+  width: 100%;
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+}
 
 /* ----- HEADER / NAV STYLES ----- */
 .subtitle {
@@ -83,6 +91,7 @@ html, body {
   min-width: 100vw;
   color: #065e48;
   text-align: center;
+  height: 30px;
 }
 .subtitle3 {
   padding-top: 5px;
@@ -91,7 +100,6 @@ html, body {
   font-size: 19px;
   min-width: 100vw;
   color: #065e48;
-  /*text-align: center;*/
 }
 
 /*styling for drop-down box*/
@@ -121,9 +129,11 @@ html, body {
   border: 4px solid #065e48;
   border-radius: 10px;
   height: 80vh;
-  width: 75vw;
+  width: 80vw;
   background: rgba(255, 255, 255, 0.777);
-  margin-left: 250px;
+}
+.empty-info-placeholder
+{
   margin-bottom: 25px;
 }
 

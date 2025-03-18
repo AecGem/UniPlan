@@ -152,7 +152,12 @@ import './Registrar.css'
               (
                 <div className="subtitle3">
                    Displaying information for your Computer Science degree: 
+                   {degInfo ==="0a" && 
+                   (
+                    <div className = "empty-info-placeholder"> [Please select what information you would like to display] </div>
+                   )}
                 </div>  
+
               )}
               {degree ==="3" && 
               (
