@@ -96,24 +96,16 @@ import './Registrar.css'
 
     
     const [degree, setDegree] = useState("1"); // or "" if you prefer
-    const handleDegreeChange = (degreeValue) => {
-      setDegree(degreeValue);  // Now we actually have `degree` state
-    {
-      const x = document.getElementById("displayInfo");
-      if(degreeSelected === 1)
-        {
-          x.style.visibility = "hidden";
-        }
-      else if(degreeSelected === 2)
-        {
-          x.style.visibility = "visible";
-        }
-      else if(degreeSelected === 3)
-        {
-          x.style.visibility = "visible";
-        }
-    }
-  }
+    const handleDegreeChange = (degreeValue) => 
+      {
+        setDegree(degreeValue);  // Now we actually have `degree` state 
+      }
+
+    const [degInfo, setDegInfo] = useState("0a"); // or "" if you prefer
+    const handleInfoChange = (degInfoValue) => 
+      {
+        setDegInfo(degInfoValue);  // Now we actually have `degree` state 
+      }
 
   return (
     <div className="page-container">
@@ -138,10 +130,36 @@ import './Registrar.css'
               <option value="2">Computer Science</option>
               <option value="3">Empty Degree</option>
             </select>
-            <br /><br />
+            
+          </div>
+          <div className="Info-Dropdown">
+            <label>Information to Display:&nbsp;</label>
+            <select value={degInfo} onChange={(e) => handleInfoChange(e.target.value)}>
+              <option value="0a">No Criteria Selected </option>
+              <option value="1a"> General Course Enrollment</option>
+              <option value="2a">Total Degree Applicants</option>
+              <option value="3a">Elective Course Enrollment</option>{/*Not sure if this is able to be done, can be removed if needed.*/}
+              <option value="4a">Empty course info template</option>
+            </select>
+            
           </div>
 
-          <div id="displayInfo" className="displayInfo">
+          <br /><br />
+
+          <div id="displayInfo" className="displayInfo" style={{visibility : degree === "1" ? "hidden" : "Visible"}}>
+
+            {degree ==="2" && 
+              (
+                <div className="subtitle3">
+                   Displaying information for your Computer Science degree: 
+                </div>  
+              )}
+              {degree ==="3" && 
+              (
+                <div className="subtitle3">
+                   Displaying information Templates for an Empty Degree: 
+                </div>  
+              )}
             
           </div>
 

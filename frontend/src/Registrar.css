@@ -79,16 +79,34 @@ html, body {
 .subtitle2 {
   padding-top: 5px;
   padding-bottom: 5px;
+  font-size: 30px;
+  min-width: 100vw;
+  color: #065e48;
+  text-align: center;
+}
+.subtitle3 {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 25px;
   font-size: 19px;
   min-width: 100vw;
-  color: #ffffff;
-  background-color: #065e48;
-  text-align: center;
+  color: #065e48;
+  /*text-align: center;*/
 }
 
 /*styling for drop-down box*/
 .Degree-Dropdown
 {
+  font-size: 20px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  text-align:center;
+  font-weight: bold;
+  color: #065e48;
+}
+.Info-Dropdown
+{
+  font-size: 20px;
   padding-top: 5px;
   padding-bottom: 5px;
   text-align:center;
@@ -99,7 +117,7 @@ html, body {
 /*Styling for degree info:*/
 .displayInfo
 {
-  visibility: visible;
+  visibility: hidden;
   border: 4px solid #065e48;
   border-radius: 10px;
   height: 80vh;
