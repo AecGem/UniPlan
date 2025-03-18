@@ -22,6 +22,13 @@ const app = new Elysia()
         const courses = await prisma.course.findMany();
         return courses;
     })
+
+    .get("/api/degree", async () => {
+        console.log("heyyyy tuts");
+        const degrees = await prisma.degree.findMany();
+        return degrees;
+    })
+    
     //Adding swagger auto-documentation endpoint
     .use(
         swagger({
