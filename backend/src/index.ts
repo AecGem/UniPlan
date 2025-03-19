@@ -33,8 +33,57 @@ const app = new Elysia()
     //API endpoints
 
         //Course and Degree endpoints
-        .get("/api/course", async () => {
-            const courses = await prisma.course.findMany();
+        .get("/api/course/:id?/:isAmbig?", async ({ params: {id, isAmbig}}) => {
+            //Checkflags
+            let id_undefined = false;
+            if(id===undefined){
+                id_undefined = true;
+            }
+
+            let isAmbig_undefined = false;
+            if(isAmbig===undefined){
+                isAmbig_undefined = true;
+            }
+
+            //Return value
+            let courses = null;
+
+            //Grab all.
+            if(id_undefined && isAmbig_undefined){
+                courses = await prisma.course.findMany();
+            }
+
+            //Get only ambig courses
+            else if (id_undefined && !(isAmbig_undefined)){
+                courses = await prisma.course.findMany(
+                    {
+                        where : {
+                            isambig : (isAmbig?.toLowerCase() == 'true')
+                        }
+
+                    }
+
+                )
+            }
+            
+            //Get only a specific ID
+
+            else if(!(id_undefined)&&isAmbig_undefined){
+                //Sanitize ID
+                let passedId;
+                if (id !== undefined){
+                    passedId = parseInt(id);
+                }
+                else{
+                    passedId = -1;
+                }
+                courses = await prisma.course.findFirst({
+                    where : {
+                        cid : passedId
+                    }
+                })
+            }
+
             return courses;
         })
 
@@ -42,6 +91,15 @@ const app = new Elysia()
             const degrees = await prisma.degree.findMany();
             return degrees;
         })
+
+        //Endpoints for registration statistics
+
+        .get("/api/registration", async() => {
+            const registrations = await prisma.SavedSem.findMany();
+            return registrations;
+        })
+
+
 
         //Authentication endpoint
         .all("/api/auth", betterAuthView)
