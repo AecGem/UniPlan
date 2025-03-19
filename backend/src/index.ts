@@ -34,11 +34,57 @@ const app = new Elysia()
 
         //Course and Degree endpoints
         .get("/api/course/:id?/:isAmbig?", async ({ params: {id, isAmbig}}) => {
-            //Check parameters
-            if(id===undefined && isAmbig ===undefined){
-                const courses = await prisma.course.findMany();
-            };
-            return null;
+            //Checkflags
+            let id_undefined = false;
+            if(id===undefined){
+                id_undefined = true;
+            }
+
+            let isAmbig_undefined = false;
+            if(isAmbig===undefined){
+                isAmbig_undefined = true;
+            }
+
+            //Return value
+            let courses = null;
+
+            //Grab all.
+            if(id_undefined && isAmbig_undefined){
+                courses = await prisma.course.findMany();
+            }
+
+            //Get only ambig courses
+            else if (id_undefined && !(isAmbig_undefined)){
+                courses = await prisma.course.findMany(
+                    {
+                        where : {
+                            isambig : (isAmbig?.toLowerCase() == 'true')
+                        }
+
+                    }
+
+                )
+            }
+            
+            //Get only a specific ID
+
+            else if(!(id_undefined)&&isAmbig_undefined){
+                //Sanitize ID
+                let passedId;
+                if (id !== undefined){
+                    passedId = parseInt(id);
+                }
+                else{
+                    passedId = -1;
+                }
+                courses = await prisma.course.findFirst({
+                    where : {
+                        cId : passedId
+                    }
+                })
+            }
+            
+            return courses;
         })
 
         .get("/api/degree", async () => {
