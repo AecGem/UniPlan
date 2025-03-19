@@ -33,15 +33,27 @@ const app = new Elysia()
     //API endpoints
 
         //Course and Degree endpoints
-        .get("/api/course", async () => {
-            const courses = await prisma.course.findMany();
-            return courses;
+        .get("/api/course/:id?/:isAmbig?", async ({ params: {id, isAmbig}}) => {
+            //Check parameters
+            if(id===undefined && isAmbig ===undefined){
+                const courses = await prisma.course.findMany();
+            };
+            return null;
         })
 
         .get("/api/degree", async () => {
             const degrees = await prisma.degree.findMany();
             return degrees;
         })
+
+        //Endpoints for registration statistics
+
+        .get("/api/registration", async() => {
+            const registrations = await prisma.SavedSem.findMany();
+            return registrations;
+        })
+
+
 
         //Authentication endpoint
         .all("/api/auth", betterAuthView)
