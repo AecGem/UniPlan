@@ -79,11 +79,11 @@ const app = new Elysia()
                 }
                 courses = await prisma.course.findFirst({
                     where : {
-                        cId : passedId
+                        cid : passedId
                     }
                 })
             }
-            
+
             return courses;
         })
 
