@@ -147,7 +147,7 @@ import './Registrar.css'
           <br /><br />
 
           <div id="displayInfo" className="displayInfo" style={{visibility : degree === "1" ? "hidden" : "Visible"}}>
-
+          
             {degree ==="2" && 
               (
                 <div className="subtitle3">

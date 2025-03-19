@@ -98,9 +98,9 @@ html, body {
   padding-bottom: 5px;
   padding-left: 25px;
   font-size: 19px;
-  min-width: 100vw;
   color: #065e48;
 }
+
 
 /*styling for drop-down box*/
 .Degree-Dropdown
@@ -135,6 +135,8 @@ html, body {
 .empty-info-placeholder
 {
   margin-bottom: 25px;
+  text-align: center;
+  margin-top: 25%;
 }
 
 /*styling taken from GeeksforGeeks for drag/drop containers*/
