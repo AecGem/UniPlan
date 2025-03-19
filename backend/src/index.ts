@@ -1,7 +1,7 @@
 import dotenv from 'dotenv'
 dotenv.config()
 
-import { Elysia } from "elysia";                                            //Base server library
+import { Elysia, Context } from "elysia";                                            //Base server library
 import { swagger } from "@elysiajs/swagger";                                //Swagger documentation
 import { jwt } from "@elysiajs/jwt";                                        //Javascript web tokens
 import { cors } from "@elysiajs/cors";                                      //Cross origin resource sharing
@@ -12,22 +12,41 @@ import { InvariantError } from "./exceptions/InvariantError";               // '
 import { staticPlugin } from '@elysiajs/static';                            //Support for static serving
 import { file } from 'bun'                                                  //File I/O?
 import { PrismaClient } from "@prisma/client";
+import { betterAuth} from "better-auth";
+import { auth } from "./utils/auth";
+
+
 const prisma = new PrismaClient();
 
+const betterAuthView = (context: Context) => {
+    const BETTER_AUTH_ACCEPT_METHODS = ["POST", "GET"]
+
+    if(BETTER_AUTH_ACCEPT_METHODS.includes(context.request.method)) {
+        return auth.handler(context.request);
+    } else {
+        context.error(405, "Method not allowed");
+    }
+}
+
 const app = new Elysia()
-    //Definitions for /api calls.
+    
+    //API endpoints
 
-    .get("/api/course", async () => {
-        const courses = await prisma.course.findMany();
-        return courses;
-    })
+        //Course and Degree endpoints
+        .get("/api/course", async () => {
+            const courses = await prisma.course.findMany();
+            return courses;
+        })
 
-    .get("/api/degree", async () => {
-        const degrees = await prisma.degree.findMany();
-        return degrees;
-    })
+        .get("/api/degree", async () => {
+            const degrees = await prisma.degree.findMany();
+            return degrees;
+        })
 
-    //Adding swagger auto-documentation endpoint
+        //Authentication endpoint
+        .all("/api/auth", betterAuthView)
+
+    //Swagger API Auto-Documentation
     .use(
         swagger({
             path: "/v1/swagger",
