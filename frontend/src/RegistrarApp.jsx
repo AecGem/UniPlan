@@ -4,25 +4,19 @@ import './Registrar.css'
 
   const App = () => {
     //data for the temp course tables
-    const CSTempdata = [
+    const CourseTempdata = [
       { courseName: "CS100", numStudents: "125" },
       { courseName: "CS110",  numStudents: "98" },
       { courseName: "CS115",  numStudents: "72" },
     ]
     //temp data for empty degree
-    const EDTempdata = [
-      { courseName: "Coursename Here", numStudents: "Number of Students Here" }
-    ]
     const electiveTempdata = [
       { courseName: "GEO100", numStudents: "66" },
       { courseName: "SCI099",  numStudents: "3" },
       { courseName: "ASTR101",  numStudents: "110" },
     ]
-     const CSDegreeEnrollmentdata = [
+     const TempDegreeEnrollmentdata = [
       {numStudents: "66"},
-    ]
-    const EDegreeEnrollmentdata = [
-      {numStudents: "Number of Students enrolled here"},
     ]
   
     // State for items in Box 2
@@ -140,8 +134,7 @@ import './Registrar.css'
             <label>Degree:&nbsp;</label>
             <select value={degree} onChange={(e) => handleDegreeChange(e.target.value)}>
               <option value="1">No Degree Selected</option>
-              <option value="2">Computer Science</option>
-              <option value="3">Empty Degree</option>
+              <option value="2">Put Degree Variable Here</option>
             </select>
             
           </div>
@@ -154,18 +147,16 @@ import './Registrar.css'
               <option value="3a">Elective Course Enrollment</option>{/*Not sure if this is able to be done, can be removed if needed.*/}
               <option value="4a">Empty course info template</option>
             </select>
-            
           </div>
 
           <br /><br />
 
           <div id="displayInfo" className="displayInfo" style={{visibility : degree === "1" ? "hidden" : "Visible"}}>
-          
             {degree ==="2" && 
               (
                 <div className="courseInfo">
                   <div className="subtitle3">
-                   Displaying information for your Computer Science degree:</div>
+                   Displaying information for your degree:</div>
                       {degInfo ==="0a" && 
                       (
                         <div className = "empty-info-placeholder"> [Please select what information you would like to display] </div>
@@ -179,7 +170,7 @@ import './Registrar.css'
                                   <th></th>
                                   <th>Number of Students Enrolled</th>
                               </tr>
-                              {CSTempdata.map((val, key) => {
+                              {CourseTempdata.map((val, key) => {
                                   return (
                                       <tr key={key}>
                                           <td>{val.courseName}</td>
@@ -198,81 +189,7 @@ import './Registrar.css'
                               <tr>
                                   <th>Total Degree Enrollment</th>
                               </tr>
-                              {CSDegreeEnrollmentdata.map((val, key) => {
-                                  return (
-                                      <tr key={key}>
-                                          <td>{val.numStudents}</td>
-                                      </tr>
-                                  )
-                              })}
-                          </table>
-                        </div>
-                      )}
-                      {degInfo ==="3a" && 
-                      (
-                        <div className = "courseTables"> 
-                          <table>
-                              <tr>
-                                  <th>Course Name</th>
-                                  <th></th>
-                                  <th>Number of Students Enrolled</th>
-                              </tr>
-                              {electiveTempdata.map((val, key) => {
-                                  return (
-                                      <tr key={key}>
-                                          <td>{val.courseName}</td>
-                                          <td></td>
-                                          <td>{val.numStudents}</td>
-                                      </tr>
-                                  )
-                              })}
-                          </table>
-                        </div>
-                      )}
-                      {degInfo ==="4a" && 
-                      (
-                        <div className = "empty-info-placeholder"> [This is where you would display information in this empty template] </div>
-                      )}
-                    </div>
-              )}
-              {degree ==="3" && 
-              (
-                <div className="courseInfo">
-                  <div className="subtitle3">
-                   Displaying information Templates for An Empty Degree:</div>
-                      {degInfo ==="0a" && 
-                      (
-                        <div className = "empty-info-placeholder"> [Please select what information you would like to display] </div>
-                      )}
-                      {degInfo ==="1a" && 
-                      (
-                        <div className = "courseTables"> 
-                          <table>
-                              <tr>
-                                  <th>Course Name</th>
-                                  <th></th>
-                                  <th>Number of Students Enrolled</th>
-                              </tr>
-                              {EDTempdata.map((val, key) => {
-                                  return (
-                                      <tr key={key}>
-                                          <td>{val.courseName}</td>
-                                          <td></td>
-                                          <td>{val.numStudents}</td>
-                                      </tr>
-                                  )
-                              })}
-                          </table>
-                        </div>
-                      )}
-                      {degInfo ==="2a" && 
-                      (
-                        <div className = "courseTables"> 
-                          <table>
-                              <tr>
-                                  <th>Total Degree Enrollment</th>
-                              </tr>
-                              {EDegreeEnrollmentdata.map((val, key) => {
+                              {TempDegreeEnrollmentdata.map((val, key) => {
                                   return (
                                       <tr key={key}>
                                           <td>{val.numStudents}</td>
