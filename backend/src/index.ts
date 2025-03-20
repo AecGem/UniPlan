@@ -33,9 +33,10 @@ const app = new Elysia()
     //API endpoints
 
         //Course and Degree endpoints
-        .get("/api/course/:id?/:isAmbig?", async ({ params: {id, isAmbig}}) => {
+        .get("/api/course/:id?/:isAmbig?/:did?", async ({ params: {id, isAmbig, did}}) => {
             //Checkflags
             let id_undefined = false;
+            
             if(id===undefined){
                 id_undefined = true;
             }
@@ -65,6 +66,7 @@ const app = new Elysia()
 
                 )
             }
+            //Get only a specific degree
             
             //Get only a specific ID
 
@@ -99,6 +101,22 @@ const app = new Elysia()
             return registrations;
         })
 
+        .get("/api/course_test", async() =>{
+            const did_in = 1
+            const courses = await prisma.degree
+            .findUnique({
+                where: { did: did_in },
+                select: { courses: true },
+            })
+            .then(degree => degree?.courses || []);
+                const result = await prisma.course.findMany({
+                where: {
+                cid: {
+                in: courses,
+                },
+                },
+                });
+            })
 
 
         //Authentication endpoint
