@@ -11,7 +11,7 @@ Frontend frameworks: React/TailwindCSS + HTML/CSS/Js/Etc. with Vite tooling.
 
 Service Backend: ElysiaJS on Bun/Yarn, Apache2, Prisma (Nginx distribution implementation out of scope pending further development.)
 
-Databases: PostgreSQL + MongoDB
+Databases: PostgreSQL
 
 ### Tool dependancies.
 Git Deployment Hamster / deploy.php, running on apache2

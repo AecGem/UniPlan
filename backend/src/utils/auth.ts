@@ -10,8 +10,22 @@ export const auth = betterAuth({
     emailAndPassword: {
         enabled: true
     },
+    requireEmailVerification: false,
     user : {
         modelName: "users",
-
+        additionalFields:{
+            usertype: {
+                type: "boolean",
+                required: true,
+                defaultValue: false,
+                input: true
+            },
+            hassaved:{
+                type: "boolean",
+                required: true,
+                defaultValue: false,
+                input: true
+            }
+        }
     }
 });
