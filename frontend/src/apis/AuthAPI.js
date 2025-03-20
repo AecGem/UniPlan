@@ -8,7 +8,7 @@ export const AuthAPI = {
     },
     signup: async(email, password, fname, lname, userType) => {
         let dummyString = "";
-        dummyString.concat(fname, ' ', lname);
+        dummyString = dummyString.concat(fname, ' ', lname);
         const resp = await authClient.signUp.email({ email, password, dummyString, userType });
         //console.log(resp);
         return resp;
