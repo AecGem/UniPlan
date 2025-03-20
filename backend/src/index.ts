@@ -116,6 +116,7 @@ const app = new Elysia()
                 },
                 },
                 });
+                return result;
             })
 
 
