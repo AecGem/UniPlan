@@ -164,7 +164,7 @@ const app = new Elysia()
     //Adding static serving plugin for regular webpages.
     .use(staticPlugin({ 
         prefix: '/',
-        assets: '/var/www/UniPlan/frontend/dist/pages'
+        assets: '/var/www/UniPlan/frontend/dist/'
     }))
 
     //Set up server listener + HTTPS attributes
