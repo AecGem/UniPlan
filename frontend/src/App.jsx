@@ -68,7 +68,7 @@ export function App() {
       return;
     }
 
-    AuthAPI.signup(signupForm.userEmail, signupForm.password, signupForm.firstName, signupForm.lastNam, signUpUserType);
+    AuthAPI.signup(signupForm.userEmail, signupForm.password, signupForm.firstName, signupForm.lastNam, signupForm.signUpUserType);
       // If userType is admin -> go to registrar
       // If userType is user -> go to registrant
       //Alter to use tanstack routing instead of window.location.href
