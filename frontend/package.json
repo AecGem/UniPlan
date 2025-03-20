@@ -10,9 +10,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@elysiajs/eden": "^1.2.0",
     "@tanstack/react-router": "^1.114.25",
     "@tanstack/react-router-devtools": "^1.114.25",
     "@tanstack/router-plugin": "^1.114.25",
+    "better-auth": "^1.2.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-dropdown": "^1.11.0",

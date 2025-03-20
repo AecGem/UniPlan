@@ -17,6 +17,7 @@ import { auth } from "./utils/auth";
 
 const prisma = new PrismaClient();
 
+//Authentication module
 const betterAuthView = (context: Context) => {
     const BETTER_AUTH_ACCEPT_METHODS = ["POST", "GET"]
 

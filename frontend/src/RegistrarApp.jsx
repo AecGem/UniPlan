@@ -3,6 +3,7 @@ import './Registrar.css'
 
 
 export const App = () => {
+
     //data for the temp course tables
     const CourseTempdata = [
       { courseName: "CS100", numStudents: "125" },
