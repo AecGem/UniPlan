@@ -15,6 +15,7 @@ export default defineConfig({
     host: "0.0.0.0",
     allowedHosts: true,
   },
+  /*
   build: {
     outDir: './dist/pages/',
     rollupOptions: {
@@ -30,4 +31,5 @@ export default defineConfig({
       }
     }
   }
+  */
 })
