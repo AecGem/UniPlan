@@ -102,7 +102,7 @@ const app = new Elysia()
 
 
         //Authentication endpoint
-        .all("/api/auth", betterAuthView)
+        .all("/api/auth/*", betterAuthView)
 
     //Swagger API Auto-Documentation
     .use(

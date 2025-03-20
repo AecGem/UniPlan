@@ -1,4 +1,3 @@
-import { api } from "../utils/Treaty";
 import { authClient } from "../utils/auth";
 
 export const AuthAPI = {
@@ -7,17 +6,21 @@ export const AuthAPI = {
         //console.log(resp);
         return resp;
     },
-    signup: async(email, password, name) => {
-        const resp = await authClient.signUp.email({ email, password, name });
+    signup: async(email, password, fname, lname, userType) => {
+        let dummyString = "";
+        dummyString.concat(fname, ' ', lname);
+        const resp = await authClient.signUp.email({ email, password, dummyString, userType });
         //console.log(resp);
         return resp;
     },
     logOut: async () => {
         const resp = await authClient.signOut();
+        //console.log(resp);
         return resp;
     },
     me: async () => {
         const resp = await authClient.us
+        //console.log(resp);
         return resp;
     }
 };

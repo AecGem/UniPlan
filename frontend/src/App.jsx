@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import './App.css'
+import {AuthAPI, login, signup} from './apis/AuthAPI'
 
 export function App() {
   const [showModal, setShowModal] = useState(false);
@@ -15,6 +16,7 @@ export function App() {
     confirmPassword: '', //required input
     userType: '' // required radio input
   });
+
 
   // Fetch courses from the backend when the component mounts.
   useEffect(() => {
@@ -41,11 +43,12 @@ export function App() {
       return;
     }
 
+    AuthAPI.login(loginEmail, loginPassword);
       // If userType is admin -> go to registrar
     if (signUpUserType === 'admin') {
-      window.location.href = 'https://uniplanner.ca/Registrar.html';
+      //window.location.href = 'https://uniplanner.ca/Registrar.html';
     } else {
-      window.location.href = 'https://uniplanner.ca/Registrant.html';
+      //window.location.href = 'https://uniplanner.ca/Registrant.html';
     }
 
     setLoginEmail('');
@@ -65,11 +68,20 @@ export function App() {
       return;
     }
 
+    AuthAPI.signup(signupForm.userEmail, signupForm.password, signupForm.firstName, signupForm.lastName);
       // If userType is admin -> go to registrar
+      // If userType is user -> go to registrant
+      //Alter to use tanstack routing instead of window.location.href
+
+
+
       if (signUpUserType === 'admin') {
-        window.location.href = 'https://uniplanner.ca/Registrar.html';
+
+        //Use tanstack routing instead of window.location.href
+
+        //window.location.href = 'https://uniplanner.ca/Registrar.html';
       } else {
-        window.location.href = 'https://uniplanner.ca/Registrant.html';
+        //window.location.href = 'https://uniplanner.ca/Registrant.html';
       }
 
     setSignupForm({
