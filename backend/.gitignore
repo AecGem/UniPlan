@@ -45,3 +45,4 @@ bun.lockb
 
 #Environment variables
 *.env
+*.prisma
