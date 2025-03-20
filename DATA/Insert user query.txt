@@ -1,2 +1,0 @@
-INSERT INTO users (email, fName, lName, pass, usertype) VALUES (
-EMAIL_IN, FNAME_IN, LNAME_IN, crypt(PASS_IN, gen_salt('md5')), TYPE_IN); 

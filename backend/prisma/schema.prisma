@@ -29,7 +29,7 @@ model Users {
 model Course {
   cId         Int      @id @default(autoincrement())
   shortname   String   @postgresql.VarChar(50)
-  coursename  String   @postgresql.VarChar(255)
+  coursename  String?  @postgresql.VarChar(255)
   credits     Int
   isambig     Boolean
   prereq      String[] @postgresql.VarChar(20)
