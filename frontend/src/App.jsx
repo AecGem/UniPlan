@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import './App.css'
+import {AuthAPI, login, signup} from './apis/AuthAPI'
 
 export function App() {
   const [showModal, setShowModal] = useState(false);
@@ -41,6 +42,7 @@ export function App() {
       return;
     }
 
+    AuthAPI.login(loginEmail, loginPassword);
       // If userType is admin -> go to registrar
     if (signUpUserType === 'admin') {
       window.location.href = 'https://uniplanner.ca/Registrar.html';
@@ -65,6 +67,7 @@ export function App() {
       return;
     }
 
+    AuthAPI.signup(signupForm.userEmail, signupForm.password, signupForm.firstName, signupForm.lastName);
       // If userType is admin -> go to registrar
       if (signUpUserType === 'admin') {
         window.location.href = 'https://uniplanner.ca/Registrar.html';
