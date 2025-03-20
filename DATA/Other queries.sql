@@ -59,5 +59,5 @@ SELECT COUNT(userId) FROM users
 WHERE dId = DID_IN; 
 
 -- View course statistics
-SELECT COUNT(dId) FROM saved_sem 
+SELECT COUNT(u_id) FROM saved_sem 
 WHERE CID_IN = ANY(courses);

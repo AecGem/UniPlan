@@ -22,7 +22,7 @@ export const auth = betterAuth({
             },
             hassaved:{
                 type: "boolean",
-                required: true,
+                required: false,
                 defaultValue: false,
                 input: true
             }
