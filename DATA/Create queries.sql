@@ -9,7 +9,7 @@ courses INTEGER[]
 CREATE TABLE course (
 cId SERIAL PRIMARY KEY,
 shortname VARCHAR(50) NOT NULL,
-coursename VARCHAR(255) NOT NULL,
+coursename VARCHAR(255),
 credits INT NOT NULL,
 isambig BOOLEAN NOT NULL,
 prereq VARCHAR(20)[],
