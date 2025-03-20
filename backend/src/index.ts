@@ -33,7 +33,7 @@ const app = new Elysia()
     //API endpoints
 
         //Course and Degree endpoints
-        .get("/api/course/:id?/:isAmbig?/:did?", async ({ params: {id, isAmbig, did}}) => {
+        .get("/api/course/:id?/:isAmbig?", async ({ params: {id, isAmbig, did}}) => {
             //Checkflags
             let id_undefined = false;
             
