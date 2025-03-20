@@ -405,7 +405,10 @@ export default function App() {
               Credit Hours: 3
             </p>
             <p>
-              Description: Real course description from DataBase.
+            items={
+              courses
+              .map(descCourse => `${descCourse.description}`)
+            }
             </p>
             <p>
               Prerequisites: Class 1, Class 2

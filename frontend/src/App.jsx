@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
 
 export function App() {
@@ -16,6 +16,17 @@ export function App() {
     userType: '' // required radio input
   });
 
+  // Fetch courses from the backend when the component mounts.
+  useEffect(() => {
+    fetch('/api/users')
+      .then(res => res.json())
+      .then(data => {
+        setCourses(data);
+      })
+      .catch(err => console.error('Error fetching users:', err));
+  }, []);
+
+  
   const [errorMessage, setErrorMessage] = useState('');
 
   const toggleMode = () => {
