@@ -12,6 +12,6 @@ export const auth = betterAuth({
     },
     user : {
         modelName: "users",
-        
+
     }
 });
