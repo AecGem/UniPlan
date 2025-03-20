@@ -16,16 +16,6 @@ prereq VARCHAR(20)[],
 description VARCHAR(1024),
 );
 
--- Create saved semester table
-CREATE TABLE saved_sem (
-sem_id SERIAL PRIMARY KEY
-save_id INT,
-CONSTRAINT fk_degree FOREIGN KEY (save_id)
-REFERENCES saved_degree(save_id)
-courses INTEGER[],
-sname VARCHAR(50) NOT NULL
-);
-
 -- Create user table
 CREATE TABLE users (
 userId SERIAL PRIMARY KEY,
@@ -35,4 +25,14 @@ lName VARCHAR(50),
 pass VARCHAR(50) NOT NULL,
 dId INT,
 userType BOOL NOT NULL
+);
+
+-- Create saved semester table
+CREATE TABLE saved_sem (
+sem_id SERIAL PRIMARY KEY
+u_id INT,
+CONSTRAINT fk_user FOREIGN KEY (u_id)
+REFERENCES users(userId),
+courses INTEGER[],
+sname VARCHAR(50) NOT NULL
 );
