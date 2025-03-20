@@ -12,6 +12,8 @@
     "@elysiajs/static": "^1.2.0",
     "@elysiajs/swagger": "^1.2.1",
     "@prisma/client": "^6.5.0",
+    "@tanstack/react-router": "^1.114.25",
+    "@tanstack/router-devtools": "^1.114.25",
     "better-auth": "^1.2.4",
     "dotenv": "^16.4.7",
     "elysia": "latest"

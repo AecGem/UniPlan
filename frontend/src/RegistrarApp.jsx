@@ -2,7 +2,7 @@ import { useState } from 'react'
 import './Registrar.css'
 
 
-  const App = () => {
+export const App = () => {
     // State for items in Box 1
     const [box1Items, setBox1Items] = useState([
       { id: 1, text: 'Item 1' },

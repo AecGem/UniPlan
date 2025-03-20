@@ -15,7 +15,6 @@ import { PrismaClient } from "@prisma/client";
 import { betterAuth} from "better-auth";
 import { auth } from "./utils/auth";
 
-
 const prisma = new PrismaClient();
 
 const betterAuthView = (context: Context) => {
