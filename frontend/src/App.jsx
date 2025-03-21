@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import './App.css'
-import {AuthAPI} from './apis/AuthAPI'
+import { AuthAPI } from './apis/AuthAPI'
+import { useNavigate } from '@tanstack/react-router'
 
 export function App() {
   const [showModal, setShowModal] = useState(false);
@@ -18,6 +19,7 @@ export function App() {
   });
 
   const [errorMessage, setErrorMessage] = useState('');
+  const navigate = useNavigate() // Get the navigate function from TanStack Router
 
   const toggleMode = () => {
     setIsLoginMode((prevMode) => !prevMode);
@@ -31,13 +33,13 @@ export function App() {
       return;
     }
 
-    AuthAPI.login(loginEmail, loginPassword);
-      // If userType is admin -> go to registrar
-    if (signUpUserType === 'admin') {
-      //window.location.href = 'https://uniplanner.ca/Registrar.html';
-    } else {
-      //window.location.href = 'https://uniplanner.ca/Registrant.html';
-    }
+      AuthAPI.login(loginEmail, loginPassword)
+      // Instead of window.location.href, use navigate:
+      if (signUpUserType === 'admin') {
+        navigate({ to: '/registrar' })
+      } else {
+        navigate({ to: '/registrant' })
+      }
 
     setLoginEmail('');
     setLoginPassword('');
@@ -56,20 +58,16 @@ export function App() {
       return;
     }
 
-    AuthAPI.signup(signupForm.userEmail, signupForm.password, signupForm.firstName.concat(" ", signupForm.lastName), signupForm.userType==='admin');
-      // If userType is admin -> go to registrar
-      // If userType is user -> go to registrant
-      //Alter to use tanstack routing instead of window.location.href
-
-
-
+    AuthAPI.signup(
+      signupForm.userEmail,
+      signupForm.password,
+      signupForm.firstName.concat(' ', signupForm.lastName),
+      signupForm.userType === 'admin'
+    )
       if (signUpUserType === 'admin') {
-
-        //Use tanstack routing instead of window.location.href
-
-        //window.location.href = 'https://uniplanner.ca/Registrar.html';
+        navigate({ to: '/registrar' })
       } else {
-        //window.location.href = 'https://uniplanner.ca/Registrant.html';
+        navigate({ to: '/registrant' })
       }
 
     setSignupForm({
