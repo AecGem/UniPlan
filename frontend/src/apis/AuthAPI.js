@@ -1,4 +1,5 @@
 import { authClient } from "../utils/auth";
+import { userInfo } from "../utils/auth";
 
 export const AuthAPI = {
     login: async(email, password, rememberMe = true) => {
@@ -13,6 +14,7 @@ export const AuthAPI = {
     },
     logOut: async () => {
         const resp = await authClient.signOut();
+        userInfo.set(null, null);
         //console.log(resp);
         return resp;
     },
