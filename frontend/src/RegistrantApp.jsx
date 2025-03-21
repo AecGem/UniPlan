@@ -246,6 +246,13 @@ export default function App() {
   };
 
   /** ---------------------------
+   *  Check Degree Validity
+   * ---------------------------*/
+    const checkValid = (semesterId, courseId) => {
+
+    };
+
+  /** ---------------------------
    *  SEMESTER MODAL HANDLERS
    * ---------------------------*/
   const handleOpenAddModal = () => {
@@ -358,6 +365,10 @@ export default function App() {
             items={courses.filter(course => course.isambig === true)}
             onDragStartAside={handleDragStartAside}
           />
+          <br /><br />
+          <button className="degree-valid-button" onClick={checkValid}>
+            Check Degree for Validity
+          </button>
         </aside>
 
         <main className="main-content">
