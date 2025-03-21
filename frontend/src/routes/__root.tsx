@@ -7,7 +7,7 @@ export const Route = createRootRoute({
   component: () => (
     <>
       <nav className="p-2 flex gap-2">
-        <Link to="/" className="[&.active]:font-bold">
+        <Link to="/app" className="[&.active]:font-bold">
           Home
         </Link>
         <Link to="/registrant" className="[&.active]:font-bold">
