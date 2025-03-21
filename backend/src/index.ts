@@ -75,14 +75,14 @@ const app = new Elysia()
             //Sanitize ID
             let passedDId;
             if (didin !== undefined) {
-                passedDId = parseInt(id);
+                passedDId = parseInt(didin);
             }
             else {
                 passedDId = -1;
             }
             const CourseList = await prisma.degree
                 .findUnique({
-                    where: { did: didin },
+                    where: { did: passedDId },
                     select: { courses: true },
                 })
                 .then(degree => degree?.courses || []);
