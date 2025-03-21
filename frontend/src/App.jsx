@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import './App.css'
 import {AuthAPI, login, signup} from './apis/AuthAPI'
 
@@ -17,18 +17,6 @@ export function App() {
     userType: '' // required radio input
   });
 
-
-  // Fetch courses from the backend when the component mounts.
-  useEffect(() => {
-    fetch('/api/users')
-      .then(res => res.json())
-      .then(data => {
-        setCourses(data);
-      })
-      .catch(err => console.error('Error fetching users:', err));
-  }, []);
-
-  
   const [errorMessage, setErrorMessage] = useState('');
 
   const toggleMode = () => {
