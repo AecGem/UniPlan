@@ -47,7 +47,7 @@ return (
       </nav>
       <hr />
       <Outlet />
-      <TanStackRouterDevtools />
+      {/*<TanStackRouterDevtools />*/}
     </>
 
 )
