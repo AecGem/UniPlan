@@ -388,38 +388,31 @@ export default function App() {
         </main>
       </div>
 
-      {/* MODAL: Show description for Class
-      BERNADETTE, THIS WILL NEED TO CHANGE TO MATCH DATABASE SO IT
-      PROPERLY INPUTS THE DATA INSTEAD OF THIS DUMMY TEXT */}
+      {/* MODAL: Show description for Class*/}
       {showDescModal && descCourse && (
         <div className="modal-backdrop">
           <div className="modal-content">
             <h2>Course Description</h2>
-            <p>
-              Course Name:{descCourse.text}
+            <p className="class-name">
+              {descCourse.shortname}: {descCourse.coursename}
             </p>
-            <p>
-              Department: Science
+            <p className="credit-hours">
+              Credits: {descCourse.credits}
             </p>
-            <p>
-              Credit Hours: 3
+            <p className="description">
+              {descCourse.description}
             </p>
-            <p>
-            items={
-              courses
-              .map(descCourse => `${descCourse.description}`)
-            }
+            <p className="prerequisites">
+              Prereqs: {descCourse.prereq?.join(', ')}
             </p>
-            <p>
-              Prerequisites: Class 1, Class 2
-            </p>
-            
+
             <div className="modal-buttons">
               <button onClick={closeDescModal}>Close</button>
             </div>
           </div>
         </div>
       )}
+
       {/* MODAL: Add or Edit Semester */}
       {showModal && (
         <div className="modal-backdrop">
