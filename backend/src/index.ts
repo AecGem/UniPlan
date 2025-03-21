@@ -183,10 +183,26 @@ const app = new Elysia()
 
    
     //Adding static serving plugin for regular webpages.
+    /*
     .use(staticPlugin({ 
         prefix: '/',
         assets: '/var/www/UniPlan/frontend/dist/'
     }))
+        */
+    .use (staticPlugin({
+        assets: '/var/www/UniPlan/frontend/dist/',
+        prefix: "/",
+        indexHTML: false,
+        noCache: true
+    }))
+    .use (staticPlugin({
+        assets: '/var/www/UniPlan/frontend/dist/assets',
+        prefix: "/assets",
+        noCache: true
+    }))
+.get("*", async (context) => {
+        return Bun.file("/var/www/UniPlan/frontend/dist/index.html");
+    })
 
     //Set up server listener + HTTPS attributes
     .listen({
