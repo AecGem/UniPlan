@@ -63,7 +63,7 @@ const app = new Elysia()
             courses = await prisma.course.findMany(
                 {
                     where: {
-                        isambig: (isAmbig?.toLowerCase() == 'true')
+                        isambig: isAmbig
                     }
 
                 }
