@@ -248,7 +248,7 @@ export default function App() {
   /** ---------------------------
    *  Check Degree Validity
    * ---------------------------*/
-    const checkValid = (semesterId, courseId) => {
+    const checkValid = (semesterId) => {
 
     };
 
