@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from '@tanstack/react-router'
 import { AuthAPI } from './apis/AuthAPI'
 import './Registrant.css'
+import { useRouter } from "@tanstack/react-router";
 
 // Collapsible Section Sub-Component
 function CollapsibleSection({title, items, onDragStartAside}) {
@@ -52,6 +53,7 @@ export default function App() {
   const [semesters, setSemesters] = useState([]);
   const [courses, setCourses] = useState([]);
   const navigate = useNavigate();
+  const router = useRouter();
 
   // Fetch courses from the backend when the component mounts.
   useEffect(() => {
@@ -89,7 +91,9 @@ export default function App() {
 
       //Clear any tokens from localStorage or cookies
       localStorage.removeItem('token')
-
+      //its http only :3
+      //localStorage.removeItem('token');
+      router.invalidate();
       navigate({ to: '/' })
     } catch (error) {
       console.error('Error signing out:', error)
