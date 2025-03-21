@@ -299,21 +299,6 @@ button:focus {
   margin-bottom: 10px;
 }
 
-/* Hover effect for the trash icon */
-.delete-course-button:hover {
-  color: #ff4444;
-  background: none;
-}
-.inspect-course-button:hover {
-  color: #027269;
-  background: none;
-}
-.edit-course-button:hover {
-  color: #027269;
-  background: none;
-}
-
-
 /* Collapsible sections in the aside panel */
 .collapsible-section {
   margin-bottom: 1rem;
