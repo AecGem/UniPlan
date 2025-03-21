@@ -1,0 +1,7 @@
+[Unit]
+Description=Run Dynamic DNS Script once an hour
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 /var/www/AecDNS/Dynamic-DNS-Client/UpdateDNS.py
+[Install]
+WantedBy=multi-user.target

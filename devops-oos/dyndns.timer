@@ -1,0 +1,9 @@
+[Unit]
+Description=Timer for running the Dynamic DNS python script once per hour.
+
+[Timer]
+OnCalendar=hourly
+Persistent=true
+
+[Install]
+WantedBy=timers.target
