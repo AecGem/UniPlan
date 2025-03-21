@@ -6,7 +6,7 @@ import { Pool } from "pg";
 const prisma = new PrismaClient();
 export const auth = betterAuth({
     database: new Pool({
-        connectionString:"postgresql://uniplanner:$&asV>2d$oxR<fzp@34.47.10.230:5432/Uniplanner"
+        connectionString:"postgresql://uniplanner:$&asV>2d$oxR<fzp@34.47.10.230:5432/uniplanner-auth"
     }),
     emailAndPassword: {
         enabled: true
