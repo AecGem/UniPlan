@@ -40,9 +40,9 @@ const app = new Elysia()
             if(id===undefined){
                 id_undefined = true;
             }
-            if(did_in===undefined){
-                did_undefined = true;
-            }
+            //if(did_in===undefined){
+           //     did_undefined = true;
+           // }
 
             let isAmbig_undefined = false;
             if(isAmbig===undefined){
@@ -53,12 +53,12 @@ const app = new Elysia()
             let courses = null;
 
             //Grab all.
-            if(id_undefined && isAmbig_undefined){
+            if(id_undefined && isAmbig_undefined && did_undefined){
                 courses = await prisma.course.findMany();
             }
 
             //Get only ambig courses
-            else if (id_undefined && !(isAmbig_undefined)){
+            else if (id_undefined && !(isAmbig_undefined) && did_undefined){
                 courses = await prisma.course.findMany(
                     {
                         where : {
@@ -90,7 +90,7 @@ const app = new Elysia()
             }
             //Get only a specific ID
 
-            else if(!(id_undefined)&&isAmbig_undefined){
+            else if(!(id_undefined)&&isAmbig_undefined&&did_undefined){
                 //Sanitize ID
                 let passedId;
                 if (id !== undefined){
