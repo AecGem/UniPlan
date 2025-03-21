@@ -321,6 +321,16 @@ export default function App() {
       {/* LAYOUT */}
       <div className="layout-wrapper">
         <aside className="requirements">
+        <label>Degree:&nbsp;</label>
+            <select
+              value={selectedType}
+              onChange={(e) => setSelectedType(e.target.value)}
+            >
+              <option value="cs">BSc Computer Science</option>
+              <option value="cs-math">BSc Combined Major in Computer Science and Mathematics</option>
+              <option value="data-sci">BSc Data Science</option>
+            </select>
+            <br /><br />
           <CollapsibleSection
             title="Required Courses"
             items={courses.filter(course => course.isambig === false)}
