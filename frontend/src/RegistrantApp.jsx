@@ -343,7 +343,7 @@ export default function App() {
                           draggable
                           onDragStart={(ev) => handleDragStartSemester(ev, courseObj, sem.id)}
                         >
-                          {courseObj.text}
+                          {courseObj.shortname}
                           {/*Question Mark Button*/}
                           <button
                             className="inspect-course-button"

@@ -188,11 +188,13 @@ html, body {
   font-size: 20px;
   color: #0a505c;
   width: 400px;
-  max-width: 100%;
+  max-width: 90%;
   position: relative;
+  padding: 1rem 1.5rem;
 }
 .modal-content h2 {
   text-align: center;
+  margin-bottom: 1rem;
 }
 .modal-content label {
   margin-left: 50px;
