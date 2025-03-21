@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import './App.css'
 import {AuthAPI, login, signup} from './apis/AuthAPI'
 
@@ -17,7 +17,7 @@ export function App() {
     confirmPassword: '', //required input
     userType: '' // required radio input
   });
-  
+
   const [errorMessage, setErrorMessage] = useState('');
 
   const toggleMode = () => {
