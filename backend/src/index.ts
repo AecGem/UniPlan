@@ -1,6 +1,5 @@
 import dotenv from 'dotenv'
 dotenv.config()
-
 import { Elysia, Context } from "elysia";                                            //Base server library
 import { swagger } from "@elysiajs/swagger";                                //Swagger documentation
 import { jwt } from "@elysiajs/jwt";                                        //Javascript web tokens
@@ -120,8 +119,10 @@ const app = new Elysia()
             })
 
 
-        //Authentication endpoint
+        //Authentication endpoints
         .all("/api/auth/*", betterAuthView)
+        .get("/api/auth/*", betterAuthView)
+
 
     //Swagger API Auto-Documentation
     .use(
@@ -182,10 +183,26 @@ const app = new Elysia()
 
    
     //Adding static serving plugin for regular webpages.
+    /*
     .use(staticPlugin({ 
         prefix: '/',
         assets: '/var/www/UniPlan/frontend/dist/'
     }))
+        */
+    .use (staticPlugin({
+        assets: '/var/www/UniPlan/frontend/dist/',
+        prefix: "/",
+        indexHTML: false,
+        noCache: true
+    }))
+    .use (staticPlugin({
+        assets: '/var/www/UniPlan/frontend/dist/assets',
+        prefix: "/assets",
+        noCache: true
+    }))
+.get("*", async (context) => {
+        return Bun.file("/var/www/UniPlan/frontend/dist/index.html");
+    })
 
     //Set up server listener + HTTPS attributes
     .listen({
