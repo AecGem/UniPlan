@@ -47,7 +47,9 @@ return (
       </nav>
       <hr />
       <Outlet />
-         process.env.NODE_ENV === 'development' && <TanStackRouterDevtools />
+      <TanStackRouterDevtools />
     </>
-  ),
-})
+
+)
+
+}
