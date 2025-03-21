@@ -4,7 +4,6 @@ import {AuthAPI, login, signup} from './apis/AuthAPI'
 
 export function App() {
   const [showModal, setShowModal] = useState(false);
-  const [users, setUsers] = useState([]);
   const [isLoginMode, setIsLoginMode] = useState(true);
   const [loginEmail, setLoginEmail] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
