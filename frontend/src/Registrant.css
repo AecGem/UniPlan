@@ -278,6 +278,17 @@ button:focus {
   outline: none;
   position: relative;
 }
+.delete-course-button,
+.inspect-course-button,
+.edit-course-button
+ {
+  background: none;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  padding: none;
+  position: relative;
+}
 .degree-valid-button{
   font-size: 13px;
   position: absolute;
