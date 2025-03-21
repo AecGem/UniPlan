@@ -13,7 +13,6 @@ export const auth = betterAuth({
     },
     requireEmailVerification: false,
     user : {
-        modelName: "users",
         additionalFields:{
             usertype: {
                 type: "boolean",
