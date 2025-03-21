@@ -1,6 +1,17 @@
 body {
   background: url(/src/image2.jpg) no-repeat center center fixed;
   background-size: cover;
+  line-height: 1.5;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
 }
 .app-container {
   min-height: 100vh;

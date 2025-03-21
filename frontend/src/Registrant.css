@@ -282,6 +282,8 @@ button:focus {
 .inspect-course-button,
 .edit-course-button
  {
+  color: #004640;
+  font-weight: bold;
   background: none;
   border: none;
   cursor: pointer;
