@@ -414,13 +414,13 @@ export default function App() {
                           <div className="icon-group">
                             <button 
                               className="inspect-course-button" 
-                              onClick={() => openDescModal(courseObj)} title="Course Description"> ? </button>
+                              onClick={() => openDescModal(courseObj)} title="Course Description"> 🔎 </button>
                             <button
                               className="edit-course-button"
-                              onClick={() => openEditCourseModal(sem.id, courseObj)} title="Edit Course"> ⚙️ </button>
+                              onClick={() => openEditCourseModal(sem.id, courseObj)} title="Edit Course"> 🔨 </button>
                             <button
                               className="delete-course-button" 
-                              onClick={() => removeSingleCourse(sem.id, courseObj.id)} title="Delete Course"> 🗑 </button>
+                              onClick={() => removeSingleCourse(sem.id, courseObj.id)} title="Delete Course"> ❌ </button>
                           </div>
                         </li>
                       ))}

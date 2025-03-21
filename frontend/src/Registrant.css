@@ -6,6 +6,7 @@ html, body {
   background-color: #fff;
   background: url(/src/image.jpg) no-repeat center center fixed;
   background-size: cover;
+  display: block;
 }
 
 /*THIS IS HERE SO*/
@@ -271,7 +272,6 @@ button:focus {
 .icon-group {
   display: flex;
   margin-left: auto;
-  gap: 0.5rem;
   border: none;
   cursor: pointer;
   color: #004640;
