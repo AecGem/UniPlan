@@ -81,7 +81,7 @@ export default function App() {
   // A small helper to sign out (navigate back to '/')
   const handleSignOut = async () => {
     try {
-      await AuthAPI.logout()
+      await AuthAPI.logOut()
 
       //Clear any tokens from localStorage or cookies
       localStorage.removeItem('token')
