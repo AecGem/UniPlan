@@ -1,6 +1,7 @@
 // RegistrantApp.jsx
 import { useState, useEffect } from 'react'
 import { useNavigate } from '@tanstack/react-router'
+import { AuthAPI } from './apis/AuthAPI'
 import './Registrant.css'
 
 // Collapsible Section Sub-Component
@@ -78,10 +79,19 @@ export default function App() {
   
 
   // A small helper to sign out (navigate back to '/')
-  const handleSignOut = () => {
-    // If you have any auth tokens to clear, do that here
-    navigate({ to: '/' });
-  };
+  const handleSignOut = async () => {
+    try {
+      await AuthAPI.logout()
+
+      //Clear any tokens from localStorage or cookies
+      localStorage.removeItem('token')
+
+      navigate({ to: '/' })
+    } catch (error) {
+      console.error('Error signing out:', error)
+      // Optionally show an error message or fallback
+    }
+  }
 
   /** ---------------------------
    *  DRAG & DROP HANDLERS
