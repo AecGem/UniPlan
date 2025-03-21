@@ -40,9 +40,9 @@ const app = new Elysia()
             if(id===undefined){
                 id_undefined = true;
             }
-            //if(did_in===undefined){
-           //     did_undefined = true;
-           // }
+            if(did_in===undefined){
+               did_undefined = true;
+            }
 
             let isAmbig_undefined = false;
             if(isAmbig===undefined){
