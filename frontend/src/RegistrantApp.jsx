@@ -54,6 +54,8 @@ export default function App() {
   const [courses, setCourses] = useState([]);
   const navigate = useNavigate();
   const router = useRouter();
+  const [degrees, setDegrees] = useState([]);
+  const [selectedDegreeId, setSelectedDegreeId] = useState(null);
 
   // Fetch courses from the backend when the component mounts.
   useEffect(() => {
@@ -69,6 +71,22 @@ export default function App() {
       .catch(err => console.error('Error fetching courses:', err));
   }, []);
 
+  // Fetch degrees from the backend when the component mounts.
+  useEffect(() => {
+    const did = 1;
+    const params = new URLSearchParams();
+    params.append('didin', did);
+    const url = `/api/degree?${params.toString()}`;
+    fetch(url)
+      .then(res => res.json())
+      .then(data => {
+        setDegrees(data);
+        if (data.length > 0){
+          selectedDegreeId(data[0].did);
+        }
+      })
+      .catch(err => console.error('Error fetching degrees:', err));
+  }, []);
 
   /** ---------------------------
    *  MODAL STATE (Add/Edit)
@@ -321,16 +339,18 @@ export default function App() {
       {/* LAYOUT */}
       <div className="layout-wrapper">
         <aside className="requirements">
-        <label>Degree:&nbsp;</label>
-            <select
-              value={selectedType}
-              onChange={(e) => setSelectedType(e.target.value)}
-            >
-              <option value="cs">BSc Computer Science</option>
-              <option value="cs-math">BSc Combined Major in Computer Science and Mathematics</option>
-              <option value="data-sci">BSc Data Science</option>
-            </select>
-            <br /><br />
+        <label>Degree&nbsp;</label>
+          <select
+            value={selectedDegreeId || ''}
+            onChange={(e) => setSelectedDegreeId(Number(e.target.value))}
+          >
+            {degrees.map((deg) => (
+              <option key={deg.did} value={deg.did}>
+                {deg.degree}
+              </option>
+            ))}
+          </select>
+          <br /><br />
           <CollapsibleSection
             title="Required Courses"
             items={courses.filter(course => course.isambig === false)}
