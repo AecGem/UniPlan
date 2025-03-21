@@ -6,6 +6,8 @@ export const Route = createFileRoute('/')({
   component: Index,
 })
 
-function Index() {
-  return <IndexApp.default />
+function Index() {   
+  const { session } = Route.useRouteContext();
+  return <IndexApp.default context={session} />
+
 }

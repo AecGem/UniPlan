@@ -8,6 +8,14 @@ export const auth = betterAuth({
     database: new Pool({
         connectionString:"postgresql://uniplanner:$&asV>2d$oxR<fzp@34.47.10.230:5432/Uniplanner"
     }),
+    advanced: {
+        defaultCookieAttributes: {
+            secure: true,
+            sameSite: "none",
+            httpOnly: true,
+            partitioned: true
+        }
+    },
     emailAndPassword: {
         enabled: true
     },

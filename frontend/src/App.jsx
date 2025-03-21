@@ -1,59 +1,64 @@
-import { useState } from 'react'
-import './App.css'
-import { AuthAPI } from './apis/AuthAPI'
-import { useNavigate } from '@tanstack/react-router'
+import { useState } from "react";
+import "./App.css";
+import { AuthAPI } from "./apis/AuthAPI";
+import { useNavigate } from "@tanstack/react-router";
 
-export function App() {
+
+export function App({ context }) {
   const [showModal, setShowModal] = useState(false);
   const [isLoginMode, setIsLoginMode] = useState(true);
-  const [loginEmail, setLoginEmail] = useState('');
-  const [loginPassword, setLoginPassword] = useState('');
-  const [signUpUserType, setUserType] = useState('user');
+  const [loginEmail, setLoginEmail] = useState("");
+  const [loginPassword, setLoginPassword] = useState("");
+  const [signUpUserType, setUserType] = useState("user");
   const [signupForm, setSignupForm] = useState({
-    firstName: '', //optional input
-    lastName: '', //optional input
-    userEmail: '', //required input
-    password: '', //required input
-    confirmPassword: '', //required input
-    userType: '' // required radio input
+    firstName: "", //optional input
+    lastName: "", //optional input
+    userEmail: "", //required input
+    password: "", //required input
+    confirmPassword: "", //required input
+    userType: "", // required radio input
   });
 
-  const [errorMessage, setErrorMessage] = useState('');
-  const navigate = useNavigate() // Get the navigate function from TanStack Router
+  const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate(); // Get the navigate function from TanStack Router
 
   const toggleMode = () => {
     setIsLoginMode((prevMode) => !prevMode);
-    setErrorMessage('');
+    setErrorMessage("");
   };
 
   const handleLoginSubmit = (e) => {
     e.preventDefault();
-    if(!loginEmail || !loginPassword) {
-      setErrorMessage('Please enter an Email and Password.');
+    if (!loginEmail || !loginPassword) {
+      setErrorMessage("Please enter an Email and Password.");
       return;
     }
 
-      AuthAPI.login(loginEmail, loginPassword)
-      // Instead of window.location.href, use navigate:
-      if (signUpUserType === 'admin') {
-        navigate({ to: '/registrar' })
-      } else {
-        navigate({ to: '/registrant' })
-      }
+    AuthAPI.login(loginEmail, loginPassword);
+    // Instead of window.location.href, use navigate:
+    if (signUpUserType === "admin") {
+      navigate({ to: "/registrar" });
+    } else {
+      navigate({ to: "/registrant" });
+    }
 
-    setLoginEmail('');
-    setLoginPassword('');
-    setErrorMessage('');
+    setLoginEmail("");
+    setLoginPassword("");
+    setErrorMessage("");
     setShowModal(false);
   };
 
   const handleSignupSubmit = (e) => {
     e.preventDefault();
-    if(!signupForm.userEmail || !signupForm.password || !signupForm.confirmPassword) {
+    if (
+      !signupForm.userEmail ||
+      !signupForm.password ||
+      !signupForm.confirmPassword
+    ) {
       setErrorMessage("Email and Password are required.");
       return;
     }
-    if(signupForm.password != signupForm.confirmPassword) {
+    if (signupForm.password != signupForm.confirmPassword) {
       setErrorMessage("Passwords don't match!");
       return;
     }
@@ -61,24 +66,24 @@ export function App() {
     AuthAPI.signup(
       signupForm.userEmail,
       signupForm.password,
-      signupForm.firstName.concat(' ', signupForm.lastName),
-      signupForm.userType === 'admin'
-    )
-      if (signUpUserType === 'admin') {
-        navigate({ to: '/registrar' })
-      } else {
-        navigate({ to: '/registrant' })
-      }
+      signupForm.firstName.concat(" ", signupForm.lastName),
+      signupForm.userType === "admin"
+    );
+    if (signUpUserType === "admin") {
+      navigate({ to: "/registrar" });
+    } else {
+      navigate({ to: "/registrant" });
+    }
 
     setSignupForm({
-      userEmail: '',
-      password: '',
-      confirmPassword: '',
-      firstName: '',
-      lastName: '',
-      userType: 'user'
+      userEmail: "",
+      password: "",
+      confirmPassword: "",
+      firstName: "",
+      lastName: "",
+      userType: "user",
     });
-    setErrorMessage('');
+    setErrorMessage("");
     setShowModal(false);
   };
 
@@ -94,12 +99,25 @@ export function App() {
     <div className="app-container">
       <h1 className="heading">UniPlan: A Degree Planner</h1>
       <p className="description">
-        Welcome to UniPlan, your personal degree-planning tool. 
-        Drag and drop courses, add semesters, and keep track of your journey-all in one place.
+        Welcome to UniPlan, your personal degree-planning tool. Drag and drop
+        courses, add semesters, and keep track of your journey-all in one place.
       </p>
 
       <div className="button-container">
-        <button className="get-planning-btn" onClick={() => setShowModal(true)}>
+        <button
+          className="get-planning-btn"
+          onClick={() => {
+            if (context.check()) {
+              if (context.userType === "admin") {
+                navigate({ to: "/registrar" });
+              } else {
+                navigate({ to: "/registrant" });
+              }
+            } else {
+              setShowModal(true);
+            }
+          }}
+        >
           Get Planning!
         </button>
       </div>
@@ -109,9 +127,7 @@ export function App() {
         <div className="modal-backdrop">
           <div className="modal-content">
             {errorMessage && (
-              <div className="error-message">
-                {errorMessage}
-              </div>
+              <div className="error-message">{errorMessage}</div>
             )}
 
             {isLoginMode ? (
@@ -181,24 +197,24 @@ export function App() {
                   />
                   <div className="user-type-options">
                     <label>
-                      <input 
-                        type="radio" 
-                        name="userType" 
+                      <input
+                        type="radio"
+                        name="userType"
                         value="user"
-                        checked={signUpUserType === 'user'}
+                        checked={signUpUserType === "user"}
                         onChange={(e) => setUserType(e.target.value)}
-                        />
-                          Student
+                      />
+                      Student
                     </label>
                     <label>
-                      <input 
-                        type="radio" 
-                        name="userType" 
+                      <input
+                        type="radio"
+                        name="userType"
                         value="admin"
-                        checked={signUpUserType === 'admin'}
+                        checked={signUpUserType === "admin"}
                         onChange={(e) => setUserType(e.target.value)}
-                        />
-                          Admin
+                      />
+                      Admin
                     </label>
                   </div>
                   <button type="submit">Sign Up</button>
@@ -214,10 +230,13 @@ export function App() {
             )}
 
             {/* Close modal button */}
-            <button className="close-button" onClick={() => {
-              setShowModal(false);
-              setErrorMessage('');
-            }}>
+            <button
+              className="close-button"
+              onClick={() => {
+                setShowModal(false);
+                setErrorMessage("");
+              }}
+            >
               Close
             </button>
           </div>
