@@ -73,10 +73,7 @@ export default function App() {
 
   // Fetch degrees from the backend when the component mounts
   useEffect(() => {
-    const did = 1;
-    const params = new URLSearchParams();
-    params.append('didin', did);
-    const url = `/api/degree?${params.toString()}`;
+    const url = `/api/degree`;
     fetch(url)
       .then(res => res.json())
       .then(data => {
