@@ -71,10 +71,9 @@ const app = new Elysia()
             }
             //Get only a specific degree
             else if (id_undefined && isAmbig_undefined && !(did_undefined)){
-                let did_temp = 1
                 const CourseList = await prisma.degree
                 .findUnique({
-                    where: { did: did_temp },
+                    where: { did: didin },
                     select: { courses: true },
                 })
                 .then(degree => degree?.courses || []);
