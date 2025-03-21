@@ -32,7 +32,7 @@ const app = new Elysia()
     //API endpoints
 
         //Course and Degree endpoints
-        .get("/api/course/:id?/:isAmbig?/:did_in?", async ({ params: {id, isAmbig, did_in}}) => {
+        .get("/api/course/:id?/:isAmbig?/:didin?", async ({ params: {id, isAmbig, didin}}) => {
             //Checkflags
             let id_undefined = false;
             let did_undefined = false;
@@ -40,7 +40,7 @@ const app = new Elysia()
             if(id===undefined){
                 id_undefined = true;
             }
-            if(did_in===undefined){
+            if(didin===undefined){
                did_undefined = true;
             }
 
@@ -122,10 +122,10 @@ const app = new Elysia()
         })
         //Emma's testing zone
         .get("/api/course_test", async() =>{
-            const did_in = 1
+            const didin = 1
             const courses = await prisma.degree
             .findUnique({
-                where: { did: did_in },
+                where: { did: didin },
                 select: { courses: true },
             })
             .then(degree => degree?.courses || []);
