@@ -58,17 +58,12 @@ export function App() {
       return;
     }
 
-    AuthAPI.signup(signupForm.userEmail, 
-      signupForm.password, 
-      signupForm.firstName.concat(" ", 
-        signupForm.lastName), 
-        signupForm.userType==='admin');
-      // If userType is admin -> go to registrar
-      // If userType is user -> go to registrant
-      //Alter to use tanstack routing instead of window.location.href
-
-
-
+    AuthAPI.signup(
+      signupForm.userEmail,
+      signupForm.password,
+      signupForm.firstName.concat(' ', signupForm.lastName),
+      signupForm.userType === 'admin'
+    )
       if (signUpUserType === 'admin') {
         navigate({ to: '/registrar' })
       } else {
