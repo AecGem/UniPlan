@@ -12,7 +12,7 @@ interface RouterContext {
 
 
 export const Route = createRootRouteWithContext<RouterContext>()({
-  component: RootComponent,
+  //component: RootComponent,
   beforeLoad: async ({ context, location }) => {
     // if our ctx session isnt valid
     if (!context.session.check()) {
@@ -31,7 +31,7 @@ export const Route = createRootRouteWithContext<RouterContext>()({
 },
 })
 
-function RootComponent(){
+/*function RootComponent(){
 return (
 <>
       <nav className="p-2 flex gap-2">
@@ -52,4 +52,4 @@ return (
 
 )
 
-}
+}*/

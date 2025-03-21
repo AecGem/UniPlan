@@ -18,14 +18,14 @@ function CollapsibleSection({title, items, onDragStartAside}) {
 
       {/* If expanded, show the list of requirements */}
       {expanded && (
-        <ul className="requirement-list">
-          {items.map((itemText, idx) => (
-            <li 
-              key={idx} 
+          <ul className="requirement-list">
+            {items.map((course) => (
+            <li
+              key={course.cId}
               draggable
-              onDragStart={(e) => onDragStartAside(e, itemText)}
+              onDragStart={(e) => onDragStartAside(e, course)}
             >
-              {itemText}
+              {course.shortname}: {course.coursename}
             </li>
           ))}
         </ul>
@@ -80,17 +80,20 @@ export default function App() {
    * ---------------------------*/
  // 1) Drag from the aside (strings only), converting it into 
   // an object { id, text } so we can store it in 'sem.courses'.
-  const handleDragStartAside = (e, itemText) => {
+  const handleDragStartAside = (e, courseObj) => {
+    const newCourse = {
+      ...courseObj,
+      id: Date.now().toString(), // or use cId if prefer
+      status: '',
+    }
+  
     const payload = {
-      course: { 
-        id: Date.now().toString(), 
-        text: itemText,
-        status: ''
-      },
+      course: newCourse,
       sourceSemId: null,
-    };
-    e.dataTransfer.setData('application/json', JSON.stringify(payload));
-  };
+    }
+    e.dataTransfer.setData('application/json', JSON.stringify(payload))
+  }
+  
 
   // 2) Drag from within a semester
   const handleDragStartSemester = (e, courseObj, sourceSemId) => {
@@ -291,21 +294,13 @@ export default function App() {
         <aside className="requirements">
           <CollapsibleSection
             title="Required Courses"
-            items={
-              courses
-                .filter(course => course.isambig === false)
-                .map(course => `${course.shortname}: ${course.coursename}`)
-            }
+            items={courses.filter(course => course.isambig === false)}
             onDragStartAside={handleDragStartAside}
           />
           <CollapsibleSection
             title="Ambiguous Courses"
-            items={
-            courses
-              .filter(course => course.isambig === true)
-              .map(course => `${course.shortname}: ${course.coursename}`)
-            }
-          onDragStartAside={handleDragStartAside}
+            items={courses.filter(course => course.isambig === true)}
+            onDragStartAside={handleDragStartAside}
           />
         </aside>
 
