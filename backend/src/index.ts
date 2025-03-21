@@ -1,6 +1,5 @@
 import dotenv from 'dotenv'
 dotenv.config()
-
 import { Elysia, Context } from "elysia";                                            //Base server library
 import { swagger } from "@elysiajs/swagger";                                //Swagger documentation
 import { jwt } from "@elysiajs/jwt";                                        //Javascript web tokens
@@ -122,6 +121,7 @@ const app = new Elysia()
 
         //Authentication endpoints
         .all("/api/auth/*", betterAuthView)
+        .get("/api/auth/*", betterAuthView)
 
 
     //Swagger API Auto-Documentation
