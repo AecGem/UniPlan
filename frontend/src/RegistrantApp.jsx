@@ -57,7 +57,7 @@ export default function App() {
   const [degrees, setDegrees] = useState([]);
   const [selectedDegreeId, setSelectedDegreeId] = useState(null);
 
-  // Fetch courses from the backend when the component mounts.
+  // Fetch courses from the backend when the component mounts
   useEffect(() => {
     const didin = 1;
     const params = new URLSearchParams();
@@ -71,7 +71,7 @@ export default function App() {
       .catch(err => console.error('Error fetching courses:', err));
   }, []);
 
-  // Fetch degrees from the backend when the component mounts.
+  // Fetch degrees from the backend when the component mounts
   useEffect(() => {
     const did = 1;
     const params = new URLSearchParams();
@@ -82,7 +82,7 @@ export default function App() {
       .then(data => {
         setDegrees(data);
         if (data.length > 0){
-          selectedDegreeId(data[0].did);
+          setSelectedDegreeId(data[0].did);
         }
       })
       .catch(err => console.error('Error fetching degrees:', err));
