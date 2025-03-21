@@ -1,0 +1,21 @@
+[Unit]
+# Description
+Description=Bun Daemon for Uniplanner
+# Start after network available.
+After=network.target
+
+[Service]
+Type=simple
+# Starting as www-data
+User=www-data
+# Root dir
+WorkingDirectory=/var/www/UniPlan/backend/src
+# Start path (abs)
+ExecStart=/home/alex1/.bun/bin/bun run index.ts
+# restart policy
+# one of {no|on-success|on-failure|on-abnormal|on-watchdog|on-abort|always}
+Restart=always
+
+[Install]
+# start the app automatically
+WantedBy=multi-user.target
