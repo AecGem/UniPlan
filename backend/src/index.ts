@@ -38,12 +38,12 @@ const app = new Elysia()
         let id_undefined = false;
         let did_undefined = false;
 
-        if (id === undefined) {
-            id_undefined = true;
-        }
-        // if(didin===undefined){
-        //   did_undefined = true;
-        //}
+            if(id===undefined){
+                id_undefined = true;
+            }
+            if(didin===undefined){
+               did_undefined = true;
+            }
 
         let isAmbig_undefined = false;
         if (isAmbig === undefined) {
