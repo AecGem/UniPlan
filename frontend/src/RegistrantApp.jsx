@@ -410,33 +410,18 @@ export default function App() {
                           draggable
                           onDragStart={(ev) => handleDragStartSemester(ev, courseObj, sem.id)}
                         >
-                          {courseObj.shortname}
-                          {/*Question Mark Button*/}
-                          <button
-                            className="inspect-course-button"
-                            onClick={() =>
-                              openDescModal(courseObj)}
-                              title="Course Description"                
-                            >
-                              ?{/* wee little question mark :) */}
-                            </button>
-                          <button
-                            className="edit-course-button"
-                            onClick={() => openEditCourseModal(sem.id, courseObj)}
-                            title="Edit Course"
-                            >
-                             ⚙️ {/* wee little gear :) */}
-                          </button>
-                            {/*Trashcan Button*/}
-                          <button
-                            className="delete-course-button"
-                            onClick={() =>
-                              removeSingleCourse(sem.id, courseObj.id)}
-                              title="Delete Course"                
-                            >
-                              🗑 {/* wee little trashcan! :) */}
-                            </button>
-                            
+                          <span className="course-name">{courseObj.shortname}</span>
+                          <div className="icon-group">
+                            <button 
+                              className="inspect-course-button" 
+                              onClick={() => openDescModal(courseObj)} title="Course Description"> ? </button>
+                            <button
+                              className="edit-course-button"
+                              onClick={() => openEditCourseModal(sem.id, courseObj)} title="Edit Course"> ⚙️ </button>
+                            <button
+                              className="delete-course-button" 
+                              onClick={() => removeSingleCourse(sem.id, courseObj.id)} title="Delete Course"> 🗑 </button>
+                          </div>
                         </li>
                       ))}
                     </ul>

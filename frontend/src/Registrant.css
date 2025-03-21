@@ -75,6 +75,16 @@ html, body {
   background-color: #eaeaeaef;
   padding: 1rem;
 }
+.requirements label {
+  color: #086374;
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: left;
+  padding-bottom: 10px;
+ }
+ .requirements select {
+  width: 200px;
+ }
 /* The main content area on the right */
 .main-content {
   flex: 1;
@@ -162,13 +172,12 @@ html, body {
 /* Semester course list */
 .semester-course-list {
   display: block; 
-  margin: 0;
+  margin: 10px;
   padding: 0;
 }
 .semester-course-list li {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   white-space: normal;
   overflow-wrap: break-word;
   max-width: 100%;
@@ -259,37 +268,22 @@ button:focus {
   outline: none;
   box-shadow: 0 0 0 3px rgba(6, 80, 90, 0.6);
 }
-.delete-course-button {
-  background: none;
+.icon-group {
+  display: flex;
+  margin-left: auto;
+  gap: 0.5rem;
   border: none;
-  cursor: pointer;
-  color: #cc0000;
-  padding: 0;
-  outline: none;
-  padding: none;
-}
-.inspect-course-button {
-  background: none;
-  border: none;
-  border-radius: 0px;
-  font-weight: bold;
   cursor: pointer;
   color: #004640;
   outline: none;
-  padding: none;
-}
-.edit-course-button {
-  background: none;
-  border: none;
-  border-radius: 0px;
-  font-weight: bold;
-  cursor: pointer;
-  color: #004640;
-  outline: none;
-  padding: none;
+  position: relative;
 }
 .degree-valid-button{
-  padding-top: 200px;
+  font-size: 13px;
+  position: absolute;
+  bottom: 0;
+  margin-left: 50px;
+  margin-bottom: 10px;
 }
 
 /* Hover effect for the trash icon */
@@ -305,7 +299,6 @@ button:focus {
   color: #027269;
   background: none;
 }
-
 
 
 /* Collapsible sections in the aside panel */
