@@ -393,18 +393,18 @@ export default function App() {
         <div className="modal-backdrop">
           <div className="modal-content">
             <h2>Course Description</h2>
-            <p className="class-name">
+            <label>
               {descCourse.shortname}: {descCourse.coursename}
-            </p>
-            <p className="credit-hours">
+            </label>
+            <label>
               Credits: {descCourse.credits}
-            </p>
-            <p className="description">
+            </label>
+            <label>
               {descCourse.description}
-            </p>
-            <p className="prerequisites">
+            </label>
+            <label>
               Prereqs: {descCourse.prereq?.join(', ')}
-            </p>
+            </label>
 
             <div className="modal-buttons">
               <button onClick={closeDescModal}>Close</button>
