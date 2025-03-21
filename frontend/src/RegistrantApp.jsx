@@ -55,7 +55,7 @@ export default function App() {
 
   // Fetch courses from the backend when the component mounts.
   useEffect(() => {
-    fetch('/api/course')
+    fetch('/api/course/$1')
       .then(res => res.json())
       .then(data => {
         setCourses(data);
