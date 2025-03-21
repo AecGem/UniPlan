@@ -55,7 +55,11 @@ export default function App() {
 
   // Fetch courses from the backend when the component mounts.
   useEffect(() => {
-    fetch('/api/course?didin=1')
+    const didin = 1
+    const params = new URLSearchParams();
+    params.append('didin', didin);
+    const url = `/api/course?${params.toString()}`;
+    fetch(url)
       .then(res => res.json())
       .then(data => {
         setCourses(data);
