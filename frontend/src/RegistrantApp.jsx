@@ -1,5 +1,6 @@
 // RegistrantApp.jsx
 import { useState, useEffect } from 'react'
+import { useNavigate } from '@tanstack/react-router'
 import './Registrant.css'
 
 // Collapsible Section Sub-Component
@@ -49,6 +50,7 @@ export default function App() {
    * ---------------------------*/
   const [semesters, setSemesters] = useState([]);
   const [courses, setCourses] = useState([]);
+  const navigate = useNavigate();
 
   // Fetch courses from the backend when the component mounts.
   useEffect(() => {
@@ -74,6 +76,12 @@ export default function App() {
   const [showEditCourseModal, setShowEditCourseModal] = useState(false);
   const [courseBeingEdited, setCourseBeingEdited] = useState(null);
   
+
+  // A small helper to sign out (navigate back to '/')
+  const handleSignOut = () => {
+    // If you have any auth tokens to clear, do that here
+    navigate({ to: '/' });
+  };
 
   /** ---------------------------
    *  DRAG & DROP HANDLERS
@@ -286,6 +294,9 @@ export default function App() {
           <a href="#profile">Profile</a>
           <a href="#saved">Saved</a>
           <a href="#settings">Settings</a>
+          <button className="sign-out" onClick={handleSignOut}>
+            Sign Out
+          </button>
         </nav>
       </header>
 
@@ -386,7 +397,7 @@ export default function App() {
       {/* MODAL: Show description for Class*/}
       {showDescModal && descCourse && (
         <div className="modal-backdrop">
-          <div className="modal-content">
+          <div className="modal-content2">
             <h2>Course Description</h2>
             <label>
               {descCourse.shortname}: {descCourse.coursename}
