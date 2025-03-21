@@ -32,12 +32,16 @@ const app = new Elysia()
     //API endpoints
 
         //Course and Degree endpoints
-        .get("/api/course/:id?/:isAmbig?", async ({ params: {id, isAmbig, did}}) => {
+        .get("/api/course/:id?/:isAmbig?/:did_in?", async ({ params: {id, isAmbig, did_in}}) => {
             //Checkflags
             let id_undefined = false;
-            
+            let did_undefined = false;
+
             if(id===undefined){
                 id_undefined = true;
+            }
+            if(did_in===undefined){
+                did_undefined = true;
             }
 
             let isAmbig_undefined = false;
@@ -66,7 +70,24 @@ const app = new Elysia()
                 )
             }
             //Get only a specific degree
-            
+            else if (id_undefined && isAmbig_undefined && !(did_undefined)){
+               
+                const courses = await prisma.degree
+                .findUnique({
+                    where: { did: did_in },
+                    select: { courses: true },
+                })
+                .then(degree => degree?.courses || []);
+                    const result = await prisma.course.findMany({
+                    where: {
+                    cid: {
+                    in: courses,
+                    },
+                    },
+                    });
+                return result;
+                
+            }
             //Get only a specific ID
 
             else if(!(id_undefined)&&isAmbig_undefined){
@@ -99,7 +120,7 @@ const app = new Elysia()
             const registrations = await prisma.SavedSem.findMany();
             return registrations;
         })
-
+        //Emma's testing zone
         .get("/api/course_test", async() =>{
             const did_in = 1
             const courses = await prisma.degree
