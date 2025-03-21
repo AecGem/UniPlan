@@ -416,7 +416,7 @@ export default function App() {
               Credits: {descCourse.credits}
             </label>
             <label>
-              {descCourse.description}
+              Description: {descCourse.description}
             </label>
             <label>
               Prereqs: {descCourse.prereq?.join(', ')}
