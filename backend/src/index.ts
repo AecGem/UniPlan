@@ -70,7 +70,7 @@ const app = new Elysia()
 
             )
         }
-        //Get only the required coursess for a specific degree
+        //Get only the required courses for a specific degree
         else if (id_undefined && isAmbig_undefined && !(did_undefined)) {
             //Sanitize ID
             let passedDId;
