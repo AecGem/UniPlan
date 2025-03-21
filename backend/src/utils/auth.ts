@@ -12,6 +12,7 @@ export const auth = betterAuth({
         enabled: true
     },
     requireEmailVerification: false,
+    trustedOrigins: ["http://localhost:3000", "http://localhost:5173"],
     user : {
         additionalFields:{
             usertype: {

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import './App.css'
-import {AuthAPI, login, signup} from './apis/AuthAPI'
+import {AuthAPI} from './apis/AuthAPI'
 
 export function App() {
   const [showModal, setShowModal] = useState(false);
