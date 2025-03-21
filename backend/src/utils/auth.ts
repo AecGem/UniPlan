@@ -1,11 +1,12 @@
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { PrismaClient } from "@prisma/client";
+import { Pool } from "pg";
  
 const prisma = new PrismaClient();
 export const auth = betterAuth({
-    database: prismaAdapter(prisma, {
-        provider: "postgresql",
+    database: new Pool({
+        connectionString:"postgresql://uniplanner:$&asV>2d$oxR<fzp@34.47.10.230:5432/Uniplanner"
     }),
     emailAndPassword: {
         enabled: true
