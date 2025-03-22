@@ -32,6 +32,8 @@ const app = new Elysia()
 
     //API endpoints
 
+    //.get:
+
     //Course and Degree endpoints
     .get("/api/course", async ({ query: { id, isAmbig, didin } }) => {
         //Checkflags
@@ -192,7 +194,11 @@ const app = new Elysia()
         });
         return count;
 })
-    //Emma's testing zone
+//.post:      
+
+
+
+//Emma's testing zone
     .get("/api/course_test", async () => {
        
         let didin = 1
