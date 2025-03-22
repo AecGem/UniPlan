@@ -46,7 +46,8 @@ html, body {
 
 .sub-subtitle
 {
-  font-size: 24px;
+  padding: 5px;
+  font-size: 20px;
 }
 /* The nav bar under the header */
 .topnav {
