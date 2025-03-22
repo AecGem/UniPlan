@@ -43,6 +43,11 @@ html, body {
 .subtitle h1 {
   margin: 3px;
 }
+
+.sub-subtitle
+{
+  font-size: 12px;
+}
 /* The nav bar under the header */
 .topnav {
   background-color: #087459;
@@ -204,6 +209,7 @@ button:focus {
 
 .footer {
   padding-top: 10px;
+  padding-bottom:10px;
   background-color: #078b64;
   font-size: 20px;
   color: white;
