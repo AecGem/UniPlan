@@ -137,7 +137,7 @@ const app = new Elysia()
     })
     //Emma's testing zone
     .get("/api/course_test", async () => {
-        const result = await prisma.SavedSem.count();
+        const result = await prisma.degree.count();
         return result;
     })
 
