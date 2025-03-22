@@ -1,14 +1,24 @@
-{
-    "pi": 3.141,
-    "happy": true,
-    "name": "Niels",
-    "nothing": null,
-    "answer": {
-      "everything": 42
+
+  {
+    "Degree Requirements List" : 
+    {
+      "Size" : 10,
+      "Requirements" : [1, 2, 3, 4, 5, 6, 7, 8, 9],
+      "Degree": "Computer Science"
     },
-    "list": [1, 0, 2],
-    "object": {
-      "currency": "USD",
-      "value": 42.99
-    }
+    
+    "Saved Semesters" : [
+      {
+        "Name" : "Winter 2025",
+        "Saved Courses" : [1, 3]
+      },
+      {
+        "Name" : "Spring 2025",
+        "Saved Courses" : [4, 5]
+      },
+      {
+        "Name" : "Fall 2025",
+        "Saved Courses" : [6, 7, 8, 9]
+      }
+    ]
   }
