@@ -36,6 +36,7 @@ html, body {
   background-color: #078b64;
   font-size: 20px;
   color: white;
+  display: flex;
   text-align: center;
   align-items: center;
   margin: 0;
@@ -167,4 +168,37 @@ th {
 
 td {
   text-align: center;
+}
+
+/*styling for sign-out button*/
+button {
+  background-color: #078b64;
+  color: #fff;
+  border: 2px solid #0a505c;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-size: 1rem;
+  outline: none;
+}
+button:hover {
+  background-color: #09a777;
+  color: #078b64;
+}
+button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px #054e38;
+}
+.icon-group {
+  display: flex;
+  margin-left: auto;
+  border: none;
+  cursor: pointer;
+  color: #004640;
+  outline: none;
+  position: relative;
+}
+.sign-out
+{
+  justify-content: right;
 }

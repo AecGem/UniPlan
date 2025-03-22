@@ -32,7 +32,10 @@ const app = new Elysia()
 
     //API endpoints
 
-    //.get:
+    //Verification endpoint
+    .get("/api/verification", async ({query:id}) =>{
+        return "nothing here for the moment."
+    })
 
     //Course and Degree endpoints
     .get("/api/course", async ({ query: { id, isAmbig, didin } }) => {
@@ -172,7 +175,7 @@ const app = new Elysia()
         const count = await prisma.savedSem.count({
             where: {
                 courses: {
-                    has: passedCId, 
+                    cid: passedCId, 
                 },
             },
         });
@@ -195,18 +198,27 @@ const app = new Elysia()
         return count;
     })
   
-
-
     //Emma's testing zone
 
-    .get("/api/course_test", async ({ query: {test} }) => {
-       
+    .get("/api/course_test", async ({ 
+        query: {test} 
+    }) => {
+        
+       console.log("reached start")
         const newDegree = await prisma.degree.create({
             data: {
             degree: "this is a test",
             },
             });
+            
             return newDegree;
+    })
+    //carolyn's test zone
+    .get("/api/caro_test", async ({ 
+        query: {test} 
+    }) => {
+            //put your prisma here!!
+  
     })
 
     //Authentication endpoints
