@@ -1,39 +1,26 @@
 Requirements elicitation:
 Requirements:
 Both user roles must be able to create an account, and login to an existing account with the correct username and password.
-For sign up, users must be able to enter a username,password, and confirmation of password .User should also be able to indicate their role at sign up. If the username is already in use, password and confirmation do not match, or password is invalid, the user should receive an error message informing them when attempting to submit the form, and sign up should not go through .
-For login, if the username exists and the entered password matches the password in the database, the user should be logged in. If one of the previously listed conditions is not met, the user should receive an error message when attempting to login and login should not go through.
+For sign up, users must be able to enter an email,password, and confirmation of password .User should also be able to indicate their role at sign up. If the email is already in use, password and confirmation do not match, or password is invalid, the user should receive an error message informing them when attempting to submit the form, and sign up should not go through .
+For login, if the email exists and the entered password matches the password in the database, the user should be logged in. If one of the previously listed conditions is not met, the user should receive an error message when attempting to login and login should not go through.
 Registrant must be able to:
 Select their desired degree and see the required classes for said degree.
 When degree is selected the registrant should be able to see the names and course numbers of that degrees required classes, as well as the amount of electives both open and restricted (ie: non-computer science science elective) and classes that must fit a specific requirement (ie:math or stat above 200 level, 400 level computer science)
-Select the number of years they wish to take their degree over, and the desired start year for that degree.
-Schedule should default to a four year degree.
-Changing the number of years will change the amount of semesters shown.
-Once a starting year is selected semesters should display the year as well as the season.
+Create, save,  rename, and delete Semesters
+When a new semester is created it should appear next to the previous created semester
+When a semester is renamed the new name should appear instead of the old for the remainder of the session.
+When a semester is saved, if the user logs out and logs back in it should have the same title and courses as it did when it was saved
+If the semester is not saved after changes have been made, and the user logs out and back in, it should appear the same as it did when it was last saved.
+If a semester is deleted it should vanish.
 Drag and drop classes from the requirements for their degree into the semesters they wish to take said classes in.
-The user should see a list of classes that have not yet been scheduled.
+The user should see a list of classes that are required for their selected degree.
 Once a class has been placed into a semester it should appear in that semester unless moved or removed.
-Classes that have been placed should no longer be listed as to be scheduled
-Users should be able to enter a specific course number in  class blocks representing electives and classes that must fit a specific requirement, which will then display the specific class that has been entered under the heading for that back, but will not change the behaviour of the block. (ie: a 400 level computer science block, once CS 409 has been entered for that block will display 400 level computer science: CS 409, but will not check prerequisites for cs 409)
-If a required class with a prerequisite is placed without its prerequisite preceding it, an error message should be displayed, but the class should still be placed.
-Designate a given semester as a co-op or gap semester.
-If a semester is designated as co-op the registrant should be unable to schedule more than one class in said semester.
-If a semester is designated as a gap semester, the registrant should be unable to schedule classes in said semester.
 Save schedule and view it again on subsequent logins.
 The user should be able to save a schedule in its current state and logout, then on subsequent logins the user should see the previously saved schedule.
-View a suggested plan for their degree:
-The user should be able to press a suggestion button and see a suggested schedule for their selected degree and number of years.
-Suggested schedule should include all required classes and electives for the degree, and all classes should be scheduled after their prerequisites if they have any.
-Suggested schedule should keep the number of classes per semester as balanced as possible, and should not schedule classes in the spring or summer semesters.
-Receive notifications about changes to their chosen degree:
-If a registrant has changed the requirements for the registrant’s chosen degree, the registrant should be notified via email.
+Verify degree plan
+When the user hits the “check degree for validity” button, they should either receive a message indicating their plan is valid and complete, or receive an error message indicating the issue
+
 Registrar should be able to:
-Create and modify degree plans:
-The  registrar should be able to create a new degree by entering its name and the required classes.
-The registrar should be able to modify the name and requirements of existing degrees.
-Create and modify classes:
-The registrant should be able to create new classes by entering the name, course number, prerequisites, and a short description of the class.
-The registrant should be able to modify the name, course number, prerequisites, and a description of existing classes.
 View scheduling data:
 Registrants should be able to see the total number of registrants who have chosen to take a given degree in a given semester. Registrants who have a co-op term in said semester will be counted, but registrants who have a gap semester should not.
 Registrants should be able to see the total number of registrants who have chosen to take a given class in a given semester.
@@ -45,20 +32,20 @@ Registrant:
 When a class block is dragged into a semester and dropped there, it should be displayed there and no longer appear in the to be scheduled list.
 When a registrant enters the correct username and password, they should be logged in and their previously saved schedule should be displayed, or if they have not previously saved a schedule a blank four year schedule should be displayed.
 Registrar:
-When a registrar enters the correct username and password, they should be logged in and a list of degrees should be displayed.
-When a registrar successfully  creates a degree with a title and a list of requirements, that  degree should now appear in the list on the registrar’s home page and should now be available as a degree option for registrants.
+When a registrar enters the correct username and password, they should be logged in and the registrar home page..
+When a registrar selects a degree and the information to be displayed, they should see the chosen information for the chosen degree.
 Robustness:
 Registrant:
-When a registrant places a class that has a prerequisite and the prerequisite has not been placed before it, the registrant should receive an error message, but the class should still be placed.
-If a registrant attempts to place a class anywhere except within a valid semester, the class should return to the to be scheduled list, and the registrant should receive an “invalid placement” error message.
+When a registrant places a class that has a prerequisite and the prerequisite has not been placed before it, when they verify their degree they should receive an error message indicating the issue.
+If a registrant attempts to place a class anywhere except within a valid semester, the class should return to the to be scheduled list
 Registrar:
-If a registrar attempts to create a degree with no title, or with no requirements, the registrar should receive an error message indicating which field is missing, and the degree should not be created.
-If a registrar attempts to create a class with title or course number missing, the registrar should receive an error message indicating which field is missing, and the class should not be created.
+Any user attempting to reach the registrar homepage without being logged in as a registrar should be redirected to the login/signup page.
+If a registrar attempts to sign in with an incorrect password, or an email for which there is no account, they should receive an error message indicating the issue and not be logged in.
 Time efficiency:
 Registrant:
 When a course is dragged from the to-be- scheduled list to a semester, it should disappear from the to-be-scheduled list and appear in the semester within ten seconds.
-When the registrant requests a suggested degree plan, they should receive a suggested degree plan within sixty seconds.
+When a registrant verifies their degree, they should receive feedback within ten seconds 
 Registrar:
-When a registrar creates a new degree, it should appear on the registrar homepage within sixty seconds.
-When a registrar clicks into a degree and selects a semester, the total number of registrants taking that class that semester and the top ten classes for that semester listed by number of registrants who have scheduled that class for that semester should appear within sixty seconds.
+When a registrar logs in they should see the registrar homepage within five seconds..
+When a registrar selects a degree and the information to be displayed, they should see information within ten seconds.
 
