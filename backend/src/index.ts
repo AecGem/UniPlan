@@ -131,8 +131,30 @@ const app = new Elysia()
 
     //Endpoints for registration statistics
 
-    .get("/api/registration", async () => {
-        const registrations = await prisma.SavedSem.findMany();
+    .get("/api/registration", async ({ query: {userid} }) => {
+        let registrations = null;
+        let uid_undefined = false;
+        if(userid==undefined){
+            uid_undefined = true;            
+        } 
+        if(uid_undefined){
+            const registrations = await prisma.SavedSem.findMany();
+        }
+        else if(!uid_undefined){ //find a specific users semesters
+            let passedId;
+            if (userid !== undefined) {
+                passedId = parseInt(userid);
+            }
+            else {
+                passedId = -1;
+            }
+            registrations = await prisma.SavedSem.findMany({
+                where: {
+                    cid: passedId
+                }
+             })
+        }
+
         return registrations;
     })
     .get("/api/sems_with_class", async ({ query: {id} }) => {
