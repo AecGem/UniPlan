@@ -186,7 +186,7 @@ button:hover {
 }
 button:focus {
   outline: none;
-  box-shadow: 0 0 0 3px #067050;
+  box-shadow: 0 0 0 3px #054e38;
 }
 .icon-group {
   display: flex;

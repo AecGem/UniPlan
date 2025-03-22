@@ -138,10 +138,11 @@ export const App = () => {
     <div className="page-container">
       <header className="subtitle">
         <h1>UniPlan: Registrar's Homepage</h1>
-        <div class="topnav">
-          <button className="sign-out" onClick={handleSignOut}>
+        <button className="sign-out" onClick={handleSignOut}>
               Sign Out
           </button>
+        <div class="topnav">
+          <a> On this page the admin can view statistics related to degrees and enrollment </a>
         </div>
       </header>
       
