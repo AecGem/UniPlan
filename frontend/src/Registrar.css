@@ -171,7 +171,7 @@ td {
 
 /*styling for sign-out button*/
 button {
-  background-color: #0d6373;
+  background-color: #078b64;
   color: #fff;
   border: 2px solid #0a505c;
   border-radius: 6px;
@@ -181,12 +181,12 @@ button {
   outline: none;
 }
 button:hover {
-  background-color: #5ed8ed;
-  color: #0d6373;
+  background-color: #09a777;
+  color: #078b64;
 }
 button:focus {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(6, 80, 90, 0.6);
+  box-shadow: 0 0 0 3px #067050;
 }
 .icon-group {
   display: flex;
@@ -196,4 +196,8 @@ button:focus {
   color: #004640;
   outline: none;
   position: relative;
+}
+.sign-out
+{
+  justify-content: right;
 }
