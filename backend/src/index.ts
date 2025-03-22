@@ -195,11 +195,12 @@ const app = new Elysia()
         return count;
     })
   
-
-
     //Emma's testing zone
 
-    .get("/api/course_test", async ({ query: {test} }) => {
+    .get("/api/course_test", async ({ 
+        query: {test} 
+    }) => {
+        
        console.log("reached start")
         const newDegree = await prisma.degree.create({
             data: {
@@ -207,8 +208,7 @@ const app = new Elysia()
             },
             });
             
-        console.log("reached end")
-        return newDegree;
+            return newDegree;
     })
 
     //Authentication endpoints
