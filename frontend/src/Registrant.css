@@ -353,6 +353,8 @@ button:focus {
 }
 
 .verify-content {
+  display: flex;
+  align-items: right;
   color: #117967;
   background-color: rgba(255, 255, 255, 0.918);
   border: 2px solid #0a505c;
