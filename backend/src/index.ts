@@ -199,7 +199,7 @@ const app = new Elysia()
 
 //Emma's testing zone
 
-    .post("/api/course_test", async ({ query: {test} }) => {
+    .get("/api/course_test", async ({ query: {test} }) => {
        
         const newDegree = await prisma.degree.create({
             data: {
