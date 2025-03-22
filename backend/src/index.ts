@@ -135,10 +135,21 @@ const app = new Elysia()
         const registrations = await prisma.SavedSem.findMany();
         return registrations;
     })
+    .get("/api/sems_with_class", async ({ query: {id} }) => {
+        let cid = 1
+        const count = await prisma.savedSem.count({
+            where: {
+                courses: {
+                    has: cid,
+                },
+            },
+        });
+        return count;
+    })
     //Emma's testing zone
     .get("/api/course_test", async () => {
         let id = 1
-        const count = await prisma.degree.count({
+        const count = await prisma.savedSem.count({
             where: {
                 courses: {
                     has: id,
