@@ -36,7 +36,6 @@ html, body {
   background-color: #078b64;
   font-size: 20px;
   color: white;
-  display: flex;
   text-align: center;
   align-items: center;
   margin: 0;
@@ -201,4 +200,14 @@ button:focus {
 .sign-out
 {
   justify-content: right;
+}
+
+.footer {
+  padding-top: 10px;
+  background-color: #078b64;
+  font-size: 20px;
+  color: white;
+  text-align: center;
+  align-items: center;
+  margin: 0;
 }

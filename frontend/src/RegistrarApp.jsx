@@ -249,6 +249,11 @@ export const App = () => {
             </div>
           </div>  
         </div>
+        <div className="footer"> 
+          <button className="sign-out" onClick={handleSignOut}>
+              Sign Out
+          </button>
+        </div>
       </div>
   ); 
 }
