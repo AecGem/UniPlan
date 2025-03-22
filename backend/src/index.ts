@@ -32,7 +32,10 @@ const app = new Elysia()
 
     //API endpoints
 
-    //.get:
+    //Verification endpoint
+    .get("/api/verification", async ({query:id}) =>{
+        return "nothing here for the moment."
+    })
 
     //Course and Degree endpoints
     .get("/api/course", async ({ query: { id, isAmbig, didin } }) => {
