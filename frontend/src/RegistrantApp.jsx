@@ -557,6 +557,7 @@ export default function App() {
         <div className="verify-content">
           {verification.map((v, idx) => (
             <p key={idx}>{JSON.stringify(v)}</p>
+            <p>ah beans</p>
           ))}
         </div>
 
