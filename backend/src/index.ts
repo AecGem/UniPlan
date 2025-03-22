@@ -141,7 +141,7 @@ const app = new Elysia()
         const count = await prisma.saved_sem.count({
                 where: {
                     courses: {
-                        has: cid, // Assuming courses is an array field
+                        has: id, // Assuming courses is an array field
                     },
                 },
                 distinct: ['u_id'], // Count distinct u_id
