@@ -148,7 +148,6 @@ const app = new Elysia()
             where: {
                 cid: {
                     in: courses,
-                    select:{cid : true}
                 },
             },
         });
