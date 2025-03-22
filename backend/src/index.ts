@@ -157,6 +157,7 @@ const app = new Elysia()
 
         return registrations;
     })
+    //get gount of semesters where a class appears
     .get("/api/sems_with_class", async ({ query: {id} }) => {
         let passedCId;
             if (id !== undefined) {
@@ -175,6 +176,22 @@ const app = new Elysia()
         });
         return count;
     })
+    .get("/api/sems_with_class", async ({ query: {didin} }) => {
+        let passedDId;
+        if (id !== undefined) {
+            passedDId = parseInt(didin);
+        }
+        else {
+            passedDId = -1;
+        }
+    
+        const count = await prisma.user.count({
+            where: {
+                did : passedDId
+            },
+        });
+        return count;
+})
     //Emma's testing zone
     .get("/api/course_test", async () => {
        
