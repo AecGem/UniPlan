@@ -159,7 +159,7 @@ const app = new Elysia()
 
         return registrations;
     })
-    //get gount of semesters where a class appears
+    //get count of semesters where a class appears
     .get("/api/sems_with_class", async ({ query: {id} }) => {
         let passedCId;
             if (id !== undefined) {
@@ -178,7 +178,7 @@ const app = new Elysia()
         });
         return count;
     })
-    .get("/api/sems_with_class", async ({ query: {didin} }) => {
+    .get("/api/degree_count", async ({ query: {didin} }) => {
         let passedDId;
         if (didin !== undefined) {
             passedDId = parseInt(didin);
@@ -193,11 +193,11 @@ const app = new Elysia()
             },
         });
         return count;
-})
-//.post:      
+    })
+  
 
 
-//Emma's testing zone
+    //Emma's testing zone
 
     .get("/api/course_test", async ({ query: {test} }) => {
        
