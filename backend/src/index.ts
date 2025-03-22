@@ -202,14 +202,14 @@ const app = new Elysia()
     .get("/api/course_test", async ({ 
         query: {test} 
     }) => {
-        /*
+        
        console.log("reached start")
         const newDegree = await prisma.degree.create({
             data: {
             degree: "this is a test",
             },
             });
-            */
+            
             return "shit";
     })
 
