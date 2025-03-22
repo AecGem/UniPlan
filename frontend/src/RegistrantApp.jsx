@@ -554,9 +554,11 @@ export default function App() {
       <div className="modal-backdrop">
       <div className="modal-content">
       <h2>Degree Verification</h2>
-        {verification.map((v, idx) => (
-          <p key={idx}>{JSON.stringify(v)}</p>
-        ))}
+        <div className="verify-content">
+          {verification.map((v, idx) => (
+            <p key={idx}>{JSON.stringify(v)}</p>
+          ))}
+        </div>
 
         <div className="modal-buttons">
           <button onClick={() => setShowValidModal(false)}>Close</button>
