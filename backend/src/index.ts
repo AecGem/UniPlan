@@ -136,11 +136,18 @@ const app = new Elysia()
         return registrations;
     })
     .get("/api/sems_with_class", async ({ query: {id} }) => {
-        let cid = 1
+        let passedCId;
+            if (id !== undefined) {
+                passedCId = parseInt(id);
+            }
+            else {
+                passedCId = -1;
+            }
+        
         const count = await prisma.savedSem.count({
             where: {
                 courses: {
-                    has: cid,
+                    has: passedCId, 
                 },
             },
         });
