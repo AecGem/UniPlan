@@ -138,10 +138,10 @@ const app = new Elysia()
     //Emma's testing zone
     .get("/api/course_test", async () => {
         let id = 1
-        const count = await prisma.savedSem.count({
+        const count = await prisma.degree.count({
             where: {
-                cId: {
-                    in: id,
+                courses: {
+                    has: id,
                 },
             },
         });
