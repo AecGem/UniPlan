@@ -102,6 +102,25 @@ export const App = () => {
       }
     };
 
+
+
+    //Here is a function that handles signout
+    const handleSignOut = async () => {
+        try {
+          await AuthAPI.logOut()
+    
+          //Clear any tokens from localStorage or cookies
+          localStorage.removeItem('token')
+          //its http only :3
+          //localStorage.removeItem('token');
+          router.invalidate();
+          navigate({ to: '/' })
+        } catch (error) {
+          console.error('Error signing out:', error)
+          // Optionally show an error message or fallback
+        }
+      }
+
     
     const [degree, setDegree] = useState("1"); // or "" if you prefer
     const handleDegreeChange = (degreeValue) => 
@@ -120,10 +139,9 @@ export const App = () => {
       <header className="subtitle">
         <h1>UniPlan: Registrar's Homepage</h1>
         <div class="topnav">
-          <a class="active" href="#plan">Plan</a>
-          <a href="#profile">Profile</a>
-          <a href="#saved">Saved</a>
-          <a href="#settings">Settings</a>
+          <button className="sign-out" onClick={handleSignOut}>
+              Sign Out
+          </button>
         </div>
       </header>
       
