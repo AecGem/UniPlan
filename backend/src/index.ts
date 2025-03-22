@@ -210,7 +210,7 @@ const app = new Elysia()
             },
             });
             
-            return "shit";
+            return newDegree;
     })
 
     //Authentication endpoints
