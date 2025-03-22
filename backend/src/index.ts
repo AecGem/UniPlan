@@ -197,17 +197,15 @@ const app = new Elysia()
 //.post:      
 
 
-
 //Emma's testing zone
-    .get("/api/course_test", async () => {
+
+    .post("/api/course_test", async ({ query: {test} }) => {
        
-        let didin = 1
-        const count = await prisma.user.count({
-            where: {
-                did : didin
+        const newDegree = await prisma.degree.create({
+            data: {
+            degree: "this is a test",
             },
-        });
-        return count;
+            });
     })
 
     //Authentication endpoints
