@@ -175,7 +175,7 @@ const app = new Elysia()
         const count = await prisma.savedSem.count({
             where: {
                 courses: {
-                    has: passedCId, 
+                    cid: passedCId, 
                 },
             },
         });
@@ -212,6 +212,13 @@ const app = new Elysia()
             });
             
             return newDegree;
+    })
+    //carolyn's test zone
+    .get("/api/caro_test", async ({ 
+        query: {test} 
+    }) => {
+            //put your prisma here!!
+  
     })
 
     //Authentication endpoints
