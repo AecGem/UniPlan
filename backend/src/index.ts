@@ -206,7 +206,7 @@ const app = new Elysia()
             degree: "this is a test",
             },
             });
-            return "created";
+            return newDegree;
     })
 
     //Authentication endpoints
