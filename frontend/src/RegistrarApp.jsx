@@ -138,11 +138,8 @@ export const App = () => {
     <div className="page-container">
       <header className="subtitle">
         <h1>UniPlan: Registrar's Homepage</h1>
-        <button className="sign-out" onClick={handleSignOut}>
-              Sign Out
-          </button>
         <div class="topnav">
-          <h2> On this page the admin can view statistics related to degrees and enrollment </h2>
+          <div className="sub-subtitle"> On this page the admin can view statistics related to degrees and enrollment </div>
         </div>
       </header>
       
@@ -248,6 +245,11 @@ export const App = () => {
               )}
             </div>
           </div>  
+        </div>
+        <div className="footer"> 
+          <button className="sign-out" onClick={handleSignOut}>
+              Sign Out
+          </button>
         </div>
       </div>
   ); 
