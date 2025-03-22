@@ -138,14 +138,16 @@ const app = new Elysia()
     //Emma's testing zone
     .get("/api/course_test", async () => {
         let id = 1;
-        const count = await prisma.savedSem.count({
-            where: {
-                cId: {
-                    in: id,
+        const count = await prisma.saved_sem.count({
+                where: {
+                    courses: {
+                        has: cid, // Assuming courses is an array field
+                    },
                 },
-            },
-        })
-        return count;
+                distinct: ['u_id'], // Count distinct u_id
+            });
+            
+            return count;
     })
 
     //Authentication endpoints
