@@ -217,8 +217,18 @@ const app = new Elysia()
     .get("/api/caro_test", async ({ 
         query: {test} 
     }) => {
-            //put your prisma here!!
-  
+
+        console.log("begin")
+        const updateSem = await prisma.degree.update({
+            where: {
+              did: 5,
+            },
+            data: {
+              degree: 'test',
+              req: [3,6,7,22]
+            },
+          });
+          return "looool";
     })
 
     //Authentication endpoints
