@@ -56,6 +56,7 @@ export default function App() {
   const router = useRouter();
   const [degrees, setDegrees] = useState([]);
   const [selectedDegreeId, setSelectedDegreeId] = useState(null);
+  const [verification, setVerify] = useState([]);
 
   // Fetch courses from the backend when the component mounts
   useEffect(() => {
@@ -77,7 +78,6 @@ export default function App() {
     fetch(url)
       .then(res => res.json())
       .then(data => {
-        setDegrees(data);
         if (data.length > 0){
           setSelectedDegreeId(data[0].did);
         }
@@ -85,11 +85,23 @@ export default function App() {
       .catch(err => console.error('Error fetching degrees:', err));
   }, []);
 
+  // Fetch degrees from the backend when the component mounts
+  useEffect(() => {
+    const url = `/api/verification`;
+    fetch(url)
+      .then(res => res.json())
+      .then(data => {
+        setVerify(data);
+      })
+      .catch(err => console.error('Error fetching verification:', err));
+  }, []);
+
   /** ---------------------------
    *  MODAL STATE (Add/Edit)
    * ---------------------------*/
   const [showModal, setShowModal] = useState(false);
   const [showDescModal, setShowDescModal] = useState(false);
+  const [showValidModal, setShowValidModal] = useState(false);
   const [descCourse, setDescCourse] = useState(null);
   const [isEditMode, setIsEditMode] = useState(false);
   const [tempSemesterId, setTempSemesterId] = useState(null); // track which semester we're editing
@@ -248,8 +260,8 @@ export default function App() {
   /** ---------------------------
    *  Check Degree Validity
    * ---------------------------*/
-    const checkValid = (semesterId) => {
-
+    const checkValid = () => {
+      setShowValidModal(true);
     };
 
   /** ---------------------------
@@ -537,6 +549,20 @@ export default function App() {
           </div>
         </div>
       </div>
+    )}
+    {showValidModal && (
+      <div className="modal-backdrop">
+      <div className="modal-content">
+      <h2>Degree Verification</h2>
+        {verification.map((v, idx) => (
+          <p key={idx}>{JSON.stringify(v)}</p>
+        ))}
+
+        <div className="modal-buttons">
+          <button onClick={() => setShowValidModal(false)}>Close</button>
+        </div>
+      </div>
+    </div>
     )}
   </div>
   );
