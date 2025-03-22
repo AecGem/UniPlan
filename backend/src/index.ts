@@ -178,7 +178,7 @@ const app = new Elysia()
     })
     .get("/api/sems_with_class", async ({ query: {didin} }) => {
         let passedDId;
-        if (id !== undefined) {
+        if (didin !== undefined) {
             passedDId = parseInt(didin);
         }
         else {
