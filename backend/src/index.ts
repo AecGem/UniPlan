@@ -179,7 +179,7 @@ const app = new Elysia()
     .get("/api/course_test", async () => {
        
         let didin = 1
-        const count = await prisma.degree.count({
+        const count = await prisma.user.count({
             where: {
                 did : didin
             },
