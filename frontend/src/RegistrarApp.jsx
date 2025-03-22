@@ -142,7 +142,7 @@ export const App = () => {
               Sign Out
           </button>
         <div class="topnav">
-          <a> On this page the admin can view statistics related to degrees and enrollment </a>
+          <h2> On this page the admin can view statistics related to degrees and enrollment </h2>
         </div>
       </header>
       

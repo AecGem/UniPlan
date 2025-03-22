@@ -36,6 +36,8 @@ html, body {
   background-color: #078b64;
   font-size: 20px;
   color: white;
+  display: flex;
+  flex-direction: row;
   text-align: center;
   align-items: center;
   margin: 0;
