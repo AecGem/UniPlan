@@ -137,17 +137,23 @@ const app = new Elysia()
     })
     //Emma's testing zone
     .get("/api/course_test", async () => {
-        let id = 1;
-        const count = await prisma.saved_sem.count({
-                where: {
-                    courses: {
-                        has: id, // Assuming courses is an array field
-                    },
+        const didin = 1;
+        const courses = await prisma.degree
+            .findUnique({
+                where: { did: didin },
+                select: { courses: true },
+            })
+            .then((degree) => degree?.courses || []);
+        const result = await prisma.course.findMany({
+            where: {
+                cid: {
+                    in: courses,
+                    select:{cid : true}
                 },
-                distinct: ['u_id'], // Count distinct u_id
-            });
-            
-            return count;
+            },
+        });
+
+        return result;
     })
 
     //Authentication endpoints
