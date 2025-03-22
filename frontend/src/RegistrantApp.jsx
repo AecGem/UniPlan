@@ -331,9 +331,6 @@ export default function App() {
         <h1>UniPlan: Registrant's Homepage</h1>
         <nav className="topnav">
           <a className="active" href="#plan">Plan</a>
-          <a href="#profile">Profile</a>
-          <a href="#saved">Saved</a>
-          <a href="#settings">Settings</a>
           <button className="sign-out" onClick={handleSignOut}>
             Sign Out
           </button>
