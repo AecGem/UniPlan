@@ -168,3 +168,32 @@ th {
 td {
   text-align: center;
 }
+
+/*styling for sign-out button*/
+button {
+  background-color: #0d6373;
+  color: #fff;
+  border: 2px solid #0a505c;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-size: 1rem;
+  outline: none;
+}
+button:hover {
+  background-color: #5ed8ed;
+  color: #0d6373;
+}
+button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(6, 80, 90, 0.6);
+}
+.icon-group {
+  display: flex;
+  margin-left: auto;
+  border: none;
+  cursor: pointer;
+  color: #004640;
+  outline: none;
+  position: relative;
+}
