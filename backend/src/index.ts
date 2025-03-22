@@ -195,8 +195,6 @@ const app = new Elysia()
         return count;
     })
   
-
-
     //Emma's testing zone
 
     .get("/api/course_test", async ({ 
