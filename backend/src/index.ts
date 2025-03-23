@@ -219,16 +219,15 @@ const app = new Elysia()
     }) => {
 
         console.log("begin")
-        const updateSem = await prisma.degree.update({
+        const updateUserDegree = await prisma.user.update({
             where: {
-              did: 5,
+                id: 1
             },
             data: {
-              degree: 'test',
-              courses: [3,6,7,22]
+                did: 1
             },
-          });
-          return "looool";
+        });
+        return updateUserDegree;
     })
 
     //Authentication endpoints
