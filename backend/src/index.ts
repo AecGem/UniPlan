@@ -223,7 +223,7 @@ const app = new Elysia()
         })
     })
 
-        .post("/api/saveSemester", async({body: {semId, name, course_list }}) =>{
+        .post("/api/saveSemester", async({body: {semId, name, course_list, userid }}) =>{
            
            
             const sem = await prisma.saved_sem.update({
@@ -235,21 +235,31 @@ const app = new Elysia()
                 sname: name
                 },
                 });
-                
                 return sem;
+                const updateUserSave = await prisma.user.update({
+                    where: {
+                        id: userid
+                    },
+                    data: {
+                        hassaved: true
+                    }
+                });
+                return updateUserSave;
+                
         },{
             body: t.Object({
             semId: t.Optional(t.Number()),
             name: t.Optional(t.String()),
-            course_list: t.Optional(t.Array(t.Number()))
+            course_list: t.Optional(t.Array(t.Number())),
+            userid: t.Optional(t.String())
         })
 
         })
 
-    .get("/api/deleteSemester", async ({ query: {semesterid} }) => {
+    .get("/api/deleteSemester", async ({ query: {semId} }) => {
         const deleteSem = await prisma.saved_sem.delete({
             where: {
-                sem_id: semesterid
+                sem_id: semId
             },
           });
           return deleteSem;
@@ -332,7 +342,24 @@ const app = new Elysia()
         query: {test} 
     }) => {
         //console.log("reached start")
-        
+        const sem = await prisma.saved_sem.update({
+            where: {
+                sem_id: 6
+            },
+            data: {
+            courses: [11, 12, 13, 14, 15],
+            sname: "name"
+            },
+            });
+            const updateUserSave = await prisma.user.update({
+                where: {
+                    id: "xNgKY4kLlWdCOimDUdIYgVKH9VWK6sLO"
+                },
+                data: {
+                    hassaved: true
+                }
+            });
+            return sem;
     })
     //carolyn's test zone
     .get("/api/caro_test", async ({ 

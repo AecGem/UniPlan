@@ -1,5 +1,5 @@
 // RegistrantApp.jsx
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { useNavigate } from '@tanstack/react-router'
 import { AuthAPI } from './apis/AuthAPI'
 import './Registrant.css'
@@ -40,11 +40,14 @@ function CollapsibleSection({ title, items, onDragStartAside }) {
 }
 
 // Main App Component
-export default function App({ context }) {
-  console.log(context);
+export default function App({}) {
+  console.log("im doing to kill myself in front of a crowd of schoolchildren");
+  const session  = useContext(Route.context);
   //let { data: session } = authClient.getSession();
-  //console.log(userInfo.session.userId);
+  
+  console.log(session);
 
+  console.log("lain could never");
   /** ---------------------------
     *  SEMESTERS + COURSES STATE
     *  Each semester in 'semesters' has this shape:
@@ -375,12 +378,12 @@ export default function App({ context }) {
       console.error("Semester not found");
       return;
     }
-    // Call your delete endpoint with the sem_id
+    // Call your delete endpoint with the semId
     try {
       const res = await fetch(`/api/deleteSemester`, {
         method: 'POST', // or DELETE, depending on your API design
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ sem_id: semesterToDelete.sem_id })
+        body: JSON.stringify({ semId: semesterToDelete.semId })
       });
       if (!res.ok) {
         throw new Error("Failed to delete semester");
