@@ -154,8 +154,23 @@ const app = new Elysia()
         })
     })
 
-    .get("/api/degree", async () => {
-        const degrees = await prisma.degree.findMany();
+    .get("/api/degree", async ({query: degreeid}) => {
+        let did_undefined = false;
+        let degrees = null;
+        
+        if (degreeid === undefined){
+            did_undefined = true;
+        }
+        if (did_undefined) {
+            const degrees = await prisma.degree.findMany();
+        }
+        else if (!did_undefined){
+            degrees = await prisma.degree.findMany({
+                where: {
+                    did: degreeid
+                }
+            });
+        }
         return degrees;
     })
 
