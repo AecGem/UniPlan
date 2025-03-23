@@ -421,7 +421,7 @@ export default function App(session) {
       semId: semesterToSave.sem_id,
       userid: userInfo.session ? userInfo.session.userId : null,
       name: `${semesterToSave.type} ${semesterToSave.year}`,
-      course_list: semesterToSave.courses.map((course) => course.cId)
+      course_list: semesterToSave.courses.map((course) => course.cid)
     };
 
     console.log("Saving to DB with payload:", payload);
