@@ -389,7 +389,7 @@ export default function App(session) {
       const res = await fetch(`/api/deleteSemester`, {
         method: 'POST', // or DELETE, depending on your API design
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ semId: semesterToDelete.semId })
+        body: JSON.stringify({ sem_id: semesterToDelete.sem_id })
       });
       if (!res.ok) {
         throw new Error("Failed to delete semester");
