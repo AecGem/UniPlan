@@ -197,16 +197,10 @@ const app = new Elysia()
             const registrations = await prisma.SavedSem.findMany();
         }
         else if(!uid_undefined){ //find a specific users semesters
-            let passedId;
-            if (userid !== undefined) {
-                passedId = parseInt(userid);
-            }
-            else {
-                passedId = -1;
-            }
+
             registrations = await prisma.SavedSem.findMany({
                 where: {
-                    cid: passedId
+                    u_id: userid
                 }
              })
         }
