@@ -154,24 +154,29 @@ const app = new Elysia()
         })
     })
 
-    .get("/api/degree", async ({query: degreeid}) => {
+    .get("/api/degree", async ({query: didin}) => {
         let did_undefined = false;
         let degrees = null;
         
-        if (degreeid === undefined){
+        if (didin === undefined){
             did_undefined = true;
         }
         if (did_undefined) {
-            const degrees = await prisma.degree.findMany();
+            degrees = await prisma.degree.findMany();
         }
         else if (!did_undefined){
             degrees = await prisma.degree.findMany({
                 where: {
-                    did: parseInt(degreeid)
+                    did: parseInt(didin)
                 }
             });
         }
         return degrees;
+    },
+    {
+        query: t.Object({
+            didin: t.Optional(t.String())
+        })
     })
 
     .get("/api/update_user_degree", async ({query: userid, did_in}) => {
