@@ -68,12 +68,12 @@ const app = new Elysia()
         let id_undefined = false;
         let did_undefined = false;
 
-            if(id===undefined){
-                id_undefined = true;
-            }
-            if(didin===undefined){
-               did_undefined = true;
-            }
+        if(id===undefined){
+            id_undefined = true;
+        }
+        if(didin===undefined){
+            did_undefined = true;
+        }
 
         let isAmbig_undefined = false;
         if (isAmbig === undefined) {
@@ -173,7 +173,7 @@ const app = new Elysia()
             }
             degrees = await prisma.degree.findFirst({
                 where: {
-                    did: 1
+                    did: didin,
                 }
             });
         
@@ -185,29 +185,19 @@ const app = new Elysia()
 
     })
 
-    .get("/api/update_user_degree", async ({query: userid, did_in}) => {
+    .get("/api/update_user_degree", async ({query: userid, degree_id}) => {
         const updateUserDegree = await prisma.user.update({
             where: {
                 id: userid
             },
             data: {
-                did: parseInt(did_in)
+                did: parseInt(degree_id)
             },
         });
         return updateUserDegree;
     })
 
-    .get("/api/update_user_saved", async({query: userid, savedbool}) => {
-        const updateUserSave = await prisma.user.update({
-            where: {
-                id: userid
-            },
-            data: {
-                hassaved: savedbool
-            }
-        });
-        return updateUserSave;
-    })
+
 
     .post("/api/createSemester", async ({ body: {userid} }) => {
         const newSem = await prisma.saved_sem.create({
@@ -223,7 +213,7 @@ const app = new Elysia()
         })
     })
 
-        .post("/api/saveSemester", async({body: {semId, name, course_list }}) =>{
+        .post("/api/saveSemester", async({body: {semId, name, course_list, userid }}) =>{
            
            
             const sem = await prisma.saved_sem.update({
@@ -235,25 +225,37 @@ const app = new Elysia()
                 sname: name
                 },
                 });
-                
+                const updateUserSave = await prisma.user.update({
+                    where: {
+                        id: userid
+                    },
+                    data: {
+                        hassaved: true
+                    }
+                });
                 return sem;
+                
         },{
             body: t.Object({
             semId: t.Optional(t.Number()),
             name: t.Optional(t.String()),
-            course_list: t.Optional(t.Array(t.Number()))
+            course_list: t.Optional(t.Array(t.Number())),
+            userid: t.Optional(t.String())
         })
 
         })
 
-    .get("/api/deleteSemester", async ({ query: {semesterid} }) => {
+    .get("/api/deleteSemester", async ({ query: {semId} }) => {
         const deleteSem = await prisma.saved_sem.delete({
             where: {
-                sem_id: semesterid
+                sem_id: semId
             },
           });
           return deleteSem;
-    })
+    }, {
+        query: t.Object({
+        semId: t.Optional(t.Number()),
+    })})
 
     //Endpoints for registration statistics
 
@@ -283,28 +285,42 @@ const app = new Elysia()
     })
     
     //get count of semesters where a class appears
-    .get("/api/sems_with_class", async ({ query: {id} }) => {
-        let passedCId;
-            if (id !== undefined) {
-                passedCId = parseInt(id);
-            }
-            else {
-                passedCId = -1;
-            }
-        
-        const count = await prisma.savedSem.count({
-            where: {
-                courses: {
-                    cid: passedCId, 
+    .get("api/course_stats", async ({query: degreeid}) => {
+        const results: {
+            count: number,
+            courseName: string,
+        }[] = [];
+        for (let i = 1; i < 44; i++){
+            const count = await prisma.saved_sem.count({
+                where: {
+                courses: { has: i,},
                 },
-            },
-        },{
-            query: t.Object({
-                id: t.Optional(t.Number())
-            })
-        });
-        return count;
+            });
+            const courseName = await prisma.course.findUnique({
+                where: {
+                    cid: i,
+                    isambig: false,
+                },
+                select: {
+                    shortname: true,
+                },
+            });
+            const inDegree = await prisma.degree.findFirst({
+                where: {
+                    did: degreeid,
+                    courses: {has: i,},
+                },
+            });
+            if (courseName && inDegree){
+                results.push({
+                    count,
+                    courseName,
+                });
+            };
+        };
+        return results;
     })
+
     .get("/api/degree_count", async ({ query: {didin} }) => {
         let passedDId;
         if (didin !== undefined) {
@@ -322,7 +338,7 @@ const app = new Elysia()
         return count;
     },{
         query: t.Object({
-            didin: t.Optional(t.String())
+        didin: t.Optional(t.String())
         })
     })
   
@@ -332,7 +348,24 @@ const app = new Elysia()
         query: {test} 
     }) => {
         //console.log("reached start")
-        
+        const sem = await prisma.saved_sem.update({
+            where: {
+                sem_id: 6
+            },
+            data: {
+            courses: [11, 12, 13, 14, 15],
+            sname: "name"
+            },
+            });
+            const updateUserSave = await prisma.user.update({
+                where: {
+                    id: "xNgKY4kLlWdCOimDUdIYgVKH9VWK6sLO"
+                },
+                data: {
+                    hassaved: true
+                }
+            });
+            return sem;
     })
     //carolyn's test zone
     .get("/api/caro_test", async ({ 
@@ -344,12 +377,10 @@ const app = new Elysia()
             count: number,
             courseName: string,
         }[] = [];
-        for (let i = 1; i < 4; i++){
+        for (let i = 1; i < 44; i++){
             const count = await prisma.saved_sem.count({
                 where: {
-                courses: {
-                    has: i,
-                    },
+                courses: { has: i,},
                 },
             });
             const courseName = await prisma.course.findUnique({
@@ -361,7 +392,13 @@ const app = new Elysia()
                     shortname: true,
                 },
             });
-            if (courseName){
+            const inDegree = await prisma.degree.findFirst({
+                where: {
+                    did: 1,
+                    courses: {has: i,},
+                },
+            });
+            if (courseName && inDegree){
                 results.push({
                     count,
                     courseName,

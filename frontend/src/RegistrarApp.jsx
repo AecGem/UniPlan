@@ -7,8 +7,8 @@ import { useRouter } from "@tanstack/react-router";
 import { userInfo } from './utils/auth'
 import { authClient } from './utils/auth'
 
-export const App = () => {
-  const { data: session } = authClient.getSession();
+export const App = (session) => {
+  
   const router = useRouter();
   const navigate = useNavigate();
   /*

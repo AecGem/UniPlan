@@ -1,5 +1,5 @@
 // RegistrantApp.jsx
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { useNavigate } from '@tanstack/react-router'
 import { AuthAPI } from './apis/AuthAPI'
 import './Registrant.css'
@@ -40,11 +40,7 @@ function CollapsibleSection({ title, items, onDragStartAside }) {
 }
 
 // Main App Component
-export default function App({ context }) {
-  console.log(context);
-  //let { data: session } = authClient.getSession();
-  //console.log(userInfo.session.userId);
-
+export default function App(session) {
   /** ---------------------------
     *  SEMESTERS + COURSES STATE
     *  Each semester in 'semesters' has this shape:
@@ -64,7 +60,7 @@ export default function App({ context }) {
   const [selectedDegreeId, setSelectedDegreeId] = useState(null);
   const [verification, setVerify] = useState([]);
 
-
+  console.log(session);
   //Check to see if a homie is logged in. If not logged in, gtfo.
   /*
   if (userInfo.session.userId === null) {
@@ -100,6 +96,19 @@ export default function App({ context }) {
       })
       .catch(err => console.error('Error fetching degrees:', err));
   }, []);
+
+  // New useEffect for fetching courses based on the selected degree
+  useEffect(() => {
+    if (selectedDegreeId !== null) {
+      const params = new URLSearchParams();
+      params.append('degree_id', selectedDegreeId);
+      const url = `/api/course?${params.toString()}`;
+      fetch(url)
+        .then(res => res.json())
+        .then(data => setCourses(data))
+        .catch(err => console.error('Error fetching courses for degree:', err));
+    }
+  }, [selectedDegreeId]);
 
   // Fetch verification from the backend when the component mounts
   useEffect(() => {
@@ -321,8 +330,7 @@ export default function App({ context }) {
       };
       setSemesters((prev) => [...prev, newSem]);
 
-      // Optionally, open your modal for further editing
-      setShowModal(true);
+      setShowModal(false);
     } catch (err) {
       console.error("Error creating semester:", err);
     }
@@ -368,25 +376,24 @@ export default function App({ context }) {
     );
   };
 
-  const handleDeleteSemester = async (id) => {
-    // Find the semester in state using the local id
-    const semesterToDelete = semesters.find((sem) => sem.id === id);
+  const handleDeleteSemester = async (localId) => {
+    const semesterToDelete = semesters.find((sem) => sem.id === localId);
     if (!semesterToDelete) {
-      console.error("Semester not found");
+      console.error("Semester not found in local state");
       return;
     }
-    // Call your delete endpoint with the sem_id
-    try {
-      const res = await fetch(`/api/deleteSemester`, {
-        method: 'POST', // or DELETE, depending on your API design
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ sem_id: semesterToDelete.sem_id })
+      const { sem_id } = semesterToDelete;
+  
+      try {
+      const response = await fetch(`/api/deleteSemester?semId=${sem_id}`, {
+        method: "GET",
       });
-      if (!res.ok) {
+      if (!response.ok) {
         throw new Error("Failed to delete semester");
       }
-      // Remove it from local state
-      setSemesters((prev) => prev.filter((sem) => sem.id !== id));
+  
+      // 4. Remove it from local state
+      setSemesters((prev) => prev.filter((sem) => sem.id !== localId));
     } catch (err) {
       console.error("Error deleting semester:", err);
     }
@@ -403,27 +410,24 @@ export default function App({ context }) {
     setShowDescModal(false);
   };
 
-  const handleSaveSemesterToDB = (semId) => {
-    // Find the semester to save using its local state identifier.
-    const semesterToSave = semesters.find((sem) => sem.id === semId);
-    if (!semesterToSave) {
-      console.error("Semester not found");
-      return;
-    }
+  // RegistrantApp.jsx (snippet)
+
+  const handleSaveSemesterToDB = (localSemesterId) => {
+    const semesterToSave = semesters.find((s) => s.id === localSemesterId);
+    if (!semesterToSave) return console.error("Semester not found in local state");
 
     const payload = {
+      semId: semesterToSave.sem_id,
       userid: userInfo.session ? userInfo.session.userId : null,
       name: `${semesterToSave.type} ${semesterToSave.year}`,
-      course_list: semesterToSave.courses.map((course) => course.cId)
+      course_list: semesterToSave.courses.map((course) => course.cid)
     };
 
-    console.log(`Saving semester ${semId} to database with payload:`, payload);
+    console.log("Saving to DB with payload:", payload);
 
-    fetch('/api/saveSemester', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
+    fetch("/api/saveSemester", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload)
     })
       .then((res) => {
@@ -433,8 +437,7 @@ export default function App({ context }) {
         return res.json();
       })
       .then((data) => {
-        // The API should return an object with the new semester ID, e.g., { sem_id: 123 }
-        console.log("Semester saved with sem_id:", data.sem_id);
+        console.log("Semester updated with sem_id:", data.sem_id);
       })
       .catch((err) => console.error("Error saving semester:", err));
   };

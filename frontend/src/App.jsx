@@ -2,9 +2,12 @@ import { useState } from "react";
 import "./App.css";
 import { AuthAPI } from "./apis/AuthAPI";
 import { useNavigate } from "@tanstack/react-router";
+import { useRouter } from "@tanstack/react-router";
+
 
 
 export function App({ context }) {
+  const router = useRouter();
   const [showModal, setShowModal] = useState(false);
   const [isLoginMode, setIsLoginMode] = useState(true);
   const [loginEmail, setLoginEmail] = useState("");
@@ -27,18 +30,23 @@ export function App({ context }) {
     setErrorMessage("");
   };
 
-  const handleLoginSubmit = (e) => {
+  const handleLoginSubmit = async (e) => {
     e.preventDefault();
     if (!loginEmail || !loginPassword) {
       setErrorMessage("Please enter an Email and Password.");
       return;
     }
 
-    AuthAPI.login(loginEmail, loginPassword);
+    let logInData = await AuthAPI.login(loginEmail, loginPassword);
+    console.log(logInData);
+    //session.set(data.data.user, data.data.session); 
     // Instead of window.location.href, use navigate:
     if (signUpUserType === "admin") {
+      
+      router.invalidate({session: logInData.data.user});
       navigate({ to: "/registrar" });
     } else {
+      router.invalidate({session: logInData.data.user});
       navigate({ to: "/registrant" });
     }
 
@@ -48,7 +56,7 @@ export function App({ context }) {
     setShowModal(false);
   };
 
-  const handleSignupSubmit = (e) => {
+  const handleSignupSubmit = async (e) => {
     e.preventDefault();
     if (
       !signupForm.userEmail ||
@@ -63,15 +71,17 @@ export function App({ context }) {
       return;
     }
 
-    AuthAPI.signup(
+    let signUpData = await AuthAPI.signup(
       signupForm.userEmail,
       signupForm.password,
       signupForm.firstName.concat(" ", signupForm.lastName),
       signupForm.userType === "admin"
     );
     if (signUpUserType === "admin") {
+      router.invalidate({session : signUpData.data.user});
       navigate({ to: "/registrar" });
     } else {
+      router.invalidate({session : signUpData.data.user});
       navigate({ to: "/registrant" });
     }
 

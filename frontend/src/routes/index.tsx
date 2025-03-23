@@ -1,8 +1,15 @@
 import * as React from 'react';
 import * as IndexApp from '../App.jsx';
 import { createFileRoute } from '@tanstack/react-router';
+import { authClient } from '../utils/auth'
+import { UserInfo } from '../utils/auth'
 
-export const Route = createFileRoute('/')({
+interface RouterContext {
+  authClient: typeof authClient,
+  session?: UserInfo
+}
+
+export const Route = createFileRoute<RouterContext>('/')({
   component: Index,
 })
 

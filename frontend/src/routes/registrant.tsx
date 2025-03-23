@@ -1,11 +1,17 @@
 import * as React from 'react'
 import * as registrantApp from '../RegistrantApp.jsx'
 import { createFileRoute } from '@tanstack/react-router'
-
-export const Route = createFileRoute('/registrant')({
+import { authClient } from '../utils/auth'
+import { UserInfo } from '../utils/auth'
+interface RouterContext {
+  authClient: typeof authClient,
+  session?: UserInfo
+}
+export const Route = createFileRoute<RouterContext>('/registrant')({
   component: RouteComponent,
 })
 
 function RouteComponent() {
-  return <registrantApp.default />
+  const { session } = Route.useRouteContext();
+  return <registrantApp.default session={session} />
 }
