@@ -374,7 +374,7 @@ export default function App() {
     }
   
     const payload = {
-      u_id: userInfo.user ? userInfo.user.userId : null,
+      userid: userInfo.session ? userInfo.session.userId : null,
       sname: `${semesterToSave.type} ${semesterToSave.year}`,
       courses: semesterToSave.courses.map((course) => course.cId)
     };
