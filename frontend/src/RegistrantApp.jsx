@@ -282,7 +282,7 @@ export default function App() {
   
     try {
       const res = await fetch('/api/createSemester', {
-        method: 'POST',
+        method: 'GET',
         headers: {
           'Content-Type': 'application/json'
         },
