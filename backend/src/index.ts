@@ -157,13 +157,8 @@ const app = new Elysia()
     .get("/api/degree", async ({query: didin}) => {
         let did_undefined = false;
         let degrees = null;
-        let passedDId;
-        if (didin !== undefined) {
-            passedDId = parseInt(didin);
-        }
-        else {
-            passedDId = -1;
-        }
+
+
         if (didin === undefined){
             did_undefined = true;
         }
@@ -171,6 +166,13 @@ const app = new Elysia()
             degrees = await prisma.degree.findMany();
         }
         else if (!did_undefined){
+            let passedDId;
+            if (didin !== undefined) {
+                passedDId = parseInt(didin);
+            }
+            else {
+                passedDId = -1;
+            }
             degrees = await prisma.degree.findMany({
                 where: {
                     did: passedDId
