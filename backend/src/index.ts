@@ -13,6 +13,7 @@ import { file } from "bun"; //File I/O?
 import { PrismaClient } from "@prisma/client";
 import { betterAuth } from "better-auth";
 import { auth } from "./utils/auth";
+import { $ } from "bun";
 
 
 const prisma = new PrismaClient();
@@ -33,8 +34,32 @@ const app = new Elysia()
     //API endpoints
 
     //Verification endpoint
-    .get("/api/verification", async ({query:id}) =>{
-        return "nothing here for the moment."
+    .get("/api/verification", async ({query:{id, did}}) =>{
+        //It's all in my head, but I want non-fiction.
+        if (id===undefined || did===undefined){
+            return {
+                errors: 1,
+                errorsList:{1: "RUNTIME_ERR: user id and degree id must not be undefined!"}
+            };
+        }
+        else{
+            //its like 199 degrees
+            let directory = '/var/www/temp/UniPlan/'.concat(id);
+            await $`mkdir ${directory}`;
+            await $`curl https://localhost:443/api/degree?did=${did} > ${directory}/req.json`;
+            await $`curl https://localhost:443/api/sems_with_class?id=${id} >${directory}/sem.json` //TODO: Get the saved sem api.
+
+            //when you're doin it with me, doin it with me~!
+            await $`/var/www/UniPlan/backend/middleware/build/verifier ${directory}/req.json ${directory}/sem.json ${directory}/out.json`
+            let response = $`cat ${directory}/out.json`.json();
+            //await $`rm -rf ${directory}`
+
+            return response;
+        }
+        
+
+
+        
     })
 
     //Course and Degree endpoints
@@ -247,15 +272,15 @@ const app = new Elysia()
     }) => {
 
         console.log("begin")
-        const updateUserDegree = await prisma.user.update({
+        const updateUserSave = await prisma.user.update({
             where: {
-                id: 'akvi32V6b6gbkRutNA8VQWx4xBPjiYxL'
+                id: "akvi32V6b6gbkRutNA8VQWx4xBPjiYxL"
             },
             data: {
-                did: 1
-            },
-        });
-        return updateUserDegree;
+                hassaved: "true"
+            }
+        })
+        return updateUserSave;
     })
 
     //Authentication endpoints
