@@ -36,7 +36,7 @@ export function App({ context }) {
       setErrorMessage("Please enter an Email and Password.");
       return;
     }
-    if(loginForm.password != loginPassword)
+    if(loginPassword != logInData.data.password)
       {
         setErrorMessage("Incorrect Password");
         return;
@@ -109,14 +109,6 @@ export function App({ context }) {
       [name]: value,
     }));
   };
-
-
-
-
-
-
-
-
 
 
 
