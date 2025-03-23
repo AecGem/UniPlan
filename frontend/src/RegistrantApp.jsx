@@ -6,7 +6,7 @@ import './Registrant.css'
 import { useRouter } from "@tanstack/react-router";
 import { userInfo } from './utils/auth'
 import { authClient } from './utils/auth'
-import { RouterContext } from './routes/__root.tsx'
+//import { RouterContext } from './routes/__root.tsx'
 
 // Collapsible Section Sub-Component
 function CollapsibleSection({ title, items, onDragStartAside }) {
