@@ -43,6 +43,7 @@ function CollapsibleSection({ title, items, onDragStartAside }) {
 // Main App Component
 export default function App() {
   const { data: session } = authClient.getSession();
+  //console.log(userInfo.session.userId);
 
   /** ---------------------------
     *  SEMESTERS + COURSES STATE
@@ -94,7 +95,7 @@ export default function App() {
       .then(data => {
         setDegrees(data);
         if (data.length > 0){
-          setSelectedDegreeId(0);
+          setSelectedDegreeId(data[0].did);
         }
       })
       .catch(err => console.error('Error fetching degrees:', err));
@@ -293,9 +294,9 @@ export default function App() {
   
   const handleConfirmAddSemester = async () => {  
     const payload = {
-      userid: userInfo.session.userid
-      //sname: `${selectedType} ${selectedYear}`,
-      //courses: [] // new semester starts with no courses
+      userid: userInfo.session.userId,
+      sname: `${selectedType} ${selectedYear}`,
+      courses: [] // new semester starts with no courses
     };
 
     try {
