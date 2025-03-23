@@ -1,5 +1,9 @@
-import { useState } from 'react'
+//import { useState } from 'react'
 import './Registrar.css'
+import { useState, useEffect } from 'react'
+import { useNavigate } from '@tanstack/react-router'
+import { AuthAPI } from './apis/AuthAPI'
+import { useRouter } from "@tanstack/react-router";
 
 
 export const App = () => {
@@ -120,28 +124,45 @@ export const App = () => {
           // Optionally show an error message or fallback
         }
       }
-
     
-    const [degree, setDegree] = useState("1"); // or "" if you prefer
-    const handleDegreeChange = (degreeValue) => 
-      {
-        setDegree(degreeValue);  // Now we actually have `degree` state 
-      }
+//handling functions for the dropdowns
+    const [degrees, setDegrees] = useState([]);
+    const [selectedDegreeId, setSelectedDegreeId] = useState(null);
 
+      
     const [degInfo, setDegInfo] = useState("0a"); // or "" if you prefer
     const handleInfoChange = (degInfoValue) => 
       {
+        console.log("Selected: ");
+        console.log(selectedDegreeId);
+        console.log("degrees: ");
+        console.log(degrees);
+        console.log("data: ");
+        console.log(data);
         setDegInfo(degInfoValue);  // Now we actually have `degree` state 
       }
+
+      // Fetch degrees from the backend when the component mounts
+      useEffect(() => {
+        const url = `/api/degree`;
+        fetch(url)
+          .then(res => res.json())
+          .then(data => {
+            setDegrees(data);
+            if (data.length > 0){
+              setSelectedDegreeId(data[0].did);
+            }
+          })
+          .catch(err => console.error('Error fetching degrees:', err));
+      }, []);
+
 
   return (
     <div className="page-container">
       <header className="subtitle">
         <h1>UniPlan: Registrar's Homepage</h1>
         <div class="topnav">
-          <button className="sign-out" onClick={handleSignOut}>
-              Sign Out
-          </button>
+          <div className="sub-subtitle"> On this page the admin can view statistics related to degrees and enrollment </div>
         </div>
       </header>
       
@@ -151,10 +172,15 @@ export const App = () => {
 
           <div className="Degree-Dropdown">
             <label>Degree:&nbsp;</label>
-            <select value={degree} onChange={(e) => handleDegreeChange(e.target.value)}>
-              <option value="1">No Degree Selected</option>
-              <option value="2">Put Degree Variable Here</option>
-            </select>
+            <select
+            value={selectedDegreeId || ''}
+            onChange={(e) => setSelectedDegreeId(Number(e.target.value))}
+          >
+            <option value ="0">No Degree Selected</option>
+            {degrees.map((deg) => (
+              <option key={deg.did} value={deg.did}> {deg.degree} </option>
+            ))}
+          </select>
             
           </div>
           <div className="Info-Dropdown">
@@ -170,8 +196,8 @@ export const App = () => {
 
           <br /><br />
 
-          <div id="displayInfo" className="displayInfo" style={{visibility : degree === "1" ? "hidden" : "Visible"}}>
-            {degree ==="2" && 
+          <div id="displayInfo" className="displayInfo" style={{visibility : selectedDegreeId === "0" ? "hidden" : "Visible"}}>
+            {selectedDegreeId !=="0" &&
               (
                 <div className="courseInfo">
                   <div className="subtitle3">
@@ -247,6 +273,11 @@ export const App = () => {
               )}
             </div>
           </div>  
+        </div>
+        <div className="footer"> 
+          <button className="sign-out" onClick={handleSignOut}>
+              Sign Out
+          </button>
         </div>
       </div>
   ); 

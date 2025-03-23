@@ -43,6 +43,12 @@ html, body {
 .subtitle h1 {
   margin: 3px;
 }
+
+.sub-subtitle
+{
+  padding: 5px;
+  font-size: 20px;
+}
 /* The nav bar under the header */
 .topnav {
   background-color: #087459;
@@ -125,6 +131,7 @@ html, body {
 /*Styling for degree info:*/
 .displayInfo
 {
+  margin-top: 40px;
   visibility: hidden;
   border: 4px solid #065e48;
   border-radius: 10px;
@@ -136,7 +143,7 @@ html, body {
 {
   margin-bottom: 25px;
   text-align: center;
-  margin-top: 25%;
+  margin-top: 20%;
 }
 .courseInfo
 {
@@ -186,7 +193,7 @@ button:hover {
 }
 button:focus {
   outline: none;
-  box-shadow: 0 0 0 3px #067050;
+  box-shadow: 0 0 0 3px #054e38;
 }
 .icon-group {
   display: flex;
@@ -200,4 +207,15 @@ button:focus {
 .sign-out
 {
   justify-content: right;
+}
+
+.footer {
+  padding-top: 10px;
+  padding-bottom:10px;
+  background-color: #078b64;
+  font-size: 20px;
+  color: white;
+  text-align: center;
+  align-items: center;
+  margin: 0;
 }

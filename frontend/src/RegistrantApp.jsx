@@ -4,6 +4,7 @@ import { useNavigate } from '@tanstack/react-router'
 import { AuthAPI } from './apis/AuthAPI'
 import './Registrant.css'
 import { useRouter } from "@tanstack/react-router";
+//const { data: session } = await authClient.getSession()
 
 // Collapsible Section Sub-Component
 function CollapsibleSection({title, items, onDragStartAside}) {
@@ -56,6 +57,7 @@ export default function App() {
   const router = useRouter();
   const [degrees, setDegrees] = useState([]);
   const [selectedDegreeId, setSelectedDegreeId] = useState(null);
+  const [verification, setVerify] = useState([]);
 
   // Fetch courses from the backend when the component mounts
   useEffect(() => {
@@ -85,11 +87,23 @@ export default function App() {
       .catch(err => console.error('Error fetching degrees:', err));
   }, []);
 
+  // Fetch verification from the backend when the component mounts
+  useEffect(() => {
+    const url = `/api/verification`;
+    fetch(url)
+      .then(res => res.json())
+      .then(data => {
+        setVerify(data);
+      })
+      .catch(err => console.error('Error fetching verification:', err));
+  }, []);
+
   /** ---------------------------
    *  MODAL STATE (Add/Edit)
    * ---------------------------*/
   const [showModal, setShowModal] = useState(false);
   const [showDescModal, setShowDescModal] = useState(false);
+  const [showValidModal, setShowValidModal] = useState(false);
   const [descCourse, setDescCourse] = useState(null);
   const [isEditMode, setIsEditMode] = useState(false);
   const [tempSemesterId, setTempSemesterId] = useState(null); // track which semester we're editing
@@ -248,8 +262,8 @@ export default function App() {
   /** ---------------------------
    *  Check Degree Validity
    * ---------------------------*/
-    const checkValid = (semesterId) => {
-
+    const checkValid = () => {
+      setShowValidModal(true);
     };
 
   /** ---------------------------
@@ -317,9 +331,41 @@ export default function App() {
   };
 
   const handleSaveSemesterToDB = (semId) => {
-    console.log(`Saving semester ${semId} to database... (placeholder)`);
-    // In the future, do fetch('/api/saveSemester', { ... })
+    // Find the semester to save using its local state identifier.
+    const semesterToSave = semesters.find((sem) => sem.id === semId);
+    if (!semesterToSave) {
+      console.error("Semester not found");
+      return;
+    }
+  
+    const payload = {
+       u_id: 1,
+      sname: `${semesterToSave.type} ${semesterToSave.year}`,
+      courses: semesterToSave.courses.map((course) => course.cId)
+    };
+  
+    console.log(`Saving semester ${semId} to database with payload:`, payload);
+  
+    fetch('/api/saveSemester', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Failed to save semester");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        // The API should return an object with the new semester ID, e.g., { sem_id: 123 }
+        console.log("Semester saved with sem_id:", data.sem_id);
+      })
+      .catch((err) => console.error("Error saving semester:", err));
   };
+  
   
   /** ---------------------------
    *  RENDER
@@ -537,6 +583,23 @@ export default function App() {
           </div>
         </div>
       </div>
+    )}
+    {showValidModal && (
+      <div className="modal-backdrop">
+      <div className="modal-content">
+      <h2>Degree Verification</h2>
+        <div className="verify-content">
+          {verification.map((v, idx) => (
+            <p key={idx}>{JSON.stringify(v)}</p>
+          ))}
+          <h5>ah beans</h5>
+        </div>
+
+        <div className="modal-buttons">
+          <button onClick={() => setShowValidModal(false)}>Close</button>
+        </div>
+      </div>
+    </div>
     )}
   </div>
   );
