@@ -183,7 +183,7 @@ const app = new Elysia()
         return updateUserSave;
     })
 
-    .get("/api/createSemester", async ({ query: {userid} }) => {
+    .post("/api/createSemester", async ({ body: {userid} }) => {
         const newSem = await prisma.saved_sem.create({
             data: {
             u_id: userid,
@@ -192,14 +192,14 @@ const app = new Elysia()
             
             return newSem;
     },{
-        query: t.Object({
+        body: t.Object({
             userid: t.Optional(t.String())
         })
     })
 
     //Endpoints for registration statistics
 
-    .post("/api/registration", async ({ body: {userid} }) => {
+    .get("/api/registration", async ({ query: {userid} }) => {
         let registrations = null;
         let uid_undefined = false;
         if(userid==undefined){
@@ -219,7 +219,7 @@ const app = new Elysia()
 
         return registrations;
     },{
-        body: t.Object({
+        query: t.Object({
             userid: t.Optional(t.String())
         })
     })
