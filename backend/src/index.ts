@@ -181,8 +181,7 @@ const app = new Elysia()
     },{
         query: t.Object({
         didin: t.Optional(t.String()),
-    })
-
+        })
     })
 
     .get("/api/update_user_degree", async ({query: userid, degree_id}) => {
