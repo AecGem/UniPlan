@@ -624,9 +624,6 @@ export default function App() {
       <div className="modal-content">
       <h2>Degree Verification</h2>
         <div className="verify-content">
-          {verification.map((v, idx) => (
-            <p key={idx}>{JSON.stringify(v)}</p>
-          ))}
           <h5>ah beans</h5>
         </div>
 
