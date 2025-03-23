@@ -9,14 +9,17 @@
     
     "Saved Semesters" : [
       {
+        "sem_id" : 1,
         "Name" : "Winter 2025",
         "Saved Courses" : [1, 3]
       },
       {
+        "sem_id" : 2,
         "Name" : "Spring 2025",
         "Saved Courses" : [4, 5]
       },
       {
+        "sem_id" : 3,
         "Name" : "Fall 2025",
         "Saved Courses" : [6, 7, 8, 9]
       }
