@@ -42,7 +42,7 @@ function CollapsibleSection({ title, items, onDragStartAside }) {
 
 // Main App Component
 export default function App({ context }) {
-  console.log(context.userInfo);
+  console.log(context.session);
   //let { data: session } = authClient.getSession();
   //console.log(userInfo.session.userId);
 
