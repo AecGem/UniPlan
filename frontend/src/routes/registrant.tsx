@@ -1,9 +1,9 @@
 import * as React from 'react'
 import * as registrantApp from '../RegistrantApp.jsx'
 import { createFileRoute } from '@tanstack/react-router'
-import { Route } from './__root.tsx'
+import { Route as RootRoute } from './__root.tsx'
 
-export const RegistrantRoute = Route.createRoute({
+export const Route = RootRoute.createRoute({
   path: "/registrant",
   loader: async ({context}) =>{
     console.log("DEBUG: registrant session context: ",context.session);
