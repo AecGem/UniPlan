@@ -44,7 +44,6 @@ function CollapsibleSection({title, items, onDragStartAside}) {
 export default function App() {
   const { data: session } = authClient.getSession();
   console.log(session);
-  console.log(userInfo.session);
  /** ---------------------------
    *  SEMESTERS + COURSES STATE
    *  Each semester in 'semesters' has this shape:
@@ -283,7 +282,7 @@ export default function App() {
   
     try {
       const res = await fetch('/api/createSemester', {
-        method: 'GET',
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
@@ -625,6 +624,7 @@ export default function App() {
       <div className="modal-content">
       <h2>Degree Verification</h2>
         <div className="verify-content">
+
           <h5>ah beans</h5>
         </div>
 
