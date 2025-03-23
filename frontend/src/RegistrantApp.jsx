@@ -41,9 +41,10 @@ function CollapsibleSection({ title, items, onDragStartAside }) {
 }
 
 // Main App Component
-export default function App() {
-  let { data: session } = authClient.getSession();
-  console.log(userInfo.session.userId);
+export default function App({ context }) {
+  console.log(context);
+  //let { data: session } = authClient.getSession();
+  //console.log(userInfo.session.userId);
 
   /** ---------------------------
     *  SEMESTERS + COURSES STATE
