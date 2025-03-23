@@ -5,6 +5,7 @@ import { AuthAPI } from './apis/AuthAPI'
 import './Registrant.css'
 import { useRouter } from "@tanstack/react-router";
 import { userInfo } from './utils/auth'
+const { data: session } = await authClient.getSession()
 
 // Collapsible Section Sub-Component
 function CollapsibleSection({title, items, onDragStartAside}) {
@@ -277,7 +278,7 @@ export default function App() {
     }
   
     const payload = {
-      u_id: userInfo.user ? userInfo.user.userId : null,
+      userid: session?.user?.userId || null,
       sname: `${selectedType} ${selectedYear}`,
       courses: [] // new semester starts with no courses
     };
