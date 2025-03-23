@@ -41,9 +41,9 @@ function CollapsibleSection({ title, items, onDragStartAside }) {
 }
 
 // Main App Component
-export default function App({ context }) {
+export default function App({}) {
   console.log("im doing to kill myself in front of a crowd of schoolchildren");
-  const session  = useContext(Route);
+  const session  = useContext(Route.context);
   //let { data: session } = authClient.getSession();
   
   console.log(session);
