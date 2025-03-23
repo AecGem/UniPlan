@@ -18,6 +18,7 @@ export const Route = createRootRouteWithContext<RouterContext>()({
     if (!context.session.check()) {
         // lets verify by checking against the api
         var sess = await context.authClient.getSession()
+        console.log(sess);
         // if that's really false, we need to log back in.
         // navigating anywhere on the profile pages will force a redirect to login.
         if(sess.data === null) {
