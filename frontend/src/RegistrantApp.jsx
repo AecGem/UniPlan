@@ -453,7 +453,7 @@ export default function App(session) {
         <h1>UniPlan: Registrant's Homepage</h1>
         <nav className="topnav">
           <a className="active" href="#plan">Plan</a>
-          <p>Hello: {session?.user?.name || "Guest"}</p>
+          <p>Hello: {session.user.name || "Guest"}</p>
           <button className="sign-out" onClick={handleSignOut}>
             Sign Out
           </button>
