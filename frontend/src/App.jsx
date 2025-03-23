@@ -36,18 +36,20 @@ export function App({ context }) {
       setErrorMessage("Please enter an Email and Password.");
       return;
     }
-    /* if we can figure out how to compare entered password to backend password, uncomment this
-    if(loginPassword != )
+    /* if we can figure out how to compare entered password to backend password, uncomment this*/
+    if(logInData.errorMessage.code = "INVALID_EMAIL_OR_PASSWORD")
       {
         setErrorMessage("Incorrect Password");
         return;
       }
-    */
+    
 
     let logInData = await AuthAPI.login(loginEmail, loginPassword);
     console.log(logInData);
     //session.set(data.data.user, data.data.session); 
     // Instead of window.location.href, use navigate:
+
+    //Check error before
     if (signUpUserType === "admin") {
       router.invalidate({session: logInData.data.user});
       navigate({ to: "/registrar" });
