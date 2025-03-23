@@ -335,17 +335,17 @@ const app = new Elysia()
                 },
             },
         });
-        /*const courseName = await prisma.course.findUnique({
+        const courseName = await prisma.course.findUnique({
             where: {
                 cid: 1,
             },
             select: {
                 shortname: true,
             },
-        });*/
+        });
         return {
             count,
-            //courseName,
+            courseName,
         };
     })
 
