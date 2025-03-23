@@ -47,8 +47,7 @@ const app = new Elysia()
             let response;
             let directory = '/var/www/temp/UniPlan/'.concat(id);
             await $`mkdir ${directory}`;
-            return $`curl https://localhost:443/api/degree?did=${did} -k > ${directory}/req.json`;
-            return "meow";
+            await $`curl https://localhost:443/api/degree?did=${did} -k > ${directory}/req.json`;
             await $`curl https://localhost:443/api/get_saved_sem?equals=${id} -k > ${directory}/sem.json` //TODO: Get the saved sem api.
 
             //when you're doin it with me, doin it with me~!
