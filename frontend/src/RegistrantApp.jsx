@@ -303,7 +303,7 @@ export default function App(session) {
   
   const handleConfirmAddSemester = async () => {  
     const payload = {
-      userid: "xNgKY4kLlWdCOimDUdIYgVKH9VWK6sLO"
+      userid: userInfo.session ? userInfo.session.userId : null
     };
 
     try {
