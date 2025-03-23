@@ -376,25 +376,24 @@ export default function App(session) {
     );
   };
 
-  const handleDeleteSemester = async (id) => {
-    // Find the semester in state using the local id
-    const semesterToDelete = semesters.find((sem) => sem.id === id);
+  const handleDeleteSemester = async (localId) => {
+    const semesterToDelete = semesters.find((sem) => sem.id === localId);
     if (!semesterToDelete) {
-      console.error("Semester not found");
+      console.error("Semester not found in local state");
       return;
     }
-    // Call your delete endpoint with the semId
-    try {
-      const res = await fetch(`/api/deleteSemester`, {
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ sem_id: semesterToDelete.sem_id })
+      const { sem_id } = semesterToDelete;
+  
+      try {
+      const response = await fetch(`/api/deleteSemester?semId=${sem_id}`, {
+        method: "GET",
       });
-      if (!res.ok) {
+      if (!response.ok) {
         throw new Error("Failed to delete semester");
       }
-      // Remove it from local state
-      setSemesters((prev) => prev.filter((sem) => sem.id !== id));
+  
+      // 4. Remove it from local state
+      setSemesters((prev) => prev.filter((sem) => sem.id !== localId));
     } catch (err) {
       console.error("Error deleting semester:", err);
     }
