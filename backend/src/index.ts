@@ -173,7 +173,7 @@ const app = new Elysia()
             }
             degrees = await prisma.degree.findFirst({
                 where: {
-                    did: 1
+                    did: didin,
                 }
             });
         
@@ -282,28 +282,42 @@ const app = new Elysia()
     })
     
     //get count of semesters where a class appears
-    .get("/api/sems_with_class", async ({ query: {id} }) => {
-        let passedCId;
-            if (id !== undefined) {
-                passedCId = parseInt(id);
-            }
-            else {
-                passedCId = -1;
-            }
-        
-        const count = await prisma.savedSem.count({
-            where: {
-                courses: {
-                    cid: passedCId, 
+    .get("api/course_stats", async ({query: degreeid}) => {
+        const results: {
+            count: number,
+            courseName: string,
+        }[] = [];
+        for (let i = 1; i < 44; i++){
+            const count = await prisma.saved_sem.count({
+                where: {
+                courses: { has: i,},
                 },
-            },
-        },{
-            query: t.Object({
-                id: t.Optional(t.Number())
-            })
-        });
-        return count;
+            });
+            const courseName = await prisma.course.findUnique({
+                where: {
+                    cid: i,
+                    isambig: false,
+                },
+                select: {
+                    shortname: true,
+                },
+            });
+            const inDegree = await prisma.degree.findFirst({
+                where: {
+                    did: degreeid,
+                    courses: {has: i,},
+                },
+            });
+            if (courseName && inDegree){
+                results.push({
+                    count,
+                    courseName,
+                });
+            };
+        };
+        return results;
     })
+
     .get("/api/degree_count", async ({ query: {didin} }) => {
         let passedDId;
         if (didin !== undefined) {
@@ -321,7 +335,7 @@ const app = new Elysia()
         return count;
     },{
         query: t.Object({
-            didin: t.Optional(t.String())
+        didin: t.Optional(t.String())
         })
     })
   
