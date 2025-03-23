@@ -36,11 +36,13 @@ export function App({ context }) {
       setErrorMessage("Please enter an Email and Password.");
       return;
     }
-    if(loginPassword != logInData.data.password)
+    /* if we can figure out how to compare entered password to backend password, uncomment this*/
+    if(loginPassword != logInData.data.user)
       {
         setErrorMessage("Incorrect Password");
         return;
       }
+    
 
     let logInData = await AuthAPI.login(loginEmail, loginPassword);
     console.log(logInData);
