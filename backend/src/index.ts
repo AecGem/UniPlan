@@ -340,24 +340,29 @@ const app = new Elysia()
     }) => {
 
         console.log("begin")
-        const count = await prisma.saved_sem.count({
-            where: {
-              courses: {
-                has: 1,
+        for (let i = 1; i < 4; i++){
+            const count = await prisma.saved_sem.count({
+                where: {
+                courses: {
+                    has: i,
+                    },
                 },
-            },
-        });
-        const courseName = await prisma.course.findUnique({
-            where: {
-                cid: 1,
-            },
-            select: {
-                shortname: true,
-            },
-        });
-        return {
-            count,
-            courseName,
+            });
+            const courseName = await prisma.course.findUnique({
+                where: {
+                    cid: i,
+                    isambig: false,
+                },
+                select: {
+                    shortname: true,
+                },
+            });
+            if (courseName){
+                return {
+                    count,
+                    courseName,
+                };
+            };
         };
     })
 
