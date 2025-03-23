@@ -252,7 +252,10 @@ const app = new Elysia()
             },
           });
           return deleteSem;
-    })
+    }, {
+        query: t.Object({
+        semId: t.Optional(t.Number()),
+    })})
 
     //Endpoints for registration statistics
 
