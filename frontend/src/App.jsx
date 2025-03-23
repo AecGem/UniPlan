@@ -37,7 +37,7 @@ export function App({ context }) {
       return;
     }
     /* if we can figure out how to compare entered password to backend password, uncomment this*/
-    if(logInData.errorMessage.code = "INVALID_EMAIL_OR_PASSWORD")
+    if(logInData.errorMessage == "INVALID_EMAIL_OR_PASSWORD")
       {
         setErrorMessage("Incorrect Password");
         return;
