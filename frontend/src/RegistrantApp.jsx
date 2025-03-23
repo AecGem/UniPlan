@@ -41,8 +41,9 @@ function CollapsibleSection({ title, items, onDragStartAside }) {
 }
 
 // Main App Component
-export default function App() {
-  const { data: session } = authClient.getSession();
+export default function App({ context }) {
+  console.log(context.userInfo);
+  //let { data: session } = authClient.getSession();
   //console.log(userInfo.session.userId);
 
   /** ---------------------------
@@ -294,7 +295,7 @@ export default function App() {
   
   const handleConfirmAddSemester = async () => {  
     const payload = {
-      userid: userInfo.session.userId,
+      userid: userInfo.session ? userInfo.session.userId : null
     };
 
     try {
