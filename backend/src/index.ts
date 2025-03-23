@@ -223,11 +223,33 @@ const app = new Elysia()
         })
     })
 
-    .get("/api/deleteSemester", async ({ query: {semesterid, userid} }) => {
+        .post("/api/saveSemester", async({body: {semId, name, course_list }}) =>{
+           
+           
+            const sem = await prisma.saved_sem.update({
+                where: {
+                    sem_id: semId
+                },
+                data: {
+                courses: course_list,
+                sname: name
+                },
+                });
+                
+                return sem;
+        },{
+            body: t.Object({
+            semId: t.Optional(t.Number()),
+            name: t.Optional(t.String()),
+            course_list: t.Optional(t.Array(t.Number()))
+        })
+
+        })
+
+    .get("/api/deleteSemester", async ({ query: {semesterid} }) => {
         const deleteSem = await prisma.saved_sem.delete({
             where: {
-                sem_id: semesterid,
-                u_id: userid,
+                sem_id: semesterid
             },
           });
           return deleteSem;
@@ -278,7 +300,7 @@ const app = new Elysia()
             },
         },{
             query: t.Object({
-                id: t.Optional(t.Integer())
+                id: t.Optional(t.Number())
             })
         });
         return count;
@@ -309,16 +331,8 @@ const app = new Elysia()
     .get("/api/course_test", async ({ 
         query: {test} 
     }) => {
+        //console.log("reached start")
         
-        console.log("reached start")
-        const newSem = await prisma.saved_sem.create({
-            data: {
-            u_id: "xNgKY4kLlWdCOimDUdIYgVKH9VWK6sLO",
-            sname: "test Sem"
-            },
-            });
-            
-            return newSem;
     })
     //carolyn's test zone
     .get("/api/caro_test", async ({ 
@@ -326,22 +340,35 @@ const app = new Elysia()
     }) => {
 
         console.log("begin")
-        const count = await prisma.saved_sem.count({
-            where: {
-              courses: {
-                has: 1,
-                }
-            }
-        });
-        const courseName = await prisma.course.findFirst({
-            where: {
-                cid: 1,
-            }
-        });
-        return {
-            count,
-            courseName,
+        const results: {
+            count: number,
+            courseName: string,
+        }[] = [];
+        for (let i = 1; i < 4; i++){
+            const count = await prisma.saved_sem.count({
+                where: {
+                courses: {
+                    has: i,
+                    },
+                },
+            });
+            const courseName = await prisma.course.findUnique({
+                where: {
+                    cid: i,
+                    isambig: false,
+                },
+                select: {
+                    shortname: true,
+                },
+            });
+            if (courseName){
+                results.push({
+                    count,
+                    courseName,
+                });
+            };
         };
+        return results;
     })
 
     //Authentication endpoints
