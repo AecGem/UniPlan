@@ -275,9 +275,9 @@ export default function App() {
    * ---------------------------*/
   const handleOpenAddModal = async () => {  
     const payload = {
-      userid: userInfo.session ? userInfo.session.userId : null,
-      sname: `${selectedType} ${selectedYear}`,
-      courses: [] // new semester starts with no courses
+      userid: "xNgKY4kLlWdCOimDUdIYgVKH9VWK6sLO"
+      //sname: `${selectedType} ${selectedYear}`,
+      //courses: [] // new semester starts with no courses
     };
   
     try {
