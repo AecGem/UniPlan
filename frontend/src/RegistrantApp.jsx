@@ -4,7 +4,9 @@ import { useNavigate } from '@tanstack/react-router'
 import { AuthAPI } from './apis/AuthAPI'
 import './Registrant.css'
 import { useRouter } from "@tanstack/react-router";
-import { userInfo } from '../utils/auth'
+import { userInfo } from './utils/auth'
+import { authClient } from './utils/auth'
+
 
 // Collapsible Section Sub-Component
 function CollapsibleSection({title, items, onDragStartAside}) {
@@ -40,6 +42,8 @@ function CollapsibleSection({title, items, onDragStartAside}) {
 
 // Main App Component
 export default function App() {
+  const { data: session } = authClient.getSession();
+  console.log(session);
  /** ---------------------------
    *  SEMESTERS + COURSES STATE
    *  Each semester in 'semesters' has this shape:
@@ -269,13 +273,50 @@ export default function App() {
   /** ---------------------------
    *  SEMESTER MODAL HANDLERS
    * ---------------------------*/
-  const handleOpenAddModal = () => {
-    setIsEditMode(false);
-    setSelectedType('Fall');
-    setSelectedYear('2025');
-    setTempSemesterId(null);
-    setShowModal(true);
+  const handleOpenAddModal = async () => {
+    // First, create a new blank semester on the backend.
+    if (!userInfo.check()) {
+      console.error("User not authenticated");
+      return;
+    }
+  
+    const payload = {
+      userid: session?.user?.userId || null,
+      sname: `${selectedType} ${selectedYear}`,
+      courses: [] // new semester starts with no courses
+    };
+  
+    try {
+      const res = await fetch('/api/createSemester', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      });
+      if (!res.ok) {
+        throw new Error("Failed to create semester");
+      }
+      const data = await res.json();
+      console.log("Created semester with sem_id:", data.sem_id);
+  
+      // Add the new semester to local state, storing the returned sem_id
+      const newSem = {
+        id: Date.now(), // local identifier
+        sem_id: data.sem_id, // backend's unique semester id
+        type: selectedType,
+        year: selectedYear,
+        courses: []
+      };
+      setSemesters((prev) => [...prev, newSem]);
+  
+      // Optionally, open your modal for further editing
+      setShowModal(true);
+    } catch (err) {
+      console.error("Error creating semester:", err);
+    }
   };
+  
 
   const handleOpenEditModal = (sem) => {
     setIsEditMode(true);
