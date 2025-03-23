@@ -37,7 +37,8 @@ export function App({ context }) {
     }
 
     let logInData = AuthAPI.login(loginEmail, loginPassword);
-    session.set(data.data.user, data.data.session);
+    console.log(logInData);
+    //session.set(data.data.user, data.data.session); 
     // Instead of window.location.href, use navigate:
     if (signUpUserType === "admin") {
       
