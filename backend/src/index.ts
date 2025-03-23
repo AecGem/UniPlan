@@ -371,7 +371,7 @@ const app = new Elysia()
             count: number,
             courseName: string,
         }[] = [];
-        for (let i = 1; i < 43; i++){
+        for (let i = 1; i < 44; i++){
             const count = await prisma.saved_sem.count({
                 where: {
                 courses: { has: i,},
