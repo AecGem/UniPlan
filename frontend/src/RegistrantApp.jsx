@@ -60,7 +60,7 @@ export default function App(session) {
   const [selectedDegreeId, setSelectedDegreeId] = useState(null);
   const [verification, setVerify] = useState([]);
 
-
+  console.log(session);
   //Check to see if a homie is logged in. If not logged in, gtfo.
   /*
   if (userInfo.session.userId === null) {
@@ -303,7 +303,7 @@ export default function App(session) {
   
   const handleConfirmAddSemester = async () => {  
     const payload = {
-      userid: "xNgKY4kLlWdCOimDUdIYgVKH9VWK6sLO"
+      userid: userInfo.session ? userInfo.session.userId : null
     };
 
     try {
@@ -594,8 +594,8 @@ export default function App(session) {
               <option value="Spring">Spring</option>
               <option value="Summer">Summer</option>
               <option value="Winter">Winter</option>
-              <option value="Co-op">Co-op Workterm</option>
-              <option value="Gap">Gap Semester</option>
+              {/*<option value="Co-op">Co-op Workterm</option>*/}
+              {/*<option value="Gap">Gap Semester</option>*/}
             </select>
             <br /><br />
 
