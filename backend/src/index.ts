@@ -309,16 +309,18 @@ const app = new Elysia()
     .get("/api/course_test", async ({ 
         query: {test} 
     }) => {
-        
-        console.log("reached start")
-        const newSem = await prisma.saved_sem.create({
+        //console.log("reached start")
+        const sem = await prisma.saved_sem.update({
+            where: {
+                sem_id: 2
+            },
             data: {
-            u_id: "xNgKY4kLlWdCOimDUdIYgVKH9VWK6sLO",
-            sname: "test Sem"
+            courses: [1,2,3,4],
+            sname: "new test"
             },
             });
             
-            return newSem;
+            return sem;
     })
     //carolyn's test zone
     .get("/api/caro_test", async ({ 
