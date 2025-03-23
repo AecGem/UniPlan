@@ -9,7 +9,7 @@ interface RouterContext {
   session?: UserInfo
 }
 
-export const Route = createFileRoute('/')({
+export const Route = createFileRoute<RouterContext>('/')({
   component: Index,
     //component: RootComponent,
     beforeLoad: async ({ context, location }) => {

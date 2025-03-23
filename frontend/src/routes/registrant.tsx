@@ -7,7 +7,7 @@ interface RouterContext {
   authClient: typeof authClient,
   session?: UserInfo
 }
-export const Route = createFileRoute('/registrant')({
+export const Route = createFileRoute<RouterContext>('/registrant')({
   component: RouteComponent,
     //component: RootComponent,
     beforeLoad: async ({ context, location }) => {
