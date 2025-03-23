@@ -6,7 +6,7 @@ BuildPath = ./build			#Build path
 CC = g++					#Compiler
 
 #Build all
-all: $(BuildName)
+all: $(BuildPath)/$(BuildName)
 
 #Main object files
 Algorithm.o: Algorithm.cpp json.hpp
