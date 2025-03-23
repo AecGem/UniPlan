@@ -7,7 +7,6 @@ import { useRouter } from "@tanstack/react-router";
 import { userInfo } from './utils/auth'
 import { authClient } from './utils/auth'
 
-
 // Collapsible Section Sub-Component
 function CollapsibleSection({ title, items, onDragStartAside }) {
   const [expanded, setExpanded] = useState(false);
@@ -42,7 +41,7 @@ function CollapsibleSection({ title, items, onDragStartAside }) {
 
 // Main App Component
 export default function App({ context }) {
-  console.log(context.session.userInfo);
+  console.log(context);
   //let { data: session } = authClient.getSession();
   //console.log(userInfo.session.userId);
 
