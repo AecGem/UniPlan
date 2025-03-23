@@ -247,15 +247,15 @@ const app = new Elysia()
     }) => {
 
         console.log("begin")
-        const updateUserDegree = await prisma.user.update({
+        const updateUserSave = await prisma.user.update({
             where: {
-                id: 'akvi32V6b6gbkRutNA8VQWx4xBPjiYxL'
+                id: "akvi32V6b6gbkRutNA8VQWx4xBPjiYxL"
             },
             data: {
-                did: 1
-            },
-        });
-        return updateUserDegree;
+                hasSaved: "true"
+            }
+        })
+        return updateUserSave;
     })
 
     //Authentication endpoints
