@@ -5,7 +5,8 @@ import { AuthAPI } from './apis/AuthAPI'
 import './Registrant.css'
 import { useRouter } from "@tanstack/react-router";
 import { userInfo } from './utils/auth'
-const { data: session } = await authClient.getSession()
+import { authClient } from './utils/auth'
+
 
 // Collapsible Section Sub-Component
 function CollapsibleSection({title, items, onDragStartAside}) {
@@ -41,6 +42,8 @@ function CollapsibleSection({title, items, onDragStartAside}) {
 
 // Main App Component
 export default function App() {
+  const { data: session } = authClient.getSession();
+  console.log(session);
  /** ---------------------------
    *  SEMESTERS + COURSES STATE
    *  Each semester in 'semesters' has this shape:
@@ -270,13 +273,7 @@ export default function App() {
   /** ---------------------------
    *  SEMESTER MODAL HANDLERS
    * ---------------------------*/
-  const handleOpenAddModal = async () => {
-    // First, create a new blank semester on the backend.
-    if (!userInfo.check()) {
-      console.error("User not authenticated");
-      return;
-    }
-  
+  const handleOpenAddModal = async () => {  
     const payload = {
       userid: session?.user?.userId || null,
       sname: `${selectedType} ${selectedYear}`,
@@ -627,9 +624,7 @@ export default function App() {
       <div className="modal-content">
       <h2>Degree Verification</h2>
         <div className="verify-content">
-          {verification.map((v, idx) => (
-            <p key={idx}>{JSON.stringify(v)}</p>
-          ))}
+
           <h5>ah beans</h5>
         </div>
 

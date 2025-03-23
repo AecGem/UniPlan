@@ -126,8 +126,8 @@ export const App = () => {
       }
     
 //handling functions for the dropdowns
-    const [degrees, setDegrees] = useState([]);
-    const [selectedDegreeId, setSelectedDegreeId] = useState(0);
+    const [degrees, setDegrees] = useState([0]);
+    const [selectedDegreeId, setSelectedDegreeId] = useState([0]);
 
       
     const [degInfo, setDegInfo] = useState("0a"); // or "" if you prefer
@@ -192,8 +192,8 @@ export const App = () => {
 
           <br /><br />
 
-          <div id="displayInfo" className="displayInfo" style={{visibility : selectedDegreeId === 0 ? "hidden" : "Visible"}}>
-            {selectedDegreeId !==0 &&
+          <div id="displayInfo" className="displayInfo" style={{visibility : selectedDegreeId === 1 ? "hidden" : "Visible"}}>
+            {selectedDegreeId !==1 &&
               (
                 <div className="courseInfo">
                   <div className="subtitle3">
