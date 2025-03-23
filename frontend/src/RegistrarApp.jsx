@@ -196,7 +196,7 @@ export const App = () => {
           <br /><br />
 
           <div id="displayInfo" className="displayInfo" style={{visibility : degrees === "0" ? "hidden" : "Visible"}}>
-            {degrees ==="2" && 
+            {degrees !=="1" &&
               (
                 <div className="courseInfo">
                   <div className="subtitle3">
