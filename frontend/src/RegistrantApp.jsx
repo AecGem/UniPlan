@@ -272,13 +272,7 @@ export default function App() {
   /** ---------------------------
    *  SEMESTER MODAL HANDLERS
    * ---------------------------*/
-  const handleOpenAddModal = async () => {
-    // First, create a new blank semester on the backend.
-    if (!userInfo.check()) {
-      console.error("User not authenticated");
-      return;
-    }
-  
+  const handleOpenAddModal = async () => {  
     const payload = {
       userid: session?.user?.userId || null,
       sname: `${selectedType} ${selectedYear}`,
