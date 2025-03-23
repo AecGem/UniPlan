@@ -5,7 +5,7 @@ import { AuthAPI } from './apis/AuthAPI'
 import './Registrant.css'
 import { useRouter } from "@tanstack/react-router";
 import { userInfo } from './utils/auth'
-const { data: session } = await authClient.getSession()
+
 
 // Collapsible Section Sub-Component
 function CollapsibleSection({title, items, onDragStartAside}) {
@@ -41,6 +41,8 @@ function CollapsibleSection({title, items, onDragStartAside}) {
 
 // Main App Component
 export default function App() {
+  const { data: session } = authClient.getSession();
+  console.log(session);
  /** ---------------------------
    *  SEMESTERS + COURSES STATE
    *  Each semester in 'semesters' has this shape:
