@@ -238,6 +238,11 @@ const app = new Elysia()
                 
                 return sem;
         },{
+            body: t.Object({
+            semId: t.Optional(t.Integer()),
+            name: t.Optional(t.String()),
+            course_list: t.Optional(t.)
+        })
 
         })
 
