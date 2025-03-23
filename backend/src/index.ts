@@ -235,7 +235,6 @@ const app = new Elysia()
                 sname: name
                 },
                 });
-                return sem;
                 const updateUserSave = await prisma.user.update({
                     where: {
                         id: userid
@@ -244,7 +243,7 @@ const app = new Elysia()
                         hassaved: true
                     }
                 });
-                return updateUserSave;
+                return sem;
                 
         },{
             body: t.Object({
