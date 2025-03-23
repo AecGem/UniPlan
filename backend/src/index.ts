@@ -162,7 +162,7 @@ const app = new Elysia()
             
     })
 
-    .get("/api/degree", async ({query: didin}) =>{
+    .get("/api/degree_specific", async ({query: didin}) =>{
         let passedDId;
         let degrees;
             if (didin !== undefined) {
