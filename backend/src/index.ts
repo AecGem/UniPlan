@@ -158,7 +158,6 @@ const app = new Elysia()
         let did_undefined = false;
         let degrees = null;
 
-
         if (didin === undefined){
             did_undefined = true;
         }
@@ -166,7 +165,7 @@ const app = new Elysia()
             degrees = await prisma.degree.findMany();
         }
         else if (!did_undefined){
-            let passedDId = 1;
+            let passedDId;
             if (didin !== undefined) {
                 passedDId = parseInt(didin);
             }
@@ -175,7 +174,7 @@ const app = new Elysia()
             }
             degrees = await prisma.degree.findFirst({
                 where: {
-                    did: passedDId
+                    did: 1
                 }
             });
         }
@@ -328,12 +327,22 @@ const app = new Elysia()
     }) => {
 
         console.log("begin")
-        const degrees = await prisma.degree.findFirst({
-			where: {
-				did: 1
-			}
-		});
-	    return degrees;
+        const count = await prisma.saved_sem.count({
+            where: {
+              courses: {
+                has: 1,
+                }
+            }
+        });
+        const courseName = await prisma.course.findFirst({
+            where: {
+                cid: 1,
+            }
+        });
+        return {
+            count,
+            courseName,
+        };
     })
 
     //Authentication endpoints
