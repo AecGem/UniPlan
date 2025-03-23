@@ -1,5 +1,9 @@
 import { useState } from 'react'
 import './Registrar.css'
+//import { useState, useEffect } from 'react'
+import { useNavigate } from '@tanstack/react-router'
+import { AuthAPI } from './apis/AuthAPI'
+import { useRouter } from "@tanstack/react-router";
 
 
 export const App = () => {
@@ -120,19 +124,38 @@ export const App = () => {
           // Optionally show an error message or fallback
         }
       }
-
     
-    const [degree, setDegree] = useState("1"); // or "" if you prefer
-    const handleDegreeChange = (degreeValue) => 
+//handling functions for the dropdowns
+    const [selectedDegreeId, setSelectedDegreeId] = useState(null);
+    /*
+    const setSelectedDegreeId = (degreeValue) => 
       {
         setDegree(degreeValue);  // Now we actually have `degree` state 
       }
+    */
 
     const [degInfo, setDegInfo] = useState("0a"); // or "" if you prefer
     const handleInfoChange = (degInfoValue) => 
       {
         setDegInfo(degInfoValue);  // Now we actually have `degree` state 
       }
+
+
+
+      // Fetch degrees from the backend when the component mounts
+      useEffect(() => {
+          const url = `/api/degree`;
+          fetch(url)
+            .then(res => res.json())
+            .then(data => {
+              if (data.length > 0){
+                setSelectedDegreeId(data[0].did);
+              }
+            })
+            .catch(err => console.error('Error fetching degrees:', err));
+        }, []);
+
+
 
   return (
     <div className="page-container">
@@ -149,10 +172,15 @@ export const App = () => {
 
           <div className="Degree-Dropdown">
             <label>Degree:&nbsp;</label>
-            <select value={degree} onChange={(e) => handleDegreeChange(e.target.value)}>
-              <option value="1">No Degree Selected</option>
-              <option value="2">Put Degree Variable Here</option>
-            </select>
+            <select
+            value={selectedDegreeId || ''}
+            onChange={(e) => setSelectedDegreeId(Number(e.target.value))}
+          >
+            <option value ="1">No Degree Selected</option>
+            {degrees.map((deg) => (
+              <option key={deg.did} value={deg.did}> {deg.degree} </option>
+            ))}
+          </select>
             
           </div>
           <div className="Info-Dropdown">
