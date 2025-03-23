@@ -126,22 +126,19 @@ export const App = () => {
       }
     
 //handling functions for the dropdowns
-    const [degrees, setDegrees] = useState([]);
-    const [selectedDegreeId, setSelectedDegreeId] = useState("0");
-    /*
+    const [degrees, setDegrees] = useState(["0"]);
+    //const [selectedDegreeId, setSelectedDegreeId] = useState(null);
+
     const setSelectedDegreeId = (degreeValue) => 
       {
-        setDegree(degreeValue);  // Now we actually have `degree` state 
+        setDegrees(degreeValue);  // Now we actually have `degree` state 
       }
-    */
 
     const [degInfo, setDegInfo] = useState("0a"); // or "" if you prefer
     const handleInfoChange = (degInfoValue) => 
       {
         setDegInfo(degInfoValue);  // Now we actually have `degree` state 
       }
-
-
 
       // Fetch degrees from the backend when the component mounts
       useEffect(() => {
@@ -156,7 +153,6 @@ export const App = () => {
           })
           .catch(err => console.error('Error fetching degrees:', err));
       }, []);
-
 
 
   return (
@@ -198,8 +194,8 @@ export const App = () => {
 
           <br /><br />
 
-          <div id="displayInfo" className="displayInfo" style={{visibility : selectedDegreeId === "0" ? "hidden" : "Visible"}}>
-            {selectedDegreeId ==="2" && 
+          <div id="displayInfo" className="displayInfo" style={{visibility : degrees === "0" ? "hidden" : "Visible"}}>
+            {degrees ==="2" && 
               (
                 <div className="courseInfo">
                   <div className="subtitle3">
