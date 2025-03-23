@@ -1,6 +1,8 @@
 import * as React from 'react'
 import * as registrantApp from '../RegistrantApp.jsx'
 import { createFileRoute } from '@tanstack/react-router'
+import { authClient } from '../utils/auth'
+import { UserInfo } from '../utils/auth'
 
 export const Route = createFileRoute('/registrant')({
   component: RouteComponent,
