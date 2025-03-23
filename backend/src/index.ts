@@ -333,14 +333,14 @@ const app = new Elysia()
                 }
             }
         });
-        const courseName = await prisma.course.findFirst({
+        /*const courseName = await prisma.course.findFirst({
             where: {
                 cid: 1,
             }
-        });
+        });*/
         return {
             count,
-            courseName,
+            //courseName,
         };
     })
 
