@@ -223,7 +223,7 @@ const app = new Elysia()
         })
     })
 
-        .post("/api/saveSemester", async({body: {semId, name, course_list }}) =>{
+        .post("/api/saveSemester", async({body: {semId, name, course_list, userid }}) =>{
            
            
             const sem = await prisma.saved_sem.update({
@@ -246,10 +246,10 @@ const app = new Elysia()
 
         })
 
-    .get("/api/deleteSemester", async ({ query: {semesterid} }) => {
+    .get("/api/deleteSemester", async ({ query: {semId} }) => {
         const deleteSem = await prisma.saved_sem.delete({
             where: {
-                sem_id: semesterid
+                sem_id: semId
             },
           });
           return deleteSem;
