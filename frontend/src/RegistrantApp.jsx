@@ -1,12 +1,12 @@
 // RegistrantApp.jsx
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { useNavigate } from '@tanstack/react-router'
 import { AuthAPI } from './apis/AuthAPI'
 import './Registrant.css'
 import { useRouter } from "@tanstack/react-router";
 import { userInfo } from './utils/auth'
 import { authClient } from './utils/auth'
-//import { RouterContext } from './routes/__root.tsx'
+import { Route } from './routes/__root.tsx'
 
 // Collapsible Section Sub-Component
 function CollapsibleSection({ title, items, onDragStartAside }) {
@@ -42,9 +42,10 @@ function CollapsibleSection({ title, items, onDragStartAside }) {
 
 // Main App Component
 export default function App({ context }) {
-  console.log(RouterContext.session);
+  const { session } = useContext(Route.context);
   //let { data: session } = authClient.getSession();
-  //console.log(userInfo.session.userId);
+  console.log("im doing to kill myself in front of a crowd of schoolchildren")
+  console.log(session);
 
   /** ---------------------------
     *  SEMESTERS + COURSES STATE
