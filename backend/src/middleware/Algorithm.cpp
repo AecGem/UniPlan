@@ -11,7 +11,7 @@ using json = nlohmann::json;
 
 int main(int argc, char *argv[])
 {
-    //JSON errors
+    //JSON errors (see: https://github.com/nlohmann/json)
     json valid_list_messg = {
         {"Number of Errors:", 0},
         {"Error List", {"No missing courses"}}
@@ -32,12 +32,7 @@ int main(int argc, char *argv[])
         {"Error List", {"Missing a prerequisite"}}
     };
 
-    if (argc != 4){
-        cout << "Incorrect Number of arguments" << endl;
-        return 1;
-    }
-
-    //Set up the file paths
+    //Set up the file paths (see: )
     string reqs_filePath = argv[1];
     string sems_filePath = argv[2];
     string out_filePath = argv[3];
@@ -56,22 +51,29 @@ int main(int argc, char *argv[])
     sems_stream >> s_input;
     sems_stream.close();
 
-    //Take in the json array of degree requirements and put it in as a c++ array
+    //Take in the json array of degree requirements and put it in as a c++ array //This must be done because JSON integers isn't necessarilly the same as C++ integers
+    //Take in the json array of saved semesters and put it in as a c++ array
+
+    //(see: https://stackoverflow.com/questions/54389742/use-nlohmann-json-to-unpack-list-of-integers-to-a-stdvectorint)
     vector<int> degree_reqs = r_input["Degree Requirements List"]["Requirements"].get<vector<int>>();
+    vector<int> saved_plan;
+
+    //Iterators are different in nlohmann stuff... you CAN'T use regular for loops, sadly womp womp (see: https://json.nlohmann.me/features/iterators/)
+    //Discussions: //https://github.com/nlohmann/json/discussions/3387 //https://github.com/nlohmann/json/issues/83
     cout << "Degree Requirements: ";
-    for (const auto& reqs : degree_reqs){
+    for (auto reqs : degree_reqs){
         cout << "Course: " << reqs << endl;
     }
 
-    //Take in the json array of saves semesters and put it in as a c++ array
-    vector<int> saved_plan;
     cout << "Saved Degree Plan: " << endl;
-    for (const auto& s: s_input["Saved Semesters"]){
-        vector <int> temp = s["Saved Courses"].get<vector<int>>();
+    for (auto s: s_input["Saved Semesters"]){
+        //the following JSON integers need to be first converted using the library so that it can be used by c++
+        //so, turn it into a an array of integers
+        vector <int> temp = s["Saved Courses"].get<vector<int>>(); //from Nlhomann JSON library
         saved_plan.insert(saved_plan.end(), temp.begin(), temp.end());
     }
 
-    for (const auto& plan : saved_plan){
+    for (auto plan : saved_plan){
         cout << plan << " ";
     }
     cout << endl;
@@ -97,9 +99,10 @@ int main(int argc, char *argv[])
         out_stream << valid_prereq_messg;
     }
 
+
     //For every element in the requirements list, check that it exists in the saved plan array. 
     //If one of them is not there, it is not valid. Exit.
-    for (const auto& reqs : degree_reqs){
+    for (auto reqs : degree_reqs){
 
         //set a current target for the search
         int temp_target = reqs;
