@@ -4,7 +4,7 @@ import { useNavigate } from '@tanstack/react-router'
 import { AuthAPI } from './apis/AuthAPI'
 import './Registrant.css'
 import { useRouter } from "@tanstack/react-router";
-const { data: session } = await authClient.getSession()
+//const { data: session } = await authClient.getSession()
 
 // Collapsible Section Sub-Component
 function CollapsibleSection({title, items, onDragStartAside}) {
@@ -339,6 +339,7 @@ export default function App() {
     }
   
     const payload = {
+       u_id: 1,
       sname: `${semesterToSave.type} ${semesterToSave.year}`,
       courses: semesterToSave.courses.map((course) => course.cId)
     };

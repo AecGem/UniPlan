@@ -134,9 +134,19 @@ const app = new Elysia()
         return degrees;
     })
 
-    /*.get("/api/update_user_degree", async ({query: id}) => {
-        let uid_undefined = false;
-    })*/
+    .get("/api/createSemester", async ({ query: {userid} }) => {
+        const newSem = await prisma.saved_sem.create({
+            data: {
+            u_id: userid,
+            },
+            });
+            
+            return newSem;
+    },{
+        query: t.Object({
+            userid: t.Optional(t.String())
+        })
+    })
 
     //Endpoints for registration statistics
 
@@ -165,7 +175,12 @@ const app = new Elysia()
         }
 
         return registrations;
+    },{
+        query: t.Object({
+            userid: t.Optional(t.String())
+        })
     })
+    
     //get count of semesters where a class appears
     .get("/api/sems_with_class", async ({ query: {id} }) => {
         let passedCId;
@@ -182,6 +197,10 @@ const app = new Elysia()
                     cid: passedCId, 
                 },
             },
+        },{
+            query: t.Object({
+                id: t.Optional(t.Integer())
+            })
         });
         return count;
     })
@@ -200,6 +219,10 @@ const app = new Elysia()
             },
         });
         return count;
+    },{
+        query: t.Object({
+            didin: t.Optional(t.String())
+        })
     })
   
     //Emma's testing zone
