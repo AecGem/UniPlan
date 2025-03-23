@@ -209,7 +209,7 @@ const app = new Elysia()
 
     //Endpoints for registration statistics
 
-    .get("/api/registration", async ({ query: {userid} }) => {
+    .post("/api/registration", async ({ body: {userid} }) => {
         let registrations = null;
         let uid_undefined = false;
         if(userid==undefined){
@@ -229,7 +229,7 @@ const app = new Elysia()
 
         return registrations;
     },{
-        query: t.Object({
+        body: t.Object({
             userid: t.Optional(t.String())
         })
     })
