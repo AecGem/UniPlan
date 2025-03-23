@@ -204,8 +204,8 @@ const app = new Elysia()
         query: {test} 
     }) => {
         
-       console.log("reached start")
-        const newSem = await prisma.savedSem.create({
+        console.log("reached start")
+        const newSem = await prisma.saved_sem.create({
             data: {
             u_id: "xNgKY4kLlWdCOimDUdIYgVKH9VWK6sLO",
             sname: "test Sem"
