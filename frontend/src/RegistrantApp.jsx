@@ -4,6 +4,7 @@ import { useNavigate } from '@tanstack/react-router'
 import { AuthAPI } from './apis/AuthAPI'
 import './Registrant.css'
 import { useRouter } from "@tanstack/react-router";
+//const { data: session } = await authClient.getSession()
 
 // Collapsible Section Sub-Component
 function CollapsibleSection({title, items, onDragStartAside}) {
@@ -330,9 +331,40 @@ export default function App() {
   };
 
   const handleSaveSemesterToDB = (semId) => {
-    console.log(`Saving semester ${semId} to database... (placeholder)`);
-    // In the future, do fetch('/api/saveSemester', { ... })
+    // Find the semester to save using its local state identifier.
+    const semesterToSave = semesters.find((sem) => sem.id === semId);
+    if (!semesterToSave) {
+      console.error("Semester not found");
+      return;
+    }
+  
+    const payload = {
+      sname: `${semesterToSave.type} ${semesterToSave.year}`,
+      courses: semesterToSave.courses.map((course) => course.cId)
+    };
+  
+    console.log(`Saving semester ${semId} to database with payload:`, payload);
+  
+    fetch('/api/saveSemester', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Failed to save semester");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        // The API should return an object with the new semester ID, e.g., { sem_id: 123 }
+        console.log("Semester saved with sem_id:", data.sem_id);
+      })
+      .catch((err) => console.error("Error saving semester:", err));
   };
+  
   
   /** ---------------------------
    *  RENDER
