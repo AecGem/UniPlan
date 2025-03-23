@@ -57,7 +57,9 @@ export default function App(session) {
   const navigate = useNavigate();
   const router = useRouter();
   const [degrees, setDegrees] = useState([]);
-  const [selectedDegreeId, setSelectedDegreeId] = useState(null);
+  const [selectedDegreeId, setSelectedDegreeId] = useState(
+    session?.user?.did || null
+  );
   const [verification, setVerify] = useState([]);
 
   console.log(session);
@@ -97,7 +99,7 @@ export default function App(session) {
       .catch(err => console.error('Error fetching degrees:', err));
   }, []);
 
-  // New useEffect for fetching courses based on the selected degree
+  // Fetching courses based on the selected degree
   useEffect(() => {
     if (selectedDegreeId !== null) {
       const params = new URLSearchParams();
@@ -398,6 +400,23 @@ export default function App(session) {
       console.error("Error deleting semester:", err);
     }
   };
+
+  const handleDegreeChange = async (e) => {
+    const newDegreeId = Number(e.target.value);
+    setSelectedDegreeId(newDegreeId);
+  
+    // Store/update the user’s new degree:
+    if (userInfo.session && userInfo.session.userId) {
+      try {
+        await fetch(
+          `/api/update_user_degree?userid=${userInfo.session.userId}&degree_id=${newDegreeId}`
+        );
+        userInfo.session.user.did = newDegreeId;
+      } catch (err) {
+        console.error("Error updating user degree:", err);
+      }
+    }
+  };
   
 
   const openDescModal = (courseObj) => {
@@ -465,7 +484,8 @@ export default function App(session) {
           <label>Degree&nbsp;</label>
           <select
             value={selectedDegreeId || ''}
-            onChange={(e) => setSelectedDegreeId(Number(e.target.value))}
+            onChange={handleDegreeChange}
+            //onChange={(e) => setSelectedDegreeId(Number(e.target.value))}
           >
             {degrees.map((deg) => (
               <option key={deg.did} value={deg.did}>
