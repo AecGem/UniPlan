@@ -154,8 +154,23 @@ const app = new Elysia()
         })
     })
 
-    .get("/api/degree", async () => {
-        const degrees = await prisma.degree.findMany();
+    .get("/api/degree", async ({query: degreeid}) => {
+        let did_undefined = false;
+        let degrees = null;
+        
+        if (degreeid === undefined){
+            did_undefined = true;
+        }
+        if (did_undefined) {
+            const degrees = await prisma.degree.findMany();
+        }
+        else if (!did_undefined){
+            degrees = await prisma.degree.findMany({
+                where: {
+                    did: parseInt(degreeid)
+                }
+            });
+        }
         return degrees;
     })
 
@@ -300,13 +315,12 @@ const app = new Elysia()
     }) => {
 
         console.log("begin")
-        const deleteSem = await prisma.saved_sem.delete({
-            where: {
-                sem_id: 1,
-                u_id: "xNgKY4kLlWdCOimDUdIYgVKH9VWK6sLO",
-            },
-          })
-          return deleteSem;
+        const degrees = await prisma.degree.findMany({
+			where: {
+				did: 1
+			}
+		});
+	    return degrees;
     })
 
     //Authentication endpoints
