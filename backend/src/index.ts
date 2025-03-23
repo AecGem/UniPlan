@@ -381,7 +381,10 @@ const app = new Elysia()
 				sem_id: true,
 				sname: true,
 				courses: true,
-			}
+			},
+            orderBy: {
+                sem_id: 'asc',
+            },
 		});
         return semesters;
     })
