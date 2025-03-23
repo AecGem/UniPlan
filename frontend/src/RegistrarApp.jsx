@@ -10,6 +10,7 @@ import { authClient } from './utils/auth'
 export const App = () => {
   const { data: session } = authClient.getSession();
   const router = useRouter();
+  const navigate = useNavigate();
   if (userInfo.session === null) {
     router.invalidate();
     navigate({ to: '/' })
