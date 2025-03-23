@@ -42,7 +42,7 @@ function CollapsibleSection({ title, items, onDragStartAside }) {
 
 // Main App Component
 export default function App({ context }) {
-  console.log(context.session);
+  console.log(context.session.userInfo);
   //let { data: session } = authClient.getSession();
   //console.log(userInfo.session.userId);
 
@@ -369,9 +369,30 @@ export default function App({ context }) {
     );
   };
 
-  const handleDeleteSemester = (id) => {
-    setSemesters((prev) => prev.filter((sem) => sem.id !== id));
+  const handleDeleteSemester = async (id) => {
+    // Find the semester in state using the local id
+    const semesterToDelete = semesters.find((sem) => sem.id === id);
+    if (!semesterToDelete) {
+      console.error("Semester not found");
+      return;
+    }
+    // Call your delete endpoint with the sem_id
+    try {
+      const res = await fetch(`/api/deleteSemester`, {
+        method: 'POST', // or DELETE, depending on your API design
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sem_id: semesterToDelete.sem_id })
+      });
+      if (!res.ok) {
+        throw new Error("Failed to delete semester");
+      }
+      // Remove it from local state
+      setSemesters((prev) => prev.filter((sem) => sem.id !== id));
+    } catch (err) {
+      console.error("Error deleting semester:", err);
+    }
   };
+  
 
   const openDescModal = (courseObj) => {
     setDescCourse(courseObj);
@@ -393,8 +414,8 @@ export default function App({ context }) {
 
     const payload = {
       userid: userInfo.session ? userInfo.session.userId : null,
-      sname: `${semesterToSave.type} ${semesterToSave.year}`,
-      courses: semesterToSave.courses.map((course) => course.cId)
+      name: `${semesterToSave.type} ${semesterToSave.year}`,
+      course_list: semesterToSave.courses.map((course) => course.cId)
     };
 
     console.log(`Saving semester ${semId} to database with payload:`, payload);
