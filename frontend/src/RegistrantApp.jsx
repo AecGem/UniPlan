@@ -41,7 +41,6 @@ function CollapsibleSection({ title, items, onDragStartAside }) {
 
 // Main App Component
 export default function App(session) {
-  console.log(session);
   /** ---------------------------
     *  SEMESTERS + COURSES STATE
     *  Each semester in 'semesters' has this shape:

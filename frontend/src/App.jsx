@@ -2,9 +2,11 @@ import { useState } from "react";
 import "./App.css";
 import { AuthAPI } from "./apis/AuthAPI";
 import { useNavigate } from "@tanstack/react-router";
+import { useRouter } from "@tanstack/react-router";
 
 
 export function App({ context }) {
+  const router = useRouter();
   const [showModal, setShowModal] = useState(false);
   const [isLoginMode, setIsLoginMode] = useState(true);
   const [loginEmail, setLoginEmail] = useState("");
@@ -70,8 +72,10 @@ export function App({ context }) {
       signupForm.userType === "admin"
     );
     if (signUpUserType === "admin") {
+      router.invalidate();
       navigate({ to: "/registrar" });
     } else {
+      router.invalidate();
       navigate({ to: "/registrant" });
     }
 
