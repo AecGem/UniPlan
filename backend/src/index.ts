@@ -277,7 +277,7 @@ const app = new Elysia()
                 id: "akvi32V6b6gbkRutNA8VQWx4xBPjiYxL"
             },
             data: {
-                hassaved: "true"
+                hassaved: true
             }
         })
         return updateUserSave;
