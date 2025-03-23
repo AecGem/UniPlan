@@ -171,6 +171,18 @@ const app = new Elysia()
         return updateUserDegree;
     })
 
+    .get("/api/update_user_saved", async({query: userid, savedbool}) => {
+        const updateUserSave = await prisma.user.update({
+            where: {
+                id: userid
+            },
+            data: {
+                hassaved: savedbool
+            }
+        });
+        return updateUserSave;
+    })
+
     .get("/api/createSemester", async ({ query: {userid} }) => {
         const newSem = await prisma.saved_sem.create({
             data: {
