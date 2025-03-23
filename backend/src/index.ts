@@ -185,29 +185,19 @@ const app = new Elysia()
 
     })
 
-    .get("/api/update_user_degree", async ({query: userid, did_in}) => {
+    .get("/api/update_user_degree", async ({query: userid, degree_id}) => {
         const updateUserDegree = await prisma.user.update({
             where: {
                 id: userid
             },
             data: {
-                did: parseInt(did_in)
+                did: parseInt(degree_id)
             },
         });
         return updateUserDegree;
     })
 
-    .get("/api/update_user_saved", async({query: userid, savedbool}) => {
-        const updateUserSave = await prisma.user.update({
-            where: {
-                id: userid
-            },
-            data: {
-                hassaved: savedbool
-            }
-        });
-        return updateUserSave;
-    })
+
 
     .post("/api/createSemester", async ({ body: {userid} }) => {
         const newSem = await prisma.saved_sem.create({
@@ -235,7 +225,6 @@ const app = new Elysia()
                 sname: name
                 },
                 });
-                return sem;
                 const updateUserSave = await prisma.user.update({
                     where: {
                         id: userid
@@ -244,7 +233,7 @@ const app = new Elysia()
                         hassaved: true
                     }
                 });
-                return updateUserSave;
+                return sem;
                 
         },{
             body: t.Object({

@@ -8,5 +8,5 @@ export const Route = createFileRoute('/registrar')({
 
 function RouteComponent() {
   const { session } = Route.useRouteContext();
-  return <RegistrarApp.default />
+  return <RegistrarApp.default session={session}/>
 }
