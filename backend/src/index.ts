@@ -238,6 +238,11 @@ const app = new Elysia()
                 
                 return sem;
         },{
+            body: t.Object({
+            semId: t.Optional(t.Number()),
+            name: t.Optional(t.String()),
+            course_list: t.Optional(t.Array(t.Number()))
+        })
 
         })
 
@@ -295,7 +300,7 @@ const app = new Elysia()
             },
         },{
             query: t.Object({
-                id: t.Optional(t.Integer())
+                id: t.Optional(t.Number())
             })
         });
         return count;
@@ -335,25 +340,33 @@ const app = new Elysia()
     }) => {
 
         console.log("begin")
-        const count = await prisma.saved_sem.count({
-            where: {
-              courses: {
-                has: 1,
+        const results: {
+            count: number,
+            courseName: string,
+        }[] = [];
+        for (let i = 1; i < 4; i++){
+            const count = await prisma.saved_sem.count({
+                where: {
+                courses: { has: i,},
                 },
-            },
-        });
-        const courseName = await prisma.course.findUnique({
-            where: {
-                cid: 1,
-            },
-            select: {
-                shortname: true,
-            },
-        });
-        return {
-            count,
-            courseName,
+            });
+            const courseName = await prisma.course.findUnique({
+                where: {
+                    cid: i,
+                    isambig: false,
+                },
+                select: {
+                    shortname: true,
+                },
+            });
+            if (courseName){
+                results.push({
+                    count,
+                    courseName,
+                });
+            };
         };
+        return results;
     })
 
     //Authentication endpoints

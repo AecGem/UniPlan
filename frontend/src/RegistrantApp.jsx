@@ -7,7 +7,6 @@ import { useRouter } from "@tanstack/react-router";
 import { userInfo } from './utils/auth'
 import { authClient } from './utils/auth'
 
-
 // Collapsible Section Sub-Component
 function CollapsibleSection({ title, items, onDragStartAside }) {
   const [expanded, setExpanded] = useState(false);

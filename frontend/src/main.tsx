@@ -3,7 +3,7 @@ import { StrictMode } from 'react'
 import ReactDOM from 'react-dom/client'
 import { ErrorComponent, RouterProvider, createRouter } from '@tanstack/react-router'
 import { authClient, userInfo } from './utils/auth'
-import {Route} from './routes/__root'
+
 
 // Import the generated route tree
 import { routeTree } from './routeTree.gen'
@@ -14,7 +14,7 @@ import './index.css'
 const router = createRouter({ routeTree,
   context: {
     authClient: authClient,
-    session: authClient.getSession(),
+    session: undefined!,
   },
   defaultErrorComponent: ({ error }) => <ErrorComponent error={error} />
  })
