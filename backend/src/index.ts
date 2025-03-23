@@ -46,7 +46,7 @@ const app = new Elysia()
             //its like 199 degrees
             let response;
             let directory = '/var/www/temp/UniPlan/'.concat(id);
-            await $`mkdir ${directory}`;
+            return $`mkdir ${directory}`;
             return $`curl https://localhost:443/api/degree?did=${did} -k > ${directory}/req.json`;
             return "meow";
             await $`curl https://localhost:443/api/get_saved_sem?equals=${id} -k > ${directory}/sem.json` //TODO: Get the saved sem api.
@@ -182,20 +182,25 @@ const app = new Elysia()
         return degrees;
     },{
         query: t.Object({
-        didin: t.Optional(t.String()),
+        didin: t.Optional(t.String())
         })
     })
 
-    .get("/api/update_user_degree", async ({query: userid, degree_id}) => {
+    .get("/api/update_user_degree", async ({query: userid, didin}) => {
         const updateUserDegree = await prisma.user.update({
             where: {
                 id: userid
             },
             data: {
-                did: parseInt(degree_id)
+                did: parseInt(didin)
             },
         });
         return updateUserDegree;
+    },{
+        query: t.Object({
+         didin: t.Optional(t.String()),
+         userid: t.Optional(t.String())
+        })
     })
 
     .post("/api/createSemester", async ({ body: {userid} }) => {
