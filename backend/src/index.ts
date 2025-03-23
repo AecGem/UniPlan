@@ -205,20 +205,30 @@ const app = new Elysia()
     }) => {
         
        console.log("reached start")
-        const newDegree = await prisma.degree.create({
+        const newSem = await prisma.savedSem.create({
             data: {
-            degree: "this is a test",
+            u_id: "xNgKY4kLlWdCOimDUdIYgVKH9VWK6sLO",
+            sname: "test Sem"
             },
             });
             
-            return newDegree;
+            return newSem;
     })
     //carolyn's test zone
     .get("/api/caro_test", async ({ 
         query: {test} 
     }) => {
-            //put your prisma here!!
-  
+
+        console.log("begin")
+        const updateUserDegree = await prisma.user.update({
+            where: {
+                id: 'akvi32V6b6gbkRutNA8VQWx4xBPjiYxL'
+            },
+            data: {
+                did: 1
+            },
+        });
+        return updateUserDegree;
     })
 
     //Authentication endpoints
