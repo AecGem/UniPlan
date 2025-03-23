@@ -239,9 +239,9 @@ const app = new Elysia()
                 return sem;
         },{
             body: t.Object({
-            semId: t.Optional(t.Integer()),
+            semId: t.Optional(t.Number()),
             name: t.Optional(t.String()),
-            course_list: t.Optional(t.)
+            course_list: t.Optional(t.Array(t.Number()))
         })
 
         })
@@ -300,7 +300,7 @@ const app = new Elysia()
             },
         },{
             query: t.Object({
-                id: t.Optional(t.Integer())
+                id: t.Optional(t.Number())
             })
         });
         return count;
