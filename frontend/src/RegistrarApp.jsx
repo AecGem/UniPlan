@@ -126,21 +126,10 @@ export const App = () => {
       }
     
 //handling functions for the dropdowns
-    const [degrees, setDegrees] = useState(["0"]);
-    //const [selectedDegreeId, setSelectedDegreeId] = useState("0");
-    const setSelectedDegreeId = (degreeValue) => 
-      {
-        console.log(degreeValue);
-        setDegrees(degreeValue);  // Now we actually have `degree` state 
-      }
+    const [degrees, setDegrees] = useState([]);
+    const [selectedDegreeId, setSelectedDegreeId] = useState(null);
 
-    /*
-    const setDegrees = (degreeValue) => 
-      {
-        setSelectedDegreeID(degreeValue);  // Now we actually have `degree` state 
-      }
-        */
-
+      
     const [degInfo, setDegInfo] = useState("0a"); // or "" if you prefer
     const handleInfoChange = (degInfoValue) => 
       {
@@ -201,8 +190,8 @@ export const App = () => {
 
           <br /><br />
 
-          <div id="displayInfo" className="displayInfo" style={{visibility : degrees === "0" ? "hidden" : "Visible"}}>
-            {degrees !=="0" &&
+          <div id="displayInfo" className="displayInfo" style={{visibility : selectedDegreeId === "0" ? "hidden" : "Visible"}}>
+            {selectedDegreeId !=="0" &&
               (
                 <div className="courseInfo">
                   <div className="subtitle3">
