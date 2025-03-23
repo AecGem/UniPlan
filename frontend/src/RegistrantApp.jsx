@@ -330,8 +330,7 @@ export default function App(session) {
       };
       setSemesters((prev) => [...prev, newSem]);
 
-      // Optionally, open your modal for further editing
-      setShowModal(true);
+      setShowModal(false);
     } catch (err) {
       console.error("Error creating semester:", err);
     }
@@ -387,7 +386,7 @@ export default function App(session) {
     // Call your delete endpoint with the semId
     try {
       const res = await fetch(`/api/deleteSemester`, {
-        method: 'POST', // or DELETE, depending on your API design
+        method: 'GET',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ sem_id: semesterToDelete.sem_id })
       });
@@ -412,27 +411,24 @@ export default function App(session) {
     setShowDescModal(false);
   };
 
-  const handleSaveSemesterToDB = (semId) => {
-    // Find the semester to save using its local state identifier.
-    const semesterToSave = semesters.find((sem) => sem.id === semId);
-    if (!semesterToSave) {
-      console.error("Semester not found");
-      return;
-    }
+  // RegistrantApp.jsx (snippet)
+
+  const handleSaveSemesterToDB = (localSemesterId) => {
+    const semesterToSave = semesters.find((s) => s.id === localSemesterId);
+    if (!semesterToSave) return console.error("Semester not found in local state");
 
     const payload = {
+      semId: semesterToSave.sem_id,
       userid: userInfo.session ? userInfo.session.userId : null,
       name: `${semesterToSave.type} ${semesterToSave.year}`,
-      course_list: semesterToSave.courses.map((course) => course.cId)
+      course_list: semesterToSave.courses.map((course) => course.cid)
     };
 
-    console.log(`Saving semester ${semId} to database with payload:`, payload);
+    console.log("Saving to DB with payload:", payload);
 
-    fetch('/api/saveSemester', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
+    fetch("/api/saveSemester", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload)
     })
       .then((res) => {
@@ -442,8 +438,7 @@ export default function App(session) {
         return res.json();
       })
       .then((data) => {
-        // The API should return an object with the new semester ID, e.g., { sem_id: 123 }
-        console.log("Semester saved with sem_id:", data.sem_id);
+        console.log("Semester updated with sem_id:", data.sem_id);
       })
       .catch((err) => console.error("Error saving semester:", err));
   };
