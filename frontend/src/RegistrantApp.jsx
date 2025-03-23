@@ -44,6 +44,7 @@ function CollapsibleSection({title, items, onDragStartAside}) {
 export default function App() {
   const { data: session } = authClient.getSession();
   console.log(session);
+  console.log(userInfo.session);
  /** ---------------------------
    *  SEMESTERS + COURSES STATE
    *  Each semester in 'semesters' has this shape:
