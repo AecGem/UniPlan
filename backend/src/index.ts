@@ -329,7 +329,7 @@ const app = new Elysia()
         const count = await prisma.saved_sem.count({
             where: {
               courses: {
-                has: 1,
+                contains: 1,
                 }
             }
         });
