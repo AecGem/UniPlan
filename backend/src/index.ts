@@ -290,15 +290,13 @@ const app = new Elysia()
     }) => {
 
         console.log("begin")
-        const updateUserSave = await prisma.user.update({
+        const deleteSem = await prisma.saved_sem.delete({
             where: {
-                id: "akvi32V6b6gbkRutNA8VQWx4xBPjiYxL"
+                sem_id: 1,
+                u_id: "xNgKY4kLlWdCOimDUdIYgVKH9VWK6sLO",
             },
-            data: {
-                hassaved: true
-            }
-        })
-        return updateUserSave;
+          })
+          return deleteSem;
     })
 
     //Authentication endpoints
