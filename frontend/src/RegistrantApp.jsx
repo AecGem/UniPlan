@@ -44,7 +44,6 @@ function CollapsibleSection({title, items, onDragStartAside}) {
 export default function App() {
   const { data: session } = authClient.getSession();
   console.log(session);
-  console.log(userInfo.session);
  /** ---------------------------
    *  SEMESTERS + COURSES STATE
    *  Each semester in 'semesters' has this shape:
@@ -276,7 +275,7 @@ export default function App() {
    * ---------------------------*/
   const handleOpenAddModal = async () => {  
     const payload = {
-      userid: session?.user?.userId || null,
+      userid: userInfo.session ? userInfo.session.userId : null,
       sname: `${selectedType} ${selectedYear}`,
       courses: [] // new semester starts with no courses
     };
@@ -375,7 +374,7 @@ export default function App() {
     }
   
     const payload = {
-      u_id: userInfo.user ? userInfo.user.userId : null,
+      userid: userInfo.session ? userInfo.session.userId : null,
       sname: `${semesterToSave.type} ${semesterToSave.year}`,
       courses: semesterToSave.courses.map((course) => course.cId)
     };
@@ -625,6 +624,7 @@ export default function App() {
       <div className="modal-content">
       <h2>Degree Verification</h2>
         <div className="verify-content">
+
           <h5>ah beans</h5>
         </div>
 

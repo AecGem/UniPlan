@@ -188,18 +188,28 @@ const app = new Elysia()
             data: {
             u_id: userid,
             },
-            });
-            
-            return newSem;
+        });
+    
+        return newSem;
     },{
         query: t.Object({
             userid: t.Optional(t.String())
         })
     })
 
+    .get("/api/deleteSemester", async ({ query: {semesterid, userid} }) => {
+        const deleteSem = await prisma.saved_sem.delete({
+            where: {
+                sem_id: semesterid,
+                u_id: userid,
+            },
+          });
+          return deleteSem;
+    })
+
     //Endpoints for registration statistics
 
-    .get("/api/registration", async ({ query: {userid} }) => {
+    .post("/api/registration", async ({ body: {userid} }) => {
         let registrations = null;
         let uid_undefined = false;
         if(userid==undefined){
@@ -219,7 +229,7 @@ const app = new Elysia()
 
         return registrations;
     },{
-        query: t.Object({
+        body: t.Object({
             userid: t.Optional(t.String())
         })
     })
@@ -290,15 +300,13 @@ const app = new Elysia()
     }) => {
 
         console.log("begin")
-        const updateUserSave = await prisma.user.update({
+        const deleteSem = await prisma.saved_sem.delete({
             where: {
-                id: "akvi32V6b6gbkRutNA8VQWx4xBPjiYxL"
+                sem_id: 1,
+                u_id: "xNgKY4kLlWdCOimDUdIYgVKH9VWK6sLO",
             },
-            data: {
-                hassaved: true
-            }
-        })
-        return updateUserSave;
+          })
+          return deleteSem;
     })
 
     //Authentication endpoints
