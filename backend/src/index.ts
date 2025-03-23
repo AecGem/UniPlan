@@ -297,7 +297,7 @@ const app = new Elysia()
     })
     
     //get count of semesters where a class appears
-    .get("api/course_stats", async ({query: degreeid}) => {
+    .get("api/course_stats", async ({query: didin}) => {
         const results: {
             count: number,
             courseName: string,
@@ -319,7 +319,7 @@ const app = new Elysia()
             });
             const inDegree = await prisma.degree.findFirst({
                 where: {
-                    did: degreeid,
+                    did: didin,
                     courses: {has: i,},
                 },
             });
@@ -331,6 +331,10 @@ const app = new Elysia()
             };
         };
         return results;
+    }, {
+        query: t.Object({
+            didin: t.Optional(t.String())
+        })
     })
 
     .get("/api/degree_count", async ({ query: {didin} }) => {
@@ -350,7 +354,7 @@ const app = new Elysia()
         return count;
     },{
         query: t.Object({
-        didin: t.Optional(t.String())
+            didin: t.Optional(t.String())
         })
     })
   
