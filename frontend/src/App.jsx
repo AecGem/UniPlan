@@ -42,10 +42,10 @@ export function App({ context }) {
     // Instead of window.location.href, use navigate:
     if (signUpUserType === "admin") {
       
-      router.invalidate({session: logInData});
+      router.invalidate({session: logInData.data.user});
       navigate({ to: "/registrar" });
     } else {
-      router.invalidate({session: logInData});
+      router.invalidate({session: logInData.data.user});
       navigate({ to: "/registrant" });
     }
 
@@ -77,10 +77,10 @@ export function App({ context }) {
       signupForm.userType === "admin"
     );
     if (signUpUserType === "admin") {
-      router.invalidate({session : signUpData});
+      router.invalidate({session : signUpData.data.user});
       navigate({ to: "/registrar" });
     } else {
-      router.invalidate({session : signUpData});
+      router.invalidate({session : signUpData.data.user});
       navigate({ to: "/registrant" });
     }
 
