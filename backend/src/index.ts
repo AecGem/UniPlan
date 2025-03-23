@@ -403,9 +403,6 @@ const app = new Elysia()
                 select: {
                     shortname: true,
                 },
-                orderBy: {
-                    cid: 'asc',
-                },
             });
             const inDegree = await prisma.degree.findFirst({
                 where: {
