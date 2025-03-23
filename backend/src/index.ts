@@ -68,12 +68,12 @@ const app = new Elysia()
         let id_undefined = false;
         let did_undefined = false;
 
-            if(id===undefined){
-                id_undefined = true;
-            }
-            if(didin===undefined){
-               did_undefined = true;
-            }
+        if(id===undefined){
+            id_undefined = true;
+        }
+        if(didin===undefined){
+            did_undefined = true;
+        }
 
         let isAmbig_undefined = false;
         if (isAmbig === undefined) {
@@ -371,7 +371,7 @@ const app = new Elysia()
             count: number,
             courseName: string,
         }[] = [];
-        for (let i = 1; i < 4; i++){
+        for (let i = 1; i < 43; i++){
             const count = await prisma.saved_sem.count({
                 where: {
                 courses: { has: i,},
@@ -386,7 +386,13 @@ const app = new Elysia()
                     shortname: true,
                 },
             });
-            if (courseName){
+            const inDegree = await prisma.degree.findFirst({
+                where: {
+                    did: 1,
+                    courses: {has: i,},
+                },
+            });
+            if (courseName && inDegree){
                 results.push({
                     count,
                     courseName,
