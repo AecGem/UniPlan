@@ -376,12 +376,12 @@ export default function App({ context }) {
       console.error("Semester not found");
       return;
     }
-    // Call your delete endpoint with the sem_id
+    // Call your delete endpoint with the semId
     try {
       const res = await fetch(`/api/deleteSemester`, {
         method: 'POST', // or DELETE, depending on your API design
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ sem_id: semesterToDelete.sem_id })
+        body: JSON.stringify({ semId: semesterToDelete.semId })
       });
       if (!res.ok) {
         throw new Error("Failed to delete semester");
