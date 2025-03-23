@@ -294,7 +294,7 @@ export default function App() {
   
   const handleConfirmAddSemester = async () => {  
     const payload = {
-      userid: userInfo.session.userId,
+      userid: userInfo.session ? userInfo.session.userId : null
     };
 
     try {
