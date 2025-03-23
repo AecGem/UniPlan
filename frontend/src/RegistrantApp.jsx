@@ -453,6 +453,7 @@ export default function App(session) {
         <h1>UniPlan: Registrant's Homepage</h1>
         <nav className="topnav">
           <a className="active" href="#plan">Plan</a>
+          <p>Hello: {session.user.name || "Guest"}</p>
           <button className="sign-out" onClick={handleSignOut}>
             Sign Out
           </button>
@@ -594,8 +595,8 @@ export default function App(session) {
               <option value="Spring">Spring</option>
               <option value="Summer">Summer</option>
               <option value="Winter">Winter</option>
-              <option value="Co-op">Co-op Workterm</option>
-              <option value="Gap">Gap Semester</option>
+              {/*<option value="Co-op">Co-op Workterm</option>*/}
+              {/*<option value="Gap">Gap Semester</option>*/}
             </select>
             <br /><br />
 

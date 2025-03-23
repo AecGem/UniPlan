@@ -46,8 +46,8 @@ const app = new Elysia()
             //its like 199 degrees
             let directory = '/var/www/temp/UniPlan/'.concat(id);
             await $`mkdir ${directory}`;
-            await $`curl https://localhost:443/api/degree?did=${did} > ${directory}/req.json`;
-            await $`curl https://localhost:443/api/sems_with_class?id=${id} >${directory}/sem.json` //TODO: Get the saved sem api.
+            await $`curl https://localhost:443/api/degree?did=${did} -k > ${directory}/req.json`;
+            await $`curl https://localhost:443/api/get_saved_sem?equals=${id} -k > ${directory}/sem.json` //TODO: Get the saved sem api.
 
             //when you're doin it with me, doin it with me~!
             await $`/var/www/UniPlan/backend/middleware/build/verifier ${directory}/req.json ${directory}/sem.json ${directory}/out.json`
@@ -162,7 +162,7 @@ const app = new Elysia()
             
     })
 
-    .get("/api/degree_specific", async ({query: didin}) =>{
+    .get("/api/degree_specific", async ({query: {didin}}) =>{
         let passedDId;
         let degrees;
             if (didin !== undefined) {
@@ -173,7 +173,7 @@ const app = new Elysia()
             }
             degrees = await prisma.degree.findFirst({
                 where: {
-                    did: didin,
+                    did: passedDId,
                 }
             });
         
@@ -181,8 +181,7 @@ const app = new Elysia()
     },{
         query: t.Object({
         didin: t.Optional(t.String()),
-    })
-
+        })
     })
 
     .get("/api/update_user_degree", async ({query: userid, degree_id}) => {
@@ -196,8 +195,6 @@ const app = new Elysia()
         });
         return updateUserDegree;
     })
-
-
 
     .post("/api/createSemester", async ({ body: {userid} }) => {
         const newSem = await prisma.saved_sem.create({
@@ -213,37 +210,34 @@ const app = new Elysia()
         })
     })
 
-        .post("/api/saveSemester", async({body: {semId, name, course_list, userid }}) =>{
-           
-           
-            const sem = await prisma.saved_sem.update({
+    .post("/api/saveSemester", async({body: {semId, name, course_list, userid }}) =>{
+        
+        const sem = await prisma.saved_sem.update({
+            where: {
+                sem_id: semId
+            },
+            data: {
+            courses: course_list,
+            sname: name
+            },
+            });
+            const updateUserSave = await prisma.user.update({
                 where: {
-                    sem_id: semId
+                    id: userid
                 },
                 data: {
-                courses: course_list,
-                sname: name
-                },
-                });
-                const updateUserSave = await prisma.user.update({
-                    where: {
-                        id: userid
-                    },
-                    data: {
-                        hassaved: true
-                    }
-                });
-                return sem;
-                
+                    hassaved: true
+                }
+            });
+            return sem;      
         },{
-            body: t.Object({
-            semId: t.Optional(t.Number()),
-            name: t.Optional(t.String()),
-            course_list: t.Optional(t.Array(t.Number())),
-            userid: t.Optional(t.String())
+        body: t.Object({
+        semId: t.Optional(t.Number()),
+        name: t.Optional(t.String()),
+        course_list: t.Optional(t.Array(t.Number())),
+        userid: t.Optional(t.String())
         })
-
-        })
+    })
 
     .get("/api/deleteSemester", async ({ query: {semId} }) => {
         const deleteSem = await prisma.saved_sem.delete({
@@ -256,6 +250,23 @@ const app = new Elysia()
         query: t.Object({
         semId: t.Optional(t.Number()),
     })})
+    
+    .get("api/get_saved_sem", async ({query: userid}) => {
+        const semesters = await prisma.saved_sem.findMany({
+            where: {
+                u_id: userid,
+            },
+            select: {
+                sem_id: true,
+                sname: true,
+                courses: true,
+            },
+            orderBy: {
+                sem_id: 'asc',
+            },
+        });
+        return semesters;
+     })
 
     //Endpoints for registration statistics
 
@@ -373,39 +384,20 @@ const app = new Elysia()
     }) => {
 
         console.log("begin")
-        const results: {
-            count: number,
-            courseName: string,
-        }[] = [];
-        for (let i = 1; i < 44; i++){
-            const count = await prisma.saved_sem.count({
-                where: {
-                courses: { has: i,},
-                },
-            });
-            const courseName = await prisma.course.findUnique({
-                where: {
-                    cid: i,
-                    isambig: false,
-                },
-                select: {
-                    shortname: true,
-                },
-            });
-            const inDegree = await prisma.degree.findFirst({
-                where: {
-                    did: 1,
-                    courses: {has: i,},
-                },
-            });
-            if (courseName && inDegree){
-                results.push({
-                    count,
-                    courseName,
-                });
-            };
-        };
-        return results;
+        const semesters = await prisma.saved_sem.findMany({
+            where: {
+                u_id: "xNgKY4kLlWdCOimDUdIYgVKH9VWK6sLO",
+            },
+            select: {
+                sem_id: true,
+                sname: true,
+                courses: true,
+            },
+            orderBy: {
+                sem_id: 'asc',
+            },
+        });
+        return semesters;
     })
 
     //Authentication endpoints
