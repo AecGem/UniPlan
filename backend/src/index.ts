@@ -223,11 +223,28 @@ const app = new Elysia()
         })
     })
 
-    .get("/api/deleteSemester", async ({ query: {semesterid, userid} }) => {
+        .post("/api/saveSemester", async({body: {semId, name, course_list }}) =>{
+           
+           
+            const sem = await prisma.saved_sem.update({
+                where: {
+                    sem_id: semId
+                },
+                data: {
+                courses: course_list,
+                sname: name
+                },
+                });
+                
+                return sem;
+        },{
+
+        })
+
+    .get("/api/deleteSemester", async ({ query: {semesterid} }) => {
         const deleteSem = await prisma.saved_sem.delete({
             where: {
-                sem_id: semesterid,
-                u_id: userid,
+                sem_id: semesterid
             },
           });
           return deleteSem;
@@ -310,17 +327,7 @@ const app = new Elysia()
         query: {test} 
     }) => {
         //console.log("reached start")
-        const sem = await prisma.saved_sem.update({
-            where: {
-                sem_id: 2
-            },
-            data: {
-            courses: [1,2,3,4],
-            sname: "new test"
-            },
-            });
-            
-            return sem;
+        
     })
     //carolyn's test zone
     .get("/api/caro_test", async ({ 
