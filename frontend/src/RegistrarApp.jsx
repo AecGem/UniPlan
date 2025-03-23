@@ -193,7 +193,7 @@ export const App = () => {
           <br /><br />
 
           <div id="displayInfo" className="displayInfo" style={{visibility : selectedDegreeId === 1 ? "hidden" : "Visible"}}>
-            {selectedDegreeId !==2 &&
+            {selectedDegreeId !==1 &&
               (
                 <div className="courseInfo">
                   <div className="subtitle3">
