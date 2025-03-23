@@ -162,7 +162,7 @@ const app = new Elysia()
             did_undefined = true;
         }
         if (did_undefined) {
-            const degrees = await prisma.degree.findMany();
+            degrees = await prisma.degree.findMany();
         }
         else if (!did_undefined){
             degrees = await prisma.degree.findMany({
