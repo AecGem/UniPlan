@@ -197,8 +197,6 @@ const app = new Elysia()
         return updateUserDegree;
     })
 
-
-
     .post("/api/createSemester", async ({ body: {userid} }) => {
         const newSem = await prisma.saved_sem.create({
             data: {
@@ -213,37 +211,34 @@ const app = new Elysia()
         })
     })
 
-        .post("/api/saveSemester", async({body: {semId, name, course_list, userid }}) =>{
-           
-           
-            const sem = await prisma.saved_sem.update({
+    .post("/api/saveSemester", async({body: {semId, name, course_list, userid }}) =>{
+        
+        const sem = await prisma.saved_sem.update({
+            where: {
+                sem_id: semId
+            },
+            data: {
+            courses: course_list,
+            sname: name
+            },
+            });
+            const updateUserSave = await prisma.user.update({
                 where: {
-                    sem_id: semId
+                    id: userid
                 },
                 data: {
-                courses: course_list,
-                sname: name
-                },
-                });
-                const updateUserSave = await prisma.user.update({
-                    where: {
-                        id: userid
-                    },
-                    data: {
-                        hassaved: true
-                    }
-                });
-                return sem;
-                
+                    hassaved: true
+                }
+            });
+            return sem;      
         },{
-            body: t.Object({
-            semId: t.Optional(t.Number()),
-            name: t.Optional(t.String()),
-            course_list: t.Optional(t.Array(t.Number())),
-            userid: t.Optional(t.String())
+        body: t.Object({
+        semId: t.Optional(t.Number()),
+        name: t.Optional(t.String()),
+        course_list: t.Optional(t.Array(t.Number())),
+        userid: t.Optional(t.String())
         })
-
-        })
+    })
 
     .get("/api/deleteSemester", async ({ query: {semId} }) => {
         const deleteSem = await prisma.saved_sem.delete({
@@ -256,6 +251,23 @@ const app = new Elysia()
         query: t.Object({
         semId: t.Optional(t.Number()),
     })})
+    
+    .get("api/get_saved_sem", async ({query: userid}) => {
+        const semesters = await prisma.saved_sem.findMany({
+            where: {
+                u_id: userid,
+            },
+            select: {
+                sem_id: true,
+                sname: true,
+                courses: true,
+            },
+            orderBy: {
+                sem_id: 'asc',
+            },
+        });
+        return semesters;
+     })
 
     //Endpoints for registration statistics
 
@@ -373,17 +385,39 @@ const app = new Elysia()
     }) => {
 
         console.log("begin")
-		const semesters = await prisma.saved_sem.findMany({
-			where: {
-				u_id: "xNgKY4kLlWdCOimDUdIYgVKH9VWK6sLO",
-			},
-			select: {
-				sem_id: true,
-				sname: true,
-				courses: true,
-			}
-		});
-        return semesters;
+        const results: {
+            count: number,
+            courseName: string,
+        }[] = [];
+        for (let i = 1; i < 44; i++){
+            const count = await prisma.saved_sem.count({
+                where: {
+                courses: { has: i,},
+                },
+            });
+            const courseName = await prisma.course.findUnique({
+                where: {
+                    cid: i,
+                    isambig: false,
+                },
+                select: {
+                    shortname: true,
+                },
+            });
+            const inDegree = await prisma.degree.findFirst({
+                where: {
+                    did: 1,
+                    courses: {has: i,},
+                },
+            });
+            if (courseName && inDegree){
+                results.push({
+                    count,
+                    courseName,
+                });
+            };
+        };
+        return results;
     })
 
     //Authentication endpoints
