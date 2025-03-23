@@ -65,10 +65,12 @@ export default function App() {
 
 
   //Check to see if a homie is logged in. If not logged in, gtfo.
+  /*
   if (userInfo.session.userId === null) {
     router.invalidate();
     navigate({ to: '/' })
   }
+    */
 
   // Fetch courses from the backend when the component mounts
   useEffect(() => {

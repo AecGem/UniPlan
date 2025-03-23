@@ -11,10 +11,12 @@ export const App = () => {
   const { data: session } = authClient.getSession();
   const router = useRouter();
   const navigate = useNavigate();
+  /*
   if (userInfo.session.userId === null) {
     router.invalidate();
     navigate({ to: '/' })
   }
+  */
   //data for the temp course tables
   const CourseTempdata = [
     { courseName: "CS100", numStudents: "125" },
