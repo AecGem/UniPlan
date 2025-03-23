@@ -70,6 +70,11 @@ export function App({ context }) {
       setErrorMessage("Passwords don't match!");
       return;
     }
+    if(signupForm.password != loginPassword)
+    {
+      setErrorMessage("Incorrect Password");
+      return;
+    }
 
     let signUpData = await AuthAPI.signup(
       signupForm.userEmail,
@@ -104,6 +109,16 @@ export function App({ context }) {
       [name]: value,
     }));
   };
+
+
+
+
+
+
+
+
+
+
 
   return (
     <div className="app-container">
