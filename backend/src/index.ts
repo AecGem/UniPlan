@@ -166,7 +166,7 @@ const app = new Elysia()
             degrees = await prisma.degree.findMany();
         }
         else if (!did_undefined){
-            let passedDId;
+            let passedDId = 1;
             if (didin !== undefined) {
                 passedDId = parseInt(didin);
             }
@@ -175,7 +175,7 @@ const app = new Elysia()
             }
             degrees = await prisma.degree.findFirst({
                 where: {
-                    did: 1
+                    did: passedDId
                 }
             });
         }
