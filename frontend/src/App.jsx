@@ -6,7 +6,7 @@ import { useRouter } from "@tanstack/react-router";
 
 
 
-export async function App({ context }) {
+export function App({ context }) {
   const router = useRouter();
   const [showModal, setShowModal] = useState(false);
   const [isLoginMode, setIsLoginMode] = useState(true);
@@ -56,7 +56,7 @@ export async function App({ context }) {
     setShowModal(false);
   };
 
-  const handleSignupSubmit = (e) => {
+  const handleSignupSubmit = async (e) => {
     e.preventDefault();
     if (
       !signupForm.userEmail ||
@@ -71,7 +71,7 @@ export async function App({ context }) {
       return;
     }
 
-    let signUpData = AuthAPI.signup(
+    let signUpData = await AuthAPI.signup(
       signupForm.userEmail,
       signupForm.password,
       signupForm.firstName.concat(" ", signupForm.lastName),
