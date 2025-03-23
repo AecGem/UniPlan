@@ -373,39 +373,17 @@ const app = new Elysia()
     }) => {
 
         console.log("begin")
-        const results: {
-            count: number,
-            courseName: string,
-        }[] = [];
-        for (let i = 1; i < 44; i++){
-            const count = await prisma.saved_sem.count({
-                where: {
-                courses: { has: i,},
-                },
-            });
-            const courseName = await prisma.course.findUnique({
-                where: {
-                    cid: i,
-                    isambig: false,
-                },
-                select: {
-                    shortname: true,
-                },
-            });
-            const inDegree = await prisma.degree.findFirst({
-                where: {
-                    did: 1,
-                    courses: {has: i,},
-                },
-            });
-            if (courseName && inDegree){
-                results.push({
-                    count,
-                    courseName,
-                });
-            };
-        };
-        return results;
+		const semesters = await prisma.saved_sem.findMany({
+			where: {
+				u_id: "xNgKY4kLlWdCOimDUdIYgVKH9VWK6sLO",
+			},
+			select: {
+				sem_id: true,
+				sname: true,
+				courses: true,
+			}
+		});
+        return semesters;
     })
 
     //Authentication endpoints
