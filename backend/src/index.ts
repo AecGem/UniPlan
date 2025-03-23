@@ -182,20 +182,25 @@ const app = new Elysia()
         return degrees;
     },{
         query: t.Object({
-        didin: t.Optional(t.String()),
+        didin: t.Optional(t.String())
         })
     })
 
-    .get("/api/update_user_degree", async ({query: userid, degree_id}) => {
+    .get("/api/update_user_degree", async ({query: userid, didin}) => {
         const updateUserDegree = await prisma.user.update({
             where: {
                 id: userid
             },
             data: {
-                did: parseInt(degree_id)
+                did: parseInt(didin)
             },
         });
         return updateUserDegree;
+    },{
+        query: t.Object({
+         didin: t.Optional(t.String()),
+         userid: t.Optional(t.String())
+        })
     })
 
     .post("/api/createSemester", async ({ body: {userid} }) => {
