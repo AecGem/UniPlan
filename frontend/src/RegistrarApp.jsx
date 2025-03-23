@@ -135,6 +135,10 @@ export const App = () => {
       {
         console.log("Selected: ");
         console.log(selectedDegreeId);
+        console.log("degrees: ");
+        console.log(degrees);
+        console.log("data: ");
+        console.log(data);
         setDegInfo(degInfoValue);  // Now we actually have `degree` state 
       }
 
