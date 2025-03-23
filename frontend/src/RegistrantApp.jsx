@@ -78,6 +78,7 @@ export default function App() {
     fetch(url)
       .then(res => res.json())
       .then(data => {
+        setDegrees(data);
         if (data.length > 0){
           setSelectedDegreeId(data[0].did);
         }
@@ -85,7 +86,7 @@ export default function App() {
       .catch(err => console.error('Error fetching degrees:', err));
   }, []);
 
-  // Fetch degrees from the backend when the component mounts
+  // Fetch verification from the backend when the component mounts
   useEffect(() => {
     const url = `/api/verification`;
     fetch(url)
