@@ -103,7 +103,7 @@ export default function App(session) {
   useEffect(() => {
     if (selectedDegreeId !== null) {
       const params = new URLSearchParams();
-      params.append('degree_id', selectedDegreeId);
+      params.append('didin', selectedDegreeId);
       const url = `/api/course?${params.toString()}`;
       fetch(url)
         .then(res => res.json())
@@ -409,7 +409,7 @@ export default function App(session) {
     if (userInfo.session && userInfo.session.userId) {
       try {
         await fetch(
-          `/api/update_user_degree?userid=${userInfo.session.userId}&degree_id=${newDegreeId}`
+          `/api/update_user_degree?userid=${userInfo.session.userId}&didin=${newDegreeId}`
         );
         userInfo.session.user.did = newDegreeId;
       } catch (err) {
