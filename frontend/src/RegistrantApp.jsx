@@ -44,6 +44,11 @@ function CollapsibleSection({title, items, onDragStartAside}) {
 export default function App() {
   const { data: session } = authClient.getSession();
   console.log(session);
+  //Check to see if a homie is logged in. If not logged in, gtfo.
+  if(session===undefined){
+    router.invalidate();
+    navigate({ to: '/' })
+  }
  /** ---------------------------
    *  SEMESTERS + COURSES STATE
    *  Each semester in 'semesters' has this shape:
@@ -275,7 +280,7 @@ export default function App() {
    * ---------------------------*/
   const handleOpenAddModal = async () => {  
     const payload = {
-      userid: "xNgKY4kLlWdCOimDUdIYgVKH9VWK6sLO"
+      userid: userInfo.session.userId,
       //sname: `${selectedType} ${selectedYear}`,
       //courses: [] // new semester starts with no courses
     };
