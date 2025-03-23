@@ -9,30 +9,58 @@ using namespace std;
 // for convenience
 using json = nlohmann::json;
 
-int main()
+int main(int argc, char *argv[])
 {
-    std::ifstream file("dummy_inputs.json");
+    if (argc != 4){
+        cout << "Incorrect Number of arguments" << endl;
+        return 1;
+    }
 
-    json jsonInputData;
-    file >> jsonInputData;
+    //Set up the file paths
+    string reqs_filePath = argv[1];
+    string sems_filePath = argv[2];
+    string out_filePath = argv[3];
 
-    file.close();
+    //Open the files
+    std::ifstream reqs_stream (reqs_filePath);
+    std::ifstream sems_stream (sems_filePath);
+    std::ifstream out_stream (out_filePath);
+
+    // std::ifstream file("dummy_inputs.json");
+    // json jsonInputData;
+    // file >> jsonInputData;
+
+    //Parse JSON
+    json r_input;
+    reqs_stream >> r_input;
+    reqs_stream.close();
+
+    json s_input;
+    sems_stream >> s_input;
+    sems_stream.close();
+
+    json outputJson;
+    out_stream >> outputJson;
+    out_stream.close();
+
 
     //Take in the json array of degree requirements and put it in as a c++ array
     
-    vector<int> degree_reqs = jsonInputData["Degree Requirements List"]["Requirements"].get<vector<int>>();
+    // vector<int> degree_reqs = jsonInputData["Degree Requirements List"]["Requirements"].get<vector<int>>();
+
+    vector<int> degree_reqs = r_input["Degree Requirements List"]["Requirements"].get<vector<int>>();
 
     cout << "Degree Requirements: ";
     for (const auto& reqs : degree_reqs){
         cout << "Course: " << reqs << endl;
     }
 
-//    //Take in the json array of saves semesters and put it in as a c++ array
+    //Take in the json array of saves semesters and put it in as a c++ array
 
     vector<int> saved_plan;
 
     cout << "Saved Degree Plan: " << endl;
-    for (const auto& s: jsonInputData["Saved Semesters"]){
+    for (const auto& s: s_input["Saved Semesters"]){
         vector <int> temp = s["Saved Courses"].get<vector<int>>();
         saved_plan.insert(saved_plan.end(), temp.begin(), temp.end());
     }
@@ -50,7 +78,8 @@ int main()
         cout << "Invalid Degree. Saved degree list does not match size of requirements list." << endl;
         //make a json output here later
     }
-    else{
+
+    else {
         cout << "Saved degree list matches size of requirements list." << endl;
     }
 
@@ -69,7 +98,6 @@ int main()
         //set a current target for the search
         int temp_target = reqs;
 
-        //sort the list of saved plans
         //if reqs has not been matched, even after the end of the list, return an error
         //sort and then do a binary search
         sort(saved_plan.begin(), saved_plan.end());
@@ -79,5 +107,7 @@ int main()
             cout << "Degree Plan Invalid. At least one course is missing." << endl;
         }
     }
+
+
 
 }
