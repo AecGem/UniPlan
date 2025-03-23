@@ -252,7 +252,7 @@ const app = new Elysia()
                 id: "akvi32V6b6gbkRutNA8VQWx4xBPjiYxL"
             },
             data: {
-                hasSaved: "true"
+                hassaved: "true"
             }
         })
         return updateUserSave;
