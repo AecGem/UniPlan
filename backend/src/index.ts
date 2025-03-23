@@ -340,6 +340,10 @@ const app = new Elysia()
     }) => {
 
         console.log("begin")
+        const results: {
+            count: number,
+            courseName: string,
+        }[] = [];
         for (let i = 1; i < 4; i++){
             const count = await prisma.saved_sem.count({
                 where: {
@@ -358,12 +362,13 @@ const app = new Elysia()
                 },
             });
             if (courseName){
-                return {
+                results.push({
                     count,
                     courseName,
-                };
+                });
             };
         };
+        return results;
     })
 
     //Authentication endpoints
