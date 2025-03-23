@@ -133,6 +133,8 @@ export const App = () => {
     const [degInfo, setDegInfo] = useState("0a"); // or "" if you prefer
     const handleInfoChange = (degInfoValue) => 
       {
+        console.log("Selected: ");
+        console.log(selectedDegreeId);
         setDegInfo(degInfoValue);  // Now we actually have `degree` state 
       }
 
