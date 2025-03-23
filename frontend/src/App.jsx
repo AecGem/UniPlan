@@ -5,7 +5,8 @@ import { useNavigate } from "@tanstack/react-router";
 import { useRouter } from "@tanstack/react-router";
 
 
-export function App({ context }) {
+
+export async function App({ context }) {
   const router = useRouter();
   const [showModal, setShowModal] = useState(false);
   const [isLoginMode, setIsLoginMode] = useState(true);
@@ -29,14 +30,14 @@ export function App({ context }) {
     setErrorMessage("");
   };
 
-  const handleLoginSubmit = (e) => {
+  const handleLoginSubmit = async (e) => {
     e.preventDefault();
     if (!loginEmail || !loginPassword) {
       setErrorMessage("Please enter an Email and Password.");
       return;
     }
 
-    let logInData = AuthAPI.login(loginEmail, loginPassword);
+    let logInData = await AuthAPI.login(loginEmail, loginPassword);
     console.log(logInData);
     //session.set(data.data.user, data.data.session); 
     // Instead of window.location.href, use navigate:
