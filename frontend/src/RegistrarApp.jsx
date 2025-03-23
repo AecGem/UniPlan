@@ -126,12 +126,14 @@ export const App = () => {
       }
     
 //handling functions for the dropdowns
-    //const [degrees, setDegrees] = useState(["0"]);
+    const [degrees, setDegrees] = useState(["0"]);
     const [selectedDegreeId, setSelectedDegreeId] = useState(null);
+    /*
     const setDegrees = (degreeValue) => 
       {
         setSelectedDegreeID(degreeValue);  // Now we actually have `degree` state 
       }
+        */
 
     const [degInfo, setDegInfo] = useState("0a"); // or "" if you prefer
     const handleInfoChange = (degInfoValue) => 
