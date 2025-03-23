@@ -594,8 +594,8 @@ export default function App(session) {
               <option value="Spring">Spring</option>
               <option value="Summer">Summer</option>
               <option value="Winter">Winter</option>
-              <option value="Co-op">Co-op Workterm</option>
-              <option value="Gap">Gap Semester</option>
+              {/*<option value="Co-op">Co-op Workterm</option>*/}
+              {/*<option value="Gap">Gap Semester</option>*/}
             </select>
             <br /><br />
 
