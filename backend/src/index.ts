@@ -225,7 +225,7 @@ const app = new Elysia()
             },
             data: {
               degree: 'test',
-              req: [3,6,7,22]
+              courses: [3,6,7,22]
             },
           });
           return "looool";
