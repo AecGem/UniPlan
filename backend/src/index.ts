@@ -205,9 +205,9 @@ const app = new Elysia()
     }) => {
         
        console.log("reached start")
-        const newDegree = await prisma.degree.create({
+        const newDegree = await prisma.savedSem.create({
             data: {
-            degree: "this is a test",
+            u_id: "this is a test",
             },
             });
             
