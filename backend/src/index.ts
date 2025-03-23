@@ -188,13 +188,23 @@ const app = new Elysia()
             data: {
             u_id: userid,
             },
-            });
-            
-            return newSem;
+        });
+    
+        return newSem;
     },{
         body: t.Object({
             userid: t.Optional(t.String())
         })
+    })
+
+    .get("/api/deleteSemester", async ({ query: {semesterid, userid} }) => {
+        const deleteSem = await prisma.saved_sem.delete({
+            where: {
+                sem_id: semesterid,
+                u_id: userid,
+            },
+          });
+          return deleteSem;
     })
 
     //Endpoints for registration statistics

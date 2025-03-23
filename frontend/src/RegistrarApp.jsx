@@ -172,7 +172,7 @@ export const App = () => {
             value={selectedDegreeId || ''}
             onChange={(e) => setSelectedDegreeId(Number(e.target.value))}
           >
-            <option value ="0">No Degree Selected</option>
+            <option value = "0">No Degree Selected</option>
             {degrees.map((deg) => (
               <option key={deg.did} value={deg.did}> {deg.degree} </option>
             ))}
@@ -192,8 +192,8 @@ export const App = () => {
 
           <br /><br />
 
-          <div id="displayInfo" className="displayInfo" style={{visibility : selectedDegreeId === 1 ? "hidden" : "Visible"}}>
-            {selectedDegreeId !==1 &&
+          <div id="displayInfo" className="displayInfo" style={{visibility : selectedDegreeId === 0 ? "hidden" : "Visible"}}>
+            {selectedDegreeId !==0 &&
               (
                 <div className="courseInfo">
                   <div className="subtitle3">
