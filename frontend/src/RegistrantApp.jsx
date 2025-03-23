@@ -102,6 +102,19 @@ export default function App(session) {
       .catch(err => console.error('Error fetching degrees:', err));
   }, []);
 
+  // New useEffect for fetching courses based on the selected degree
+  useEffect(() => {
+    if (selectedDegreeId !== null) {
+      const params = new URLSearchParams();
+      params.append('degree_id', selectedDegreeId);
+      const url = `/api/course?${params.toString()}`;
+      fetch(url)
+        .then(res => res.json())
+        .then(data => setCourses(data))
+        .catch(err => console.error('Error fetching courses for degree:', err));
+    }
+  }, [selectedDegreeId]);
+
   // Fetch verification from the backend when the component mounts
   useEffect(() => {
     const url = `/api/verification`;
