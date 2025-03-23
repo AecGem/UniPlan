@@ -346,7 +346,7 @@ const app = new Elysia()
             const courseName = await prisma.course.findUnique({
                 where: {
                     cid: i,
-                    isAmbig: false,
+                    isambig: false,
                 },
                 select: {
                     shortname: true,
