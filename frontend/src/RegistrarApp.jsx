@@ -125,32 +125,33 @@ export const App = () => {
         }
       }
     
-//handling functions for the dropdowns
-    const [degrees, setDegrees] = useState([0]);
-    const [selectedDegreeId, setSelectedDegreeId] = useState([0]);
+  // Fetch degrees from the backend when the component mounts
+  useEffect(() => {
+    const url = `/api/degree`;
+    fetch(url)
+      .then(res => res.json())
+      .then(data => {
+        setDegrees(data);
+        if (data.length > 0){
+          setSelectedDegreeId(data[0].did);
+        }
+      })
+      .catch(err => console.error('Error fetching degrees:', err));
+  }, []);
 
-      
-    const [degInfo, setDegInfo] = useState("0a"); // or "" if you prefer
-    const handleInfoChange = (degInfoValue) => 
-      {
-        console.log("Selected: ");
-        console.log(selectedDegreeId);
-        setDegInfo(degInfoValue);  // Now we actually have `degree` state 
-      }
 
-      // Fetch degrees from the backend when the component mounts
-      useEffect(() => {
-        const url = `/api/degree`;
-        fetch(url)
-          .then(res => res.json())
-          .then(data => {
-            setDegrees(data);
-            if (data.length > 0){
-              setSelectedDegreeId(data[0].did);
-            }
-          })
-          .catch(err => console.error('Error fetching degrees:', err));
-      }, []);
+  //handling functions for the dropdowns
+      const [degrees, setDegrees] = useState([0]);
+      const [selectedDegreeId, setSelectedDegreeId] = useState([0]);
+
+        
+      const [degInfo, setDegInfo] = useState("0a"); // or "" if you prefer
+      const handleInfoChange = (degInfoValue) => 
+        {
+          console.log("Selected: ");
+          console.log(selectedDegreeId);
+          setDegInfo(degInfoValue);  // Now we actually have `degree` state 
+        }
 
 
   return (
