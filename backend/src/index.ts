@@ -235,13 +235,22 @@ const app = new Elysia()
                 sname: name
                 },
                 });
-                
+                const updateUserSave = await prisma.user.update({
+                    where: {
+                        id: userid
+                    },
+                    data: {
+                        hassaved: true
+                    }
+                });
+                return updateUserSave;
                 return sem;
         },{
             body: t.Object({
             semId: t.Optional(t.Number()),
             name: t.Optional(t.String()),
-            course_list: t.Optional(t.Array(t.Number()))
+            course_list: t.Optional(t.Array(t.Number())),
+            userid: t.Optional(t.String())
         })
 
         })
