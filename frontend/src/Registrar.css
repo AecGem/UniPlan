@@ -131,6 +131,7 @@ html, body {
 /*Styling for degree info:*/
 .displayInfo
 {
+  margin-top: 40px;
   visibility: hidden;
   border: 4px solid #065e48;
   border-radius: 10px;
@@ -142,7 +143,7 @@ html, body {
 {
   margin-bottom: 25px;
   text-align: center;
-  margin-top: 25%;
+  margin-top: 20%;
 }
 .courseInfo
 {
