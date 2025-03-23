@@ -167,7 +167,6 @@ const app = new Elysia()
         let degrees;
             if (didin !== undefined) {
                 passedDId = parseInt(didin);
-                return didin;
             }
             else {
                 passedDId = -1;
