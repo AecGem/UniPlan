@@ -36,6 +36,11 @@ export function App({ context }) {
       setErrorMessage("Please enter an Email and Password.");
       return;
     }
+    if(loginForm.password != loginPassword)
+      {
+        setErrorMessage("Incorrect Password");
+        return;
+      }
 
     let logInData = await AuthAPI.login(loginEmail, loginPassword);
     console.log(logInData);
@@ -68,11 +73,6 @@ export function App({ context }) {
     }
     if (signupForm.password != signupForm.confirmPassword) {
       setErrorMessage("Passwords don't match!");
-      return;
-    }
-    if(signupForm.password != loginPassword)
-    {
-      setErrorMessage("Incorrect Password");
       return;
     }
 
