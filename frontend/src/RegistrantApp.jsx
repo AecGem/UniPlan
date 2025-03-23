@@ -91,8 +91,8 @@ export default function App() {
       .then(res => res.json())
       .then(data => {
         setDegrees(data);
-        if (data.length > 0) {
-          setSelectedDegreeId(data[0].did);
+        if (data.length > 0){
+          setSelectedDegreeId(0);
         }
       })
       .catch(err => console.error('Error fetching degrees:', err));
@@ -280,9 +280,18 @@ export default function App() {
   /** ---------------------------
    *  SEMESTER MODAL HANDLERS
    * ---------------------------*/
-  const handleOpenAddModal = async () => {
+  const handleOpenAddModal = () => {
+    setIsEditMode(false);
+    setSelectedType('Fall');
+    setSelectedYear('2025');
+    setTempSemesterId(null);
+    // Simply open the modal without creating a semester record immediately.
+    setShowModal(true);
+  };
+  
+  const handleConfirmAddSemester = async () => {  
     const payload = {
-      userid: userInfo.session.userId,
+      userid: userInfo.session.userid
       //sname: `${selectedType} ${selectedYear}`,
       //courses: [] // new semester starts with no courses
     };
@@ -577,7 +586,7 @@ export default function App() {
 
             <div className="modal-buttons">
               <button onClick={() => setShowModal(false)}>Cancel</button>
-              <button onClick={handleSaveSemester}>
+              <button onClick={isEditMode ? handleSaveSemester : handleConfirmAddSemester}>
                 {isEditMode ? 'Save' : 'Add'}
               </button>
             </div>
