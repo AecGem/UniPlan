@@ -3,7 +3,10 @@ import * as RegistrarApp from '../RegistrarApp.jsx'
 import { createFileRoute } from '@tanstack/react-router'
 import { authClient } from '../utils/auth'
 import { UserInfo } from '../utils/auth'
-
+interface RouterContext {
+  authClient: typeof authClient,
+  session?: UserInfo
+}
 export const Route = createFileRoute('/registrar')({
   component: RouteComponent,
     //component: RootComponent,

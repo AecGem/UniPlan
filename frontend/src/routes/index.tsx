@@ -4,6 +4,11 @@ import { createFileRoute } from '@tanstack/react-router';
 import { authClient } from '../utils/auth'
 import { UserInfo } from '../utils/auth'
 
+interface RouterContext {
+  authClient: typeof authClient,
+  session?: UserInfo
+}
+
 export const Route = createFileRoute('/')({
   component: Index,
     //component: RootComponent,
