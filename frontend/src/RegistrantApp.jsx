@@ -57,7 +57,9 @@ export default function App(session) {
   const navigate = useNavigate();
   const router = useRouter();
   const [degrees, setDegrees] = useState([]);
-  const [selectedDegreeId, setSelectedDegreeId] = useState(null);
+  const [selectedDegreeId, setSelectedDegreeId] = useState(
+    session?.user?.did || null
+  );
   const [verification, setVerify] = useState([]);
 
   console.log(session);
@@ -97,11 +99,11 @@ export default function App(session) {
       .catch(err => console.error('Error fetching degrees:', err));
   }, []);
 
-  // New useEffect for fetching courses based on the selected degree
+  // Fetching courses based on the selected degree
   useEffect(() => {
     if (selectedDegreeId !== null) {
       const params = new URLSearchParams();
-      params.append('degree_id', selectedDegreeId);
+      params.append('didin', selectedDegreeId);
       const url = `/api/course?${params.toString()}`;
       fetch(url)
         .then(res => res.json())
@@ -398,6 +400,23 @@ export default function App(session) {
       console.error("Error deleting semester:", err);
     }
   };
+
+  const handleDegreeChange = async (e) => {
+    const newDegreeId = Number(e.target.value);
+    setSelectedDegreeId(newDegreeId);
+  
+    // Store/update the user’s new degree:
+    if (userInfo.session && userInfo.session.userId) {
+      try {
+        await fetch(
+          `/api/update_user_degree?userid=${userInfo.session.userId}&didin=${newDegreeId}`
+        );
+        userInfo.session.user.did = newDegreeId;
+      } catch (err) {
+        console.error("Error updating user degree:", err);
+      }
+    }
+  };
   
 
   const openDescModal = (courseObj) => {
@@ -453,7 +472,6 @@ export default function App(session) {
         <h1>UniPlan: Registrant's Homepage</h1>
         <nav className="topnav">
           <a className="active" href="#plan">Plan</a>
-          <p>Hello: {session.user.name || "Guest"}</p>
           <button className="sign-out" onClick={handleSignOut}>
             Sign Out
           </button>
@@ -466,7 +484,8 @@ export default function App(session) {
           <label>Degree&nbsp;</label>
           <select
             value={selectedDegreeId || ''}
-            onChange={(e) => setSelectedDegreeId(Number(e.target.value))}
+            onChange={handleDegreeChange}
+            //onChange={(e) => setSelectedDegreeId(Number(e.target.value))}
           >
             {degrees.map((deg) => (
               <option key={deg.did} value={deg.did}>

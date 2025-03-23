@@ -9,6 +9,18 @@ using namespace std;
 // for convenience
 using json = nlohmann::json;
 
+class Semester_class {
+    //enter stuff here
+};
+
+class Course_class {
+    //enter stuff here
+};
+
+class Requirements_class {
+    //enter stuff ehre
+};
+
 int main(int argc, char *argv[])
 {
     //JSON errors (see: https://github.com/nlohmann/json)
@@ -59,7 +71,8 @@ int main(int argc, char *argv[])
     vector<int> saved_plan;
 
     //Iterators are different in nlohmann stuff... you CAN'T use regular for loops, sadly womp womp (see: https://json.nlohmann.me/features/iterators/)
-    //Discussions: //https://github.com/nlohmann/json/discussions/3387 //https://github.com/nlohmann/json/issues/83
+    //Discussions: //https://github.com/nlohmann/json/discussions/3387 
+    //https://github.com/nlohmann/json/issues/83
     cout << "Degree Requirements: ";
     for (auto reqs : degree_reqs){
         cout << "Course: " << reqs << endl;
@@ -118,6 +131,5 @@ int main(int argc, char *argv[])
     }
 
     out_stream.close();
-
 
 }
