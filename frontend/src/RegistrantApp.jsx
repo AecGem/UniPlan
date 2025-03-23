@@ -7,7 +7,6 @@ import { useRouter } from "@tanstack/react-router";
 import { userInfo } from './utils/auth'
 import { authClient } from './utils/auth'
 
-
 // Collapsible Section Sub-Component
 function CollapsibleSection({ title, items, onDragStartAside }) {
   const [expanded, setExpanded] = useState(false);
@@ -42,7 +41,7 @@ function CollapsibleSection({ title, items, onDragStartAside }) {
 
 // Main App Component
 export default function App({ context }) {
-  console.log(context.session.userInfo);
+  console.log(context);
   //let { data: session } = authClient.getSession();
   //console.log(userInfo.session.userId);
 
@@ -376,12 +375,12 @@ export default function App({ context }) {
       console.error("Semester not found");
       return;
     }
-    // Call your delete endpoint with the sem_id
+    // Call your delete endpoint with the semId
     try {
       const res = await fetch(`/api/deleteSemester`, {
         method: 'POST', // or DELETE, depending on your API design
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ sem_id: semesterToDelete.sem_id })
+        body: JSON.stringify({ semId: semesterToDelete.semId })
       });
       if (!res.ok) {
         throw new Error("Failed to delete semester");
