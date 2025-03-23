@@ -46,7 +46,7 @@ const app = new Elysia()
             //its like 199 degrees
             let response;
             let directory = '/var/www/temp/UniPlan/'.concat(id);
-            await $`mkdir ${directory}`;
+            return $`mkdir ${directory}`;
             return $`curl https://localhost:443/api/degree?did=${did} -k > ${directory}/req.json`;
             return "meow";
             await $`curl https://localhost:443/api/get_saved_sem?equals=${id} -k > ${directory}/sem.json` //TODO: Get the saved sem api.
