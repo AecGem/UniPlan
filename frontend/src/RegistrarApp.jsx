@@ -126,6 +126,7 @@ export const App = () => {
       }
     
 //handling functions for the dropdowns
+    const [degrees, setDegrees] = useState([]);
     const [selectedDegreeId, setSelectedDegreeId] = useState(null);
     /*
     const setSelectedDegreeId = (degreeValue) => 
@@ -144,16 +145,17 @@ export const App = () => {
 
       // Fetch degrees from the backend when the component mounts
       useEffect(() => {
-          const url = `/api/degree`;
-          fetch(url)
-            .then(res => res.json())
-            .then(data => {
-              if (data.length > 0){
-                setSelectedDegreeId(data[0].did);
-              }
-            })
-            .catch(err => console.error('Error fetching degrees:', err));
-        }, []);
+        const url = `/api/degree`;
+        fetch(url)
+          .then(res => res.json())
+          .then(data => {
+            setDegrees(data);
+            if (data.length > 0){
+              setSelectedDegreeId(data[0].did);
+            }
+          })
+          .catch(err => console.error('Error fetching degrees:', err));
+      }, []);
 
 
 
