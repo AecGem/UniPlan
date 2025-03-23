@@ -295,8 +295,6 @@ export default function App() {
   const handleConfirmAddSemester = async () => {  
     const payload = {
       userid: userInfo.session.userId,
-      sname: `${selectedType} ${selectedYear}`,
-      courses: [] // new semester starts with no courses
     };
 
     try {
