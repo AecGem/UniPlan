@@ -173,7 +173,7 @@ const app = new Elysia()
             }
             degrees = await prisma.degree.findFirst({
                 where: {
-                    did: 1
+                    did: didin,
                 }
             });
         
