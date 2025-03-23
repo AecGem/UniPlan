@@ -165,7 +165,7 @@ const app = new Elysia()
             degrees = await prisma.degree.findMany();
         }
         else if (!did_undefined){
-            degrees = await prisma.degree.findMany({
+            degrees = await prisma.degree.findFirst({
                 where: {
                     did: parseInt(degreeid)
                 }
@@ -315,7 +315,7 @@ const app = new Elysia()
     }) => {
 
         console.log("begin")
-        const degrees = await prisma.degree.findMany({
+        const degrees = await prisma.degree.findFirst({
 			where: {
 				did: 1
 			}
