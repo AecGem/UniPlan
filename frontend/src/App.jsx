@@ -7,7 +7,6 @@ import { useRouter } from "@tanstack/react-router";
 
 export function App({ context }) {
   const router = useRouter();
-  const session = router.useRouteContext();
   const [showModal, setShowModal] = useState(false);
   const [isLoginMode, setIsLoginMode] = useState(true);
   const [loginEmail, setLoginEmail] = useState("");
@@ -37,15 +36,15 @@ export function App({ context }) {
       return;
     }
 
-    let data = AuthAPI.login(loginEmail, loginPassword);
+    let logInData = AuthAPI.login(loginEmail, loginPassword);
     session.set(data.data.user, data.data.session);
     // Instead of window.location.href, use navigate:
     if (signUpUserType === "admin") {
       
-      router.invalidate();
+      router.invalidate({session: logInData});
       navigate({ to: "/registrar" });
     } else {
-      router.invalidate();
+      router.invalidate({session: logInData});
       navigate({ to: "/registrant" });
     }
 
@@ -70,17 +69,17 @@ export function App({ context }) {
       return;
     }
 
-    AuthAPI.signup(
+    let signUpData = AuthAPI.signup(
       signupForm.userEmail,
       signupForm.password,
       signupForm.firstName.concat(" ", signupForm.lastName),
       signupForm.userType === "admin"
     );
     if (signUpUserType === "admin") {
-      router.invalidate();
+      router.invalidate({session : signUpData});
       navigate({ to: "/registrar" });
     } else {
-      router.invalidate();
+      router.invalidate({session : signUpData});
       navigate({ to: "/registrant" });
     }
 
