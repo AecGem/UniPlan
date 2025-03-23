@@ -11,7 +11,7 @@ export const App = () => {
   const { data: session } = authClient.getSession();
   const router = useRouter();
   const navigate = useNavigate();
-  if (userInfo.session === null) {
+  if (userInfo.session.userId === null) {
     router.invalidate();
     navigate({ to: '/' })
   }

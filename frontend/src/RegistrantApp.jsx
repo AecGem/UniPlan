@@ -65,7 +65,7 @@ export default function App() {
 
 
   //Check to see if a homie is logged in. If not logged in, gtfo.
-  if (userInfo.session === null) {
+  if (userInfo.session.userId === null) {
     router.invalidate();
     navigate({ to: '/' })
   }
