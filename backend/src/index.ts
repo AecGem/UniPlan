@@ -13,6 +13,7 @@ import { file } from "bun"; //File I/O?
 import { PrismaClient } from "@prisma/client";
 import { betterAuth } from "better-auth";
 import { auth } from "./utils/auth";
+import { $ } from "bun";
 
 
 const prisma = new PrismaClient();
@@ -32,7 +33,34 @@ const app = new Elysia()
 
     //API endpoints
 
-    //.get:
+    //Verification endpoint
+    .get("/api/verification", async ({query:{id, did}}) =>{
+        //It's all in my head, but I want non-fiction.
+        if (id===undefined || did===undefined){
+            return {
+                errors: 1,
+                errorsList:{1: "RUNTIME_ERR: user id and degree id must not be undefined!"}
+            };
+        }
+        else{
+            //its like 199 degrees
+            let directory = '/var/www/temp/UniPlan/'.concat(id);
+            await $`mkdir ${directory}`;
+            await $`curl https://localhost:443/api/degree?did=${did} > ${directory}/req.json`;
+            await $`curl https://localhost:443/api/sems_with_class?id=${id} >${directory}/sem.json` //TODO: Get the saved sem api.
+
+            //when you're doin it with me, doin it with me~!
+            await $`/var/www/UniPlan/backend/middleware/build/verifier ${directory}/req.json ${directory}/sem.json ${directory}/out.json`
+            let response = $`cat ${directory}/out.json`.json();
+            //await $`rm -rf ${directory}`
+
+            return response;
+        }
+        
+
+
+        
+    })
 
     //Course and Degree endpoints
     .get("/api/course", async ({ query: { id, isAmbig, didin } }) => {
@@ -127,8 +155,82 @@ const app = new Elysia()
     })
 
     .get("/api/degree", async () => {
-        const degrees = await prisma.degree.findMany();
+        let degrees = null;
+        degrees = await prisma.degree.findMany();
+ 
+        return degrees
+            
+    })
+
+    .get("/api/degree_specific", async ({query: didin}) =>{
+        let passedDId;
+        let degrees;
+            if (didin !== undefined) {
+                passedDId = parseInt(didin);
+            }
+            else {
+                passedDId = -1;
+            }
+            degrees = await prisma.degree.findFirst({
+                where: {
+                    did: 1
+                }
+            });
+        
         return degrees;
+    },{
+        query: t.Object({
+        didin: t.Optional(t.String()),
+    })
+
+    })
+
+    .get("/api/update_user_degree", async ({query: userid, did_in}) => {
+        const updateUserDegree = await prisma.user.update({
+            where: {
+                id: userid
+            },
+            data: {
+                did: parseInt(did_in)
+            },
+        });
+        return updateUserDegree;
+    })
+
+    .get("/api/update_user_saved", async({query: userid, savedbool}) => {
+        const updateUserSave = await prisma.user.update({
+            where: {
+                id: userid
+            },
+            data: {
+                hassaved: savedbool
+            }
+        });
+        return updateUserSave;
+    })
+
+    .post("/api/createSemester", async ({ body: {userid} }) => {
+        const newSem = await prisma.saved_sem.create({
+            data: {
+            u_id: userid,
+            },
+        });
+    
+        return newSem;
+    },{
+        body: t.Object({
+            userid: t.Optional(t.String())
+        })
+    })
+
+    .get("/api/deleteSemester", async ({ query: {semesterid, userid} }) => {
+        const deleteSem = await prisma.saved_sem.delete({
+            where: {
+                sem_id: semesterid,
+                u_id: userid,
+            },
+          });
+          return deleteSem;
     })
 
     //Endpoints for registration statistics
@@ -143,22 +245,21 @@ const app = new Elysia()
             const registrations = await prisma.SavedSem.findMany();
         }
         else if(!uid_undefined){ //find a specific users semesters
-            let passedId;
-            if (userid !== undefined) {
-                passedId = parseInt(userid);
-            }
-            else {
-                passedId = -1;
-            }
+
             registrations = await prisma.SavedSem.findMany({
                 where: {
-                    cid: passedId
+                    u_id: userid
                 }
              })
         }
 
         return registrations;
+    },{
+        query: t.Object({
+            userid: t.Optional(t.String())
+        })
     })
+    
     //get count of semesters where a class appears
     .get("/api/sems_with_class", async ({ query: {id} }) => {
         let passedCId;
@@ -172,9 +273,13 @@ const app = new Elysia()
         const count = await prisma.savedSem.count({
             where: {
                 courses: {
-                    has: passedCId, 
+                    cid: passedCId, 
                 },
             },
+        },{
+            query: t.Object({
+                id: t.Optional(t.Integer())
+            })
         });
         return count;
     })
@@ -193,20 +298,50 @@ const app = new Elysia()
             },
         });
         return count;
+    },{
+        query: t.Object({
+            didin: t.Optional(t.String())
+        })
     })
   
-
-
     //Emma's testing zone
 
-    .get("/api/course_test", async ({ query: {test} }) => {
-       
-        const newDegree = await prisma.degree.create({
+    .get("/api/course_test", async ({ 
+        query: {test} 
+    }) => {
+        
+        console.log("reached start")
+        const newSem = await prisma.saved_sem.create({
             data: {
-            degree: "this is a test",
+            u_id: "xNgKY4kLlWdCOimDUdIYgVKH9VWK6sLO",
+            sname: "test Sem"
             },
             });
-            return newDegree;
+            
+            return newSem;
+    })
+    //carolyn's test zone
+    .get("/api/caro_test", async ({ 
+        query: {test} 
+    }) => {
+
+        console.log("begin")
+        const count = await prisma.saved_sem.count({
+            where: {
+              courses: {
+                has: 1,
+                }
+            }
+        });
+        const courseName = await prisma.course.findFirst({
+            where: {
+                cid: 1,
+            }
+        });
+        return {
+            count,
+            courseName,
+        };
     })
 
     //Authentication endpoints

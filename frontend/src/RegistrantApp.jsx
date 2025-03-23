@@ -4,9 +4,12 @@ import { useNavigate } from '@tanstack/react-router'
 import { AuthAPI } from './apis/AuthAPI'
 import './Registrant.css'
 import { useRouter } from "@tanstack/react-router";
+import { userInfo } from './utils/auth'
+import { authClient } from './utils/auth'
+
 
 // Collapsible Section Sub-Component
-function CollapsibleSection({title, items, onDragStartAside}) {
+function CollapsibleSection({ title, items, onDragStartAside }) {
   const [expanded, setExpanded] = useState(false);
   const toggleExpand = () => {
     setExpanded((prev) => !(prev));
@@ -21,8 +24,8 @@ function CollapsibleSection({title, items, onDragStartAside}) {
 
       {/* If expanded, show the list of requirements */}
       {expanded && (
-          <ul className="requirement-list">
-            {items.map((course) => (
+        <ul className="requirement-list">
+          {items.map((course) => (
             <li
               key={course.cId}
               draggable
@@ -39,23 +42,36 @@ function CollapsibleSection({title, items, onDragStartAside}) {
 
 // Main App Component
 export default function App() {
- /** ---------------------------
-   *  SEMESTERS + COURSES STATE
-   *  Each semester in 'semesters' has this shape:
-   *  {
-   *    id: number,
-   *    year: number,
-   *    courses: [{ id: string, text: string }, ...]
-   *  }
-   *  The 'courses' array holds the courses the user has 
-   *  dragged in. 
-   * ---------------------------*/
+  const { data: session } = authClient.getSession();
+  //console.log(userInfo.session.userId);
+
+  /** ---------------------------
+    *  SEMESTERS + COURSES STATE
+    *  Each semester in 'semesters' has this shape:
+    *  {
+    *    id: number,
+    *    year: number,
+    *    courses: [{ id: string, text: string }, ...]
+    *  }
+    *  The 'courses' array holds the courses the user has 
+    *  dragged in. 
+    * ---------------------------*/
   const [semesters, setSemesters] = useState([]);
   const [courses, setCourses] = useState([]);
   const navigate = useNavigate();
   const router = useRouter();
   const [degrees, setDegrees] = useState([]);
   const [selectedDegreeId, setSelectedDegreeId] = useState(null);
+  const [verification, setVerify] = useState([]);
+
+
+  //Check to see if a homie is logged in. If not logged in, gtfo.
+  /*
+  if (userInfo.session.userId === null) {
+    router.invalidate();
+    navigate({ to: '/' })
+  }
+    */
 
   // Fetch courses from the backend when the component mounts
   useEffect(() => {
@@ -85,11 +101,23 @@ export default function App() {
       .catch(err => console.error('Error fetching degrees:', err));
   }, []);
 
+  // Fetch verification from the backend when the component mounts
+  useEffect(() => {
+    const url = `/api/verification`;
+    fetch(url)
+      .then(res => res.json())
+      .then(data => {
+        setVerify(data);
+      })
+      .catch(err => console.error('Error fetching verification:', err));
+  }, []);
+
   /** ---------------------------
    *  MODAL STATE (Add/Edit)
    * ---------------------------*/
   const [showModal, setShowModal] = useState(false);
   const [showDescModal, setShowDescModal] = useState(false);
+  const [showValidModal, setShowValidModal] = useState(false);
   const [descCourse, setDescCourse] = useState(null);
   const [isEditMode, setIsEditMode] = useState(false);
   const [tempSemesterId, setTempSemesterId] = useState(null); // track which semester we're editing
@@ -97,7 +125,7 @@ export default function App() {
   const [selectedYear, setSelectedYear] = useState('2025');
   const [showEditCourseModal, setShowEditCourseModal] = useState(false);
   const [courseBeingEdited, setCourseBeingEdited] = useState(null);
-  
+
 
   // A small helper to sign out (navigate back to '/')
   const handleSignOut = async () => {
@@ -119,7 +147,7 @@ export default function App() {
   /** ---------------------------
    *  DRAG & DROP HANDLERS
    * ---------------------------*/
- // 1) Drag from the aside (strings only), converting it into 
+  // 1) Drag from the aside (strings only), converting it into 
   // an object { id, text } so we can store it in 'sem.courses'.
   const handleDragStartAside = (e, courseObj) => {
     const newCourse = {
@@ -127,14 +155,14 @@ export default function App() {
       id: Date.now().toString(), // or use cId if prefer
       status: '',
     }
-  
+
     const payload = {
       course: newCourse,
       sourceSemId: null,
     }
     e.dataTransfer.setData('application/json', JSON.stringify(payload))
   }
-  
+
 
   // 2) Drag from within a semester
   const handleDragStartSemester = (e, courseObj, sourceSemId) => {
@@ -152,7 +180,7 @@ export default function App() {
   const handleDrop = (e, targetSemId) => {
     e.preventDefault();
     const rawData = e.dataTransfer.getData('application/json');
-    if (!rawData) return; 
+    if (!rawData) return;
 
     let payload;
     try {
@@ -203,21 +231,21 @@ export default function App() {
     setCourseBeingEdited({ semesterId, ...courseObj });
     setShowEditCourseModal(true);
   };
-  
+
   const handleSaveCourseEdits = (updatedInfo) => {
     setSemesters((prev) =>
       prev.map((sem) => {
         if (sem.id !== updatedInfo.semesterId) return sem;
-  
+
         return {
           ...sem,
           courses: sem.courses.map((c) =>
             c.id === updatedInfo.id
               ? {
-                  ...c,
-                  text: updatedInfo.text,
-                  status: updatedInfo.status // Save the new status
-                }
+                ...c,
+                text: updatedInfo.text,
+                status: updatedInfo.status // Save the new status
+              }
               : c
           ),
         };
@@ -226,8 +254,8 @@ export default function App() {
     setShowEditCourseModal(false);
     setCourseBeingEdited(null);
   };
-  
-  
+
+
 
   /** ---------------------------
    *  HELPER: Remove Single Course
@@ -237,9 +265,9 @@ export default function App() {
       prev.map((sem) =>
         sem.id === semesterId
           ? {
-              ...sem,
-              courses: sem.courses.filter((c) => c.id !== courseId),
-            }
+            ...sem,
+            courses: sem.courses.filter((c) => c.id !== courseId),
+          }
           : sem
       )
     );
@@ -248,9 +276,9 @@ export default function App() {
   /** ---------------------------
    *  Check Degree Validity
    * ---------------------------*/
-    const checkValid = (semesterId) => {
-
-    };
+  const checkValid = () => {
+    setShowValidModal(true);
+  };
 
   /** ---------------------------
    *  SEMESTER MODAL HANDLERS
@@ -260,8 +288,46 @@ export default function App() {
     setSelectedType('Fall');
     setSelectedYear('2025');
     setTempSemesterId(null);
+    // Simply open the modal without creating a semester record immediately.
     setShowModal(true);
   };
+  
+  const handleConfirmAddSemester = async () => {  
+    const payload = {
+      userid: userInfo.session.userId,
+    };
+
+    try {
+      const res = await fetch('/api/createSemester', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      });
+      if (!res.ok) {
+        throw new Error("Failed to create semester");
+      }
+      const data = await res.json();
+      console.log("Created semester with sem_id:", data.sem_id);
+
+      // Add the new semester to local state, storing the returned sem_id
+      const newSem = {
+        id: Date.now(), // local identifier
+        sem_id: data.sem_id, // backend's unique semester id
+        type: selectedType,
+        year: selectedYear,
+        courses: []
+      };
+      setSemesters((prev) => [...prev, newSem]);
+
+      // Optionally, open your modal for further editing
+      setShowModal(true);
+    } catch (err) {
+      console.error("Error creating semester:", err);
+    }
+  };
+
 
   const handleOpenEditModal = (sem) => {
     setIsEditMode(true);
@@ -317,10 +383,42 @@ export default function App() {
   };
 
   const handleSaveSemesterToDB = (semId) => {
-    console.log(`Saving semester ${semId} to database... (placeholder)`);
-    // In the future, do fetch('/api/saveSemester', { ... })
+    // Find the semester to save using its local state identifier.
+    const semesterToSave = semesters.find((sem) => sem.id === semId);
+    if (!semesterToSave) {
+      console.error("Semester not found");
+      return;
+    }
+
+    const payload = {
+      userid: userInfo.session ? userInfo.session.userId : null,
+      sname: `${semesterToSave.type} ${semesterToSave.year}`,
+      courses: semesterToSave.courses.map((course) => course.cId)
+    };
+
+    console.log(`Saving semester ${semId} to database with payload:`, payload);
+
+    fetch('/api/saveSemester', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Failed to save semester");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        // The API should return an object with the new semester ID, e.g., { sem_id: 123 }
+        console.log("Semester saved with sem_id:", data.sem_id);
+      })
+      .catch((err) => console.error("Error saving semester:", err));
   };
-  
+
+
   /** ---------------------------
    *  RENDER
    * ---------------------------*/
@@ -331,9 +429,6 @@ export default function App() {
         <h1>UniPlan: Registrant's Homepage</h1>
         <nav className="topnav">
           <a className="active" href="#plan">Plan</a>
-          <a href="#profile">Profile</a>
-          <a href="#saved">Saved</a>
-          <a href="#settings">Settings</a>
           <button className="sign-out" onClick={handleSignOut}>
             Sign Out
           </button>
@@ -343,7 +438,7 @@ export default function App() {
       {/* LAYOUT */}
       <div className="layout-wrapper">
         <aside className="requirements">
-        <label>Degree&nbsp;</label>
+          <label>Degree&nbsp;</label>
           <select
             value={selectedDegreeId || ''}
             onChange={(e) => setSelectedDegreeId(Number(e.target.value))}
@@ -412,14 +507,14 @@ export default function App() {
                         >
                           <span className="course-name">{courseObj.shortname}</span>
                           <div className="icon-group">
-                            <button 
-                              className="inspect-course-button" 
+                            <button
+                              className="inspect-course-button"
                               onClick={() => openDescModal(courseObj)} title="Course Description"> 🔎 </button>
                             <button
                               className="edit-course-button"
                               onClick={() => openEditCourseModal(sem.id, courseObj)} title="Edit Course"> 🔨 </button>
                             <button
-                              className="delete-course-button" 
+                              className="delete-course-button"
                               onClick={() => removeSingleCourse(sem.id, courseObj.id)} title="Delete Course"> ❌ </button>
                           </div>
                         </li>
@@ -492,7 +587,7 @@ export default function App() {
 
             <div className="modal-buttons">
               <button onClick={() => setShowModal(false)}>Cancel</button>
-              <button onClick={handleSaveSemester}>
+              <button onClick={isEditMode ? handleSaveSemester : handleConfirmAddSemester}>
                 {isEditMode ? 'Save' : 'Add'}
               </button>
             </div>
@@ -501,46 +596,61 @@ export default function App() {
       )}
       {/* MODAL: Edit Course */}
       {showEditCourseModal && courseBeingEdited && (
-      <div className="modal-backdrop">
-        <div className="modal-content">
-          <h2>Edit Course</h2>
+        <div className="modal-backdrop">
+          <div className="modal-content">
+            <h2>Edit Course</h2>
 
-          <label>Course Name:</label>
-          <input
-            type="text"
-            value={courseBeingEdited.text}
-            onChange={(e) =>
-              setCourseBeingEdited({
-                ...courseBeingEdited,
-                text: e.target.value
-              })
-            }
-          />
+            <label>Course Name:</label>
+            <input
+              type="text"
+              value={courseBeingEdited.text}
+              onChange={(e) =>
+                setCourseBeingEdited({
+                  ...courseBeingEdited,
+                  text: e.target.value
+                })
+              }
+            />
 
-          <label>Status:</label>
-          <select
-            value={courseBeingEdited.status || 'inprogress'}
-            onChange={(e) =>
-              setCourseBeingEdited({
-                ...courseBeingEdited,
-                status: e.target.value
-              })
-            }
-          >
-            <option value="passed">Passed</option>
-            <option value="failed">Failed</option>
-            <option value="inprogress">In Progress</option>
-          </select>
+            <label>Status:</label>
+            <select
+              value={courseBeingEdited.status || 'inprogress'}
+              onChange={(e) =>
+                setCourseBeingEdited({
+                  ...courseBeingEdited,
+                  status: e.target.value
+                })
+              }
+            >
+              <option value="passed">Passed</option>
+              <option value="failed">Failed</option>
+              <option value="inprogress">In Progress</option>
+            </select>
 
-          <div className="modal-buttons">
-            <button onClick={() => setShowEditCourseModal(false)}>Cancel</button>
-            <button onClick={() => handleSaveCourseEdits(courseBeingEdited)}>
-              Save
-            </button>
+            <div className="modal-buttons">
+              <button onClick={() => setShowEditCourseModal(false)}>Cancel</button>
+              <button onClick={() => handleSaveCourseEdits(courseBeingEdited)}>
+                Save
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-    )}
-  </div>
+      )}
+      {showValidModal && (
+        <div className="modal-backdrop">
+          <div className="modal-content">
+            <h2>Degree Verification</h2>
+            <div className="verify-content">
+
+              <h5>ah beans</h5>
+            </div>
+
+            <div className="modal-buttons">
+              <button onClick={() => setShowValidModal(false)}>Close</button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
   );
 }
