@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import './Registrar.css'
-//import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from '@tanstack/react-router'
 import { AuthAPI } from './apis/AuthAPI'
 import { useRouter } from "@tanstack/react-router";
