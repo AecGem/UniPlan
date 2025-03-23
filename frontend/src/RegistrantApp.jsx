@@ -60,7 +60,7 @@ export default function App(session) {
   const [selectedDegreeId, setSelectedDegreeId] = useState(null);
   const [verification, setVerify] = useState([]);
 
-
+  console.log(session);
   //Check to see if a homie is logged in. If not logged in, gtfo.
   /*
   if (userInfo.session.userId === null) {
