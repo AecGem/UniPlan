@@ -44,16 +44,18 @@ const app = new Elysia()
         }
         else{
             //its like 199 degrees
+            let response;
             let directory = '/var/www/temp/UniPlan/'.concat(id);
             await $`mkdir ${directory}`;
-            await $`curl https://localhost:443/api/degree?did=${did} -k > ${directory}/req.json`;
+            return $`curl https://localhost:443/api/degree?did=${did} -k > ${directory}/req.json`;
+            return "meow";
             await $`curl https://localhost:443/api/get_saved_sem?equals=${id} -k > ${directory}/sem.json` //TODO: Get the saved sem api.
 
             //when you're doin it with me, doin it with me~!
-            await $`/var/www/UniPlan/backend/middleware/build/verifier ${directory}/req.json ${directory}/sem.json ${directory}/out.json`
-            let response = $`cat ${directory}/out.json`.json();
+            //await $`/var/www/UniPlan/backend/middleware/build/verifier ${directory}/req.json ${directory}/sem.json ${directory}/out.json`
+            //response = $`cat ${directory}/out.json`.json();
             //await $`rm -rf ${directory}`
-
+            response = "Completed. Check folder! ^^"
             return response;
         }
         
@@ -296,7 +298,7 @@ const app = new Elysia()
     })
     
     //get count of semesters where a class appears
-    .get("api/course_stats", async ({query: degreeid}) => {
+    .get("api/course_stats", async ({query: didin}) => {
         const results: {
             count: number,
             courseName: string,
@@ -318,7 +320,7 @@ const app = new Elysia()
             });
             const inDegree = await prisma.degree.findFirst({
                 where: {
-                    did: degreeid,
+                    did: didin,
                     courses: {has: i,},
                 },
             });
@@ -330,6 +332,10 @@ const app = new Elysia()
             };
         };
         return results;
+    }, {
+        query: t.Object({
+            didin: t.Optional(t.String())
+        })
     })
 
     .get("/api/degree_count", async ({ query: {didin} }) => {
@@ -349,7 +355,7 @@ const app = new Elysia()
         return count;
     },{
         query: t.Object({
-        didin: t.Optional(t.String())
+            didin: t.Optional(t.String())
         })
     })
   
