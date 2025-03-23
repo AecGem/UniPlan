@@ -235,6 +235,7 @@ const app = new Elysia()
                 sname: name
                 },
                 });
+                return sem;
                 const updateUserSave = await prisma.user.update({
                     where: {
                         id: userid
@@ -244,7 +245,7 @@ const app = new Elysia()
                     }
                 });
                 return updateUserSave;
-                return sem;
+                
         },{
             body: t.Object({
             semId: t.Optional(t.Number()),
@@ -341,7 +342,24 @@ const app = new Elysia()
         query: {test} 
     }) => {
         //console.log("reached start")
-        
+        const sem = await prisma.saved_sem.update({
+            where: {
+                sem_id: 6
+            },
+            data: {
+            courses: [11, 12, 13, 14, 15],
+            sname: "name"
+            },
+            });
+            const updateUserSave = await prisma.user.update({
+                where: {
+                    id: "xNgKY4kLlWdCOimDUdIYgVKH9VWK6sLO"
+                },
+                data: {
+                    hassaved: true
+                }
+            });
+            return sem;
     })
     //carolyn's test zone
     .get("/api/caro_test", async ({ 
