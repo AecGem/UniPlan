@@ -94,7 +94,7 @@ export default function App() {
       .then(data => {
         setDegrees(data);
         if (data.length > 0){
-          setSelectedDegreeId(0);
+          setSelectedDegreeId(data[0].did);
         }
       })
       .catch(err => console.error('Error fetching degrees:', err));
