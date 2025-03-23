@@ -141,7 +141,7 @@ export const App = () => {
 
 
   //handling functions for the dropdowns
-      const [degrees, setDegrees] = useState(0);
+      const [degrees, setDegrees] = useState([0]);
       const [selectedDegreeId, setSelectedDegreeId] = useState(0);
 
         
