@@ -36,6 +36,11 @@ export function App({ context }) {
       setErrorMessage("Please enter an Email and Password.");
       return;
     }
+    if(loginForm.password != loginPassword)
+      {
+        setErrorMessage("Incorrect Password");
+        return;
+      }
 
     let logInData = await AuthAPI.login(loginEmail, loginPassword);
     console.log(logInData);
@@ -104,6 +109,16 @@ export function App({ context }) {
       [name]: value,
     }));
   };
+
+
+
+
+
+
+
+
+
+
 
   return (
     <div className="app-container">
