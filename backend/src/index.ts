@@ -47,7 +47,7 @@ const app = new Elysia()
             let directory = '/var/www/temp/UniPlan/'.concat(id);
             await $`mkdir ${directory}`;
             await $`curl https://localhost:443/api/degree?did=${did} -k > ${directory}/req.json`;
-            await $`curl https://localhost:443/api/sems_with_class?id=${id} -k >${directory}/sem.json` //TODO: Get the saved sem api.
+            await $`curl https://localhost:443/api/get_saved_sem?equals=${id} -k > ${directory}/sem.json` //TODO: Get the saved sem api.
 
             //when you're doin it with me, doin it with me~!
             await $`/var/www/UniPlan/backend/middleware/build/verifier ${directory}/req.json ${directory}/sem.json ${directory}/out.json`
@@ -162,18 +162,19 @@ const app = new Elysia()
             
     })
 
-    .get("/api/degree_specific", async ({query: didin}) =>{
+    .get("/api/degree_specific", async ({query: {didin}}) =>{
         let passedDId;
         let degrees;
             if (didin !== undefined) {
                 passedDId = parseInt(didin);
+                return didin;
             }
             else {
                 passedDId = -1;
             }
             degrees = await prisma.degree.findFirst({
                 where: {
-                    did: parseInt(didin),
+                    did: passedDId,
                 }
             });
         
