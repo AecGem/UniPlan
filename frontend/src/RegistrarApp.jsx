@@ -93,11 +93,11 @@ useEffect(() => {
     .then(res => res.json())
     .then(data => 
     {
-      setCourseNameShort(data.courseName.shortname);
-      setCourseEnrollmentData(data.count);
+      //setCourseNameShort(data.courseName.shortname);
+      setCourseEnrollmentData(data);
     })
     .catch(err => console.error('Error getting Course Enrollment List', err));
-}, [courseNameShort, courseEnrollmentData]);
+}, [courseEnrollmentData]);
 
 
 
@@ -170,9 +170,9 @@ const handleInfoChange = (degInfoValue) =>
                       
 
                           <tr>
-                            <td>{courseNameShort}</td>
+                            <td>{courseEnrollmentData.courseName.shortname}</td>
                             <td></td>
-                            <td>{courseEnrollmentData}</td>
+                            <td>{courseEnrollmentData.count}</td>
                           </tr>
 
                         </table>
