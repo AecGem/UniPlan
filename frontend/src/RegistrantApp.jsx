@@ -53,6 +53,9 @@ export default function App(session) {
   const [verification, setVerify] = useState([]);
 
   console.log(session);
+  if(session.user.usertype === true){
+    navigate({ to: '/registrar' })
+  }
   //Check to see if a homie is logged in. If not logged in, gtfo.
   /*
   if (userInfo.session.userId === null) {
