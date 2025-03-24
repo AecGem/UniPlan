@@ -388,6 +388,7 @@ const app = new Elysia()
                 },
             },
         });
+        return result;
     })
     //carolyn's test zone
     .get("/api/caro_test", async ({ 
