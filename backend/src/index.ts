@@ -190,7 +190,7 @@ const app = new Elysia()
         })
     })
 
-    .get("/api/update_user_degree", async ({query: userid, didin}) => {
+    .get("/api/update_user_degree", async ({query: {userid, didin}}) => {
         const updateUserDegree = await prisma.user.update({
             where: {
                 id: userid
