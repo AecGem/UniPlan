@@ -68,6 +68,27 @@ export const App = (session) => {
   }, []);
 
 
+//fetching number of degree applicants for information display:
+
+
+
+
+
+
+
+
+//fetching the course enrollment list
+
+
+
+
+
+
+
+
+
+
+
   //handling functions for the dropdowns
   const [degrees, setDegrees] = useState([0]);
   const [selectedDegreeId, setSelectedDegreeId] = useState(0);
@@ -120,8 +141,6 @@ export const App = (session) => {
               <option value="0a">No Criteria Selected </option>
               <option value="1a"> General Course Enrollment</option>
               <option value="2a">Total Degree Applicants</option>
-              <option value="3a">Elective Course Enrollment</option>{/*Not sure if this is able to be done, can be removed if needed.*/}
-              <option value="4a">Empty course info template</option>
             </select>
           </div>
 
@@ -174,31 +193,6 @@ export const App = (session) => {
                           })}
                         </table>
                       </div>
-                    )}
-                  {degInfo === "3a" &&
-                    (
-                      <div className="courseTables">
-                        <table>
-                          <tr>
-                            <th>Course Name</th>
-                            <th></th>
-                            <th>Number of Students Enrolled</th>
-                          </tr>
-                          {electiveTempdata.map((val, key) => {
-                            return (
-                              <tr key={key}>
-                                <td>{val.courseName}</td>
-                                <td></td>
-                                <td>{val.numStudents}</td>
-                              </tr>
-                            )
-                          })}
-                        </table>
-                      </div>
-                    )}
-                  {degInfo === "4a" &&
-                    (
-                      <div className="empty-info-placeholder"> [This is where you would display information in this empty template] </div>
                     )}
                 </div>
               )}
