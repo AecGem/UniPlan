@@ -1,4 +1,3 @@
-//import { useState } from 'react'
 import './Registrar.css'
 import { useState, useEffect } from 'react'
 import { useNavigate } from '@tanstack/react-router'
@@ -49,8 +48,7 @@ export const App = (session) => {
   const [numStudents, setNumStudents] = useState([0]);
   const [degrees, setDegrees] = useState([0]);
   const [selectedDegreeId, setSelectedDegreeId] = useState(0);
-  const [courseNameShort, setCourseNameShort] = useState(["Empty"]);
-  const [courseEnrollmentData, setCourseEnrollmentData] = useState([0]);
+  const [courseEnrollmentData, setCourseEnrollmentData] = useState([null]);
 
 
   // Fetch degrees from the backend when the component mounts
@@ -100,7 +98,7 @@ useEffect(() => {
 
 
 
-//handling functions for the dropdowns
+//handling function for the dropdowns
 const [degInfo, setDegInfo] = useState("0a"); // or "" if you prefer
 const handleInfoChange = (degInfoValue) => 
   {
@@ -111,18 +109,20 @@ const handleInfoChange = (degInfoValue) =>
 /*---------------------------------------------------------------------------------------------------------------------------------*/
 
   return (
+    
     <div className="page-container">
+      {/*basic page-formatting elements for header*/}
       <header className="subtitle">
         <h1>UniPlan: Registrar's Homepage</h1>
         <div class="topnav">
           <div className="sub-subtitle"> On this page the admin can view statistics related to degrees and enrollment </div>
         </div>
       </header>
-
+      {/*start of app container for React elements*/}
       <div className="layout-wrapper">
         <div className="app-container">
           <div className="subtitle2">Select a Degree to View: </div>
-
+        {/*Drop-downs to handle degree selection and what kind of information to display about that degree*/}
           <div className="Degree-Dropdown">
             <label>Degree:&nbsp;</label>
             <select
@@ -146,7 +146,7 @@ const handleInfoChange = (degInfoValue) =>
           </div>
 
           <br /><br />
-
+            {/*Display info container only displays when a degree is selected, otherwise it is hidden on the page*/}
           <div id="displayInfo" className="displayInfo" style={{ visibility: selectedDegreeId === 0 ? "hidden" : "Visible" }}>
             {selectedDegreeId !== 0 &&
               (
@@ -156,41 +156,43 @@ const handleInfoChange = (degInfoValue) =>
                   {degInfo === "0a" &&
                     (
                       <div className="empty-info-placeholder"> [Please select what information you would like to display] </div>
-                    )}
+                    )}{/*displaying info for course list and enrollment here:*/ }
                   {degInfo === "1a" &&
                     (
                       <div className="courseTables">
                         <table>
                           <thead>
                             <tr>
-                              <th className="headerSpacing">Course Name</th>
-                              <th className="headerSpacing">Number of Students Enrolled</th>
+                              <th>Course Name</th>
+                              <th>Number of Students Enrolled</th>
                             </tr>
                           </thead>
 
                           <tbody>
                             {courseEnrollmentData.map((item, idx) => (
                               <tr key={idx}>
-                                <td className="courseSpacing">{item.courseName.shortname}</td>
-                                <td className="countSpacing">{item.count}</td>
+                                <td>{item.courseName.shortname}</td>
+                                <td>{item.count}</td>
                               </tr>
                               ))}
                           </tbody>
                         </table>
                       </div>
-                    )}
+                    )}{/*displaying info for total degree enrollment here*/ }
                   {degInfo === "2a" &&
                     (
                       <div className="courseTables">
                         <table>
-                          
-                          <tr>
-                            <th>Total Degree Enrollment</th>
-                          </tr>
-                          <tr>
-                            <td>{numStudents}</td>
-                          </tr>
-                         
+                          <thead>
+                            <tr>
+                              <th>Total Degree Enrollment</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>{numStudents}</td>
+                            </tr>
+                          </tbody>
                         </table>
                       </div>
                     )}
@@ -198,7 +200,7 @@ const handleInfoChange = (degInfoValue) =>
               )}
           </div>
         </div>
-      </div>
+      </div>{/*small footer with sign-out button at bottom of the page*/}
       <div className="footer">
         <button className="sign-out" onClick={handleSignOut}>
           Sign Out
