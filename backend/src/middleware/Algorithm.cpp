@@ -16,7 +16,7 @@ public:
     int id;
     string name;
     vector<string> prerequisites;
-    //Optional isSatisfied boolean for degree requirements.
+    // Optional isSatisfied boolean for degree requirements.
     bool isSatisfied = false;
 
     // Constructor. Sets id. Name and prerequisites are added later.
@@ -153,17 +153,15 @@ int main(int argc, char *argv[])
     vector<Course> degree_reqs;
     // Parse degree requirements:
 
-    //JSON Format: {did: 1, degree: "Computer Science", reqs: [1,2,3,4]}
+    // JSON Format: {did: 1, degree: "Computer Science", reqs: [1,2,3,4]}
     for (const auto &degree : r_input)
     {
         std::cout << ">Finding requirements..." << std::endl;
-        //Iterate through each integer in the reqs array
-        for (int i = 0; i < degree["reqs"].size(); i++)
-        {
-            std::cout << degree << std::endl;
-        }
+        // Iterate through each integer in the reqs array
+
+        std::cout << degree << std::endl;
+
         // Add course to degree requirements
-        
     }
 
     vector<Semester> semester_array;
@@ -185,7 +183,7 @@ int main(int argc, char *argv[])
                     // Create new course from fields "cid" and "shortname"
                     Course new_course(lexicon_course["cid"]);
                     new_course.addName(lexicon_course["shortname"]);
-                    //Add prerequisites to course
+                    // Add prerequisites to course
                     std::cout << "Adding prereqs..." << std::endl;
                     for (const auto &prereq : lexicon_course["prereq"])
                     {
@@ -252,34 +250,34 @@ int main(int argc, char *argv[])
     }
 
     // Check if all degree requirements have been met
-    //For each semester...
+    // For each semester...
     for (const auto &semester : semester_array)
     {
-        //For each course in semester...
+        // For each course in semester...
         for (const auto &course : semester.courses)
         {
-            //For each degree requirement...
+            // For each degree requirement...
             for (auto &degree_course : degree_reqs)
             {
-                //If the course name matches the degree requirement name and it is not already satisfied...
+                // If the course name matches the degree requirement name and it is not already satisfied...
                 if (course.name == degree_course.name && !degree_course.isSatisfied)
                 {
-                    //Mark the degree requirement as satisfied.
+                    // Mark the degree requirement as satisfied.
                     degree_course.isSatisfied = true;
                 }
             }
         }
     }
 
-    //Now check if all degree requirements have been satisfied.
+    // Now check if all degree requirements have been satisfied.
 
-    //For each course in degree requirements...
+    // For each course in degree requirements...
     for (const auto &degree_course : degree_reqs)
     {
-        //If the course has not been satisfied...
+        // If the course has not been satisfied...
         if (!degree_course.isSatisfied)
         {
-            //Add an error to the output.
+            // Add an error to the output.
             output.addError("Degree requirement " + degree_course.name + " has not been satisfied.");
         }
     }
