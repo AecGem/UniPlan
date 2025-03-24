@@ -39,7 +39,6 @@ function CollapsibleSection({ title, items, onDragStartAside }) {
     const [courses, setCourses] = useState([]);
     const [degrees, setDegrees] = useState([]);
     const [selectedDegreeId, setSelectedDegreeId] = useState('');
-    const [verifyResult, setVerifyResult] = useState(null);
 
     const navigate = useNavigate();
     const router = useRouter();
