@@ -63,7 +63,7 @@ export const App = (session) => {
       .then(data => {
         setDegrees(data);
         if (data.length > 0) {
-          setSelectedDegreeId(0);
+          setSelectedDegreeId(1);
         }
       })
       .catch(err => console.error('Error fetching degrees:', err));
@@ -71,6 +71,9 @@ export const App = (session) => {
 
 
 //fetching number of degree applicants for information display:
+const [numStudents, setNumStudents] = useState([]);
+
+
 useEffect(() => {
   const url = `/api/degree_count`;
   fetch(url)
@@ -79,14 +82,11 @@ useEffect(() => {
       setNumStudents(data);
     })
     .catch(err => console.error('Error getting number of students for degree', err));
-}, []);
+}, [setNumStudents]);
 
-const [numStudents, setNumStudents] = useState([0]);
+
+
 //fetching the course enrollment list
-
-
-
-
 
 
 
@@ -103,7 +103,6 @@ const [degInfo, setDegInfo] = useState("0a"); // or "" if you prefer
 const handleInfoChange = (degInfoValue) => 
   {
     setDegInfo(degInfoValue);  // Now we actually have `degree` state 
-    setNumStudents();
   }
 
 
