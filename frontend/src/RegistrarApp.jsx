@@ -1,4 +1,4 @@
-import './Registrar.css'
+import adminStyles from './Registrar.module.css'
 import { useState, useEffect } from 'react'
 import { useNavigate } from '@tanstack/react-router'
 import { AuthAPI } from './apis/AuthAPI'
@@ -110,20 +110,20 @@ const handleInfoChange = (degInfoValue) =>
 
   return (
     
-    <div className="page-container">
+    <div className={adminStyles.page-container}>
       {/*basic page-formatting elements for header*/}
-      <header className="subtitle">
+      <header className={adminStyles.subtitle}>
         <h1>UniPlan: Registrar's Homepage</h1>
-        <div class="topnav">
-          <div className="sub-subtitle"> On this page the admin can view statistics related to degrees and enrollment </div>
+        <div class={adminStyles.topnav}>
+          <div className={adminStyles.sub-subtitle}> On this page the admin can view statistics related to degrees and enrollment </div>
         </div>
       </header>
       {/*start of app container for React elements*/}
-      <div className="layout-wrapper">
-        <div className="app-container">
-          <div className="subtitle2">Select a Degree to View: </div>
+      <div className={adminStyles.layout-wrapper}>
+        <div className={adminStyles.app-container}>
+          <div className={adminStyles.subtitle2}>Select a Degree to View: </div>
         {/*Drop-downs to handle degree selection and what kind of information to display about that degree*/}
-          <div className="Degree-Dropdown">
+          <div className={adminStyles.Degree-Dropdown}>
             <label>Degree:&nbsp;</label>
             <select
               value={selectedDegreeId || ''}
@@ -136,7 +136,7 @@ const handleInfoChange = (degInfoValue) =>
             </select>
 
           </div>
-          <div className="Info-Dropdown">
+          <div className={adminStyles.Info-Dropdown}>
             <label>Information to Display:&nbsp;</label>
             <select value={degInfo} onChange={(e) => handleInfoChange(e.target.value)}>
               <option value="0a">No Criteria Selected </option>
@@ -147,19 +147,19 @@ const handleInfoChange = (degInfoValue) =>
 
           <br /><br />
             {/*Display info container only displays when a degree is selected, otherwise it is hidden on the page*/}
-          <div id="displayInfo" className="displayInfo" style={{ visibility: selectedDegreeId === 0 ? "hidden" : "Visible" }}>
+          <div id="displayInfo" className={adminStyles.displayInfo} style={{ visibility: selectedDegreeId === 0 ? "hidden" : "Visible" }}>
             {selectedDegreeId !== 0 &&
               (
-                <div className="courseInfo">
-                  <div className="subtitle3">
+                <div className={adminStyles.courseInfo}>
+                  <div className={adminStyles.subtitle3}>
                     Displaying information for your degree:</div>
                   {degInfo === "0a" &&
                     (
-                      <div className="empty-info-placeholder"> [Please select what information you would like to display] </div>
+                      <div className={adminStyles.empty-info-placeholder}> [Please select what information you would like to display] </div>
                     )}{/*displaying info for course list and enrollment here:*/ }
                   {degInfo === "1a" &&
                     (
-                      <div className="courseTables">
+                      <div className={adminStyles.courseTables}>
                         <table>
                           <thead>
                             <tr>
@@ -181,7 +181,7 @@ const handleInfoChange = (degInfoValue) =>
                     )}{/*displaying info for total degree enrollment here*/ }
                   {degInfo === "2a" &&
                     (
-                      <div className="courseTables">
+                      <div className={adminStyles.courseTables}>
                         <table>
                           <thead>
                             <tr>
@@ -201,8 +201,8 @@ const handleInfoChange = (degInfoValue) =>
           </div>
         </div>
       </div>{/*small footer with sign-out button at bottom of the page*/}
-      <div className="footer">
-        <button className="sign-out" onClick={handleSignOut}>
+      <div className={adminStyles.footer}>
+        <button className={adminStyles.sign-out} onClick={handleSignOut}>
           Sign Out
         </button>
       </div>
