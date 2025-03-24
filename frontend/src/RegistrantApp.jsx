@@ -54,11 +54,19 @@ export default function App(session) {
 
   console.log(session);
   console.log
-  if (session !== undefined) {
-    if (session.session.user.usertype === true) {
-      navigate({ to: '/registrar' })
+  //Wrapping this whole thing in a try-catch.
+  //Can't access? Rough. Invalidate router and gtfo.
+  try{
+    if (session !== undefined) {
+      if (session.session.user.usertype === true) {
+        navigate({ to: '/registrar' })
+      }
     }
+  } catch (error) {
+    router.invalidate();
+    navigate({ to: '/' })
   }
+  
   //Check to see if a homie is logged in. If not logged in, gtfo.
   /*
   if (userInfo.session.userId === null) {
