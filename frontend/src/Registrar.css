@@ -158,6 +158,8 @@ html, body {
 .courseTables
 {
   display: flex;
+  padding-left: 20px;
+  padding-right: 20px;
   margin-top: 5%;
   height: 60vh;
   max-width: 60vw;
