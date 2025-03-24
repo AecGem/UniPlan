@@ -160,9 +160,10 @@ html, body {
   display: flex;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 5%;
-  height: 60vh;
+  margin-top: 1%;
+  height: 45vh;
   max-width: 55vw;
+  overflow-x: auto;
 }
 table {
   background-color: rgba(230, 227, 220, 0.515);
@@ -171,13 +172,17 @@ table {
   height: 200px;
 }
 
+
 th {
+  padding-left: 0px;
   border-bottom: 1px solid black;
 }
 
 td {
+  padding-left: 0px;
   text-align: center;
 }
+
 
 /*styling for sign-out button*/
 button {

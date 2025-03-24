@@ -164,9 +164,16 @@ const app = new Elysia()
         const result = await prisma.course.findMany({
             where: {
                 cid: {
-                    in: cids,
-                },
+                    in: cids,},
             },
+            select: {
+                cid: true,
+                shortname: true,
+                coursename: true,
+                credits: true,
+                description: true,
+                prereq: true,
+              }
         });
         return result;
     },
@@ -366,7 +373,7 @@ const app = new Elysia()
         return results;
     }, {
         query: t.Object({
-            didin: t.Optional(t.String())
+            didin: t.Optional(t.Number())
         })
     })
 

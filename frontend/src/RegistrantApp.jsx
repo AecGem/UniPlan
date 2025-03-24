@@ -51,6 +51,7 @@ export default function App(session) {
   const [degrees, setDegrees] = useState([]);
   const [selectedDegreeId, setSelectedDegreeId] = useState('');
   const [verification, setVerify] = useState([]);
+  const [savedPopup, setSavedPopup] = useState(false);
 
   console.log(session);
   console.log
@@ -151,7 +152,9 @@ export default function App(session) {
           setSemesters(emptyCoursesSemesters);
           return;
         }
-        const cidsArray = [5, 6, 7];
+
+        const cidsArray = Array.from(allCids);
+
         return fetch('/api/course_many', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -166,6 +169,7 @@ export default function App(session) {
             courseDetails.forEach((c) => {
               detailMap[c.cid] = c;
             });
+
             const newSemesters = semestersData.map((item) => ({
               id: Date.now() + Math.random(),  // local ephemeral ID
               sem_id: item.sem_id,
@@ -175,9 +179,12 @@ export default function App(session) {
                 const details = detailMap[cid] || {};
                 return {
                   id: Date.now() + Math.random(),
-                  cid,
+                  cid: cid,
                   shortname: details.shortname || '',
                   coursename: details.coursename || '',
+                  credits: details.credits || 0,
+                  description: details.description || '',
+                  prereq: details.prereq || [],
                   status: ''
                 };
               }),
@@ -524,6 +531,8 @@ export default function App(session) {
       })
       .then((data) => {
         console.log("Semester updated with sem_id:", data.sem_id);
+        setSavedPopup(true);
+        setTimeout(() => setSavedPopup(false), 5000);
       })
       .catch((err) => console.error("Error saving semester:", err));
   };
@@ -595,9 +604,9 @@ export default function App(session) {
                   <div className="dropdown-container">
                     <button className="dropdown-btn">⋮</button>
                     <div className="dropdown-content">
-                      <button onClick={() => handleOpenEditModal(sem)}>Edit</button>
+                      <button onClick={() => handleOpenEditModal(sem)}>Edit Semester</button>
                       <button onClick={() => handleClearSemester(sem.id)}>Clear Courses</button>
-                      <button onClick={() => handleDeleteSemester(sem.id)}>Delete</button>
+                      <button onClick={() => handleDeleteSemester(sem.id)}>Delete Semester</button>
                       <button onClick={() => handleSaveSemesterToDB(sem.id)}>Save Semester</button>
                     </div>
                   </div>
@@ -641,6 +650,13 @@ export default function App(session) {
           </div>
         </main>
       </div>
+
+      {/* POPUP: Show saving semester indication*/}
+      {savedPopup && (
+        <div className="popup">
+          Semester successfully saved!
+        </div>
+      )}
 
       {/* MODAL: Show description for Class*/}
       {showDescModal && descCourse && (
@@ -713,8 +729,8 @@ export default function App(session) {
         <div className="modal-backdrop">
           <div className="modal-content">
             <h2>Edit Course</h2>
-
-            <label>Course Name:</label>
+            <br></br>
+            <label>Course Name: </label>
             <input
               type="text"
               value={courseBeingEdited.text}
@@ -725,8 +741,8 @@ export default function App(session) {
                 })
               }
             />
-
-            <label>Status:</label>
+            <br></br>
+            <label>Status: </label>
             <select
               value={courseBeingEdited.status || 'inprogress'}
               onChange={(e) =>
@@ -756,7 +772,7 @@ export default function App(session) {
             <h2>Degree Verification</h2>
             <div className="verify-content">
 
-              <h5>ah beans</h5>
+              <h5> -ah beans- </h5>
             </div>
 
             <div className="modal-buttons">
