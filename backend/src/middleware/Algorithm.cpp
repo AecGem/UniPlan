@@ -196,6 +196,7 @@ int main(int argc, char *argv[])
                         // If the prereq name matches, break and continue to next prereq
                         if (prev_course.name == prereq)
                         {
+                            std::cout << "Found prereq " << prereq << " for course " << course.name << std::endl;
                             found = true;
                             break;
                         }
