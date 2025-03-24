@@ -181,6 +181,9 @@ export default function App(session) {
                   cid: cid,
                   shortname: details.shortname || '',
                   coursename: details.coursename || '',
+                  credits: details.credits || 0,
+                  description: details.description || '',
+                  prereq: details.prereq || [],
                   status: ''
                 };
               }),
