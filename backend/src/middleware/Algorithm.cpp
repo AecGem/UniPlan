@@ -155,25 +155,30 @@ int main(int argc, char *argv[])
     //JSON Format: {did: 1, degree: "Computer Science", reqs: [1,2,3,4]}
     for (const auto &degree : r_input)
     {
-        // Create new course from fields "did" and "degree"
-        Course new_course(degree["did"]);
-        //Search lexicon for course name and details
-        for (const auto &lexicon_course : lexicon_input)
+        //Create new courses from the reqs field
+        for (const auto &course_id : degree["reqs"])
         {
-            if (lexicon_course["cid"] == degree["did"])
+            //Find course in lexicon
+            for (const auto &lexicon_course : lexicon_input)
             {
-                //Add course name to course object
-                new_course.addName(lexicon_course["shortname"]);
-                //Add prerequisites to course object
-                for (const auto &prereq : lexicon_course["prereq"])
+                if (lexicon_course["cid"] == course_id)
                 {
-                    new_course.addPrerequisite(prereq);
+                    //Create new course from fields "cid" and "shortname"
+                    Course new_course(lexicon_course["cid"]);
+                    new_course.addName(lexicon_course["shortname"]);
+                    //Add prerequisites to course
+                    for (const auto &prereq : lexicon_course["prereq"])
+                    {
+                        new_course.addPrerequisite(prereq);
+                    }
+                    //Add course to degree requirements
+                    degree_reqs.push_back(new_course);
+                    break;
                 }
-                break;
             }
         }
         // Add course to degree requirements
-        degree_reqs.push_back(new_course);
+        
     }
 
     vector<Semester> semester_array;
