@@ -39,7 +39,6 @@ function CollapsibleSection({ title, items, onDragStartAside }) {
     const [courses, setCourses] = useState([]);
     const [degrees, setDegrees] = useState([]);
     const [selectedDegreeId, setSelectedDegreeId] = useState('');
-    const [verifyResult, setVerifyResult] = useState(null);
 
     const navigate = useNavigate();
     const router = useRouter();
@@ -300,6 +299,7 @@ function CollapsibleSection({ title, items, onDragStartAside }) {
         throw new Error('Failed to verify degree');
       }
       const data = await res.json();
+      console.log('Verification result data:', data);
       setVerifyResultData(data);
     } catch (err) {
       console.error('Error verifying degree:', err);
@@ -683,15 +683,16 @@ function CollapsibleSection({ title, items, onDragStartAside }) {
       {/* MODAL: Degree Verification */}
       {showValidModal && (
         <div className="modal-backdrop">
-          <div className="modal-content">
+          <div className="modal-content3">
             <h2>Degree Verification</h2>
+            <h3>--------------------------------------------------------------------</h3>
             <div className="verify-content">
               {verifyResultData ? (
-                verifyResultData.errors > 0 ? (
-                  // We have errors; display them in red boxes
+                verifyResultData["Number of Errors"] > 0 ? (
                   <>
-                    {Object.values(verifyResultData.errorsList).map((errMsg, index) => (
-                      <div key={index} className="error-box">
+                    {/* We have errors—display them */}
+                    {verifyResultData["Error List"].map((errMsg, i) => (
+                      <div key={i} className="error-box">
                         {errMsg}
                       </div>
                     ))}
@@ -703,11 +704,12 @@ function CollapsibleSection({ title, items, onDragStartAside }) {
                   </div>
                 )
               ) : (
+                // Still loading or no data
                 <p>Loading verification results...</p>
               )}
             </div>
-
-            <div className="modal-buttons">
+            <br></br>
+            <div className="modal-buttons3">
               <button onClick={() => setShowValidModal(false)}>Close</button>
             </div>
           </div>
