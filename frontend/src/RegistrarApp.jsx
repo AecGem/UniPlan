@@ -11,12 +11,12 @@ export const App = (session) => {
   
   const router = useRouter();
   const navigate = useNavigate();
-  /*
-  if (userInfo.session.userId === null) {
-    router.invalidate();
-    navigate({ to: '/' })
+  console.log(session);
+  if (session !== undefined) {
+    if (session.session.user.usertype === false) {
+      navigate({ to: '/registrant' })
+    }
   }
-  */
 
   //data for the temp course tables
   const CourseTempdata = [
