@@ -173,6 +173,7 @@ table {
 }
 
 th {
+  padding-left: 0px;
   border-bottom: 1px solid black;
 }
 
@@ -182,11 +183,11 @@ td {
 
 .courseSpacing
 {
-  padding-left: 50px;
+  padding-left: 5vw;
 }
 .countSpacing
 {
-  padding-left: 250px;
+  padding-left: 10vw;
 }
 
 
