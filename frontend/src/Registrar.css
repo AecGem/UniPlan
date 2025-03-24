@@ -195,6 +195,7 @@ td {
 .headerSpacing
 {
   padding-left: 0;
+  min-width: 50px;
 }
 
 
