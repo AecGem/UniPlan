@@ -9,17 +9,17 @@ using namespace std;
 // for convenience
 using json = nlohmann::json;
 
-class Semester_class {
-    //enter stuff here
-};
+// class Semester_class {
+//     //enter stuff here
+// };
 
-class Course_class {
-    //enter stuff here
-};
+// class Course_class {
+//     //enter stuff here
+// };
 
-class Requirements_class {
-    //enter stuff ehre
-};
+// class Requirements_class {
+//     //enter stuff here
+// };
 
 int main(int argc, char *argv[])
 {
