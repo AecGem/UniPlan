@@ -71,7 +71,7 @@ export const App = (session) => {
 
 
 //fetching number of degree applicants for information display:
-const [numStudents, setNumStudents] = useState([0]);
+const [numStudents, setNumStudents] = useState([]);
 
 
 useEffect(() => {
