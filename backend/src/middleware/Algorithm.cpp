@@ -284,6 +284,7 @@ int main(int argc, char *argv[])
 
     // Now check if all degree requirements have been satisfied.
 
+    std::cout << degree_reqs.size() << std::endl;
     // For each course in degree requirements...
     for (const auto &degree_course : degree_reqs)
     {
