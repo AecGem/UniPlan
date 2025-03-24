@@ -601,9 +601,9 @@ export default function App(session) {
                   <div className="dropdown-container">
                     <button className="dropdown-btn">⋮</button>
                     <div className="dropdown-content">
-                      <button onClick={() => handleOpenEditModal(sem)}>Edit</button>
+                      <button onClick={() => handleOpenEditModal(sem)}>Edit Semester</button>
                       <button onClick={() => handleClearSemester(sem.id)}>Clear Courses</button>
-                      <button onClick={() => handleDeleteSemester(sem.id)}>Delete</button>
+                      <button onClick={() => handleDeleteSemester(sem.id)}>Delete Semester</button>
                       <button onClick={() => handleSaveSemesterToDB(sem.id)}>Save Semester</button>
                     </div>
                   </div>
