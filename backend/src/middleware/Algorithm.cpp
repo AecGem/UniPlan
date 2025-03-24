@@ -178,14 +178,18 @@ int main(int argc, char *argv[])
 
     // Check prerequisites for each course
     // Iterate over semesters in reverse order
+    std::cout << ">Verifying prerequisites..." << std::endl;
     for (int i = semester_array.size() - 1; i >= 0; i--)
     {
+        std::cout << ">Checking semester..." << std::endl;
         // For each course in semester...
         for (const auto &course : semester_array[i].courses)
         {
+            std::cout << ">Checking course..." << std::endl;
             // For every prerequisite of the course, if any...
             for (const auto &prereq : course.prerequisites)
             {
+                std::cout << ">Checking prereq..." << std::endl;
                 // Check all previous semesters...
                 bool found = false;
                 for (int l = i; l >= 0; l--)
