@@ -18,13 +18,6 @@ export const App = (session) => {
     }
   }
 
-  //data for the temp course tables
-  const CourseTempdata = [
-    { courseName: "CS100", numStudents: "125" },
-    { courseName: "CS110", numStudents: "98" },
-    { courseName: "CS115", numStudents: "72" },
-  ]
-
   //Here is a function that handles signout
   const handleSignOut = async () => {
     try {
@@ -42,14 +35,13 @@ export const App = (session) => {
     }
   }
 
-
-
   //const variable declarations
   const [numStudents, setNumStudents] = useState([0]);
   const [degrees, setDegrees] = useState([0]);
   const [selectedDegreeId, setSelectedDegreeId] = useState(0);
   const [courseNameShort, setCourseNameShort] = useState(["Empty"]);
   const [courseEnrollmentData, setCourseEnrollmentData] = useState([0]);
+
 
   // Fetch degrees from the backend when the component mounts
   useEffect(() => {
@@ -82,6 +74,7 @@ export const App = (session) => {
 
 
 //fetching the course enrollment list
+
 useEffect(() => {
   const params = new URLSearchParams();
   params.append('didin', selectedDegreeId);
@@ -90,16 +83,11 @@ useEffect(() => {
     .then(res => res.json())
     .then(data => 
     {
-
       setCourseNameShort(data);
       setCourseEnrollmentData(data);
     })
     .catch(err => console.error('Error getting Course Enrollment List', err));
 }, [courseNameShort, courseEnrollmentData]);
-
-
-
-
 
 
 
