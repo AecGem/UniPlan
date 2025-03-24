@@ -51,6 +51,7 @@ export default function App(session) {
   const [degrees, setDegrees] = useState([]);
   const [selectedDegreeId, setSelectedDegreeId] = useState('');
   const [verification, setVerify] = useState([]);
+  const [savedPopup, setSavedPopup] = useState(false);
 
   console.log(session);
   console.log
@@ -530,6 +531,8 @@ export default function App(session) {
       })
       .then((data) => {
         console.log("Semester updated with sem_id:", data.sem_id);
+        setSavedPopup(true);
+        setTimeout(() => setSavedPopup(false), 5000);
       })
       .catch((err) => console.error("Error saving semester:", err));
   };
@@ -647,6 +650,13 @@ export default function App(session) {
           </div>
         </main>
       </div>
+
+      {/* POPUP: Show saving semester indication*/}
+      {savedPopup && (
+        <div className="popup">
+          Semester successfully saved!
+        </div>
+      )}
 
       {/* MODAL: Show description for Class*/}
       {showDescModal && descCourse && (
