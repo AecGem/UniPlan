@@ -183,6 +183,11 @@ int main(int argc, char *argv[])
                     // Create new course from fields "cid" and "shortname"
                     Course new_course(lexicon_course["cid"]);
                     new_course.addName(lexicon_course["shortname"]);
+                    //Add prerequisites to course
+                    for (const auto &prereq : lexicon_course["prerequisites"])
+                    {
+                        new_course.addPrerequisite(prereq);
+                    }
                     // Add course to semester
                     new_semester.addCourse(new_course);
                     break;
