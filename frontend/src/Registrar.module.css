@@ -4,7 +4,7 @@ html, body {
 }
 
 /* ----- FLEX LAYOUT FOR BACKGROUND ----- */
-.layout-wrapper {
+.layoutWrapper {
   background-color: rgba(255, 255, 255, 0.555);
   background-size: cover;
   display: flex;
@@ -21,7 +21,7 @@ html, body {
   flex-direction: column;
   align-items: stretch;
 }
-.app-container
+.appContainer
 {
   height: 100%;
   width: 100%;
@@ -44,7 +44,7 @@ html, body {
   margin: 3px;
 }
 
-.sub-subtitle
+.subSubtitle
 {
   padding: 5px;
   font-size: 20px;
@@ -109,7 +109,7 @@ html, body {
 
 
 /*styling for drop-down box*/
-.Degree-Dropdown
+.DegreeDropdown
 {
   font-size: 20px;
   padding-top: 5px;
@@ -118,7 +118,7 @@ html, body {
   font-weight: bold;
   color: #065e48;
 }
-.Info-Dropdown
+.InfoDropdown
 {
   font-size: 20px;
   padding-top: 5px;
@@ -139,7 +139,7 @@ html, body {
   width: 60vw;
   background: rgba(255, 255, 255, 0.777);
 }
-.empty-info-placeholder
+.emptyInfoPlaceholder
 {
   margin-bottom: 25px;
   text-align: center;
@@ -212,7 +212,7 @@ button:focus {
   outline: none;
   position: relative;
 }
-.sign-out
+.signOut
 {
   justify-content: right;
 }

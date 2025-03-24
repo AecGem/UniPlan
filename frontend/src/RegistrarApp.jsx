@@ -115,15 +115,15 @@ const handleInfoChange = (degInfoValue) =>
       <header className={adminStyles.subtitle}>
         <h1>UniPlan: Registrar's Homepage</h1>
         <div class={adminStyles.topnav}>
-          <div className={adminStyles.sub-subtitle}> On this page the admin can view statistics related to degrees and enrollment </div>
+          <div className={adminStyles.subSubtitle}> On this page the admin can view statistics related to degrees and enrollment </div>
         </div>
       </header>
       {/*start of app container for React elements*/}
-      <div className={adminStyles.layout-wrapper}>
-        <div className={adminStyles.app-container}>
+      <div className={adminStyles.layoutWrapper}>
+        <div className={adminStyles.appContainer}>
           <div className={adminStyles.subtitle2}>Select a Degree to View: </div>
         {/*Drop-downs to handle degree selection and what kind of information to display about that degree*/}
-          <div className={adminStyles.Degree-Dropdown}>
+          <div className={adminStyles.DegreeDropdown}>
             <label>Degree:&nbsp;</label>
             <select
               value={selectedDegreeId || ''}
@@ -136,7 +136,7 @@ const handleInfoChange = (degInfoValue) =>
             </select>
 
           </div>
-          <div className={adminStyles.Info-Dropdown}>
+          <div className={adminStyles.InfoDropdown}>
             <label>Information to Display:&nbsp;</label>
             <select value={degInfo} onChange={(e) => handleInfoChange(e.target.value)}>
               <option value="0a">No Criteria Selected </option>
@@ -155,7 +155,7 @@ const handleInfoChange = (degInfoValue) =>
                     Displaying information for your degree:</div>
                   {degInfo === "0a" &&
                     (
-                      <div className={adminStyles.empty-info-placeholder}> [Please select what information you would like to display] </div>
+                      <div className={adminStyles.emptyInfoPlaceholder}> [Please select what information you would like to display] </div>
                     )}{/*displaying info for course list and enrollment here:*/ }
                   {degInfo === "1a" &&
                     (
@@ -202,7 +202,7 @@ const handleInfoChange = (degInfoValue) =>
         </div>
       </div>{/*small footer with sign-out button at bottom of the page*/}
       <div className={adminStyles.footer}>
-        <button className={adminStyles.sign-out} onClick={handleSignOut}>
+        <button className={adminStyles.signOut} onClick={handleSignOut}>
           Sign Out
         </button>
       </div>
