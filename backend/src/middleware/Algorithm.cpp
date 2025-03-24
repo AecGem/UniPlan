@@ -148,28 +148,80 @@ int main(int argc, char *argv[])
     }
     
     //_________NEW: AecGem codes the validity checks here___________
+    //Create an output object
+    Output output;
 
+    //Now that the semesters are sorted and course info is populated, we can validate prerequisites.
 
+    //Check one: Prerequisites are taken before any course that requires them.
+    //Loop through each semester, back to front.
+    for(int i = semester_array.size()-1; i >= 0; i--){
+        //For each course in the semester, check if it has prerequisites.
+        for (int j = 0; j < semester_array[i].courses.size(); j++){
 
+            //If it does, loop through the prerequisites.
+            if(semester_array[i].courses[j].prerequisites.size() > 0){
+                for (int k = 0; k < semester_array[i].courses[j].prerequisites.size(); k++){
+                    //For each prerequisite, check if it has been taken.
+                    bool found = false;
+                    //Check each semester before the current one.
+                    for (int l = 0; l < i; l++){
 
-    //NEW: Will edit the Degree Validity check to output the json error using the output class
-    //For every element in the requirements list, check that it exists in the saved plan array. 
-    //If one of them is not there, it is not valid. Exit.
-    for (auto reqs : degree_reqs){
+                        //Check each course in the semester.
+                        for (int m = 0; m < semester_array[l].courses.size(); m++){
+                            //If the course is found, set found to true and break out of the loop.
+                            if (semester_array[l].courses[m].name == semester_array[i].courses[j].prerequisites[k]){
+                                found = true;
+                                break;
+                            }
+                        }
+                        //If the course is found, break out of the loop.
+                        if (found){
+                            break;
+                        }
 
-        //set a current target for the search
-        int temp_target = reqs;
+                    }
+                    //If it hasn't, add an error to the output object.
+                    if(!found){
+                        output.addError("Prerequisite " + semester_array[i].courses[j].prerequisites[k] + " for course " + semester_array[i].courses[j].name + " has not been taken.");
+                    }
+                    //Then, move on to the next prerequisite.
+                }
+            }
+        }
 
-        //if reqs has not been matched, even after the end of the list, return an error
-        //sort and then do a binary search
-        sort(saved_plan.begin(), saved_plan.end());
-        if (binary_search(saved_plan.begin(), saved_plan.end(), temp_target) == false)
-        {
-            cout << "Degree Plan Invalid. At least one course is missing." << endl;
-            out_stream << missing_course_messg;
+    }
+
+    //Check two: All degree requirements are met.
+
+    //Loop through each course in the degree requirements.
+    for (int i = 0; i < degree_reqs.size(); i++){
+        bool found = false;
+        //Loop through each semester.
+        for (int j = 0; j < semester_array.size(); j++){
+            //Loop through each course in the semester.
+            for (int k = 0; k < semester_array[j].courses.size(); k++){
+                //If the course id is found, set found to true and break out of the loop.
+                if (semester_array[j].courses[k].id == degree_reqs[i]){
+                    found = true;
+                    break;
+                }
+            }
+            //If the course is found, break out of the loop.
+            if (found){
+                break;
+            }
+        }
+        //If the course hasn't been found, add an error to the output object.
+        if (!found){
+            output.addError("Degree requirement " + to_string(degree_reqs[i]) + " has not been met.");
         }
     }
 
-    out_stream.close();
 
+
+    //Write the output to a JSON file.
+    output.writeOutput(out_filePath);
+    return 0;
+    //Done :)
 }
