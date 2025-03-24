@@ -113,11 +113,13 @@ int main(int argc, char* argv[]) {
     lexicon.close();
 
     std::cout << "Parsing json inputs..." << std::endl;
+    std::cout << ">Degree reqs..." << std::endl;
     vector<int> degree_reqs;
     for (const auto& req_courses : r_input["courses"]) {
         degree_reqs.push_back(req_courses.get<int>());
     }
 
+    std::cout << ".Saved plans..." << std::endl;
     vector<int> saved_plan;
     for (const auto& saved_sems : s_input["semesters"]) {
         saved_plan.push_back(saved_sems["sem_id"].get<int>());
@@ -138,6 +140,21 @@ int main(int argc, char* argv[]) {
             temp.addCourse(added_course);
         }
         semester_array.push_back(temp);
+    }
+
+    std::cout << "Populating courses from lexicon..." << std::endl;
+    for (auto& sem : semester_array) {
+        for (auto& course : sem.courses) {
+            for (const auto& lexicon_course : lexicon_input["courses"]) {
+                if (course.id == lexicon_course["id"].get<int>()) {
+                    course.addName(lexicon_course["name"].get<string>());
+                    for (const auto& prereq : lexicon_course["prerequisites"]) {
+                        course.addPrerequisite(prereq.get<string>());
+                    }
+                    break;
+                }
+            }
+        }
     }
 
 
