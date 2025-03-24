@@ -44,7 +44,7 @@ const app = new Elysia()
         }
         else{
             //its like 199 degrees
-            let response;
+            let response = "hai";
             let directory = '/var/www/temp/UniPlan/'.concat(id);
             await $`mkdir ${directory}`.nothrow();
             await $`curl https://localhost:443/api/degree?did=${did} -k > ${directory}/req.json`.nothrow();
@@ -54,7 +54,7 @@ const app = new Elysia()
             //await $`/var/www/UniPlan/backend/middleware/build/verifier ${directory}/req.json ${directory}/sem.json ${directory}/out.json`
             //response = $`cat ${directory}/out.json`.json();
             try {
-                response =  $`rm -rf ${directory}`.text()
+                response =  await $`rm -rf ${directory}`.text();
             } catch (err) {
                 response = err.stderr.toString();
             }
