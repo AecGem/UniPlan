@@ -56,7 +56,7 @@ const app = new Elysia()
             try {
                 response =  $`rm -rf ${directory}`.text()
             } catch (err) {
-                response = err;
+                response = err.stdout.toString();
             }
             
             //response = "Completed. Check folder! ^^"
