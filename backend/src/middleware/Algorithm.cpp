@@ -153,19 +153,24 @@ int main(int argc, char *argv[])
     // JSON format: {did: 1, degree: "Computer Science", courses: [1, 2, 3, 4, 5]}
     // The api grabs this as an array which is stupid, so we have to iterate over one(1) element >:(
 
+    std::cout << ">>>Top Level." << std::endl;
     for (const auto &req : r_input)
     {
+        std::cout << ">>>Select by name 'courses'." << std::endl;
         for (const auto &req_id : req["courses"])
         {
             // Iterate over lexicon to find course details
             // Lexicon format:{cid: 1,shortname: "CS 101",coursename: "Introduction to Computer Science",isambig: true, prereq: [1,2,3,4]}
+            std::cout << ">>>Top Level, lexicon." << std::endl;
             for (const auto &lex : lexicon_input)
             {
+                std::cout << ">>>Select 'cid' from lexicon, match to req_id" << std::endl;
                 if (lex["cid"] == req_id)
                 {
                     Course course(req_id);
                     // Populate name and prereqs once found
                     course.addName(lex["cname"]);
+                    std::cout << ">>>Select prereq string match from lex." << std::endl;
                     for (const auto &prereq : lex["prereq"])
                     {
                         course.addPrerequisite(prereq);
