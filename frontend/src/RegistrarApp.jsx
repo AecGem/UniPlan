@@ -110,7 +110,7 @@ const handleInfoChange = (degInfoValue) =>
 
   return (
     
-    <div className={adminStyles.page-container}>
+    <div className={adminStyles.pageContainer}>
       {/*basic page-formatting elements for header*/}
       <header className={adminStyles.subtitle}>
         <h1>UniPlan: Registrar's Homepage</h1>
