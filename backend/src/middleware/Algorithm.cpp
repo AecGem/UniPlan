@@ -121,10 +121,32 @@ int main(int argc, char *argv[])
     //Take in the json array of saved semesters and put it in as a c++ array
     //(see: https://stackoverflow.com/questions/54389742/use-nlohmann-json-to-unpack-list-of-integers-to-a-stdvectorint)
 
-    vector<int> degree_reqs = r_input["courses"].get<vector<int>>();
-    vector<int> saved_plan = s_input[""];
 
+    //you have to loop through each object in the array to get the required courses list
+    vector<int> degree_reqs;
+    for (auto req_courses : r_input){
+        int temp_course_req = r_input["courses"].get<int>();
+        degree_reqs.push_back(temp_course_req);
+    }
 
+    vector<int> saved_plan;
+    for (auto saved_sems : s_input){
+        int temp_sem = s_input["sem_id"].get<int>();
+        saved_plan.push_back(temp_sem);
+    }
+    
+    vector<int> saved_plan = s_input["courses"].get<vector<int>>();
+    vector<Semester> semester_array;
+
+    //Populate the semester objects
+    for (int i = 0; i < saved_plan.size(); i++){
+        //call the constructor to create semesters
+        Semester temp (saved_plan[0], saved_plan[0]["sname"]);
+        semester_array.push_back(temp);
+
+        for (auto course_id : )
+    }
+    
     //_________NEW: AecGem codes the validity checks here___________
 
 
