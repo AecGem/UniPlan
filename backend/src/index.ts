@@ -262,7 +262,7 @@ const app = new Elysia()
         semId: t.Optional(t.Number()),
     })})
     
-    .get("api/get_saved_sem", async ({query: userid}) => {
+    .get("api/get_saved_sem", async ({query: {userid}}) => {
         const semesters = await prisma.saved_sem.findMany({
             where: {
                 u_id: userid,
