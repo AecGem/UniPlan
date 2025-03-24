@@ -53,12 +53,13 @@ export default function App(session) {
   const [verification, setVerify] = useState([]);
 
   console.log(session);
-  //Check to see if user is logged in. If not logged in, restrict.
-
+  //Check to see if a homie is logged in. If not logged in, gtfo.
+  /*
   if (userInfo.session.userId === null) {
     router.invalidate();
     navigate({ to: '/' })
   }
+    */
 
   // Fetch degrees from the backend when the component mounts
   useEffect(() => {
