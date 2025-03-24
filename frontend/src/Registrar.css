@@ -178,16 +178,17 @@ th {
 }
 
 td {
+  padding-left: 0px;
   text-align: center;
 }
 
 .courseSpacing
 {
-  padding-left: 5vw;
+  padding-left: 6vw;
 }
 .countSpacing
 {
-  padding-left: 10vw;
+  padding-left: 20vw;
 }
 
 
