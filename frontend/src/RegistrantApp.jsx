@@ -151,7 +151,7 @@ export default function App(session) {
           setSemesters(emptyCoursesSemesters);
           return;
         }
-        const cidsArray = [5, 6, 7]
+        const cidsArray = [5, 6, 7];
         return fetch('/api/course_many', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
