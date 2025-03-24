@@ -48,10 +48,10 @@ const app = new Elysia()
             let directory = '/var/www/temp/UniPlan/'.concat(id);
             await $`mkdir ${directory}`.nothrow();
             await $`curl https://localhost:443/api/course?did=${did} -k > ${directory}/req.json`.nothrow();
-            await $`curl https://localhost:443/api/get_saved_sem?userid=${id} -k > ${directory}/sem.json`.nothrow(); //TODO: Get the saved sem api.
+            await $`curl https://localhost:443/api/get_saved_sem?userid=${id} -k > ${directory}/sem.json`.nothrow();
 
             //when you're doin it with me, doin it with me~!
-            await $`/var/www/UniPlan/backend/middleware/build/verifier ${directory}/req.json ${directory}/sem.json ${directory}/out.json`
+            await $`/var/www/UniPlan/backend/src/middleware/build/verifier ${directory}/req.json ${directory}/sem.json ${directory}/out.json`
             response = $`cat ${directory}/out.json`.json();
             try {
                 response =  await $`rm -rf ${directory}`.text();
