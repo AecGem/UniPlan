@@ -70,7 +70,7 @@ export const App = (session) => {
       .then(data => {
         setDegrees(data);
         if (data.length > 0) {
-          setSelectedDegreeId(1);
+          setSelectedDegreeId(0);
         }
       })
       .catch(err => console.error('Error fetching degrees:', err));
