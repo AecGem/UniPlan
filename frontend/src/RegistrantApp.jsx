@@ -70,18 +70,18 @@ export default function App(session) {
     */
 
   // Fetch courses from the backend when the component mounts
-  useEffect(() => {
-    const didin = 1;
-    const params = new URLSearchParams();
-    params.append('didin', didin);
-    const url = `/api/course?${params.toString()}`;
-    fetch(url)
-      .then(res => res.json())
-      .then(data => {
-        setCourses(data);
-      })
-      .catch(err => console.error('Error fetching courses:', err));
-  }, []);
+  //useEffect(() => {
+    //const didin = 1;
+    //const params = new URLSearchParams();
+    //params.append('didin', didin);
+    //const url = `/api/course?${params.toString()}`;
+    //fetch(url)
+      //.then(res => res.json())
+      //.then(data => {
+        //setCourses(data);
+      //})
+      //.catch(err => console.error('Error fetching courses:', err));
+  //}, []);
 
   // Fetch degrees from the backend when the component mounts
   useEffect(() => {
