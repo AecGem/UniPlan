@@ -12,12 +12,12 @@ using json = nlohmann::json;
 
 //Class definitions:
 
-//Semester, has id, timeslot (as an integer), and a vector of courses represented as ints
+//Semester, has id, timeslot (as an integer), and a vector of course objects.
 class Semester{
     public:
         int id;
         int timeslot;
-        vector<int> courses;
+        vector<Course> courses;
     //Constructor for semester, takes in int id, string timeslot in the format of "Fall 2024, Winter 2025, Spring 2025, Summer 2025" etc.
     Semester(int id, string timeslot){
         this->id = id;
