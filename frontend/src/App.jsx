@@ -21,6 +21,7 @@ export function App({ context }) {
     confirmPassword: "", //required input
     userType: "", // required radio input
   });
+  console.log(context)
 
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate(); // Get the navigate function from TanStack Router
@@ -130,7 +131,7 @@ export function App({ context }) {
           className="get-planning-btn"
           onClick={() => {
             if (context.check()) {
-              if (context.userType === "admin") {
+              if (context.user.usertype === true) {
                 navigate({ to: "/registrar" });
               } else {
                 navigate({ to: "/registrant" });
