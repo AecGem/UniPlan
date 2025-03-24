@@ -685,8 +685,7 @@ function CollapsibleSection({ title, items, onDragStartAside }) {
         <div className="modal-backdrop">
           <div className="modal-content3">
             <h2>Degree Verification</h2>
-            <br></br>
-            <h3>---------------------------------------------------</h3>
+            <h3>--------------------------------------------------------------------</h3>
             <div className="verify-content">
               {verifyResultData ? (
                 verifyResultData["Number of Errors"] > 0 ? (
