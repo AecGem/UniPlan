@@ -35,10 +35,6 @@ const app = new Elysia()
 
     //Verification endpoint
     .get("/api/verification", async ({query:{id, did}}) =>{
-        return {
-            errors: 1,
-            errorsList:{1: "hello".concat(id,did)}
-        }
         //It's all in my head, but I want non-fiction.
         if (id===undefined || did===undefined){
             return {
@@ -51,7 +47,7 @@ const app = new Elysia()
             let response = "hai";
             let directory = '/var/www/temp/UniPlan/'.concat(id);
             await $`mkdir ${directory}`.nothrow();
-            await $`curl https://localhost:443/api/degree?did=${did} -k > ${directory}/req.json`.nothrow();
+            await $`curl https://localhost:443/api/course?did=${did} -k > ${directory}/req.json`.nothrow();
             await $`curl https://localhost:443/api/get_saved_sem?userid=${id} -k > ${directory}/sem.json`.nothrow(); //TODO: Get the saved sem api.
 
             //when you're doin it with me, doin it with me~!
