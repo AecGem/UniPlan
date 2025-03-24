@@ -1,4 +1,4 @@
-html, body {
+html.registrant, body.registrant {
   margin: 0;
   padding: 0;
   min-width: 100%;
@@ -219,6 +219,7 @@ html, body {
 }
 .modal-content h2 {
   text-align: center;
+  justify-content: center;
   margin-bottom: 1rem;
 }
 .modal-content label {
@@ -241,7 +242,7 @@ html, body {
   border-radius: 8px;
   font-size: 20px;
   color: #0a505c;
-  width: 400px;
+  width: 900px;
   max-width: 90%;
   position: relative;
   padding: 1rem 1.5rem;
