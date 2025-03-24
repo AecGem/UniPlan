@@ -80,7 +80,8 @@ export default function App(session) {
       const params = new URLSearchParams();
       params.append('didin', selectedDegreeId);
       const url = `/api/course?${params.toString()}`;
-      fetch(url)
+      console.log('Fetching courses for didin:', selectedDegreeId);
+        fetch(url)
         .then(res => res.json())
         .then(data => setCourses(data))
         .catch(err => console.error('Error fetching courses for degree:', err));
