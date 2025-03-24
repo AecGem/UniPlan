@@ -53,8 +53,10 @@ export default function App(session) {
   const [verification, setVerify] = useState([]);
 
   console.log(session);
-  if(session.user.usertype === true){
-    navigate({ to: '/registrar' })
+  if (session.check()) {
+    if (session.user.usertype === true) {
+      navigate({ to: '/registrar' })
+    }
   }
   //Check to see if a homie is logged in. If not logged in, gtfo.
   /*
@@ -80,14 +82,14 @@ export default function App(session) {
     if (!selectedDegreeId) {
       return;
     }
-      const params = new URLSearchParams();
-      params.append('didin', selectedDegreeId);
-      const url = `/api/course?${params.toString()}`;
-      console.log('Fetching courses for didin:', selectedDegreeId);
-        fetch(url)
-        .then(res => res.json())
-        .then(data => setCourses(data))
-        .catch(err => console.error('Error fetching courses for degree:', err));
+    const params = new URLSearchParams();
+    params.append('didin', selectedDegreeId);
+    const url = `/api/course?${params.toString()}`;
+    console.log('Fetching courses for didin:', selectedDegreeId);
+    fetch(url)
+      .then(res => res.json())
+      .then(data => setCourses(data))
+      .catch(err => console.error('Error fetching courses for degree:', err));
   }, [selectedDegreeId]);
 
   // Fetch verification from the backend when the component mounts
@@ -313,8 +315,8 @@ export default function App(session) {
     // Simply open the modal without creating a semester record immediately.
     setShowModal(true);
   };
-  
-  const handleConfirmAddSemester = async () => {  
+
+  const handleConfirmAddSemester = async () => {
     const payload = {
       userid: userInfo.session ? userInfo.session.userId : null
     };
@@ -395,16 +397,16 @@ export default function App(session) {
       console.error("Semester not found in local state");
       return;
     }
-      const { sem_id } = semesterToDelete;
-  
-      try {
+    const { sem_id } = semesterToDelete;
+
+    try {
       const response = await fetch(`/api/deleteSemester?semId=${sem_id}`, {
         method: "GET",
       });
       if (!response.ok) {
         throw new Error("Failed to delete semester");
       }
-  
+
       // 4. Remove it from local state
       setSemesters((prev) => prev.filter((sem) => sem.id !== localId));
     } catch (err) {
@@ -412,27 +414,27 @@ export default function App(session) {
     }
   };
 
-const handleDegreeChange = async (e) => {
-  const newDegreeId = e.target.value;
-  setSelectedDegreeId(newDegreeId);
+  const handleDegreeChange = async (e) => {
+    const newDegreeId = e.target.value;
+    setSelectedDegreeId(newDegreeId);
 
-  let realUserId = userInfo?.session?.userId;
+    let realUserId = userInfo?.session?.userId;
 
-  if (typeof realUserId === 'object' && realUserId !== null) {
-    realUserId = realUserId.id;
-  }
-
-  if (realUserId && newDegreeId) {
-    try {
-      await fetch(`/api/update_user_degree?userid=${realUserId}&didin=${newDegreeId}`);
-      // ...
-    } catch (err) {
-      console.error("Error updating user degree:", err);
+    if (typeof realUserId === 'object' && realUserId !== null) {
+      realUserId = realUserId.id;
     }
-  }
-};
 
-  
+    if (realUserId && newDegreeId) {
+      try {
+        await fetch(`/api/update_user_degree?userid=${realUserId}&didin=${newDegreeId}`);
+        // ...
+      } catch (err) {
+        console.error("Error updating user degree:", err);
+      }
+    }
+  };
+
+
 
   const openDescModal = (courseObj) => {
     setDescCourse(courseObj);
@@ -500,9 +502,9 @@ const handleDegreeChange = async (e) => {
           <select
             value={selectedDegreeId || ''}
             onChange={handleDegreeChange}
-            //onChange={(e) => setSelectedDegreeId(Number(e.target.value))}
+          //onChange={(e) => setSelectedDegreeId(Number(e.target.value))}
           >
-             <option value="">-- No degree selected --</option>
+            <option value="">-- No degree selected --</option>
             {degrees.map((deg) => (
               <option key={deg.did} value={deg.did}>
                 {deg.degree}
