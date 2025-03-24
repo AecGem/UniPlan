@@ -202,7 +202,7 @@ const handleInfoChange = (degInfoValue) =>
         </div>
       </div>{/*small footer with sign-out button at bottom of the page*/}
       <div className={adminStyles.footer}>
-        <button className={adminStyles.signOut} onClick={handleSignOut}>
+        <button className={adminStyles.buttonStyle} onClick={handleSignOut}>
           Sign Out
         </button>
       </div>
