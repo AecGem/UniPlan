@@ -210,10 +210,11 @@ int main(int argc, char *argv[])
         for (const auto &course : semester_array[i].courses)
         {
             std::cout << ">Checking course..." << std::endl;
+            std::cout << course.prerequisites.size(); << std::endl;
             // For every prerequisite of the course, if any...
             for (const auto &prereq : course.prerequisites)
             {
-                std::cout << ">Checking prereq..." << std::endl;
+                std::cout << ">Checking prereqs..." << std::endl;
                 // Check all previous semesters...
                 bool found = false;
                 for (int l = i; l >= 0; l--)
