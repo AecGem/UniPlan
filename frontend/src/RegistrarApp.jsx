@@ -32,9 +32,11 @@ export const App = (session) => {
   ]
   */
 
+  /*
   const TempDegreeEnrollmentdata = [
     { numStudents: "66" },
   ]
+    */
 
   //Here is a function that handles signout
   const handleSignOut = async () => {
@@ -69,14 +71,17 @@ export const App = (session) => {
 
 
 //fetching number of degree applicants for information display:
+useEffect(() => {
+  const url = `/api/degree_count`;
+  fetch(url)
+    .then(res => res.json())
+    .then(data => {
+      setNumStudents(data);
+    })
+    .catch(err => console.error('Error getting number of students for degree', err));
+}, []);
 
-
-
-
-
-
-
-
+const [numStudents, setNumStudents] = useState([0]);
 //fetching the course enrollment list
 
 
@@ -184,13 +189,11 @@ export const App = (session) => {
                           <tr>
                             <th>Total Degree Enrollment</th>
                           </tr>
-                          {TempDegreeEnrollmentdata.map((val, key) => {
-                            return (
-                              <tr key={key}>
-                                <td>{val.numStudents}</td>
+                          
+                              <tr>
+                                <td>{numStudents}</td>
                               </tr>
-                            )
-                          })}
+                         
                         </table>
                       </div>
                     )}
