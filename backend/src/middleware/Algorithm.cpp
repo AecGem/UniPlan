@@ -160,26 +160,7 @@ int main(int argc, char *argv[])
         //Iterate through each integer in the reqs array
         for (int i = 0; i < degree["reqs"].size(); i++)
         {
-            std::cout << ">Finding in lexicon..." << std::endl;
-            //Find the course in the lexicon with the matching id
-            for (const auto &lexicon_course : lexicon_input)
-            {
-                if (lexicon_course["cid"] == degree["reqs"][i])
-                {
-                    //Create a new course object with the id
-                    Course new_course(lexicon_course["cid"]);
-                    //Add the name of the course
-                    new_course.addName(lexicon_course["shortname"]);
-                    //Add prerequisites to the course
-                    for (const auto &prereq : lexicon_course["prereq"])
-                    {
-                        new_course.addPrerequisite(prereq);
-                    }
-                    //Add the course to the degree requirements
-                    degree_reqs.push_back(new_course);
-                    break;
-                }
-            }
+            std::cout << degree << std::endl;
         }
         // Add course to degree requirements
         
