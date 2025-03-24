@@ -729,8 +729,8 @@ export default function App(session) {
         <div className="modal-backdrop">
           <div className="modal-content">
             <h2>Edit Course</h2>
-
-            <label>Course Name:</label>
+            <br></br>
+            <label>Course Name: </label>
             <input
               type="text"
               value={courseBeingEdited.text}
@@ -741,8 +741,8 @@ export default function App(session) {
                 })
               }
             />
-
-            <label>Status:</label>
+            <br></br>
+            <label>Status: </label>
             <select
               value={courseBeingEdited.status || 'inprogress'}
               onChange={(e) =>
@@ -772,7 +772,7 @@ export default function App(session) {
             <h2>Degree Verification</h2>
             <div className="verify-content">
 
-              <h5>ah beans</h5>
+              <h5> -ah beans- </h5>
             </div>
 
             <div className="modal-buttons">
