@@ -21,8 +21,8 @@ clean:
 
 #Valgrind
 valgrind:
-	valgrind --leak-check=full $(BuildName)
+	valgrind --leak-check=full ./$(BuildName)
 
 #Debug
 debug:
-	gdb $(BuildName)
+	gdb ./$(BuildName)
