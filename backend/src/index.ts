@@ -366,7 +366,7 @@ const app = new Elysia()
         return results;
     }, {
         query: t.Object({
-            didin: t.Optional(t.String())
+            didin: t.Optional(t.Number())
         })
     })
 
