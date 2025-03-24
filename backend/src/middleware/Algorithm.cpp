@@ -21,6 +21,12 @@ using json = nlohmann::json;
 //     //enter stuff here
 // };
 
+
+//read in the semestrs and courses
+//read in the objects
+//read in the lexicon
+
+
 int main(int argc, char *argv[])
 {
     //JSON errors (see: https://github.com/nlohmann/json)
