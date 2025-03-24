@@ -21,6 +21,7 @@ export function App({ context }) {
     confirmPassword: "", //required input
     userType: "", // required radio input
   });
+  console.log(context)
 
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate(); // Get the navigate function from TanStack Router
