@@ -70,13 +70,6 @@ class Course{
     }
 };
 
-<<<<<<< HEAD
-
-//read in the semestrs and courses
-//read in the objects
-//read in the lexicon
-
-=======
 //JSON output object, has a number of errors and a list of errors
 class Output{
     public:
@@ -102,7 +95,6 @@ class Output{
         out_stream.close();
     }
 };
->>>>>>> 88390979aef6f55dc1560ad300e7b14a80ad3ed6
 
 int main(int argc, char *argv[])
 {
@@ -163,18 +155,14 @@ int main(int argc, char *argv[])
         cout << "Saved degree list matches size of requirements list." << endl;
         out_stream << valid_list_messg;
     }
+    
 
-    //check so see if the saved list ids are sorted in order from lowest to highest. If not, the degree is invalid because of prerequisites not in order
-    if (is_sorted(saved_plan.begin(), saved_plan.end()) == false){
-        cout << "Degree Invalid. There are prerequisites required to take certain classes." << endl;
-        out_stream << missing_prerequisite_messg;
-    }
-    else{
-        cout << "There are no prerequisite conflicts." << endl;
-        out_stream << valid_prereq_messg;
-    }
+    //_________NEW: AecGem codes the validity checks here___________
 
 
+
+
+    //NEW: Will edit the Degree Validity check to output the json error using the output class
     //For every element in the requirements list, check that it exists in the saved plan array. 
     //If one of them is not there, it is not valid. Exit.
     for (auto reqs : degree_reqs){
