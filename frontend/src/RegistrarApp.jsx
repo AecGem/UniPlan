@@ -162,8 +162,8 @@ const handleInfoChange = (degInfoValue) =>
                       <div className="courseTables">
                         <table>
                           <tr>
-                            <th>Course Name</th>
-                            <th>Number of Students Enrolled</th>
+                            <th className="headerSpacing">Course Name</th>
+                            <th className="headerSpacing">Number of Students Enrolled</th>
                           </tr>
                     
                           <tr>
