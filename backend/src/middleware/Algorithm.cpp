@@ -45,7 +45,7 @@ class Semester{
 
     }
     //Add course to the semester
-    void addCourse(int course){
+    void addCourse(Course course){
         this->courses.push_back(course);
     }
 };
