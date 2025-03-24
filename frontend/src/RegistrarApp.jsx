@@ -83,7 +83,7 @@ useEffect(() => {
     .then(res => res.json())
     .then(data => 
     {
-      setCourseNameShort(data.courseName.shortName);
+      setCourseNameShort(data.courseName.shortname);
       setCourseEnrollmentData(data.count);
     })
     .catch(err => console.error('Error getting Course Enrollment List', err));
