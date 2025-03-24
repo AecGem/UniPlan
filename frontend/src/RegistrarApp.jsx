@@ -14,6 +14,7 @@ export const App = (session) => {
   console.log(session);
   if (session !== undefined) {
     if (session.session.user.usertype === false) {
+      console("meowmeowmeow")
       navigate({ to: '/registrant' })
     }
   }
