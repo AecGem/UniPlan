@@ -708,7 +708,7 @@ function CollapsibleSection({ title, items, onDragStartAside }) {
               )}
             </div>
 
-            <div className="modal-buttons">
+            <div className="modal-buttons3">
               <button onClick={() => setShowValidModal(false)}>Close</button>
             </div>
           </div>
