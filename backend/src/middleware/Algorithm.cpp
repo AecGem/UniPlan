@@ -152,18 +152,19 @@ int main(int argc, char *argv[])
 
     vector<Course> degree_reqs;
     // Parse degree requirements:
+    
     //JSON Format: {did: 1, degree: "Computer Science", reqs: [1,2,3,4]}
     for (const auto &degree : r_input)
     {
-        //Create new courses from the reqs field
-        for (const auto &course_id : degree["reqs"])
+        //Iterate through each integer in the reqs array
+        for (const auto &req : degree["reqs"])
         {
-            //Find course in lexicon
+            //Find the course in the lexicon
             for (const auto &lexicon_course : lexicon_input)
             {
-                if (lexicon_course["cid"] == course_id)
+                if (lexicon_course["cid"] == req)
                 {
-                    //Create new course from fields "cid" and "shortname"
+                    //Create a new course from the lexicon course
                     Course new_course(lexicon_course["cid"]);
                     new_course.addName(lexicon_course["shortname"]);
                     //Add prerequisites to course
