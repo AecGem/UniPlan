@@ -58,7 +58,6 @@ export default function App(session) {
   const router = useRouter();
   const [degrees, setDegrees] = useState([]);
   const [selectedDegreeId, setSelectedDegreeId] = useState(null);
-  );
   const [verification, setVerify] = useState([]);
 
   console.log(session);
