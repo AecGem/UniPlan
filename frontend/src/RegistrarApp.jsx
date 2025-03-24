@@ -73,7 +73,8 @@ export const App = (session) => {
     const url = `/api/degree_count?didin=${selectedDegreeId}`;
     fetch(url)
       .then(res => res.json())
-      .then(data => {
+      .then(data => 
+      {
         setNumStudents(data);
       })
       .catch(err => console.error('Error getting number of students for degree', err));
@@ -87,11 +88,13 @@ useEffect(() => {
   const url = `/api/course_stats?didin=${selectedDegreeId}`;
   fetch(url)
     .then(res => res.json())
-    .then(data => {
+    .then(data => 
+    {
+
       setCourseNameShort(data);
       setCourseEnrollmentData(data);
     })
-    .catch(err => console.error('Error getting number of students for degree', err));
+    .catch(err => console.error('Error getting Course Enrollment List', err));
 }, [courseNameShort, courseEnrollmentData]);
 
 
@@ -166,15 +169,14 @@ const handleInfoChange = (degInfoValue) =>
                             <th></th>
                             <th>Number of Students Enrolled</th>
                           </tr>
-                          {CourseTempdata.map((val, key) => {
-                            return (
-                              <tr key={key}>
-                                <td>{val.courseName}</td>
-                                <td></td>
-                                <td>{val.numStudents}</td>
-                              </tr>
-                            )
-                          })}
+                      
+
+                          <tr>
+                            <td>{courseNameShort}</td>
+                            <td></td>
+                            <td>{courseEnrollmentData}</td>
+                          </tr>
+
                         </table>
                       </div>
                     )}
