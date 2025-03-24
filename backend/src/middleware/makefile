@@ -12,7 +12,7 @@ Algorithm.o: Algorithm.cpp json.hpp
 	$(CC) -c Algorithm.cpp
 
 json.o: json.hpp
-	$(CC) -c json.hpp
+	$(CC) -o json.hpp
 
 #Main target and linking
 $(BuildName): Algorithm.o json.o
