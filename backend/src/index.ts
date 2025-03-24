@@ -207,17 +207,20 @@ const app = new Elysia()
         })
     })
 
-    .post("/api/createSemester", async ({ body: {userid} }) => {
+    .post("/api/createSemester", async ({ body: {userid, name} }) => {
         const newSem = await prisma.saved_sem.create({
             data: {
             u_id: userid,
+            sname: name,
+            courses: []
             },
         });
     
         return newSem;
     },{
         body: t.Object({
-            userid: t.Optional(t.String())
+            userid: t.Optional(t.String()),
+            name: t.Optional(t.String())
         })
     })
 
@@ -311,7 +314,7 @@ const app = new Elysia()
     })
     
     //get count of semesters where a class appears
-    .get("api/course_stats", async ({query: didin}) => {
+    .get("api/course_stats", async ({query: {didin}}) => {
         const results: {
             count: number,
             courseName: string,

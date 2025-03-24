@@ -53,6 +53,7 @@ export default function App(session) {
   const [verification, setVerify] = useState([]);
 
   console.log(session);
+  console.log
   if (session !== undefined) {
     if (session.session.user.usertype === true) {
       navigate({ to: '/registrar' })
