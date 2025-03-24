@@ -187,14 +187,16 @@ const handleInfoChange = (degInfoValue) =>
                     (
                       <div className="courseTables">
                         <table>
+                        <tr>
+                          <th>Total Degree Enrollment</th>
+                        </tr>
 
+                        {numStudents.map((val) => {
+                            return (
                           <tr>
-                            <th>Total Degree Enrollment</th>
+                            <td>{val}</td>
                           </tr>
-                          <tr>
-                            <td>{numStudents}</td>
-                          </tr>
-                         
+                            )})}
                         </table>
                       </div>
                     )}
