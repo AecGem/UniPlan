@@ -374,3 +374,24 @@ button:focus {
   box-shadow: 0 0 10px rgba(0,0,0,0.2);
   font-size: 1.2rem;
 }
+
+/* For verification */
+.error-box {
+  margin: 0.5rem 0;
+  padding: 0.5rem;
+  border: 2px solid red;
+  background-color: #ffe5e5;
+  color: red;
+  font-weight: bold;
+  border-radius: 4px;
+}
+
+.success-message {
+  margin: 0.5rem 0;
+  padding: 0.5rem;
+  border: 2px solid green;
+  background-color: #eeffec;
+  color: green;
+  font-weight: bold;
+  border-radius: 4px;
+}
