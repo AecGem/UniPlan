@@ -12,11 +12,21 @@ export const App = (session) => {
   const router = useRouter();
   const navigate = useNavigate();
   console.log(session);
-  if (session !== undefined) {
-    if (session.session.user.usertype === false) {
-      navigate({ to: '/registrant' })
+  //Wrapping this whole thing in a try-catch.
+  //Can't access? Rough. Invalidate router and gtfo.
+  try{
+    if (session !== undefined) {
+      if (session.session.user.usertype === false) {
+        navigate({ to: '/registrant' })
+      }
     }
   }
+  catch (error) {
+    console.error('Error fetching session:', error)
+    router.invalidate();
+    navigate({ to: '/' })
+  }
+  
 
   //data for the temp course tables
   const CourseTempdata = [
