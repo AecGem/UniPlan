@@ -35,10 +35,6 @@ const app = new Elysia()
 
     //Verification endpoint
     .get("/api/verification", async ({query:{id, did}}) =>{
-        return {
-            errors: 1,
-            errorsList:{1: "hello".concat(id,did)}
-        }
         //It's all in my head, but I want non-fiction.
         if (id===undefined || did===undefined){
             return {
