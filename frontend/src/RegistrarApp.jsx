@@ -170,6 +170,7 @@ const handleInfoChange = (degInfoValue) =>
                             <td>{courseEnrollmentData.map((item, idx) => (
                               <tr key={idx}>
                                 <td className="courseSpacing">{item.courseName.shortname}</td>
+                                <td>test</td>
                                 <td className="countSpacing">{item.count}</td>
                               </tr>
                               ))}
