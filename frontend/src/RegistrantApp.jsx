@@ -151,11 +151,13 @@ export default function App(session) {
           setSemesters(emptyCoursesSemesters);
           return;
         }
-        const cidsArray = [5, 6, 7];
+
+        const cidsArray = Array.from(allCids);
+
         return fetch('/api/course_many', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ cids: cidsArray }) // { cids: [5,12,27] }
+          body: JSON.stringify({ cids: [cidsArray] }) // { cids: [5,12,27] }
         })
           .then((res) => {
             if (!res.ok) throw new Error('Failed to fetch course details');
@@ -166,6 +168,7 @@ export default function App(session) {
             courseDetails.forEach((c) => {
               detailMap[c.cid] = c;
             });
+
             const newSemesters = semestersData.map((item) => ({
               id: Date.now() + Math.random(),  // local ephemeral ID
               sem_id: item.sem_id,
@@ -175,7 +178,7 @@ export default function App(session) {
                 const details = detailMap[cid] || {};
                 return {
                   id: Date.now() + Math.random(),
-                  cid,
+                  cid: cid,
                   shortname: details.shortname || '',
                   coursename: details.coursename || '',
                   status: ''
