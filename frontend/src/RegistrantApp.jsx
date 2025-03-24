@@ -318,8 +318,10 @@ export default function App(session) {
   };
 
   const handleConfirmAddSemester = async () => {
+    const semesterName = `${selectedType} ${selectedYear}`;
     const payload = {
-      userid: userInfo.session ? userInfo.session.userId : null
+      userid: userInfo.session ? userInfo.session.userId : null,
+      name: semesterName
     };
 
     try {
