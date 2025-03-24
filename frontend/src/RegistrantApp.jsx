@@ -43,14 +43,6 @@ function CollapsibleSection({ title, items, onDragStartAside }) {
 export default function App(session) {
   /** ---------------------------
     *  SEMESTERS + COURSES STATE
-    *  Each semester in 'semesters' has this shape:
-    *  {
-    *    id: number,
-    *    year: number,
-    *    courses: [{ id: string, text: string }, ...]
-    *  }
-    *  The 'courses' array holds the courses the user has 
-    *  dragged in. 
     * ---------------------------*/
   const [semesters, setSemesters] = useState([]);
   const [courses, setCourses] = useState([]);
@@ -69,20 +61,6 @@ export default function App(session) {
   }
     */
 
-  // Fetch courses from the backend when the component mounts
-  //useEffect(() => {
-    //const didin = 1;
-    //const params = new URLSearchParams();
-    //params.append('didin', didin);
-    //const url = `/api/course?${params.toString()}`;
-    //fetch(url)
-      //.then(res => res.json())
-      //.then(data => {
-        //setCourses(data);
-      //})
-      //.catch(err => console.error('Error fetching courses:', err));
-  //}, []);
-
   // Fetch degrees from the backend when the component mounts
   useEffect(() => {
     const url = `/api/degree`;
@@ -90,9 +68,6 @@ export default function App(session) {
       .then(res => res.json())
       .then(data => {
         setDegrees(data);
-        //if (data.length > 0){
-          //setSelectedDegreeId(data[0].did);
-        //}
       })
       .catch(err => console.error('Error fetching degrees:', err));
   }, []);
@@ -269,8 +244,6 @@ export default function App(session) {
     setShowEditCourseModal(false);
     setCourseBeingEdited(null);
   };
-
-
 
   /** ---------------------------
    *  HELPER: Remove Single Course
