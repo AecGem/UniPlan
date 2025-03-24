@@ -171,7 +171,7 @@ const handleInfoChange = (degInfoValue) =>
                             <td>{courseEnrollmentData.map((item, idx) => (
                               <tr key={idx}>
                                 <td>{item.courseName.shortname}</td>
-                                <td><td>
+                                <td></td>
                                 <td>{item.count}</td>
                               </tr>
                               ))}
