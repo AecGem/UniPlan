@@ -4,7 +4,7 @@ University Degree Registration Planner
 hai! :3
 
 
-## Tech stack and dependancies:
+## Tech stack and dependencies:
 
 ### Tech stack.
 Frontend frameworks: React/TailwindCSS + HTML/CSS/Js/Etc. with Vite tooling.
@@ -13,7 +13,7 @@ Service Backend: ElysiaJS on Bun/Yarn, Apache2, Prisma (Nginx distribution imple
 
 Databases: PostgreSQL
 
-### Tool dependancies.
+### Tool dependencies.
 Git Deployment Hamster / deploy.php, running on apache2
 
 AecGem Dynamic-DNS-Client, running via python3
