@@ -168,7 +168,30 @@ int main(int argc, char *argv[])
     std::cout << ">Semesters..." << std::endl;
     // Parse semesters:
     // JSON format: {sem_id: 1, sname: "Fall 2025", courses: [1,2,3,4]}
-
+    for (const auto &semester : s_input)
+    {
+        // Create new semester from fields "sem_id" and "sname"
+        Semester new_semester(semester["sem_id"], semester["sname"]);
+        // For each course in semester...
+        for (const auto &course_id : semester["courses"])
+        {
+            // Find course in lexicon
+            for (const auto &lexicon_course : lexicon_input)
+            {
+                if (lexicon_course["cid"] == course_id)
+                {
+                    // Create new course from fields "cid" and "shortname"
+                    Course new_course(lexicon_course["cid"]);
+                    new_course.addName(lexicon_course["shortname"]);
+                    // Add course to semester
+                    new_semester.addCourse(new_course);
+                    break;
+                }
+            }
+        }
+        // Add semester to semester array
+        semester_array.push_back(new_semester);
+    }
 
     // Sort semesters in ascending order
     sort(semester_array.begin(), semester_array.end());
