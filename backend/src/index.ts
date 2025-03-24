@@ -314,7 +314,7 @@ const app = new Elysia()
     })
     
     //get count of semesters where a class appears
-    .get("api/course_stats", async ({query: didin}) => {
+    .get("api/course_stats", async ({query: {didin}}) => {
         const results: {
             count: number,
             courseName: string,
