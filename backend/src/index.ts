@@ -377,25 +377,20 @@ const app = new Elysia()
     .get("/api/course_test", async ({ 
         query: {test} 
     }) => {
-        //console.log("reached start")
-        const sem = await prisma.saved_sem.update({
-            where: {
-                sem_id: 6
-            },
-            data: {
-            courses: [11, 12, 13, 14, 15],
-            sname: "name"
-            },
-            });
-            const updateUserSave = await prisma.user.update({
+        const CourseList = await prisma.degree
+                .findUnique({
+                    where: { did: 1 },
+                    select: { courses: true },
+                })
+                .then(degree => degree?.courses || []);
+            const result = await prisma.course.findMany({
                 where: {
-                    id: "xNgKY4kLlWdCOimDUdIYgVKH9VWK6sLO"
+                    cid: {
+                        in: CourseList,
+                    },
                 },
-                data: {
-                    hassaved: true
-                }
             });
-            return sem;
+            return result;
     })
     //carolyn's test zone
     .get("/api/caro_test", async ({ 

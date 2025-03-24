@@ -211,7 +211,7 @@ html, body {
   border-radius: 8px;
   font-size: 20px;
   color: #0a505c;
-  width: 400px;
+  width: 600px;
   position: relative;
   padding: 1rem 1.5rem;
 }
@@ -293,7 +293,7 @@ button:focus {
 }
 .degree-valid-button{
   font-size: 13px;
-  position: absolute;
+  position: relative;
   bottom: 0;
   margin-left: 50px;
   margin-bottom: 10px;
