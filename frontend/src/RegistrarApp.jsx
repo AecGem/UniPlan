@@ -17,26 +17,13 @@ export const App = (session) => {
     navigate({ to: '/' })
   }
   */
+
   //data for the temp course tables
   const CourseTempdata = [
     { courseName: "CS100", numStudents: "125" },
     { courseName: "CS110", numStudents: "98" },
     { courseName: "CS115", numStudents: "72" },
   ]
-
-  /*
-  const electiveTempdata = [
-    { courseName: "GEO100", numStudents: "66" },
-    { courseName: "SCI099", numStudents: "3" },
-    { courseName: "ASTR101", numStudents: "110" },
-  ]
-  */
-
-  /*
-  const TempDegreeEnrollmentdata = [
-    { numStudents: "66" },
-  ]
-    */
 
   //Here is a function that handles signout
   const handleSignOut = async () => {
@@ -55,6 +42,15 @@ export const App = (session) => {
     }
   }
 
+
+
+  //const variable declarations
+  const [numStudents, setNumStudents] = useState([0]);
+  const [degrees, setDegrees] = useState([0]);
+  const [selectedDegreeId, setSelectedDegreeId] = useState(0);
+  const [courseNameShort, setCourseNameShort] = useState([0]);
+  const [courseEnrollmentData, setCourseEnrollmentData] = useState([0]);
+
   // Fetch degrees from the backend when the component mounts
   useEffect(() => {
     const url = `/api/degree`;
@@ -70,23 +66,33 @@ export const App = (session) => {
   }, []);
 
 
-//fetching number of degree applicants for information display:
+  //fetching data for current degree 'total entollment'
+  useEffect(() => {
+    const params = new URLSearchParams();
+    params.append('didin', selectedDegreeId);
+    const url = `/api/degree_count?didin=${selectedDegreeId}`;
+    fetch(url)
+      .then(res => res.json())
+      .then(data => {
+        setNumStudents(data);
+      })
+      .catch(err => console.error('Error getting number of students for degree', err));
+  }, [selectedDegreeId]);
+
+
+//fetching the course enrollment list
 useEffect(() => {
-  const url = `/api/degree_count`;
+  const params = new URLSearchParams();
+  params.append('didin', selectedDegreeId);
+  const url = `/api/course_stats?didin=${selectedDegreeId}`;
   fetch(url)
     .then(res => res.json())
     .then(data => {
-      setNumStudents(data);
+      setCourseNameShort(data);
+      setCourseEnrollmentData(data);
     })
     .catch(err => console.error('Error getting number of students for degree', err));
-}, []);
-
-const [numStudents, setNumStudents] = useState([0]);
-//fetching the course enrollment list
-
-
-
-
+}, [courseNameShort, courseEnrollmentData]);
 
 
 
@@ -95,25 +101,14 @@ const [numStudents, setNumStudents] = useState([0]);
 
 
 //handling functions for the dropdowns
-const [degrees, setDegrees] = useState([0]);
-const [selectedDegreeId, setSelectedDegreeId] = useState(0);
-
-
 const [degInfo, setDegInfo] = useState("0a"); // or "" if you prefer
 const handleInfoChange = (degInfoValue) => 
   {
-    setDegInfo(degInfoValue);  // Now we actually have `degree` state 
-    setNumStudents();
+    setDegInfo(degInfoValue);  //Now we actually have `degree` state 
   }
 
 
-
-
-/*---------------------------------------------------------------------------------*/
-
-
-
-
+/*---------------------------------------------------------------------------------------------------------------------------------*/
 
   return (
     <div className="page-container">

@@ -375,22 +375,14 @@ const app = new Elysia()
     //Emma's testing zone
 
     .get("/api/course_test", async ({ 
-        query: {test} 
+        query: {} 
     }) => {
-        const CourseList = await prisma.degree
-                .findUnique({
-                    where: { did: 1 },
-                    select: { courses: true },
-                })
-                .then(degree => degree?.courses || []);
-            const result = await prisma.course.findMany({
-                where: {
-                    cid: {
-                        in: CourseList,
-                    },
-                },
-            });
-            return result;
+        const count = await prisma.user.count({
+            where: {
+                did : 1
+            },
+        });
+        return count;
     })
     //carolyn's test zone
     .get("/api/caro_test", async ({ 
