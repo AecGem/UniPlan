@@ -54,7 +54,7 @@ export default function App(session) {
 
   console.log(session);
   if (session !== undefined) {
-    if (session.user.usertype === true) {
+    if (session.session.user.usertype === true) {
       navigate({ to: '/registrar' })
     }
   }
