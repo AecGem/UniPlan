@@ -11,32 +11,22 @@ export const App = (session) => {
   
   const router = useRouter();
   const navigate = useNavigate();
-  /*
-  if (userInfo.session.userId === null) {
+  console.log(session);
+  //Wrapping this whole thing in a try-catch.
+  //Can't access? Rough. Invalidate router and gtfo.
+  try{
+    if (session !== undefined) {
+      if (session.session.user.usertype === false) {
+        navigate({ to: '/registrant' })
+      }
+    }
+  }
+  catch (error) {
+    console.error('Error fetching session:', error)
     router.invalidate();
     navigate({ to: '/' })
   }
-  */
-  //data for the temp course tables
-  const CourseTempdata = [
-    { courseName: "CS100", numStudents: "125" },
-    { courseName: "CS110", numStudents: "98" },
-    { courseName: "CS115", numStudents: "72" },
-  ]
-
-  /*
-  const electiveTempdata = [
-    { courseName: "GEO100", numStudents: "66" },
-    { courseName: "SCI099", numStudents: "3" },
-    { courseName: "ASTR101", numStudents: "110" },
-  ]
-  */
-
-  /*
-  const TempDegreeEnrollmentdata = [
-    { numStudents: "66" },
-  ]
-    */
+  
 
   //Here is a function that handles signout
   const handleSignOut = async () => {
@@ -55,12 +45,13 @@ export const App = (session) => {
     }
   }
 
-
-
   //const variable declarations
   const [numStudents, setNumStudents] = useState([0]);
   const [degrees, setDegrees] = useState([0]);
   const [selectedDegreeId, setSelectedDegreeId] = useState(0);
+  const [courseNameShort, setCourseNameShort] = useState(["Empty"]);
+  const [courseEnrollmentData, setCourseEnrollmentData] = useState([0]);
+
 
   // Fetch degrees from the backend when the component mounts
   useEffect(() => {
@@ -70,7 +61,7 @@ export const App = (session) => {
       .then(data => {
         setDegrees(data);
         if (data.length > 0) {
-          setSelectedDegreeId(1);
+          setSelectedDegreeId(0);
         }
       })
       .catch(err => console.error('Error fetching degrees:', err));
@@ -84,7 +75,8 @@ export const App = (session) => {
     const url = `/api/degree_count?didin=${selectedDegreeId}`;
     fetch(url)
       .then(res => res.json())
-      .then(data => {
+      .then(data => 
+      {
         setNumStudents(data);
       })
       .catch(err => console.error('Error getting number of students for degree', err));
@@ -93,10 +85,19 @@ export const App = (session) => {
 
 //fetching the course enrollment list
 
-
-
-
-
+useEffect(() => {
+  const params = new URLSearchParams();
+  params.append('didin', selectedDegreeId);
+  const url = `/api/course_stats?didin=${selectedDegreeId}`;
+  fetch(url)
+    .then(res => res.json())
+    .then(data => 
+    {
+      setCourseNameShort(data.courseName.shortname);
+      setCourseEnrollmentData(data.count);
+    })
+    .catch(err => console.error('Error getting Course Enrollment List', err));
+}, [courseNameShort, courseEnrollmentData]);
 
 
 
@@ -166,15 +167,14 @@ const handleInfoChange = (degInfoValue) =>
                             <th></th>
                             <th>Number of Students Enrolled</th>
                           </tr>
-                          {CourseTempdata.map((val, key) => {
-                            return (
-                              <tr key={key}>
-                                <td>{val.courseName}</td>
-                                <td></td>
-                                <td>{val.numStudents}</td>
-                              </tr>
-                            )
-                          })}
+                      
+
+                          <tr>
+                            <td>{courseNameShort}</td>
+                            <td></td>
+                            <td>{courseEnrollmentData}</td>
+                          </tr>
+
                         </table>
                       </div>
                     )}

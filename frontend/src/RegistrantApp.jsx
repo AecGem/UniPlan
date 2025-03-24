@@ -53,6 +53,20 @@ export default function App(session) {
   const [verification, setVerify] = useState([]);
 
   console.log(session);
+  console.log
+  //Wrapping this whole thing in a try-catch.
+  //Can't access? Rough. Invalidate router and gtfo.
+  try{
+    if (session !== undefined) {
+      if (session.session.user.usertype === true) {
+        navigate({ to: '/registrar' })
+      }
+    }
+  } catch (error) {
+    router.invalidate();
+    navigate({ to: '/' })
+  }
+  
   //Check to see if a homie is logged in. If not logged in, gtfo.
   /*
   if (userInfo.session.userId === null) {
@@ -77,14 +91,14 @@ export default function App(session) {
     if (!selectedDegreeId) {
       return;
     }
-      const params = new URLSearchParams();
-      params.append('didin', selectedDegreeId);
-      const url = `/api/course?${params.toString()}`;
-      console.log('Fetching courses for didin:', selectedDegreeId);
-        fetch(url)
-        .then(res => res.json())
-        .then(data => setCourses(data))
-        .catch(err => console.error('Error fetching courses for degree:', err));
+    const params = new URLSearchParams();
+    params.append('didin', selectedDegreeId);
+    const url = `/api/course?${params.toString()}`;
+    console.log('Fetching courses for didin:', selectedDegreeId);
+    fetch(url)
+      .then(res => res.json())
+      .then(data => setCourses(data))
+      .catch(err => console.error('Error fetching courses for degree:', err));
   }, [selectedDegreeId]);
 
   // Fetch verification from the backend when the component mounts
@@ -97,6 +111,46 @@ export default function App(session) {
       })
       .catch(err => console.error('Error fetching verification:', err));
   }, []);
+
+  // Loading user's saved semesters
+  useEffect(() => {
+    // If no user is logged in, skip or redirect
+    const realUserId = userInfo.session?.userId;
+    if (!realUserId) {
+      return;
+    }
+
+    // If userId might be an object, pull out the real string
+    let userIdString = realUserId;
+    if (typeof userIdString === 'object' && userIdString !== null) {
+      userIdString = userIdString.id;
+    }
+
+    // Call get_saved_sem
+    fetch(`/api/get_saved_sem?userid=${userIdString}`)
+      .then((res) => {
+        if (!res.ok) throw new Error('Failed to fetch saved semesters');
+        return res.json();
+      })
+      .then((data) => {
+        const newSemesters = data.map((item) => ({
+          // local "id" for React
+          id: Date.now() + Math.random(),
+          sem_id: item.sem_id,
+          type: item.sname.split(' ')[0] || '???',
+          year: item.sname.split(' ')[1] || '???',
+          courses: item.courses.map((cid) => ({
+            id: Date.now() + Math.random(),
+            cid: cid,
+            shortname: '',
+            status: '',
+          })),
+        }));
+        setSemesters(newSemesters);
+      })
+      .catch((err) => console.error('Error fetching saved semesters:', err));
+  }, []);
+
 
   /** ---------------------------
    *  MODAL STATE (Add/Edit)
@@ -270,10 +324,12 @@ export default function App(session) {
     // Simply open the modal without creating a semester record immediately.
     setShowModal(true);
   };
-  
-  const handleConfirmAddSemester = async () => {  
+
+  const handleConfirmAddSemester = async () => {
+    const semesterName = `${selectedType} ${selectedYear}`;
     const payload = {
-      userid: userInfo.session ? userInfo.session.userId : null
+      userid: userInfo.session ? userInfo.session.userId : null,
+      name: semesterName
     };
 
     try {
@@ -352,16 +408,16 @@ export default function App(session) {
       console.error("Semester not found in local state");
       return;
     }
-      const { sem_id } = semesterToDelete;
-  
-      try {
+    const { sem_id } = semesterToDelete;
+
+    try {
       const response = await fetch(`/api/deleteSemester?semId=${sem_id}`, {
         method: "GET",
       });
       if (!response.ok) {
         throw new Error("Failed to delete semester");
       }
-  
+
       // 4. Remove it from local state
       setSemesters((prev) => prev.filter((sem) => sem.id !== localId));
     } catch (err) {
@@ -369,27 +425,27 @@ export default function App(session) {
     }
   };
 
-const handleDegreeChange = async (e) => {
-  const newDegreeId = e.target.value;
-  setSelectedDegreeId(newDegreeId);
+  const handleDegreeChange = async (e) => {
+    const newDegreeId = e.target.value;
+    setSelectedDegreeId(newDegreeId);
 
-  let realUserId = userInfo?.session?.userId;
+    let realUserId = userInfo?.session?.userId;
 
-  if (typeof realUserId === 'object' && realUserId !== null) {
-    realUserId = realUserId.id;
-  }
-
-  if (realUserId && newDegreeId) {
-    try {
-      await fetch(`/api/update_user_degree?userid=${realUserId}&didin=${newDegreeId}`);
-      // ...
-    } catch (err) {
-      console.error("Error updating user degree:", err);
+    if (typeof realUserId === 'object' && realUserId !== null) {
+      realUserId = realUserId.id;
     }
-  }
-};
 
-  
+    if (realUserId && newDegreeId) {
+      try {
+        await fetch(`/api/update_user_degree?userid=${realUserId}&didin=${newDegreeId}`);
+        // ...
+      } catch (err) {
+        console.error("Error updating user degree:", err);
+      }
+    }
+  };
+
+
 
   const openDescModal = (courseObj) => {
     setDescCourse(courseObj);
@@ -457,9 +513,9 @@ const handleDegreeChange = async (e) => {
           <select
             value={selectedDegreeId || ''}
             onChange={handleDegreeChange}
-            //onChange={(e) => setSelectedDegreeId(Number(e.target.value))}
+          //onChange={(e) => setSelectedDegreeId(Number(e.target.value))}
           >
-             <option value="">-- No degree selected --</option>
+            <option value="">-- No degree selected --</option>
             {degrees.map((deg) => (
               <option key={deg.did} value={deg.did}>
                 {deg.degree}

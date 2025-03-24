@@ -21,6 +21,9 @@ export function App({ context }) {
     confirmPassword: "", //required input
     userType: "", // required radio input
   });
+  console.log(context);
+  //Log signupform user type
+  console.log(signupForm.userType);
 
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate(); // Get the navigate function from TanStack Router
@@ -130,7 +133,7 @@ export function App({ context }) {
           className="get-planning-btn"
           onClick={() => {
             if (context.check()) {
-              if (context.userType === "admin") {
+              if (context.user.usertype === true) {
                 navigate({ to: "/registrar" });
               } else {
                 navigate({ to: "/registrant" });
@@ -223,8 +226,8 @@ export function App({ context }) {
                         type="radio"
                         name="userType"
                         value="user"
-                        checked={signUpUserType === "user"}
-                        onChange={(e) => setUserType(e.target.value)}
+                        checked={signupForm.userType === "user"}
+                        onChange={handleSignupChange}
                       />
                       Student
                     </label>
@@ -233,8 +236,8 @@ export function App({ context }) {
                         type="radio"
                         name="userType"
                         value="admin"
-                        checked={signUpUserType === "admin"}
-                        onChange={(e) => setUserType(e.target.value)}
+                        checked={signupForm.userType === "admin"}
+                        onChange={handleSignupChange}
                       />
                       Admin
                     </label>
