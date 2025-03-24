@@ -161,7 +161,7 @@ int main(int argc, char *argv[])
         degree_course.addName(req["shortname"]);
         //Add course to degree requirements
         degree_reqs.push_back(degree_course);
-        
+
     }
 
     vector<Semester> semester_array;
@@ -169,31 +169,6 @@ int main(int argc, char *argv[])
     // Parse semesters:
     // JSON format: {sem_id: 1, sname: "Fall 2025", courses: [1,2,3,4]}
 
-    // Iterate over top-level array
-    for (const auto &sem : s_input)
-    {
-        Semester semester(sem["sem_id"], sem["sname"]);
-        // Iterate over courses in semester
-        for (const auto &course_id : sem["courses"])
-        {
-            Course course(course_id);
-            // Iterate over lexicon to find course name and prerequisites
-            for (const auto &lex : lexicon_input)
-            {
-                if (lex["cid"] == course_id)
-                {
-                    course.addName(lex["cname"]);
-                    for (const auto &prereq : lex["prereq"])
-                    {
-                        course.addPrerequisite(prereq);
-                    }
-                    break;
-                }
-            }
-            semester.addCourse(course);
-        }
-        semester_array.push_back(semester);
-    }
 
     // Sort semesters in ascending order
     sort(semester_array.begin(), semester_array.end());

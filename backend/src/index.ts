@@ -292,12 +292,7 @@ const app = new Elysia()
         const semesters = await prisma.saved_sem.findMany({
             where: {
                 u_id: userid,
-            },
-            select: {
-                sem_id: true,
-                sname: true,
-                courses: true,
-            },
+            }
         });
         return semesters;
      },{
