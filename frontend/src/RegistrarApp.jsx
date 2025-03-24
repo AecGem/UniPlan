@@ -55,6 +55,13 @@ export const App = (session) => {
     }
   }
 
+
+
+  //const variable declarations
+  const [numStudents, setNumStudents] = useState([0]);
+  const [degrees, setDegrees] = useState([0]);
+  const [selectedDegreeId, setSelectedDegreeId] = useState(0);
+
   // Fetch degrees from the backend when the component mounts
   useEffect(() => {
     const url = `/api/degree`;
@@ -70,24 +77,18 @@ export const App = (session) => {
   }, []);
 
 
-//const variable declarations
-const [numStudents, setNumStudents] = useState([]);
-const [degrees, setDegrees] = useState([0]);
-const [selectedDegreeId, setSelectedDegreeId] = useState(0);
-
-
-//fetching data for current degree 'total entollment'
-useEffect(() => {
-  const params = new URLSearchParams();
-  params.append('didin', selectedDegreeId);
-  const url = `/api/degree_count`;
-  fetch(url)
-    .then(res => res.json())
-    .then(data => {
-      setNumStudents(data);
-    })
-    .catch(err => console.error('Error getting number of students for degree', err));
-}, [setNumStudents]);
+  //fetching data for current degree 'total entollment'
+  useEffect(() => {
+    const params = new URLSearchParams();
+    params.append('didin', selectedDegreeId);
+    const url = `/api/degree_count?didin=${selectedDegreeId}`;
+    fetch(url)
+      .then(res => res.json())
+      .then(data => {
+        setNumStudents(data);
+      })
+      .catch(err => console.error('Error getting number of students for degree', err));
+  }, [selectedDegreeId]);
 
 
 //fetching the course enrollment list
