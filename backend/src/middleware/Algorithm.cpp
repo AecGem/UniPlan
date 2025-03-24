@@ -152,18 +152,22 @@ int main(int argc, char *argv[])
 
     vector<Course> degree_reqs;
     // Parse degree requirements:
-    
+
     //JSON Format: {did: 1, degree: "Computer Science", reqs: [1,2,3,4]}
     for (const auto &degree : r_input)
     {
+        std::cout << ">Finding requirements..." << std::endl;
         //Iterate through each integer in the reqs array
         for (const auto &req : degree["reqs"])
         {
+            std::cout << ">Finding in lexicon..." << std::endl;
             //Find the course in the lexicon
             for (const auto &lexicon_course : lexicon_input)
             {
+                
                 if (lexicon_course["cid"] == req)
                 {
+                    std::cout << ">Matched in lexicon." << std::endl;
                     //Create a new course from the lexicon course
                     Course new_course(lexicon_course["cid"]);
                     new_course.addName(lexicon_course["shortname"]);
