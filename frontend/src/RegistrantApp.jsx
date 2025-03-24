@@ -97,20 +97,31 @@ export default function App(session) {
       .catch(err => console.error('Error fetching degrees:', err));
   }, []);
 
-  // Fetching courses based on the selected degree
+  // Fetch courses whenever selectedDegreeId changes
   useEffect(() => {
-    if (!selectedDegreeId) {
-      // skip if ""
-      return;
-    }
-      const params = new URLSearchParams();
-      params.append('didin', selectedDegreeId);
-      const url = `/api/course?${params.toString()}`;
-      fetch(url)
-        .then(res => res.json())
-        .then(data => setCourses(data))
-        .catch(err => console.error('Error fetching courses for degree:', err));
+    if (!selectedDegreeId) return; // skip if no degree
+
+    fetchCourses(selectedDegreeId);
   }, [selectedDegreeId]);
+
+  // A small helper that fetches courses for a given degree
+  const fetchCourses = (degId) => {
+    const params = new URLSearchParams();
+    params.append("didin", degId);
+    fetch(`/api/course?${params.toString()}`)
+      .then((res) => res.json())
+      .then((data) => setCourses(data))
+      .catch((err) =>
+        console.error("Error fetching courses for degree:", err)
+      );
+  };
+
+    // On button click, just call the same function
+    const handleRefreshCourses = () => {
+      if (!selectedDegreeId) return;
+      fetchCourses(selectedDegreeId);
+    };
+  
 
   // Fetch verification from the backend when the component mounts
   useEffect(() => {
@@ -482,7 +493,6 @@ const handleDegreeChange = async (e) => {
           <select
             value={selectedDegreeId || ''}
             onChange={handleDegreeChange}
-            //onChange={(e) => setSelectedDegreeId(Number(e.target.value))}
           >
              <option value="">-- No degree selected --</option>
             {degrees.map((deg) => (
@@ -491,6 +501,7 @@ const handleDegreeChange = async (e) => {
               </option>
             ))}
           </select>
+          <button onClick={handleRefreshCourses}>Refresh Courses</button>
           <br /><br />
           <CollapsibleSection
             title="Required Courses"
@@ -577,15 +588,19 @@ const handleDegreeChange = async (e) => {
         <div className="modal-backdrop">
           <div className="modal-content2">
             <h2>Course Description</h2>
+            <br /><br />
             <label>
               {descCourse.shortname}: {descCourse.coursename}
             </label>
+            <br /><br />
             <label>
               Credits: {descCourse.credits}
             </label>
+            <br /><br />
             <label>
               Description: {descCourse.description}
             </label>
+            <br /><br />
             <label>
               Prereqs: {descCourse.prereq?.join(', ')}
             </label>
