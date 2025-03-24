@@ -119,7 +119,7 @@ const handleInfoChange = (degInfoValue) =>
         </div>
       </header>
       {/*start of app container for React elements*/}
-      <div className={adminStyles.layout-wrapper}>
+      <div className={adminStyles.layoutWrapper}>
         <div className={adminStyles.app-container}>
           <div className={adminStyles.subtitle2}>Select a Degree to View: </div>
         {/*Drop-downs to handle degree selection and what kind of information to display about that degree*/}
