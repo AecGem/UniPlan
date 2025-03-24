@@ -70,6 +70,13 @@ class Course{
     }
 };
 
+<<<<<<< HEAD
+
+//read in the semestrs and courses
+//read in the objects
+//read in the lexicon
+
+=======
 //JSON output object, has a number of errors and a list of errors
 class Output{
     public:
@@ -95,6 +102,7 @@ class Output{
         out_stream.close();
     }
 };
+>>>>>>> 88390979aef6f55dc1560ad300e7b14a80ad3ed6
 
 int main(int argc, char *argv[])
 {
