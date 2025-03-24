@@ -683,7 +683,7 @@ function CollapsibleSection({ title, items, onDragStartAside }) {
       {/* MODAL: Degree Verification */}
       {showValidModal && (
         <div className="modal-backdrop">
-          <div className="modal-content">
+          <div className="modal-content3">
             <h2>Degree Verification</h2>
             <div className="verify-content">
               {verifyResultData ? (

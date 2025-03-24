@@ -367,8 +367,14 @@ button:focus {
 }
 
 /* For verification */
+.modal-content3 {
+  width: 900px;
+}
 .verify-content {
-  font-size: 8px;
+  width: 400px;
+  max-height: 70vh;
+  overflow-y: auto; 
+  font-size: 16px;
 }
 .error-box {
   margin: 0.5rem 0;
