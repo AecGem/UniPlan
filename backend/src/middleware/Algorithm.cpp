@@ -147,8 +147,8 @@ int main(int argc, char *argv[])
     lexicon.close();
 
     // Parse JSON inputs.
-    std::cout << "Parsing json inputs..." << std::endl;
-    std::cout << ">Degree reqs..." << std::endl;
+    std::cout << "Parsing JSON inputs..." << std::endl;
+    std::cout << "Adding Degree reqs..." << std::endl;
 
     vector<Course> degree_reqs;
     // Parse degree requirements:
@@ -166,7 +166,7 @@ int main(int argc, char *argv[])
             {
                 // Add course name to course object
                 new_course.addName(lexicon_course["shortname"]);
-                
+
                 // Add all prerequisites to course object
                 for (const auto &prereq : lexicon_course["prereq"])
                 {
@@ -181,7 +181,7 @@ int main(int argc, char *argv[])
     }
 
     vector<Semester> semester_array;
-    std::cout << ">Semesters..." << std::endl;
+    std::cout << "Adding Semesters..." << std::endl;
     // Parse semesters:
     // JSON format: {sem_id: 1, sname: "Fall 2025", courses: [1,2,3,4]}
     for (const auto &semester : s_input)
@@ -200,7 +200,7 @@ int main(int argc, char *argv[])
                     Course new_course(lexicon_course["cid"]);
                     new_course.addName(lexicon_course["shortname"]);
                     // Add prerequisites to course
-                    std::cout << "Adding prereqs..." << std::endl;
+                    std::cout << "\tAdding prerequisites..." << std::endl;
                     for (const auto &prereq : lexicon_course["prereq"])
                     {
                         new_course.addPrerequisite(prereq);
@@ -227,17 +227,17 @@ int main(int argc, char *argv[])
     std::cout << semester_array.size() << std::endl;
     for (int i = semester_array.size() - 1; i >= 0; i--)
     {
-        std::cout << ">Checking semester..." << std::endl;
+        std::cout << "\t>Checking semester..." << std::endl;
         std::cout << semester_array[i].courses.size() << std::endl;
         // For each course in semester...
         for (const auto &course : semester_array[i].courses)
         {
-            std::cout << ">Checking course..." << std::endl;
+            std::cout << "\t\t>Checking course..." << std::endl;
             std::cout << course.prerequisites.size() << std::endl;
             // For every prerequisite of the course, if any...
             for (const auto &prereq : course.prerequisites)
             {
-                std::cout << ">Checking prereqs..." << std::endl;
+                std::cout << "\t\t\t>Checking prereqs..." << std::endl;
                 // Check all previous semesters...
                 bool found = false;
                 for (int l = i; l >= 0; l--)
@@ -248,7 +248,7 @@ int main(int argc, char *argv[])
                         // If the prereq name matches, break and continue to next prereq
                         if (prev_course.name == prereq)
                         {
-                            std::cout << "Found prereq " << prereq << " for course " << course.name << std::endl;
+                            std::cout << "\t\t\t\t>Found prereq " << prereq << " for course " << course.name << std::endl;
                             found = true;
                             break;
                         }
