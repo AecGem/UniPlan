@@ -114,41 +114,80 @@ export default function App(session) {
 
   // Loading user's saved semesters
   useEffect(() => {
-    // If no user is logged in, skip or redirect
     const realUserId = userInfo.session?.userId;
     if (!realUserId) {
       return;
     }
-
-    // If userId might be an object, pull out the real string
+    // If userId is an object, extract the string
     let userIdString = realUserId;
     if (typeof userIdString === 'object' && userIdString !== null) {
       userIdString = userIdString.id;
     }
-
-    // Call get_saved_sem
     fetch(`/api/get_saved_sem?userid=${userIdString}`)
       .then((res) => {
         if (!res.ok) throw new Error('Failed to fetch saved semesters');
         return res.json();
       })
-      .then((data) => {
-        const newSemesters = data.map((item) => ({
-          // local "id" for React
-          id: Date.now() + Math.random(),
-          sem_id: item.sem_id,
-          type: item.sname.split(' ')[0] || '???',
-          year: item.sname.split(' ')[1] || '???',
-          courses: item.courses.map((cid) => ({
+      .then((semestersData) => {
+        if (!semestersData || semestersData.length === 0) {
+          // No saved semesters, just set to empty
+          setSemesters([]);
+          return;
+        }
+
+        const allCids = new Set();
+        semestersData.forEach((item) => {
+          item.courses.forEach((cid) => allCids.add(cid));
+        });
+
+        if (allCids.size === 0) {
+          const emptyCoursesSemesters = semestersData.map((item) => ({
             id: Date.now() + Math.random(),
-            cid: cid,
-            shortname: '',
-            status: '',
-          })),
-        }));
-        setSemesters(newSemesters);
+            sem_id: item.sem_id,
+            type: item.sname?.split(' ')[0] || '???',
+            year: item.sname?.split(' ')[1] || '???',
+            courses: []
+          }));
+          setSemesters(emptyCoursesSemesters);
+          return;
+        }
+        const cidsArray = Array.from(allCids);
+        return fetch('/api/course_many', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ cids: cidsArray }) // { cids: [5,12,27] }
+        })
+          .then((res) => {
+            if (!res.ok) throw new Error('Failed to fetch course details');
+            return res.json();
+          })
+          .then((courseDetails) => {
+            const detailMap = {};
+            courseDetails.forEach((c) => {
+              detailMap[c.cid] = c;
+            });
+            const newSemesters = semestersData.map((item) => ({
+              id: Date.now() + Math.random(),  // local ephemeral ID
+              sem_id: item.sem_id,
+              type: item.sname?.split(' ')[0] || '???',
+              year: item.sname?.split(' ')[1] || '???',
+              courses: item.courses.map((cid) => {
+                const details = detailMap[cid] || {};
+                return {
+                  id: Date.now() + Math.random(),
+                  cid,
+                  shortname: details.shortname || '',
+                  coursename: details.coursename || '',
+                  status: ''
+                };
+              }),
+            }));
+            setSemesters(newSemesters);
+          });
       })
-      .catch((err) => console.error('Error fetching saved semesters:', err));
+      .catch((err) => {
+        console.error('Error fetching and merging saved semesters:', err);
+      });
   }, []);
 
 
