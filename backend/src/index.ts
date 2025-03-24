@@ -160,7 +160,7 @@ const app = new Elysia()
         })
     })
 
-    .post("/api/course", async ({ body: { courses } }) =>{
+    .post("/api/course_many", async ({ body: { courses } }) =>{
         const result = await prisma.course.findMany({
             where: {
                 cid: {
