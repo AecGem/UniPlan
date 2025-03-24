@@ -158,12 +158,10 @@ export default function App(session) {
   /** ---------------------------
    *  DRAG & DROP HANDLERS
    * ---------------------------*/
-  // 1) Drag from the aside (strings only), converting it into 
-  // an object { id, text } so we can store it in 'sem.courses'.
   const handleDragStartAside = (e, courseObj) => {
     const newCourse = {
       ...courseObj,
-      id: Date.now().toString(), // or use cId if prefer
+      id: Date.now().toString(),
       status: '',
     }
 
@@ -174,20 +172,15 @@ export default function App(session) {
     e.dataTransfer.setData('application/json', JSON.stringify(payload))
   }
 
-
-  // 2) Drag from within a semester
   const handleDragStartSemester = (e, courseObj, sourceSemId) => {
     const payload = { course: courseObj, sourceSemId };
     e.dataTransfer.setData('application/json', JSON.stringify(payload));
   };
 
-  // 3) onDragOver to allow dropping
   const handleDragOver = (e) => {
     e.preventDefault();
   };
 
-  // 4) onDrop: remove from old place and add to the new 
-  // semester. The "targetSemId" is whichever semester was dropped onto.
   const handleDrop = (e, targetSemId) => {
     e.preventDefault();
     const rawData = e.dataTransfer.getData('application/json');
@@ -401,22 +394,26 @@ export default function App(session) {
     }
   };
 
-  const handleDegreeChange = async (e) => {
-    const newDegreeId = Number(e.target.value);
-    setSelectedDegreeId(newDegreeId);
-  
-    // Store/update the user’s new degree:
-    if (userInfo.session && userInfo.session.userId) {
-      try {
-        await fetch(
-          `/api/update_user_degree?userid=${userInfo.session.userId}&didin=${newDegreeId}`
-        );
-        userInfo.session.user.did = newDegreeId;
-      } catch (err) {
-        console.error("Error updating user degree:", err);
-      }
+const handleDegreeChange = async (e) => {
+  const newDegreeId = e.target.value;
+  setSelectedDegreeId(newDegreeId);
+
+  let realUserId = userInfo?.session?.userId;
+
+  if (typeof realUserId === 'object' && realUserId !== null) {
+    realUserId = realUserId.id;
+  }
+
+  if (realUserId && newDegreeId) {
+    try {
+      await fetch(`/api/update_user_degree?userid=${realUserId}&didin=${newDegreeId}`);
+      // ...
+    } catch (err) {
+      console.error("Error updating user degree:", err);
     }
-  };
+  }
+};
+
   
 
   const openDescModal = (courseObj) => {

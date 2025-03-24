@@ -2,11 +2,10 @@
 
 #Defining variables
 BuildName = verifier		#Build name
-BuildPath = ./build			#Build path
 CC = g++					#Compiler
 
 #Build all
-all: $(BuildPath)/$(BuildName)
+all: $(BuildName)
 
 #Main object files
 Algorithm.o: Algorithm.cpp json.hpp
@@ -17,16 +16,16 @@ json.o: json.hpp
 
 #Main target and linking
 $(BuildName): Algorithm.o json.o
-	$(CC) Algorithm.o json.o -o $(BuildPath)/$(BuildName)
+	$(CC) Algorithm.o json.o -o $(BuildName)
 
 #Cleaning
 clean:
-	rm -f *.o $(BuildPath)/$(BuildName)
+	rm -f *.o $(BuildName)
 
 #Valgrind
 valgrind:
-	valgrind --leak-check=full $(BuildPath)/$(BuildName)
+	valgrind --leak-check=full $(BuildName)
 
 #Debug
 debug:
-	gdb $(BuildPath)/$(BuildName)
+	gdb $(BuildName)
