@@ -119,43 +119,11 @@ int main(int argc, char *argv[])
 
     //Take in the json array of degree requirements and put it in as a c++ array //This must be done because JSON integers isn't necessarilly the same as C++ integers
     //Take in the json array of saved semesters and put it in as a c++ array
-
     //(see: https://stackoverflow.com/questions/54389742/use-nlohmann-json-to-unpack-list-of-integers-to-a-stdvectorint)
+
     vector<int> degree_reqs = r_input["courses"].get<vector<int>>();
-    vector<int> saved_plan;
+    vector<int> saved_plan = s_input[""];
 
-    //Iterators are different in nlohmann stuff... you CAN'T use regular for loops, sadly womp womp (see: https://json.nlohmann.me/features/iterators/)
-    //Discussions: //https://github.com/nlohmann/json/discussions/3387 
-    //https://github.com/nlohmann/json/issues/83
-    cout << "Degree Requirements: ";
-    for (auto reqs : degree_reqs){
-        cout << "Course: " << reqs << endl;
-    }
-
-    cout << "Saved Degree Plan: " << endl;
-    for (auto s: s_input){
-        //the following JSON integers need to be first converted using the library so that it can be used by c++
-        //so, turn it into a an array of integers
-        vector <int> temp = s["courses"].get<vector<int>>(); //from Nlhomann JSON library
-        saved_plan.insert(saved_plan.end(), temp.begin(), temp.end());
-    }
-
-    for (auto plan : saved_plan){
-        cout << plan << " ";
-    }
-    cout << endl;
-
-    //Compare the array list of required courses for that degree with the array list of semesters
-    //Check if the size of the planned degree is less that the requirements. If so, that means it's an invalid degree
-    if (degree_reqs.size() > saved_plan.size()){
-        cout << "Invalid Degree. Saved degree list does not match size of requirements list." << endl;
-        out_stream << missing_course_messg;
-    }
-    else {
-        cout << "Saved degree list matches size of requirements list." << endl;
-        out_stream << valid_list_messg;
-    }
-    
 
     //_________NEW: AecGem codes the validity checks here___________
 
