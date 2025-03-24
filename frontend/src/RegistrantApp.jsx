@@ -57,9 +57,7 @@ export default function App(session) {
   const navigate = useNavigate();
   const router = useRouter();
   const [degrees, setDegrees] = useState([]);
-  const [selectedDegreeId, setSelectedDegreeId] = useState(
-    session?.user?.did || null
-  );
+  const [selectedDegreeId, setSelectedDegreeId] = useState(null);
   const [verification, setVerify] = useState([]);
 
   console.log(session);
@@ -487,6 +485,7 @@ export default function App(session) {
             onChange={handleDegreeChange}
             //onChange={(e) => setSelectedDegreeId(Number(e.target.value))}
           >
+             <option value="">-- No degree selected --</option>
             {degrees.map((deg) => (
               <option key={deg.did} value={deg.did}>
                 {deg.degree}
