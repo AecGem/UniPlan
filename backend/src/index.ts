@@ -172,7 +172,7 @@ const app = new Elysia()
     },
     {
         body: t.Object({
-            courses: t.Optional(t.Array(t.Number))
+            cids: t.Optional(t.Array(t.Number()))
         })
     })
 
