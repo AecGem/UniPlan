@@ -131,7 +131,7 @@ export function App({ context }) {
           className="get-planning-btn"
           onClick={() => {
             if (context.check()) {
-              if (context.user.usertype === false) {
+              if (context.user.usertype === true) {
                 navigate({ to: "/registrar" });
               } else {
                 navigate({ to: "/registrant" });
