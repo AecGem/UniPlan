@@ -170,7 +170,7 @@ const handleInfoChange = (degInfoValue) =>
                       
 
                           <tr>
-                            <td>{courseEnrollmentData.courseName.shortname}</td>
+                            <td>{courseEnrollmentData.shortname}</td>
                             <td></td>
                             <td>{courseEnrollmentData.count}</td>
                           </tr>
