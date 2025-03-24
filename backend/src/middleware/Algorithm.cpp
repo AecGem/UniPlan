@@ -206,11 +206,11 @@ int main(int argc, char *argv[])
     for (int i = semester_array.size() - 1; i >= 0; i--)
     {
         std::cout << ">Checking semester..." << std::endl;
+        std::cout << semester_array[i].courses.size() << std::endl;
         // For each course in semester...
         for (const auto &course : semester_array[i].courses)
         {
             std::cout << ">Checking course..." << std::endl;
-            std::cout << semester_array[i].courses.size() << std::endl;
             std::cout << course.prerequisites.size() << std::endl;
             // For every prerequisite of the course, if any...
             for (const auto &prereq : course.prerequisites)
