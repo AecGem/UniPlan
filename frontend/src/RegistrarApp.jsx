@@ -63,7 +63,7 @@ export const App = (session) => {
       .then(data => {
         setDegrees(data);
         if (data.length > 0) {
-          setSelectedDegreeId(0);
+          setSelectedDegreeId(1);
         }
       })
       .catch(err => console.error('Error fetching degrees:', err));
@@ -81,7 +81,7 @@ useEffect(() => {
     .catch(err => console.error('Error getting number of students for degree', err));
 }, []);
 
-const [numStudents, setNumStudents] = useState([1]);
+const [numStudents, setNumStudents] = useState([0]);
 //fetching the course enrollment list
 
 
