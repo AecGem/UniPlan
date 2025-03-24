@@ -11,12 +11,9 @@ all: $(BuildName)
 Algorithm.o: Algorithm.cpp json.hpp
 	$(CC) -c Algorithm.cpp
 
-json.o: json.hpp
-	$(CC) -o json.hpp
-
 #Main target and linking
-$(BuildName): Algorithm.o json.o
-	$(CC) Algorithm.o json.o -o $(BuildName)
+$(BuildName): Algorithm.o
+	$(CC) Algorithm.o -o $(BuildName)
 
 #Cleaning
 clean:
@@ -24,8 +21,8 @@ clean:
 
 #Valgrind
 valgrind:
-	valgrind --leak-check=full $(BuildName)
+	valgrind --leak-check=full ./$(BuildName)
 
 #Debug
 debug:
-	gdb $(BuildName)
+	gdb ./$(BuildName)
