@@ -44,7 +44,7 @@ html, body {
   margin: 3px;
 }
 
-.sub-subtitle
+.subSubtitle
 {
   padding: 5px;
   font-size: 20px;
@@ -109,7 +109,7 @@ html, body {
 
 
 /*styling for drop-down box*/
-.Degree-Dropdown
+.DegreeDropdown
 {
   font-size: 20px;
   padding-top: 5px;
@@ -118,7 +118,7 @@ html, body {
   font-weight: bold;
   color: #065e48;
 }
-.Info-Dropdown
+.InfoDropdown
 {
   font-size: 20px;
   padding-top: 5px;
@@ -139,7 +139,7 @@ html, body {
   width: 60vw;
   background: rgba(255, 255, 255, 0.777);
 }
-.empty-info-placeholder
+.emptyInfoPlaceholder
 {
   margin-bottom: 25px;
   text-align: center;
