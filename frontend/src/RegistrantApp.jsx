@@ -687,11 +687,11 @@ function CollapsibleSection({ title, items, onDragStartAside }) {
             <h2>Degree Verification</h2>
             <div className="verify-content">
               {verifyResultData ? (
-                verifyResultData.errors > 0 ? (
-                  // We have errors; display them in red boxes
+                verifyResultData["Number of Errors"] > 0 ? (
                   <>
-                    {Object.values(verifyResultData.errorsList).map((errMsg, index) => (
-                      <div key={index} className="error-box">
+                    {/* We have errors—display them */}
+                    {verifyResultData["Error List"].map((errMsg, i) => (
+                      <div key={i} className="error-box">
                         {errMsg}
                       </div>
                     ))}
@@ -703,6 +703,7 @@ function CollapsibleSection({ title, items, onDragStartAside }) {
                   </div>
                 )
               ) : (
+                // Still loading or no data
                 <p>Loading verification results...</p>
               )}
             </div>
