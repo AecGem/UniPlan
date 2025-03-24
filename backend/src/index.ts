@@ -202,7 +202,7 @@ const app = new Elysia()
         return updateUserDegree;
     },{
         query: t.Object({
-         didin: t.Optional(t.String()),
+         didin: t.Optional(t.Number()),
          userid: t.Optional(t.String())
         })
     })
@@ -277,7 +277,11 @@ const app = new Elysia()
             },
         });
         return semesters;
-     })
+     },{
+        query: t.Object({
+         userid: t.Optional(t.String())
+        })
+    })
 
     //Endpoints for registration statistics
 
