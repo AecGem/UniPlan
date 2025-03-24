@@ -299,6 +299,7 @@ function CollapsibleSection({ title, items, onDragStartAside }) {
         throw new Error('Failed to verify degree');
       }
       const data = await res.json();
+      console.log('Verification result data:', data);
       setVerifyResultData(data);
     } catch (err) {
       console.error('Error verifying degree:', err);
