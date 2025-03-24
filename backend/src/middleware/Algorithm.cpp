@@ -9,29 +9,37 @@ using namespace std;
 using json = nlohmann::json;
 
 // Class definitions
+//Course object, contains id, name, and prerequisites.
 class Course {
 public:
     int id;
     string name;
     vector<string> prerequisites;
 
-    Course(int id) : id(id) {}
-
-    void addPrerequisite(const string& prereq) {
-        prerequisites.push_back(prereq);
+    //Constructor. Sets id. Name and prerequisites are added later.
+    Course(int id){
+        this->id = id;
     }
 
+    //Adds a prerequisite to the course.
+    void addPrerequisite(const string& prereq) {
+        this->prerequisites.push_back(prereq);
+    }
+
+    //Defines the name of the course.
     void addName(const string& name) {
         this->name = name;
     }
 };
 
+//Semester object. Contains an id, timeslot, and list of courses.
 class Semester {
 public:
     int id;
     int timeslot;
     vector<Course> courses;
 
+    //Constructor. Parses the timeslot string into an integer.
     Semester(int id, const string& timeslot) : id(id) {
         string season = timeslot.substr(0, timeslot.find(" "));
         string year = timeslot.substr(timeslot.find(" ") + 1);
@@ -46,15 +54,18 @@ public:
         this->timeslot = year_int + season_int;
     }
 
+    //Adds a course to the semester.
     void addCourse(const Course& course) {
         courses.push_back(course);
     }
 
+    //Less than operator. Compares timeslots.
     bool operator<(const Semester& other) const {
         return timeslot < other.timeslot;
     }
 };
 
+//Output object. Contains error count and list of errors.
 class Output {
 public:
     int num_errors;
@@ -73,18 +84,21 @@ public:
             {"Error List", error_list}
         };
         ofstream out_stream(file_path);
-        out_stream << output_json.dump(4); // Pretty print with 4 spaces
+        out_stream << output_json.dump(4); // Pretty print with 4 spaces :)
         out_stream.close();
     }
 };
 
+//Main: args[1] = reqs_filePath, args[2] = sems_filePath, args[3] = out_filePath
 int main(int argc, char* argv[]) {
+    //Arg sanitization
     std::cout << "Initializing..." << std::endl;
     if (argc < 4) {
         cerr << "Usage: " << argv[0] << " <reqs_filePath> <sems_filePath> <out_filePath>" << endl;
         return 1;
     }
 
+    //File path/stream definitions
     std::cout << "Setting filepaths..." << std::endl;
     string reqs_filePath = argv[1];
     string sems_filePath = argv[2];
@@ -99,6 +113,7 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
+    //Define JSON inputs
     std::cout << "Defining json inputs..." << std::endl;
     json r_input;
     reqs_stream >> r_input;
@@ -112,45 +127,27 @@ int main(int argc, char* argv[]) {
     lexicon >> lexicon_input;
     lexicon.close();
 
+    //Parse JSON inputs.
     std::cout << "Parsing json inputs..." << std::endl;
-    std::cout << ">Degree reqs..." << std::endl;
-    vector<int> degree_reqs;
-    for (const auto& req_courses : r_input["courses"]) {
-        degree_reqs.push_back(req_courses.get<int>());
-    }
-
-    std::cout << ".Saved plans..." << std::endl;
-    vector<int> saved_plan;
-    for (const auto& saved_sems : s_input["semesters"]) {
-        saved_plan.push_back(saved_sems["sem_id"].get<int>());
-    }
-
-    std::cout << "Creating semesters..." << std::endl;
-    vector<Semester> semester_array;
-    for (const auto& sem : s_input["semesters"]) {
-        int temp_sem_id = sem["sem_id"].get<int>();
-        Semester temp(temp_sem_id, sem["sname"].get<string>());
-        for (const auto& course : sem["courses"]) {
-            int temp_course_id = course["course_id"].get<int>();
-            Course added_course(temp_course_id);
-            added_course.addName(course["name"].get<string>());
-            for (const auto& prereq : course["prerequisites"]) {
-                added_course.addPrerequisite(prereq.get<string>());
-            }
-            temp.addCourse(added_course);
-        }
-        semester_array.push_back(temp);
-    }
-
-    std::cout << "Populating courses from lexicon..." << std::endl;
-    for (auto& sem : semester_array) {
-        for (auto& course : sem.courses) {
-            for (const auto& lexicon_course : lexicon_input["courses"]) {
-                if (course.id == lexicon_course["id"].get<int>()) {
-                    course.addName(lexicon_course["name"].get<string>());
-                    for (const auto& prereq : lexicon_course["prerequisites"]) {
-                        course.addPrerequisite(prereq.get<string>());
+    std::cout << ">Degree reqs..." << std::endl; 
+    
+    vector<Course> degree_reqs;
+    //Parse degree requirements:
+    //JSON format: {did: 1, degree: "Computer Science", courses: [1, 2, 3, 4, 5]}
+    for (const auto& req : r_input["courses"]) {
+        for (const auto& req_id : req["courses"]) {
+            //Iterate over lexicon to find course details
+            //Lexicon format:{cid: 1,shortname: "CS 101",coursename: "Introduction to Computer Science",isambig: true, prereq: [1,2,3,4]}
+            for (const auto& lex : lexicon_input) {
+                if (lex["cid"] == req_id) {
+                    Course course(req_id);
+                    //Populate name and prereqs once found
+                    course.addName(lex["cname"]);
+                    for (const auto& prereq : lex["prereq"]) {
+                        course.addPrerequisite(prereq);
                     }
+                    //Add course to degree requirements
+                    degree_reqs.push_back(course);
                     break;
                 }
             }
@@ -158,16 +155,52 @@ int main(int argc, char* argv[]) {
     }
 
 
+
+    vector<Semester> semester_array;
+    std::cout << ">Semesters..." << std::endl; 
+    //Parse semesters:
+    //JSON format: {sem_id: 1, sname: "Fall 2025", courses: [1,2,3,4]}
+    
+    //Iterate over top-level array
+    for (const auto& sem : s_input) {
+        Semester semester(sem["sem_id"], sem["sname"]);
+        //Iterate over courses in semester
+        for (const auto& course_id : sem["courses"]) {
+            Course course(course_id);
+            //Iterate over lexicon to find course name and prerequisites
+            for (const auto& lex : lexicon_input) {
+                if (lex["cid"] == course_id) {
+                    course.addName(lex["cname"]);
+                    for (const auto& prereq : lex["prereq"]) {
+                        course.addPrerequisite(prereq);
+                    }
+                    break;
+                }
+            }
+            semester.addCourse(course);
+        }
+        semester_array.push_back(semester);
+    }
+
+    //Sort semesters in ascending order
     sort(semester_array.begin(), semester_array.end());
 
+    //Define output and begin validation checks
     Output output;
 
+    //Check prerequisites for each course
+    //Iterate over semesters in reverse order
     for (int i = semester_array.size() - 1; i >= 0; i--) {
+        //For each course in semester...
         for (const auto& course : semester_array[i].courses) {
+            //For every prerequisite of the course, if any...
             for (const auto& prereq : course.prerequisites) {
+                //Check all previous semesters...
                 bool found = false;
-                for (int l = 0; l < i; l++) {
+                for (int l = i; l >= 0; l--) {
+                    //For each course in previous semester...
                     for (const auto& prev_course : semester_array[l].courses) {
+                        //If the prereq name matches, break and continue to next prereq
                         if (prev_course.name == prereq) {
                             found = true;
                             break;
@@ -175,6 +208,7 @@ int main(int argc, char* argv[]) {
                     }
                     if (found) break;
                 }
+                //If not found, spit out an error and check the next.
                 if (!found) {
                     output.addError("Prerequisite " + prereq + " for course " + course.name + " has not been taken.");
                 }
@@ -182,22 +216,30 @@ int main(int argc, char* argv[]) {
         }
     }
 
+    //Check if all degree requirements have been met
+    //For each degree requirement...
     for (const auto& req : degree_reqs) {
         bool found = false;
-        for (const auto& sem : semester_array) {
-            for (const auto& course : sem.courses) {
-                if (course.id == req) {
+        //Check all semesters...
+        for (const auto& semester : semester_array) {
+            //For each course in semester...
+            for (const auto& course : semester.courses) {
+                //If the course name matches, break and continue to next req
+                if (course.name == req.name) {
                     found = true;
                     break;
                 }
             }
             if (found) break;
         }
+        //If not found, spit out an error and check the next.
         if (!found) {
-            output.addError("Degree requirement " + to_string(req) + " has not been met.");
+            output.addError("Degree requirement " + req.name + " has not been met.");
         }
     }
 
+    //Write output to a json file.
     output.writeOutput(out_filePath);
+    //Done! :3
     return 0;
 }
