@@ -49,7 +49,7 @@ export const App = (session) => {
   const [numStudents, setNumStudents] = useState([0]);
   const [degrees, setDegrees] = useState([0]);
   const [selectedDegreeId, setSelectedDegreeId] = useState(0);
-  const [courseNameShort, setCourseNameShort] = useState([0]);
+  const [courseNameShort, setCourseNameShort] = useState(["Empty"]);
   const [courseEnrollmentData, setCourseEnrollmentData] = useState([0]);
 
   // Fetch degrees from the backend when the component mounts
@@ -74,7 +74,8 @@ export const App = (session) => {
     const url = `/api/degree_count?didin=${selectedDegreeId}`;
     fetch(url)
       .then(res => res.json())
-      .then(data => {
+      .then(data => 
+      {
         setNumStudents(data);
       })
       .catch(err => console.error('Error getting number of students for degree', err));
@@ -88,11 +89,13 @@ useEffect(() => {
   const url = `/api/course_stats?didin=${selectedDegreeId}`;
   fetch(url)
     .then(res => res.json())
-    .then(data => {
+    .then(data => 
+    {
+
       setCourseNameShort(data);
       setCourseEnrollmentData(data);
     })
-    .catch(err => console.error('Error getting number of students for degree', err));
+    .catch(err => console.error('Error getting Course Enrollment List', err));
 }, [courseNameShort, courseEnrollmentData]);
 
 
@@ -167,15 +170,14 @@ const handleInfoChange = (degInfoValue) =>
                             <th></th>
                             <th>Number of Students Enrolled</th>
                           </tr>
-                          {CourseTempdata.map((val, key) => {
-                            return (
-                              <tr key={key}>
-                                <td>{val.courseName}</td>
-                                <td></td>
-                                <td>{val.numStudents}</td>
-                              </tr>
-                            )
-                          })}
+                      
+
+                          <tr>
+                            <td>{courseNameShort}</td>
+                            <td></td>
+                            <td>{courseEnrollmentData}</td>
+                          </tr>
+
                         </table>
                       </div>
                     )}
