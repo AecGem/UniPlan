@@ -74,7 +74,7 @@ export const App = (session) => {
 
 
 //fetching the course enrollment list
-/*
+
 useEffect(() => {
   const params = new URLSearchParams();
   params.append('didin', selectedDegreeId);
@@ -88,7 +88,7 @@ useEffect(() => {
     })
     .catch(err => console.error('Error getting Course Enrollment List', err));
 }, [courseNameShort, courseEnrollmentData]);
-*/
+
 
 
 //handling functions for the dropdowns
