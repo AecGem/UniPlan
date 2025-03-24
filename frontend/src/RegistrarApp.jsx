@@ -84,7 +84,6 @@ export const App = (session) => {
 
 
 //fetching the course enrollment list
-
 useEffect(() => {
   const params = new URLSearchParams();
   params.append('didin', selectedDegreeId);
@@ -93,11 +92,11 @@ useEffect(() => {
     .then(res => res.json())
     .then(data => 
     {
-      //setCourseNameShort(data.courseName.shortname);
+      //setCourseNameShort(data);
       setCourseEnrollmentData(data);
     })
     .catch(err => console.error('Error getting Course Enrollment List', err));
-}, [courseEnrollmentData]);
+}, [selectedDegreeId]);
 
 
 
@@ -169,9 +168,16 @@ const handleInfoChange = (degInfoValue) =>
                           </tr>
                     
                           <tr>
-                            <td>{courseEnrollmentData.shortname}</td>
-                            <td></td>
-                            <td>{courseEnrollmentData.count}</td>
+                            <td>{courseEnrollmentData.map((item, idx) => (
+                              <tr key={idx}>
+                                <td>{item.courseName.shortname}</td>
+                                <td>{item.count}</td>
+                              </tr>
+                              ))}
+
+
+                            </td>
+            
                           </tr>
 
                         </table>
