@@ -225,7 +225,10 @@ export function App({ context }) {
                         name="userType"
                         value="user"
                         checked={signUpUserType === "user"}
-                        onChange={(e) => setUserType(e.target.value)}
+                        onChange={(e) => {
+                          setUserType(e.target.value);
+                          console.log(signUpUserType);
+                        }}
                       />
                       Student
                     </label>
