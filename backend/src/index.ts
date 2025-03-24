@@ -53,7 +53,7 @@ const app = new Elysia()
             //when you're doin it with me, doin it with me~!
             //await $`/var/www/UniPlan/backend/middleware/build/verifier ${directory}/req.json ${directory}/sem.json ${directory}/out.json`
             //response = $`cat ${directory}/out.json`.json();
-            response = $`rm -rf ${directory}`
+            response =  $`rm -rf ${directory}`.text()
             //response = "Completed. Check folder! ^^"
             return response;
         }
