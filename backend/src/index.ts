@@ -380,12 +380,14 @@ const app = new Elysia()
     .get("/api/course_test", async ({ 
         query: {} 
     }) => {
-        const count = await prisma.user.count({
+        let test = [1,2,3];
+        const result = await prisma.course.findMany({
             where: {
-                did : 1
+                cid: {
+                    in: test,
+                },
             },
         });
-        return count;
     })
     //carolyn's test zone
     .get("/api/caro_test", async ({ 
