@@ -14,7 +14,7 @@ import { PrismaClient } from "@prisma/client";
 import { betterAuth } from "better-auth";
 import { auth } from "./utils/auth";
 import { $ } from "bun";
-
+import { rmSync } from 'fs';
 
 const prisma = new PrismaClient();
 
@@ -52,9 +52,9 @@ const app = new Elysia()
 
             //when you're doin it with me, doin it with me~!
             await $`/var/www/UniPlan/backend/src/middleware/verifier ${directory}/req.json ${directory}/sem.json ${directory}/out.json`
-            let returnFile = Bun.file(`${directory}/out.json`)
-            response = await returnFile.json();
-            returnFile.delete();
+            let file = Bun.file(`${directory}/out.json`);
+            response = await file.json();
+            rmSync(directory, { recursive: true, force: true });
             return response;
         }
         
