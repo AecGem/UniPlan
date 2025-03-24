@@ -57,7 +57,7 @@ export default function App(session) {
   const navigate = useNavigate();
   const router = useRouter();
   const [degrees, setDegrees] = useState([]);
-  const [selectedDegreeId, setSelectedDegreeId] = useState(null);
+  const [selectedDegreeId, setSelectedDegreeId] = useState('');
   const [verification, setVerify] = useState([]);
 
   console.log(session);
@@ -90,16 +90,19 @@ export default function App(session) {
       .then(res => res.json())
       .then(data => {
         setDegrees(data);
-        if (data.length > 0){
-          setSelectedDegreeId(data[0].did);
-        }
+        //if (data.length > 0){
+          //setSelectedDegreeId(data[0].did);
+        //}
       })
       .catch(err => console.error('Error fetching degrees:', err));
   }, []);
 
   // Fetching courses based on the selected degree
   useEffect(() => {
-    if (selectedDegreeId !== null) {
+    if (!selectedDegreeId) {
+      // skip if ""
+      return;
+    }
       const params = new URLSearchParams();
       params.append('didin', selectedDegreeId);
       const url = `/api/course?${params.toString()}`;
@@ -107,7 +110,6 @@ export default function App(session) {
         .then(res => res.json())
         .then(data => setCourses(data))
         .catch(err => console.error('Error fetching courses for degree:', err));
-    }
   }, [selectedDegreeId]);
 
   // Fetch verification from the backend when the component mounts
