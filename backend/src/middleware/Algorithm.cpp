@@ -12,12 +12,12 @@ using json = nlohmann::json;
 
 //Class definitions:
 
-//Semester, has id, timeslot (as an integer), and a vector of courses represented as ints
+//Semester, has id, timeslot (as an integer), and a vector of course objects.
 class Semester{
     public:
         int id;
         int timeslot;
-        vector<int> courses;
+        vector<Course> courses;
     //Constructor for semester, takes in int id, string timeslot in the format of "Fall 2024, Winter 2025, Spring 2025, Summer 2025" etc.
     Semester(int id, string timeslot){
         this->id = id;
@@ -45,7 +45,7 @@ class Semester{
 
     }
     //Add course to the semester
-    void addCourse(int course){
+    void addCourse(Course course){
         this->courses.push_back(course);
     }
 };
@@ -70,29 +70,42 @@ class Course{
     }
 };
 
+<<<<<<< HEAD
+
+//read in the semestrs and courses
+//read in the objects
+//read in the lexicon
+
+=======
+//JSON output object, has a number of errors and a list of errors
+class Output{
+    public:
+        int num_errors;
+        vector<string> error_list;
+        //Constructor for Output, takes in nothing.
+        Output(){
+            this->num_errors = 0;
+        }
+    //Add an error to the error list
+    void addError(string error){
+        this->num_errors++;
+        this->error_list.push_back(error);
+    }
+    //Write the output to a JSON file.
+    void writeOutput(string file_path){
+        json output_json = {
+            {"Number of Errors:", this->num_errors},
+            {"Error List", this->error_list}
+        };
+        std::ofstream out_stream (file_path);
+        out_stream << output_json;
+        out_stream.close();
+    }
+};
+>>>>>>> 88390979aef6f55dc1560ad300e7b14a80ad3ed6
+
 int main(int argc, char *argv[])
 {
-    //JSON errors (see: https://github.com/nlohmann/json)
-    json valid_list_messg = {
-        {"Number of Errors:", 0},
-        {"Error List", {"No missing courses"}}
-    };
-
-    json valid_prereq_messg = {
-        {"Number of Errors:", 0},
-        {"Error List", {"No Prerequisite Conflicts"}}
-    };
-
-    json missing_course_messg = {
-        {"Number of Errors", 1},
-        {"Error List", {"Missing a course"}}
-    };
-
-    json missing_prerequisite_messg = {
-        {"Number of Errors", 1},
-        {"Error List", {"Missing a prerequisite"}}
-    };
-
     //Set up the file paths (see: )
     string reqs_filePath = argv[1];
     string sems_filePath = argv[2];
