@@ -51,8 +51,8 @@ const app = new Elysia()
             await $`curl https://localhost:443/api/get_saved_sem?equals=${id} -k > ${directory}/sem.json`.nothrow(); //TODO: Get the saved sem api.
 
             //when you're doin it with me, doin it with me~!
-            //await $`/var/www/UniPlan/backend/middleware/build/verifier ${directory}/req.json ${directory}/sem.json ${directory}/out.json`
-            //response = $`cat ${directory}/out.json`.json();
+            await $`/var/www/UniPlan/backend/middleware/build/verifier ${directory}/req.json ${directory}/sem.json ${directory}/out.json`
+            response = $`cat ${directory}/out.json`.json();
             try {
                 response =  await $`rm -rf ${directory}`.text();
             } catch (err) {
