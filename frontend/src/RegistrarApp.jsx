@@ -161,25 +161,21 @@ const handleInfoChange = (degInfoValue) =>
                     (
                       <div className="courseTables">
                         <table>
-                          <tr>
-                            <th className="headerSpacing">Course Name</th>
-                            <th className="headerSpacing">Number of Students Enrolled</th>
-                          </tr>
-                    
-                          <tr>
-                            <td>{courseEnrollmentData.map((item, idx) => (
+                          <thead>
+                            <tr>
+                              <th className="headerSpacing">Course Name</th>
+                              <th className="headerSpacing">Number of Students Enrolled</th>
+                            </tr>
+                          </thead>
+
+                          <tbody>
+                            {courseEnrollmentData.map((item, idx) => (
                               <tr key={idx}>
                                 <td className="courseSpacing">{item.courseName.shortname}</td>
-                                <td>test</td>
                                 <td className="countSpacing">{item.count}</td>
                               </tr>
                               ))}
-
-
-                            </td>
-            
-                          </tr>
-
+                          </tbody>
                         </table>
                       </div>
                     )}
