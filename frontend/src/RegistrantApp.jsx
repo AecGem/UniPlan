@@ -5,23 +5,17 @@ import { AuthAPI } from './apis/AuthAPI'
 import './Registrant.css'
 import { useRouter } from "@tanstack/react-router";
 import { userInfo } from './utils/auth'
-import { authClient } from './utils/auth'
 
 // Collapsible Section Sub-Component
 function CollapsibleSection({ title, items, onDragStartAside }) {
   const [expanded, setExpanded] = useState(false);
-  const toggleExpand = () => {
-    setExpanded((prev) => !(prev));
-  };
+  const toggleExpand = () => setExpanded((prev) => !prev);
 
   return (
     <div className="collapsible-section">
-      {/* Button showing arrow and title */}
       <button className="collapsible-header" onClick={toggleExpand}>
         {expanded ? '▼' : '▶'} {title}
       </button>
-
-      {/* If expanded, show the list of requirements */}
       {expanded && (
         <ul className="requirement-list">
           {items.map((course) => (
@@ -40,58 +34,40 @@ function CollapsibleSection({ title, items, onDragStartAside }) {
 }
 
 // Main App Component
-export default function App(session) {
-  /** ---------------------------
-    *  SEMESTERS + COURSES STATE
-    * ---------------------------*/
-  const [semesters, setSemesters] = useState([]);
-  const [courses, setCourses] = useState([]);
-  const navigate = useNavigate();
-  const router = useRouter();
-  const [degrees, setDegrees] = useState([]);
-  const [selectedDegreeId, setSelectedDegreeId] = useState('');
-  const [verification, setVerify] = useState([]);
-  const [savedPopup, setSavedPopup] = useState(false);
+  export default function App(session) {
+    const [semesters, setSemesters] = useState([]);
+    const [courses, setCourses] = useState([]);
+    const [degrees, setDegrees] = useState([]);
+    const [selectedDegreeId, setSelectedDegreeId] = useState('');
 
-  console.log(session);
-  console.log
-  //Wrapping this whole thing in a try-catch.
-  //Can't access? Rough. Invalidate router and gtfo.
-  try{
+    const navigate = useNavigate();
+    const router = useRouter();
+    console.log(session);
+    console.log
+
+// Attempt to protect route
+  try {
     if (session !== undefined) {
       if (session.session.user.usertype === true) {
-        navigate({ to: '/registrar' })
+        navigate({ to: '/registrar' });
       }
     }
   } catch (error) {
     router.invalidate();
-    navigate({ to: '/' })
+    navigate({ to: '/' });
   }
-  
-  //Check to see if a homie is logged in. If not logged in, gtfo.
-  /*
-  if (userInfo.session.userId === null) {
-    router.invalidate();
-    navigate({ to: '/' })
-  }
-    */
 
-  // Fetch degrees from the backend when the component mounts
+// ============= LOAD DEGREES =============  
   useEffect(() => {
-    const url = `/api/degree`;
-    fetch(url)
-      .then(res => res.json())
-      .then(data => {
-        setDegrees(data);
-      })
-      .catch(err => console.error('Error fetching degrees:', err));
+    fetch('/api/degree')
+      .then((res) => res.json())
+      .then((data) => setDegrees(data))
+      .catch((err) => console.error('Error fetching degrees:', err));
   }, []);
 
-  // Fetching courses based on the selected degree
+// ============= LOAD COURSES FOR SELECTED DEGREE =============
   useEffect(() => {
-    if (!selectedDegreeId) {
-      return;
-    }
+    if (!selectedDegreeId) return;
     const params = new URLSearchParams();
     params.append('didin', selectedDegreeId);
     const url = `/api/course?${params.toString()}`;
@@ -102,28 +78,17 @@ export default function App(session) {
       .catch(err => console.error('Error fetching courses for degree:', err));
   }, [selectedDegreeId]);
 
-  // Fetch verification from the backend when the component mounts
-  useEffect(() => {
-    const url = `/api/verification`;
-    fetch(url)
-      .then(res => res.json())
-      .then(data => {
-        setVerify(data);
-      })
-      .catch(err => console.error('Error fetching verification:', err));
-  }, []);
-
-  // Loading user's saved semesters
+// ============= LOAD SAVED SEMESTERS + MERGE COURSE DETAILS =============
   useEffect(() => {
     const realUserId = userInfo.session?.userId;
-    if (!realUserId) {
-      return;
-    }
+    if (!realUserId) return;
+    
     // If userId is an object, extract the string
     let userIdString = realUserId;
     if (typeof userIdString === 'object' && userIdString !== null) {
       userIdString = userIdString.id;
     }
+
     fetch(`/api/get_saved_sem?userid=${userIdString}`)
       .then((res) => {
         if (!res.ok) throw new Error('Failed to fetch saved semesters');
@@ -131,7 +96,6 @@ export default function App(session) {
       })
       .then((semestersData) => {
         if (!semestersData || semestersData.length === 0) {
-          // No saved semesters, just set to empty
           setSemesters([]);
           return;
         }
@@ -147,18 +111,17 @@ export default function App(session) {
             sem_id: item.sem_id,
             type: item.sname?.split(' ')[0] || '???',
             year: item.sname?.split(' ')[1] || '???',
-            courses: []
+            courses: [],
           }));
           setSemesters(emptyCoursesSemesters);
           return;
         }
 
         const cidsArray = Array.from(allCids);
-
         return fetch('/api/course_many', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ cids: cidsArray }) // { cids: [5,12,27] }
+          body: JSON.stringify({ cids: cidsArray })
         })
           .then((res) => {
             if (!res.ok) throw new Error('Failed to fetch course details');
@@ -171,7 +134,7 @@ export default function App(session) {
             });
 
             const newSemesters = semestersData.map((item) => ({
-              id: Date.now() + Math.random(),  // local ephemeral ID
+              id: Date.now() + Math.random(),
               sem_id: item.sem_id,
               type: item.sname?.split(' ')[0] || '???',
               year: item.sname?.split(' ')[1] || '???',
@@ -197,64 +160,35 @@ export default function App(session) {
       });
   }, []);
 
-
-  /** ---------------------------
-   *  MODAL STATE (Add/Edit)
-   * ---------------------------*/
-  const [showModal, setShowModal] = useState(false);
-  const [showDescModal, setShowDescModal] = useState(false);
-  const [showValidModal, setShowValidModal] = useState(false);
-  const [descCourse, setDescCourse] = useState(null);
-  const [isEditMode, setIsEditMode] = useState(false);
-  const [tempSemesterId, setTempSemesterId] = useState(null); // track which semester we're editing
-  const [selectedType, setSelectedType] = useState('Fall');
-  const [selectedYear, setSelectedYear] = useState('2025');
-  const [showEditCourseModal, setShowEditCourseModal] = useState(false);
-  const [courseBeingEdited, setCourseBeingEdited] = useState(null);
-
-
-  // A small helper to sign out (navigate back to '/')
+// ============= Sign Out =============    
   const handleSignOut = async () => {
-    try {
-      await AuthAPI.logOut()
+      try {
+        await AuthAPI.logOut()
+        localStorage.removeItem('token')
+        router.invalidate();
+        navigate({ to: '/' })
+      } catch (error) {
+        console.error('Error signing out:', error)
+      }
+    };
 
-      //Clear any tokens from localStorage or cookies
-      localStorage.removeItem('token')
-      //its http only :3
-      //localStorage.removeItem('token');
-      router.invalidate();
-      navigate({ to: '/' })
-    } catch (error) {
-      console.error('Error signing out:', error)
-      // Optionally show an error message or fallback
-    }
-  }
-
-  /** ---------------------------
-   *  DRAG & DROP HANDLERS
-   * ---------------------------*/
+// ============= DRAG & DROP HANDLERS =============
   const handleDragStartAside = (e, courseObj) => {
     const newCourse = {
       ...courseObj,
       id: Date.now().toString(),
       status: '',
-    }
-
-    const payload = {
-      course: newCourse,
-      sourceSemId: null,
-    }
-    e.dataTransfer.setData('application/json', JSON.stringify(payload))
-  }
+    };
+    const payload = { course: newCourse, sourceSemId: null };
+    e.dataTransfer.setData('application/json', JSON.stringify(payload));
+  };
 
   const handleDragStartSemester = (e, courseObj, sourceSemId) => {
     const payload = { course: courseObj, sourceSemId };
     e.dataTransfer.setData('application/json', JSON.stringify(payload));
   };
 
-  const handleDragOver = (e) => {
-    e.preventDefault();
-  };
+  const handleDragOver = (e) => e.preventDefault();
 
   const handleDrop = (e, targetSemId) => {
     e.preventDefault();
@@ -264,9 +198,7 @@ export default function App(session) {
     let payload;
     try {
       payload = JSON.parse(rawData);
-    } catch (err) {
-      return; // not valid data
-    }
+    } catch (err) { return };
 
     const { course, sourceSemId } = payload;
     if (!course) return;
@@ -274,8 +206,7 @@ export default function App(session) {
     // Update 'semesters' in local state
     setSemesters((prev) => {
       let updated = [...prev];
-
-      // If it came from another semester, remove it from that semester's courses.
+      // If it came from another semester, remove it from that semester's courses
       if (sourceSemId) {
         updated = updated.map((sem) => {
           if (sem.id === sourceSemId) {
@@ -306,6 +237,10 @@ export default function App(session) {
     });
   };
 
+// ============= EDIT COURSE HANDLERS =============
+  const [showEditCourseModal, setShowEditCourseModal] = useState(false);
+  const [courseBeingEdited, setCourseBeingEdited] = useState(null);
+
   const openEditCourseModal = (semesterId, courseObj) => {
     setCourseBeingEdited({ semesterId, ...courseObj });
     setShowEditCourseModal(true);
@@ -315,16 +250,11 @@ export default function App(session) {
     setSemesters((prev) =>
       prev.map((sem) => {
         if (sem.id !== updatedInfo.semesterId) return sem;
-
         return {
           ...sem,
           courses: sem.courses.map((c) =>
             c.id === updatedInfo.id
-              ? {
-                ...c,
-                text: updatedInfo.text,
-                status: updatedInfo.status // Save the new status
-              }
+              ? { ...c, text: updatedInfo.text, status: updatedInfo.status }
               : c
           ),
         };
@@ -334,40 +264,66 @@ export default function App(session) {
     setCourseBeingEdited(null);
   };
 
-
-
-  /** ---------------------------
-   *  HELPER: Remove Single Course
-   * ---------------------------*/
+// ============= REMOVE SINGLE COURSE =============
   const removeSingleCourse = (semesterId, courseId) => {
     setSemesters((prev) =>
       prev.map((sem) =>
         sem.id === semesterId
-          ? {
-            ...sem,
-            courses: sem.courses.filter((c) => c.id !== courseId),
-          }
+          ? { ...sem, courses: sem.courses.filter((c) => c.id !== courseId) }
           : sem
       )
     );
   };
 
-  /** ---------------------------
-   *  Check Degree Validity
-   * ---------------------------*/
-  const checkValid = () => {
+// ============= CHECK DEGREE VALIDITY =============
+  const [showValidModal, setShowValidModal] = useState(false);
+  const [verifyResultData, setVerifyResultData] = useState(null);
+
+  const checkValid = async () => {
+    // If no user or no degree selected, show something or return
+    const realUserId = userInfo.session?.userId;
+    if (!realUserId || !selectedDegreeId) {
+      alert('Please ensure you are logged in and have selected a degree.');
+      return;
+    }
+    let userIdString = realUserId;
+    if (typeof userIdString === 'object' && userIdString !== null) {
+      userIdString = userIdString.id;
+    }
+
+    // Call verification with userId & degree
+    const verifyUrl = `/api/verification?id=${userIdString}&did=${selectedDegreeId}`;
+    try {
+      const res = await fetch(verifyUrl);
+      if (!res.ok) {
+        throw new Error('Failed to verify degree');
+      }
+      const data = await res.json();
+      console.log('Verification result data:', data);
+      setVerifyResultData(data);
+    } catch (err) {
+      console.error('Error verifying degree:', err);
+      setVerifyResultData({
+        errors: 1,
+        errorsList: { 1: 'Unknown error occurred verifying your degree.' },
+      });
+    }
+
     setShowValidModal(true);
   };
 
-  /** ---------------------------
-   *  SEMESTER MODAL HANDLERS
-   * ---------------------------*/
+// ============= SEMESTER MODALS (ADD/EDIT) =============
+  const [showModal, setShowModal] = useState(false);
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [tempSemesterId, setTempSemesterId] = useState(null);
+  const [selectedType, setSelectedType] = useState('Fall');
+  const [selectedYear, setSelectedYear] = useState('2025');
+
   const handleOpenAddModal = () => {
     setIsEditMode(false);
     setSelectedType('Fall');
     setSelectedYear('2025');
     setTempSemesterId(null);
-    // Simply open the modal without creating a semester record immediately.
     setShowModal(true);
   };
 
@@ -381,33 +337,27 @@ export default function App(session) {
     try {
       const res = await fetch('/api/createSemester', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(payload)
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
       });
-      if (!res.ok) {
-        throw new Error("Failed to create semester");
-      }
+
+      if (!res.ok) throw new Error('Failed to create semester');
       const data = await res.json();
-      console.log("Created semester with sem_id:", data.sem_id);
 
       // Add the new semester to local state, storing the returned sem_id
       const newSem = {
-        id: Date.now(), // local identifier
-        sem_id: data.sem_id, // backend's unique semester id
+        id: Date.now(),
+        sem_id: data.sem_id,
         type: selectedType,
         year: selectedYear,
-        courses: []
+        courses: [],
       };
       setSemesters((prev) => [...prev, newSem]);
-
       setShowModal(false);
     } catch (err) {
       console.error("Error creating semester:", err);
     }
   };
-
 
   const handleOpenEditModal = (sem) => {
     setIsEditMode(true);
@@ -419,7 +369,6 @@ export default function App(session) {
 
   const handleSaveSemester = () => {
     if (isEditMode && tempSemesterId != null) {
-      // Update an existing semester
       setSemesters((prev) =>
         prev.map((sem) =>
           sem.id === tempSemesterId
@@ -428,12 +377,11 @@ export default function App(session) {
         )
       );
     } else {
-      // Add a new semester
       const newSem = {
         id: Date.now(),
         type: selectedType,
         year: selectedYear,
-        courses: []
+        courses: [],
       };
       setSemesters((prev) => [...prev, newSem]);
     }
@@ -442,29 +390,20 @@ export default function App(session) {
 
   const handleClearSemester = (id) => {
     setSemesters((prev) =>
-      prev.map((sem) =>
-        sem.id === id ? { ...sem, courses: [] } : sem
-      )
+      prev.map((sem) => (sem.id === id ? { ...sem, courses: [] } : sem))
     );
   };
 
   const handleDeleteSemester = async (localId) => {
     const semesterToDelete = semesters.find((sem) => sem.id === localId);
-    if (!semesterToDelete) {
-      console.error("Semester not found in local state");
-      return;
-    }
+    if (!semesterToDelete) return console.error('Semester not found');
     const { sem_id } = semesterToDelete;
 
     try {
       const response = await fetch(`/api/deleteSemester?semId=${sem_id}`, {
         method: "GET",
       });
-      if (!response.ok) {
-        throw new Error("Failed to delete semester");
-      }
-
-      // 4. Remove it from local state
+      if (!response.ok) throw new Error("Failed to delete semester");
       setSemesters((prev) => prev.filter((sem) => sem.id !== localId));
     } catch (err) {
       console.error("Error deleting semester:", err);
@@ -484,15 +423,16 @@ export default function App(session) {
     if (realUserId && newDegreeId) {
       try {
         await fetch(`/api/update_user_degree?userid=${realUserId}&didin=${newDegreeId}`);
-        // ...
       } catch (err) {
         console.error("Error updating user degree:", err);
       }
     }
   };
 
-
-
+// ============= COURSE DESCRIPTION MODAL =============
+  const [showDescModal, setShowDescModal] = useState(false);
+  const [descCourse, setDescCourse] = useState(null);
+  
   const openDescModal = (courseObj) => {
     setDescCourse(courseObj);
     setShowDescModal(true);
@@ -503,7 +443,8 @@ export default function App(session) {
     setShowDescModal(false);
   };
 
-  // RegistrantApp.jsx (snippet)
+// ============= SAVE SEMESTER TO DB =============
+  const [savedPopup, setSavedPopup] = useState(false);
 
   const handleSaveSemesterToDB = (localSemesterId) => {
     const semesterToSave = semesters.find((s) => s.id === localSemesterId);
@@ -516,21 +457,16 @@ export default function App(session) {
       course_list: semesterToSave.courses.map((course) => course.cid)
     };
 
-    console.log("Saving to DB with payload:", payload);
-
     fetch("/api/saveSemester", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload)
     })
       .then((res) => {
-        if (!res.ok) {
-          throw new Error("Failed to save semester");
-        }
+        if (!res.ok) throw new Error('Failed to save semester');
         return res.json();
       })
       .then((data) => {
-        console.log("Semester updated with sem_id:", data.sem_id);
         setSavedPopup(true);
         setTimeout(() => setSavedPopup(false), 5000);
       })
@@ -538,16 +474,14 @@ export default function App(session) {
   };
 
 
-  /** ---------------------------
-   *  RENDER
-   * ---------------------------*/
+// ============= RENDER =============
   return (
     <div className="page-container">
       {/* HEADER */}
       <header className="subtitle">
         <h1>UniPlan: Registrant's Homepage</h1>
         <nav className="topnav">
-          <a className="active" href="#plan">Plan</a>
+          <a className="active">Plan</a>
           <button className="sign-out" onClick={handleSignOut}>
             Sign Out
           </button>
@@ -559,10 +493,7 @@ export default function App(session) {
         <aside className="requirements">
           <label>Degree&nbsp;</label>
           <select
-            value={selectedDegreeId || ''}
-            onChange={handleDegreeChange}
-          //onChange={(e) => setSelectedDegreeId(Number(e.target.value))}
-          >
+            value={selectedDegreeId || ''} onChange={handleDegreeChange}>
             <option value="">-- No degree selected --</option>
             {degrees.map((deg) => (
               <option key={deg.did} value={deg.did}>
@@ -573,12 +504,12 @@ export default function App(session) {
           <br /><br />
           <CollapsibleSection
             title="Required Courses"
-            items={courses.filter(course => course.isambig === false)}
+            items={courses.filter((course) => course.isambig === false)}
             onDragStartAside={handleDragStartAside}
           />
           <CollapsibleSection
             title="Ambiguous Courses"
-            items={courses.filter(course => course.isambig === true)}
+            items={courses.filter((course) => course.isambig === true)}
             onDragStartAside={handleDragStartAside}
           />
           <br /><br />
@@ -589,9 +520,7 @@ export default function App(session) {
 
         <main className="main-content">
           <h2>Your Planner</h2>
-          <p>
-            Add semesters, then drag courses from the left panel.
-          </p>
+          <p>Add semesters, then drag courses from the left panel.</p>
 
           <button onClick={handleOpenAddModal}>Add New Semester</button>
 
@@ -652,11 +581,7 @@ export default function App(session) {
       </div>
 
       {/* POPUP: Show saving semester indication*/}
-      {savedPopup && (
-        <div className="popup">
-          Semester successfully saved!
-        </div>
-      )}
+      {savedPopup && <div className="popup">Semester successfully saved!</div>}
 
       {/* MODAL: Show description for Class*/}
       {showDescModal && descCourse && (
@@ -692,12 +617,8 @@ export default function App(session) {
         <div className="modal-backdrop">
           <div className="modal-content">
             <h2>{isEditMode ? 'Edit Semester' : 'New Semester'}</h2>
-
             <label>Type:&nbsp;</label>
-            <select
-              value={selectedType}
-              onChange={(e) => setSelectedType(e.target.value)}
-            >
+            <select value={selectedType} onChange={(e) => setSelectedType(e.target.value)}>
               <option value="Fall">Fall</option>
               <option value="Spring">Spring</option>
               <option value="Summer">Summer</option>
@@ -710,8 +631,8 @@ export default function App(session) {
               type="number"
               value={selectedYear}
               onChange={(e) => setSelectedYear(e.target.value)}
-              min="2020"
-              max="2100"
+              min="2025"
+              max="2300"
             />
             <br /><br />
 
@@ -735,10 +656,7 @@ export default function App(session) {
               type="text"
               value={courseBeingEdited.text}
               onChange={(e) =>
-                setCourseBeingEdited({
-                  ...courseBeingEdited,
-                  text: e.target.value
-                })
+                setCourseBeingEdited({ ...courseBeingEdited, text: e.target.value })
               }
             />
             <br></br>
@@ -746,10 +664,7 @@ export default function App(session) {
             <select
               value={courseBeingEdited.status || 'inprogress'}
               onChange={(e) =>
-                setCourseBeingEdited({
-                  ...courseBeingEdited,
-                  status: e.target.value
-                })
+                setCourseBeingEdited({ ...courseBeingEdited, status: e.target.value })
               }
             >
               <option value="passed">Passed</option>
@@ -759,23 +674,42 @@ export default function App(session) {
 
             <div className="modal-buttons">
               <button onClick={() => setShowEditCourseModal(false)}>Cancel</button>
-              <button onClick={() => handleSaveCourseEdits(courseBeingEdited)}>
-                Save
-              </button>
+              <button onClick={() => handleSaveCourseEdits(courseBeingEdited)}>Save</button>
             </div>
           </div>
         </div>
       )}
+
+      {/* MODAL: Degree Verification */}
       {showValidModal && (
         <div className="modal-backdrop">
-          <div className="modal-content">
+          <div className="modal-content3">
             <h2>Degree Verification</h2>
+            <h3>--------------------------------------------------------------------</h3>
             <div className="verify-content">
-
-              <h5> -ah beans- </h5>
+              {verifyResultData ? (
+                verifyResultData["Number of Errors"] > 0 ? (
+                  <>
+                    {/* We have errors—display them */}
+                    {verifyResultData["Error List"].map((errMsg, i) => (
+                      <div key={i} className="error-box">
+                        {errMsg}
+                      </div>
+                    ))}
+                  </>
+                ) : (
+                  // No errors
+                  <div className="success-message">
+                    ✅ No errors found! Your plan meets all requirements.
+                  </div>
+                )
+              ) : (
+                // Still loading or no data
+                <p>Loading verification results...</p>
+              )}
             </div>
-
-            <div className="modal-buttons">
+            <br></br>
+            <div className="modal-buttons3">
               <button onClick={() => setShowValidModal(false)}>Close</button>
             </div>
           </div>

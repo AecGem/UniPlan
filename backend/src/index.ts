@@ -287,7 +287,10 @@ const app = new Elysia()
         const semesters = await prisma.saved_sem.findMany({
             where: {
                 u_id: userid,
-            }
+            },
+            orderBy: {
+                sem_id: 'asc',
+            },
         });
         return semesters;
      },{
