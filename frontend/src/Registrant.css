@@ -16,7 +16,7 @@ html, body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  width: 100%;
+  width: 100vw;
   background-color: transparent;
   background: url(/src/image.jpg) no-repeat center center fixed;
   background-size: cover;
