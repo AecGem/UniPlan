@@ -43,14 +43,6 @@ function CollapsibleSection({ title, items, onDragStartAside }) {
 export default function App(session) {
   /** ---------------------------
     *  SEMESTERS + COURSES STATE
-    *  Each semester in 'semesters' has this shape:
-    *  {
-    *    id: number,
-    *    year: number,
-    *    courses: [{ id: string, text: string }, ...]
-    *  }
-    *  The 'courses' array holds the courses the user has 
-    *  dragged in. 
     * ---------------------------*/
   const [semesters, setSemesters] = useState([]);
   const [courses, setCourses] = useState([]);
@@ -69,20 +61,6 @@ export default function App(session) {
   }
     */
 
-  // Fetch courses from the backend when the component mounts
-  //useEffect(() => {
-    //const didin = 1;
-    //const params = new URLSearchParams();
-    //params.append('didin', didin);
-    //const url = `/api/course?${params.toString()}`;
-    //fetch(url)
-      //.then(res => res.json())
-      //.then(data => {
-        //setCourses(data);
-      //})
-      //.catch(err => console.error('Error fetching courses:', err));
-  //}, []);
-
   // Fetch degrees from the backend when the component mounts
   useEffect(() => {
     const url = `/api/degree`;
@@ -90,9 +68,6 @@ export default function App(session) {
       .then(res => res.json())
       .then(data => {
         setDegrees(data);
-        //if (data.length > 0){
-          //setSelectedDegreeId(data[0].did);
-        //}
       })
       .catch(err => console.error('Error fetching degrees:', err));
   }, []);
@@ -100,7 +75,6 @@ export default function App(session) {
   // Fetching courses based on the selected degree
   useEffect(() => {
     if (!selectedDegreeId) {
-      // skip if ""
       return;
     }
       const params = new URLSearchParams();
@@ -577,15 +551,19 @@ const handleDegreeChange = async (e) => {
         <div className="modal-backdrop">
           <div className="modal-content2">
             <h2>Course Description</h2>
+            <br></br>
             <label>
               {descCourse.shortname}: {descCourse.coursename}
             </label>
+            <br></br>
             <label>
               Credits: {descCourse.credits}
             </label>
+            <br></br>
             <label>
               Description: {descCourse.description}
             </label>
+            <br></br>
             <label>
               Prereqs: {descCourse.prereq?.join(', ')}
             </label>
@@ -612,8 +590,6 @@ const handleDegreeChange = async (e) => {
               <option value="Spring">Spring</option>
               <option value="Summer">Summer</option>
               <option value="Winter">Winter</option>
-              {/*<option value="Co-op">Co-op Workterm</option>*/}
-              {/*<option value="Gap">Gap Semester</option>*/}
             </select>
             <br /><br />
 

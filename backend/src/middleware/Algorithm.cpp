@@ -9,17 +9,17 @@ using namespace std;
 // for convenience
 using json = nlohmann::json;
 
-class Semester_class {
-    //enter stuff here
-};
+// class Semester_class {
+//     //enter stuff here
+// };
 
-class Course_class {
-    //enter stuff here
-};
+// class Course_class {
+//     //enter stuff here
+// };
 
-class Requirements_class {
-    //enter stuff ehre
-};
+// class Requirements_class {
+//     //enter stuff here
+// };
 
 int main(int argc, char *argv[])
 {
@@ -67,7 +67,7 @@ int main(int argc, char *argv[])
     //Take in the json array of saved semesters and put it in as a c++ array
 
     //(see: https://stackoverflow.com/questions/54389742/use-nlohmann-json-to-unpack-list-of-integers-to-a-stdvectorint)
-    vector<int> degree_reqs = r_input["Degree Requirements List"]["Requirements"].get<vector<int>>();
+    vector<int> degree_reqs = r_input["courses"].get<vector<int>>();
     vector<int> saved_plan;
 
     //Iterators are different in nlohmann stuff... you CAN'T use regular for loops, sadly womp womp (see: https://json.nlohmann.me/features/iterators/)
@@ -79,10 +79,10 @@ int main(int argc, char *argv[])
     }
 
     cout << "Saved Degree Plan: " << endl;
-    for (auto s: s_input["Saved Semesters"]){
+    for (auto s: s_input){
         //the following JSON integers need to be first converted using the library so that it can be used by c++
         //so, turn it into a an array of integers
-        vector <int> temp = s["Saved Courses"].get<vector<int>>(); //from Nlhomann JSON library
+        vector <int> temp = s["courses"].get<vector<int>>(); //from Nlhomann JSON library
         saved_plan.insert(saved_plan.end(), temp.begin(), temp.end());
     }
 

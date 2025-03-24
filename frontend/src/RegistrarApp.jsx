@@ -94,15 +94,16 @@ const [numStudents, setNumStudents] = useState([0]);
 
 
 
-  //handling functions for the dropdowns
-  const [degrees, setDegrees] = useState([0]);
-  const [selectedDegreeId, setSelectedDegreeId] = useState(0);
+//handling functions for the dropdowns
+const [degrees, setDegrees] = useState([0]);
+const [selectedDegreeId, setSelectedDegreeId] = useState(0);
 
 
-  const [degInfo, setDegInfo] = useState("0a"); // or "" if you prefer
-  const handleInfoChange = (degInfoValue) => 
+const [degInfo, setDegInfo] = useState("0a"); // or "" if you prefer
+const handleInfoChange = (degInfoValue) => 
   {
     setDegInfo(degInfoValue);  // Now we actually have `degree` state 
+    setNumStudents();
   }
 
 
@@ -186,13 +187,13 @@ const [numStudents, setNumStudents] = useState([0]);
                     (
                       <div className="courseTables">
                         <table>
+                          
                           <tr>
                             <th>Total Degree Enrollment</th>
                           </tr>
-                          
-                              <tr>
-                                <td>{numStudents}</td>
-                              </tr>
+                          <tr>
+                            <td>{numStudents}</td>
+                          </tr>
                          
                         </table>
                       </div>
