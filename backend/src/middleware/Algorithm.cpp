@@ -79,11 +79,13 @@ public:
 };
 
 int main(int argc, char* argv[]) {
+    std::cout << "Initializing..." << std::endl;
     if (argc < 4) {
         cerr << "Usage: " << argv[0] << " <reqs_filePath> <sems_filePath> <out_filePath>" << endl;
         return 1;
     }
 
+    std::cout << "Setting filepaths..." << std::endl;
     string reqs_filePath = argv[1];
     string sems_filePath = argv[2];
     string out_filePath = argv[3];
@@ -97,6 +99,7 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
+    std::cout << "Defining json inputs..." << std::endl;
     json r_input;
     reqs_stream >> r_input;
     reqs_stream.close();
@@ -109,6 +112,7 @@ int main(int argc, char* argv[]) {
     lexicon >> lexicon_input;
     lexicon.close();
 
+    std::cout << "Parsing json inputs..." << std::endl;
     vector<int> degree_reqs;
     for (const auto& req_courses : r_input["courses"]) {
         degree_reqs.push_back(req_courses.get<int>());
@@ -119,6 +123,7 @@ int main(int argc, char* argv[]) {
         saved_plan.push_back(saved_sems["sem_id"].get<int>());
     }
 
+    std::cout << "Creating semesters..." << std::endl;
     vector<Semester> semester_array;
     for (const auto& sem : s_input["semesters"]) {
         int temp_sem_id = sem["sem_id"].get<int>();
@@ -134,6 +139,7 @@ int main(int argc, char* argv[]) {
         }
         semester_array.push_back(temp);
     }
+
 
     sort(semester_array.begin(), semester_array.end());
 
