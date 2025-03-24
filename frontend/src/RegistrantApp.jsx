@@ -101,6 +101,46 @@ export default function App(session) {
       .catch(err => console.error('Error fetching verification:', err));
   }, []);
 
+  // Loading user's saved semesters
+  useEffect(() => {
+    // If no user is logged in, skip or redirect
+    const realUserId = userInfo.session?.userId;
+    if (!realUserId) {
+      return;
+    }
+
+    // If userId might be an object, pull out the real string
+    let userIdString = realUserId;
+    if (typeof userIdString === 'object' && userIdString !== null) {
+      userIdString = userIdString.id;
+    }
+
+    // Call get_saved_sem
+    fetch(`/api/get_saved_sem?userid=${userIdString}`)
+      .then((res) => {
+        if (!res.ok) throw new Error('Failed to fetch saved semesters');
+        return res.json();
+      })
+      .then((data) => {
+        const newSemesters = data.map((item) => ({
+          // local "id" for React
+          id: Date.now() + Math.random(),
+          sem_id: item.sem_id,
+          type: item.sname.split(' ')[0] || '???',
+          year: item.sname.split(' ')[1] || '???',
+          courses: item.courses.map((cid) => ({
+            id: Date.now() + Math.random(),
+            cid: cid,
+            shortname: '',
+            status: '',
+          })),
+        }));
+        setSemesters(newSemesters);
+      })
+      .catch((err) => console.error('Error fetching saved semesters:', err));
+  }, []);
+
+
   /** ---------------------------
    *  MODAL STATE (Add/Edit)
    * ---------------------------*/
