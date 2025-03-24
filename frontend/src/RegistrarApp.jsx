@@ -23,99 +23,18 @@ export const App = (session) => {
     { courseName: "CS110", numStudents: "98" },
     { courseName: "CS115", numStudents: "72" },
   ]
-  //temp data for empty degree
+
+  /*
   const electiveTempdata = [
     { courseName: "GEO100", numStudents: "66" },
     { courseName: "SCI099", numStudents: "3" },
     { courseName: "ASTR101", numStudents: "110" },
   ]
+  */
+
   const TempDegreeEnrollmentdata = [
     { numStudents: "66" },
   ]
-
-  // State for items in Box 2
-  const [box2Items, setBox2Items] = useState([]);
-
-  // Function to handle the start of a drag operation
-  const handleDragStart = (e, item) => {
-    // Set the data being dragged as
-    // text/plain with the serialized item
-    e.dataTransfer
-      .setData('text/plain', JSON.stringify(item));
-  };
-
-  // Function to handle the drag over event
-  const handleDragOver = (e) => {
-    // Prevent the default behavior to allow dropping
-    e.preventDefault();
-  };
-
-  // Function to handle the drop event
-  const handleDrop = (e, targetBox) => {
-    // Prevent the default behavior 
-    // to avoid unwanted behavior
-    e.preventDefault();
-
-    // Parse the dropped item from the dataTransfer
-    const droppedItem = JSON.parse(
-      e.dataTransfer
-        .getData('text/plain')
-    );
-
-    // Check the target box and 
-    // update the state accordingly
-    if (targetBox === 'box1') {
-      // Check if the same item is already present in Box 1
-      let isSameItemPresent = box1Items.some(
-        item => item.id === droppedItem.id
-          && item.text === droppedItem.text
-      );
-
-      // Update the state of Box 1 
-      // and remove the item from Box 2
-      setBox1Items((prevItems) =>
-        //If the same item is already present in Box 1 then 
-        //again don't add that item 
-        // else add the new item in Box 1
-        isSameItemPresent ?
-          [...prevItems] :
-          [...prevItems, droppedItem]
-      );
-      setBox2Items((prevItems) =>
-        //Remove the dragged item from Box 2
-        prevItems.filter(
-          (item) =>
-            item.id !== droppedItem.id
-        )
-      );
-    } else if (targetBox === 'box2') {
-      // Check if the same item is already present in Box 2
-      let isSameItemPresent = box2Items.some(
-        item => item.id === droppedItem.id
-          && item.text === droppedItem.text
-      );
-
-      // Update the state of Box 2 and remove the item from Box 1
-      setBox2Items((prevItems) =>
-        //If the same item is already 
-        // present in Box 2 then 
-        //again don't add that item 
-        // else add the new item in Box 2
-        isSameItemPresent ?
-          [...prevItems] :
-          [...prevItems, droppedItem]
-      );
-      setBox1Items((prevItems) =>
-        //Remove the dragged item from Box 1
-        prevItems.filter(
-          (item) =>
-            item.id !== droppedItem.id
-        )
-      );
-    }
-  };
-
-
 
   //Here is a function that handles signout
   const handleSignOut = async () => {
@@ -155,11 +74,18 @@ export const App = (session) => {
 
 
   const [degInfo, setDegInfo] = useState("0a"); // or "" if you prefer
-  const handleInfoChange = (degInfoValue) => {
-    console.log("Selected: ");
-    console.log(selectedDegreeId);
+  const handleInfoChange = (degInfoValue) => 
+  {
     setDegInfo(degInfoValue);  // Now we actually have `degree` state 
   }
+
+
+
+
+/*---------------------------------------------------------------------------------*/
+
+
+
 
 
   return (
