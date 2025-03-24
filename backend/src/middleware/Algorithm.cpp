@@ -11,6 +11,25 @@ using namespace std;
 using json = nlohmann::json;
 
 //Class definitions:
+//Courses, has id, name, and a vector of prerequisites represented as strings
+class Course{
+    public:
+        int id;
+        string name;
+        vector<string> prerequisites;
+    //Constructor for course, takes in int id, nothing else.
+    Course(int id){
+        this->id = id;
+    }
+    //Add a prerequisite to the course
+    void addPrerequisite(string prereq){
+        this->prerequisites.push_back(prereq);
+    }
+    //Add a name to the course
+    void addName(string name){
+        this->name = name;
+    }
+};
 
 //Semester, has id, timeslot (as an integer), and a vector of course objects.
 class Semester{
@@ -50,25 +69,7 @@ class Semester{
     }
 };
 
-//Courses, has id, name, and a vector of prerequisites represented as strings
-class Course{
-    public:
-        int id;
-        string name;
-        vector<string> prerequisites;
-    //Constructor for course, takes in int id, nothing else.
-    Course(int id){
-        this->id = id;
-    }
-    //Add a prerequisite to the course
-    void addPrerequisite(string prereq){
-        this->prerequisites.push_back(prereq);
-    }
-    //Add a name to the course
-    void addName(string name){
-        this->name = name;
-    }
-};
+
 
 //JSON output object, has a number of errors and a list of errors
 class Output{
