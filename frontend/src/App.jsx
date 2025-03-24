@@ -226,7 +226,7 @@ export function App({ context }) {
                         type="radio"
                         name="userType"
                         value="user"
-                        checked={signUpUserType.userType === "user"}
+                        checked={signupForm.userType === "user"}
                         onChange={handleSignupChange}
                       />
                       Student
@@ -236,7 +236,7 @@ export function App({ context }) {
                         type="radio"
                         name="userType"
                         value="admin"
-                        checked={signUpUserType.userType === "admin"}
+                        checked={signupForm.userType === "admin"}
                         onChange={handleSignupChange}
                       />
                       Admin
