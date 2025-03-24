@@ -70,11 +70,16 @@ export const App = (session) => {
   }, []);
 
 
-//fetching number of degree applicants for information display:
+//const variable declarations
 const [numStudents, setNumStudents] = useState([]);
+const [degrees, setDegrees] = useState([0]);
+const [selectedDegreeId, setSelectedDegreeId] = useState(0);
 
 
+//fetching data for current degree 'total entollment'
 useEffect(() => {
+  const params = new URLSearchParams();
+  params.append('didin', selectedDegreeId);
   const url = `/api/degree_count`;
   fetch(url)
     .then(res => res.json())
@@ -85,7 +90,6 @@ useEffect(() => {
 }, [setNumStudents]);
 
 
-
 //fetching the course enrollment list
 
 
@@ -94,25 +98,16 @@ useEffect(() => {
 
 
 
+
 //handling functions for the dropdowns
-const [degrees, setDegrees] = useState([0]);
-const [selectedDegreeId, setSelectedDegreeId] = useState(0);
-
-
 const [degInfo, setDegInfo] = useState("0a"); // or "" if you prefer
 const handleInfoChange = (degInfoValue) => 
   {
-    setDegInfo(degInfoValue);  // Now we actually have `degree` state 
+    setDegInfo(degInfoValue);  //Now we actually have `degree` state 
   }
 
 
-
-
-/*---------------------------------------------------------------------------------*/
-
-
-
-
+/*---------------------------------------------------------------------------------------------------------------------------------*/
 
   return (
     <div className="page-container">
