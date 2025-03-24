@@ -70,29 +70,34 @@ class Course{
     }
 };
 
+//JSON output object, has a number of errors and a list of errors
+class Output{
+    public:
+        int num_errors;
+        vector<string> error_list;
+        //Constructor for Output, takes in nothing.
+        Output(){
+            this->num_errors = 0;
+        }
+    //Add an error to the error list
+    void addError(string error){
+        this->num_errors++;
+        this->error_list.push_back(error);
+    }
+    //Write the output to a JSON file.
+    void writeOutput(string file_path){
+        json output_json = {
+            {"Number of Errors:", this->num_errors},
+            {"Error List", this->error_list}
+        };
+        std::ofstream out_stream (file_path);
+        out_stream << output_json;
+        out_stream.close();
+    }
+};
+
 int main(int argc, char *argv[])
 {
-    //JSON errors (see: https://github.com/nlohmann/json)
-    json valid_list_messg = {
-        {"Number of Errors:", 0},
-        {"Error List", {"No missing courses"}}
-    };
-
-    json valid_prereq_messg = {
-        {"Number of Errors:", 0},
-        {"Error List", {"No Prerequisite Conflicts"}}
-    };
-
-    json missing_course_messg = {
-        {"Number of Errors", 1},
-        {"Error List", {"Missing a course"}}
-    };
-
-    json missing_prerequisite_messg = {
-        {"Number of Errors", 1},
-        {"Error List", {"Missing a prerequisite"}}
-    };
-
     //Set up the file paths (see: )
     string reqs_filePath = argv[1];
     string sems_filePath = argv[2];
