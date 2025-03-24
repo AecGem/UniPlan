@@ -9,10 +9,6 @@ html, body {
 :root {
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   text-rendering: optimizeLegibility;
-  background-color: #fff;
-  background: url(/src/image.jpg) no-repeat center center fixed;
-  background-size: cover;
-  display: block;
 }
 
 /* The top-level container for the entire page */
@@ -22,6 +18,8 @@ html, body {
   min-height: 100vh;
   width: 100%;
   background-color: transparent;
+  background: url(/src/image.jpg) no-repeat center center fixed;
+  background-size: cover;
 }
 
 
