@@ -6,116 +6,97 @@
 #include <string>
 
 using namespace std;
-
-// for convenience
 using json = nlohmann::json;
 
-//Class definitions:
-//Courses, has id, name, and a vector of prerequisites represented as strings
-class Course{
-    public:
-        int id;
-        string name;
-        vector<string> prerequisites;
-    //Constructor for course, takes in int id, nothing else.
-    Course(int id){
-        this->id = id;
+// Class definitions
+class Course {
+public:
+    int id;
+    string name;
+    vector<string> prerequisites;
+
+    Course(int id) : id(id) {}
+
+    void addPrerequisite(const string& prereq) {
+        prerequisites.push_back(prereq);
     }
-    //Add a prerequisite to the course
-    void addPrerequisite(string prereq){
-        this->prerequisites.push_back(prereq);
-    }
-    //Add a name to the course
-    void addName(string name){
+
+    void addName(const string& name) {
         this->name = name;
     }
 };
 
-//Semester, has id, timeslot (as an integer), and a vector of course objects.
-class Semester{
-    public:
-        int id;
-        int timeslot;
-        vector<Course> courses;
-    //Constructor for semester, takes in int id, string timeslot in the format of "Fall 2024, Winter 2025, Spring 2025, Summer 2025" etc.
-    Semester(int id, string timeslot){
-        this->id = id;
-        //First, split string into two parts (the season and the year)
+class Semester {
+public:
+    int id;
+    int timeslot;
+    vector<Course> courses;
+
+    Semester(int id, const string& timeslot) : id(id) {
         string season = timeslot.substr(0, timeslot.find(" "));
-        string year = timeslot.substr(timeslot.find(" ")+1, timeslot.length());
-        //Parse year into an integer, then multiply by 10 to make room for season.
-        int year_int = stoi(year)*10;
-        //Parse season into an integer via lookup.
-        int season_int;
-        if (season == "Winter"){
-            season_int = 0;
-        }
-        else if (season == "Spring"){
-            season_int = 2;
-        }
-        else if (season == "Summer"){
-            season_int = 3;
-        }
-        else if (season == "Fall"){
-            season_int = 4;
-        }
-        //Add the two together to get the timeslot.
+        string year = timeslot.substr(timeslot.find(" ") + 1);
+        int year_int = stoi(year) * 10;
+        int season_int = 0;
+
+        if (season == "Winter") season_int = 0;
+        else if (season == "Spring") season_int = 2;
+        else if (season == "Summer") season_int = 3;
+        else if (season == "Fall") season_int = 4;
+
         this->timeslot = year_int + season_int;
-    
-
-    }
-    //Add course to the semester
-    void addCourse(Course course){
-        this->courses.push_back(course);
     }
 
-    bool operator<(const Semester& other) const{
-        return this->timeslot < other.timeslot;
+    void addCourse(const Course& course) {
+        courses.push_back(course);
+    }
+
+    bool operator<(const Semester& other) const {
+        return timeslot < other.timeslot;
     }
 };
 
+class Output {
+public:
+    int num_errors;
+    vector<string> error_list;
 
+    Output() : num_errors(0) {}
 
-//JSON output object, has a number of errors and a list of errors
-class Output{
-    public:
-        int num_errors;
-        vector<string> error_list;
-        //Constructor for Output, takes in nothing.
-        Output(){
-            this->num_errors = 0;
-        }
-    //Add an error to the error list
-    void addError(string error){
-        this->num_errors++;
-        this->error_list.push_back(error);
+    void addError(const string& error) {
+        num_errors++;
+        error_list.push_back(error);
     }
-    //Write the output to a JSON file.
-    void writeOutput(string file_path){
+
+    void writeOutput(const string& file_path) {
         json output_json = {
-            {"Number of Errors:", this->num_errors},
-            {"Error List", this->error_list}
+            {"Number of Errors", num_errors},
+            {"Error List", error_list}
         };
-        std::ofstream out_stream (file_path);
-        out_stream << output_json;
+        ofstream out_stream(file_path);
+        out_stream << output_json.dump(4); // Pretty print with 4 spaces
         out_stream.close();
     }
 };
 
-int main(int argc, char *argv[])
-{
-    //Set up the file paths (see: )
+int main(int argc, char* argv[]) {
+    if (argc < 4) {
+        cerr << "Usage: " << argv[0] << " <reqs_filePath> <sems_filePath> <out_filePath>" << endl;
+        return 1;
+    }
+
     string reqs_filePath = argv[1];
     string sems_filePath = argv[2];
     string out_filePath = argv[3];
 
-    //Open the files
-    std::ifstream reqs_stream (reqs_filePath);
-    std::ifstream sems_stream (sems_filePath);
-    std::ofstream out_stream (out_filePath);
-    std::ifstream lexicon ("/var/www/temp/lexicon/lexicon.json");
+    ifstream reqs_stream(reqs_filePath);
+    ifstream sems_stream(sems_filePath);
+    ifstream lexicon("/var/www/temp/lexicon/lexicon.json");
 
-    //Parse JSON
+    if (!reqs_stream.is_open() || !sems_stream.is_open() || !lexicon.is_open()) {
+        cerr << "Error opening input files." << endl;
+        return 1;
+    }
+
     json r_input;
     reqs_stream >> r_input;
     reqs_stream.close();
@@ -128,141 +109,72 @@ int main(int argc, char *argv[])
     lexicon >> lexicon_input;
     lexicon.close();
 
-    //Take in the json array of degree requirements and put it in as a c++ array //This must be done because JSON integers isn't necessarilly the same as C++ integers
-    //Take in the json array of saved semesters and put it in as a c++ array
-    //(see: https://stackoverflow.com/questions/54389742/use-nlohmann-json-to-unpack-list-of-integers-to-a-stdvectorint)
-
-
-    //you have to loop through each object in the array to get the required courses list
     vector<int> degree_reqs;
-    for (auto req_courses : r_input){
-        int temp_course_req = r_input["courses"].get<int>();
-        degree_reqs.push_back(temp_course_req);
+    for (const auto& req_courses : r_input["courses"]) {
+        degree_reqs.push_back(req_courses.get<int>());
     }
 
     vector<int> saved_plan;
-    for (auto saved_sems : s_input){
-        int temp_sem = s_input["sem_id"].get<int>();
-        saved_plan.push_back(temp_sem);
+    for (const auto& saved_sems : s_input["semesters"]) {
+        saved_plan.push_back(saved_sems["sem_id"].get<int>());
     }
-    
-    vector<Semester> semester_array;
-    vector<int> courses_list;
-    //Populate the semester objects
-    for (int i = 0; i < saved_plan.size(); i++){
-        //call the constructor to create semesters
-        int temp_sem_id = saved_plan[0];
-        Semester temp (temp_sem_id, s_input[temp_sem_id]["sname"]);
-        semester_array.push_back(temp);
 
-        for (auto sem_courses : s_input){
-            int temp_course_id = s_input[temp_sem_id]["courses"].get<int>();
-            Course added_course (temp_course_id); 
+    vector<Semester> semester_array;
+    for (const auto& sem : s_input["semesters"]) {
+        int temp_sem_id = sem["sem_id"].get<int>();
+        Semester temp(temp_sem_id, sem["sname"].get<string>());
+        for (const auto& course : sem["courses"]) {
+            int temp_course_id = course["course_id"].get<int>();
+            Course added_course(temp_course_id);
+            added_course.addName(course["name"].get<string>());
+            for (const auto& prereq : course["prerequisites"]) {
+                added_course.addPrerequisite(prereq.get<string>());
+            }
             temp.addCourse(added_course);
         }
-    }
-
-    //Populate the course objects
-    //Loop through each semester
-    for (int i = 0; i < semester_array.size(); i++){
-        //Loop through each course in the semester
-        for (int j = 0; j < semester_array[i].courses.size(); j++){
-            //Get the course id number, then use it to get the course name and prerequisites from the lexicon.
-            int course_id = semester_array[i].courses[j].id;
-            string course_name;
-            string course_prereq;
-            for (auto lexicon_courses : lexicon_input){
-                if (lexicon_courses["id"] == course_id){
-                    //Set the course object name in the semester to the name from the lexicon.
-                    course_name = lexicon_courses["name"];
-                    semester_array[i].courses[j].addName(course_name);
-                    //Loop through any prerequisites in the lexicon and add them to the course object in the semester.
-                    for (auto lexicon_prereqs : lexicon_courses["prerequisites"]){
-                        course_prereq = lexicon_prereqs.get<string>();
-                        semester_array[i].courses[j].addPrerequisite(course_prereq);
-                    }
-                }
-            }
-        }
+        semester_array.push_back(temp);
     }
 
     sort(semester_array.begin(), semester_array.end());
-    
-    //_________NEW: AecGem codes the validity checks here___________
-    //Create an output object
+
     Output output;
 
-    //Now that the semesters are sorted and course info is populated, we can validate prerequisites.
-
-    //Check one: Prerequisites are taken before any course that requires them.
-    //Loop through each semester, back to front.
-    for(int i = semester_array.size()-1; i >= 0; i--){
-        //For each course in the semester, check if it has prerequisites.
-        for (int j = 0; j < semester_array[i].courses.size(); j++){
-
-            //If it does, loop through the prerequisites.
-            if(semester_array[i].courses[j].prerequisites.size() > 0){
-                for (int k = 0; k < semester_array[i].courses[j].prerequisites.size(); k++){
-                    //For each prerequisite, check if it has been taken.
-                    bool found = false;
-                    //Check each semester before the current one.
-                    for (int l = 0; l < i; l++){
-
-                        //Check each course in the semester.
-                        for (int m = 0; m < semester_array[l].courses.size(); m++){
-                            //If the course is found, set found to true and break out of the loop.
-                            if (semester_array[l].courses[m].name == semester_array[i].courses[j].prerequisites[k]){
-                                found = true;
-                                break;
-                            }
-                        }
-                        //If the course is found, break out of the loop.
-                        if (found){
+    for (int i = semester_array.size() - 1; i >= 0; i--) {
+        for (const auto& course : semester_array[i].courses) {
+            for (const auto& prereq : course.prerequisites) {
+                bool found = false;
+                for (int l = 0; l < i; l++) {
+                    for (const auto& prev_course : semester_array[l].courses) {
+                        if (prev_course.name == prereq) {
+                            found = true;
                             break;
                         }
-
                     }
-                    //If it hasn't, add an error to the output object.
-                    if(!found){
-                        output.addError("Prerequisite " + semester_array[i].courses[j].prerequisites[k] + " for course " + semester_array[i].courses[j].name + " has not been taken.");
-                    }
-                    //Then, move on to the next prerequisite.
+                    if (found) break;
+                }
+                if (!found) {
+                    output.addError("Prerequisite " + prereq + " for course " + course.name + " has not been taken.");
                 }
             }
         }
-
     }
 
-    //Check two: All degree requirements are met.
-
-    //Loop through each course in the degree requirements.
-    for (int i = 0; i < degree_reqs.size(); i++){
+    for (const auto& req : degree_reqs) {
         bool found = false;
-        //Loop through each semester.
-        for (int j = 0; j < semester_array.size(); j++){
-            //Loop through each course in the semester.
-            for (int k = 0; k < semester_array[j].courses.size(); k++){
-                //If the course id is found, set found to true and break out of the loop.
-                if (semester_array[j].courses[k].id == degree_reqs[i]){
+        for (const auto& sem : semester_array) {
+            for (const auto& course : sem.courses) {
+                if (course.id == req) {
                     found = true;
                     break;
                 }
             }
-            //If the course is found, break out of the loop.
-            if (found){
-                break;
-            }
+            if (found) break;
         }
-        //If the course hasn't been found, add an error to the output object.
-        if (!found){
-            output.addError("Degree requirement " + to_string(degree_reqs[i]) + " has not been met.");
+        if (!found) {
+            output.addError("Degree requirement " + to_string(req) + " has not been met.");
         }
     }
 
-
-
-    //Write the output to a JSON file.
     output.writeOutput(out_filePath);
     return 0;
-    //Done :)
 }
