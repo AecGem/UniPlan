@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./App.module.css";
+import "./App.css";
 import { AuthAPI } from "./apis/AuthAPI";
 import { useNavigate } from "@tanstack/react-router";
 import { useRouter } from "@tanstack/react-router";
