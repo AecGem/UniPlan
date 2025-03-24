@@ -113,6 +113,7 @@ int main(int argc, char *argv[])
     std::ifstream reqs_stream (reqs_filePath);
     std::ifstream sems_stream (sems_filePath);
     std::ofstream out_stream (out_filePath);
+    std::ifstream lexicon ("/var/www/temp/lexicon/lexicon.json");
 
     //Parse JSON
     json r_input;
@@ -122,6 +123,10 @@ int main(int argc, char *argv[])
     json s_input;
     sems_stream >> s_input;
     sems_stream.close();
+
+    json lexicon_input;
+    lexicon >> lexicon_input;
+    lexicon.close();
 
     //Take in the json array of degree requirements and put it in as a c++ array //This must be done because JSON integers isn't necessarilly the same as C++ integers
     //Take in the json array of saved semesters and put it in as a c++ array
@@ -154,6 +159,30 @@ int main(int argc, char *argv[])
             int temp_course_id = s_input[temp_sem_id]["courses"].get<int>();
             Course added_course (temp_course_id); 
             temp.addCourse(added_course);
+        }
+    }
+
+    //Populate the course objects
+    //Loop through each semester
+    for (int i = 0; i < semester_array.size(); i++){
+        //Loop through each course in the semester
+        for (int j = 0; j < semester_array[i].courses.size(); j++){
+            //Get the course id number, then use it to get the course name and prerequisites from the lexicon.
+            int course_id = semester_array[i].courses[j].id;
+            string course_name;
+            string course_prereq;
+            for (auto lexicon_courses : lexicon_input){
+                if (lexicon_courses["id"] == course_id){
+                    //Set the course object name in the semester to the name from the lexicon.
+                    course_name = lexicon_courses["name"];
+                    semester_array[i].courses[j].addName(course_name);
+                    //Loop through any prerequisites in the lexicon and add them to the course object in the semester.
+                    for (auto lexicon_prereqs : lexicon_courses["prerequisites"]){
+                        course_prereq = lexicon_prereqs.get<string>();
+                        semester_array[i].courses[j].addPrerequisite(course_prereq);
+                    }
+                }
+            }
         }
     }
 
