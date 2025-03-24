@@ -2,7 +2,7 @@
 import { useState, useEffect, useContext } from 'react'
 import { useNavigate } from '@tanstack/react-router'
 import { AuthAPI } from './apis/AuthAPI'
-import './Registrant.css'
+import './Registrant.module.css'
 import { useRouter } from "@tanstack/react-router";
 import { userInfo } from './utils/auth'
 import { authClient } from './utils/auth'
