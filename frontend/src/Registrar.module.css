@@ -10,7 +10,7 @@ html, body {
   display: flex;
   flex: 1;
 }
-.page-container {
+.pageContainer {
   background: url(/src/image3.jpg) no-repeat center center fixed;
   color: #00362f;
   min-height: 100vh;
