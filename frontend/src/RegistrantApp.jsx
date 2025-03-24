@@ -57,7 +57,7 @@ export default function App(session) {
   const navigate = useNavigate();
   const router = useRouter();
   const [degrees, setDegrees] = useState([]);
-  const [selectedDegreeId, setSelectedDegreeId] = useState(null);
+  const [selectedDegreeId, setSelectedDegreeId] = useState('');
   const [verification, setVerify] = useState([]);
 
   console.log(session);
@@ -70,18 +70,18 @@ export default function App(session) {
     */
 
   // Fetch courses from the backend when the component mounts
-  useEffect(() => {
-    const didin = 1;
-    const params = new URLSearchParams();
-    params.append('didin', didin);
-    const url = `/api/course?${params.toString()}`;
-    fetch(url)
-      .then(res => res.json())
-      .then(data => {
-        setCourses(data);
-      })
-      .catch(err => console.error('Error fetching courses:', err));
-  }, []);
+  //useEffect(() => {
+    //const didin = 1;
+    //const params = new URLSearchParams();
+    //params.append('didin', didin);
+    //const url = `/api/course?${params.toString()}`;
+    //fetch(url)
+      //.then(res => res.json())
+      //.then(data => {
+        //setCourses(data);
+      //})
+      //.catch(err => console.error('Error fetching courses:', err));
+  //}, []);
 
   // Fetch degrees from the backend when the component mounts
   useEffect(() => {
@@ -90,24 +90,26 @@ export default function App(session) {
       .then(res => res.json())
       .then(data => {
         setDegrees(data);
-        if (data.length > 0){
-          setSelectedDegreeId(data[0].did);
-        }
+        //if (data.length > 0){
+          //setSelectedDegreeId(data[0].did);
+        //}
       })
       .catch(err => console.error('Error fetching degrees:', err));
   }, []);
 
-  // New useEffect for fetching courses based on the selected degree
+  // Fetching courses based on the selected degree
   useEffect(() => {
-    if (selectedDegreeId !== null) {
+    if (!selectedDegreeId) {
+      // skip if ""
+      return;
+    }
       const params = new URLSearchParams();
-      params.append('degree_id', selectedDegreeId);
+      params.append('didin', selectedDegreeId);
       const url = `/api/course?${params.toString()}`;
       fetch(url)
         .then(res => res.json())
         .then(data => setCourses(data))
         .catch(err => console.error('Error fetching courses for degree:', err));
-    }
   }, [selectedDegreeId]);
 
   // Fetch verification from the backend when the component mounts
@@ -156,12 +158,10 @@ export default function App(session) {
   /** ---------------------------
    *  DRAG & DROP HANDLERS
    * ---------------------------*/
-  // 1) Drag from the aside (strings only), converting it into 
-  // an object { id, text } so we can store it in 'sem.courses'.
   const handleDragStartAside = (e, courseObj) => {
     const newCourse = {
       ...courseObj,
-      id: Date.now().toString(), // or use cId if prefer
+      id: Date.now().toString(),
       status: '',
     }
 
@@ -172,20 +172,15 @@ export default function App(session) {
     e.dataTransfer.setData('application/json', JSON.stringify(payload))
   }
 
-
-  // 2) Drag from within a semester
   const handleDragStartSemester = (e, courseObj, sourceSemId) => {
     const payload = { course: courseObj, sourceSemId };
     e.dataTransfer.setData('application/json', JSON.stringify(payload));
   };
 
-  // 3) onDragOver to allow dropping
   const handleDragOver = (e) => {
     e.preventDefault();
   };
 
-  // 4) onDrop: remove from old place and add to the new 
-  // semester. The "targetSemId" is whichever semester was dropped onto.
   const handleDrop = (e, targetSemId) => {
     e.preventDefault();
     const rawData = e.dataTransfer.getData('application/json');
@@ -398,6 +393,27 @@ export default function App(session) {
       console.error("Error deleting semester:", err);
     }
   };
+
+const handleDegreeChange = async (e) => {
+  const newDegreeId = e.target.value;
+  setSelectedDegreeId(newDegreeId);
+
+  let realUserId = userInfo?.session?.userId;
+
+  if (typeof realUserId === 'object' && realUserId !== null) {
+    realUserId = realUserId.id;
+  }
+
+  if (realUserId && newDegreeId) {
+    try {
+      await fetch(`/api/update_user_degree?userid=${realUserId}&didin=${newDegreeId}`);
+      // ...
+    } catch (err) {
+      console.error("Error updating user degree:", err);
+    }
+  }
+};
+
   
 
   const openDescModal = (courseObj) => {
@@ -453,7 +469,6 @@ export default function App(session) {
         <h1>UniPlan: Registrant's Homepage</h1>
         <nav className="topnav">
           <a className="active" href="#plan">Plan</a>
-          <p>Hello: {session.user.name || "Guest"}</p>
           <button className="sign-out" onClick={handleSignOut}>
             Sign Out
           </button>
@@ -466,8 +481,10 @@ export default function App(session) {
           <label>Degree&nbsp;</label>
           <select
             value={selectedDegreeId || ''}
-            onChange={(e) => setSelectedDegreeId(Number(e.target.value))}
+            onChange={handleDegreeChange}
+            //onChange={(e) => setSelectedDegreeId(Number(e.target.value))}
           >
+             <option value="">-- No degree selected --</option>
             {degrees.map((deg) => (
               <option key={deg.did} value={deg.did}>
                 {deg.degree}
