@@ -52,14 +52,15 @@ const app = new Elysia()
 
             //when you're doin it with me, doin it with me~!
             await $`/var/www/UniPlan/backend/src/middleware/verifier ${directory}/req.json ${directory}/sem.json ${directory}/out.json`
-            response = await Bun.file(`${directory}/out.json`).json();
-            /*
+            let returnFile = Bun.file(`${directory}/out.json`)
+            response = returnFile.json();
+            
             try {
                 response =  await $`rm -rf ${directory}`.text();
             } catch (err) {
                 response = err.stderr.toString();
             }
-            */            
+                      
             //response = "Completed. Check folder! ^^"
             return response;
         }
