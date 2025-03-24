@@ -195,6 +195,17 @@ button {
   font-size: 1rem;
   outline: none;
 }
+.buttonStyle
+{
+  background-color: #078b64;
+  color: #fff;
+  border: 2px solid #0a505c;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-size: 1rem;
+  outline: none;
+}
 button:hover {
   background-color: #09a777;
   color: #078b64;
