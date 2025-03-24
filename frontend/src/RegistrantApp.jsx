@@ -729,7 +729,7 @@ export default function App(session) {
         <div className="modal-backdrop">
           <div className="modal-content">
             <h2>Edit Course</h2>
-
+            <br></br>
             <label>Course Name:</label>
             <input
               type="text"
@@ -741,7 +741,7 @@ export default function App(session) {
                 })
               }
             />
-
+            <br></br>
             <label>Status:</label>
             <select
               value={courseBeingEdited.status || 'inprogress'}
