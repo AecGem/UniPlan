@@ -48,7 +48,7 @@ export const App = (session) => {
   const [numStudents, setNumStudents] = useState([0]);
   const [degrees, setDegrees] = useState([0]);
   const [selectedDegreeId, setSelectedDegreeId] = useState(0);
-  const [courseNameShort, setCourseNameShort] = useState([0]);
+  const [courseNameShort, setCourseNameShort] = useState(["Empty"]);
   const [courseEnrollmentData, setCourseEnrollmentData] = useState([0]);
 
   // Fetch degrees from the backend when the component mounts
