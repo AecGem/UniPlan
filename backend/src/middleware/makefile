@@ -13,7 +13,7 @@ Algorithm.o: Algorithm.cpp json.hpp
 
 #Main target and linking
 $(BuildName): Algorithm.o
-	$(CC) Algorithm.o -o $(BuildName)
+	$(CC) Algorithm.o -o $(BuildName) -lpthread
 
 #Cleaning
 clean:
