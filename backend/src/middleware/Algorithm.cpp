@@ -135,17 +135,23 @@ int main(int argc, char *argv[])
         saved_plan.push_back(temp_sem);
     }
     
-    vector<int> saved_plan = s_input["courses"].get<vector<int>>();
     vector<Semester> semester_array;
-
+    vector<int> courses_list;
     //Populate the semester objects
     for (int i = 0; i < saved_plan.size(); i++){
         //call the constructor to create semesters
-        Semester temp (saved_plan[0], saved_plan[0]["sname"]);
+        int temp_sem_id = saved_plan[0];
+        Semester temp (temp_sem_id, s_input[temp_sem_id]["sname"]);
         semester_array.push_back(temp);
 
-        for (auto course_id : )
+        for (auto sem_courses : s_input){
+            int temp_course_id = s_input[temp_sem_id]["courses"].get<int>();
+            Course added_course (temp_course_id); 
+            temp.addCourse(added_course);
+        }
     }
+
+    sort(semester_array.begin(), semester_array.end());
     
     //_________NEW: AecGem codes the validity checks here___________
 
