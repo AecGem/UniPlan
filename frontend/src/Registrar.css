@@ -160,7 +160,7 @@ html, body {
   display: flex;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 5%;
+  margin-top: 1%;
   height: 45vh;
   max-width: 55vw;
   overflow-x: auto;
@@ -180,9 +180,13 @@ td {
   text-align: center;
 }
 
-.countSpacing
+.courseSpacing
 {
   padding-left: 50px;
+}
+.countSpacing
+{
+  padding-left: 250px;
 }
 
 
