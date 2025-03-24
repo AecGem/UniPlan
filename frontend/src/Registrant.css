@@ -367,6 +367,9 @@ button:focus {
 }
 
 /* For verification */
+.verify-content {
+  font-size: 8px;
+}
 .error-box {
   margin: 0.5rem 0;
   padding: 0.5rem;
