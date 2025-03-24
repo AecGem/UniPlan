@@ -61,11 +61,16 @@ class Semester{
         }
         //Add the two together to get the timeslot.
         this->timeslot = year_int + season_int;
+    
 
     }
     //Add course to the semester
     void addCourse(Course course){
         this->courses.push_back(course);
+    }
+
+    bool operator<(const Semester& other) const{
+        return this->timeslot < other.timeslot;
     }
 };
 
