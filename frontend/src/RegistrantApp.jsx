@@ -155,7 +155,7 @@ export default function App(session) {
         return fetch('/api/course_many', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ cids: cidsArray }) // { cids: [5,12,27] }
+          body: JSON.stringify({ cids: [5, 7, 8] }) // { cids: [5,12,27] }
         })
           .then((res) => {
             if (!res.ok) throw new Error('Failed to fetch course details');
