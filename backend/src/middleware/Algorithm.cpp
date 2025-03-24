@@ -184,8 +184,8 @@ int main(int argc, char *argv[])
                     Course new_course(lexicon_course["cid"]);
                     new_course.addName(lexicon_course["shortname"]);
                     //Add prerequisites to course
-                    std::cou << "Adding prereqs..." << std::endl;
-                    for (const auto &prereq : lexicon_course["prerequisites"])
+                    std::cout << "Adding prereqs..." << std::endl;
+                    for (const auto &prereq : lexicon_course["prereq"])
                     {
                         new_course.addPrerequisite(prereq);
                     }
