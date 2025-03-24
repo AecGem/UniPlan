@@ -160,6 +160,22 @@ const app = new Elysia()
         })
     })
 
+    .post("/api/course_many", async ({ body: {cids} }) =>{
+        const result = await prisma.course.findMany({
+            where: {
+                cid: {
+                    in: cids,
+                },
+            },
+        });
+        return result;
+    },
+    {
+        body: t.Object({
+            cids: t.Optional(t.Array(t.Number()))
+        })
+    })
+
     .get("/api/degree", async () => {
         let degrees = null;
         degrees = await prisma.degree.findMany();
@@ -350,7 +366,7 @@ const app = new Elysia()
         return results;
     }, {
         query: t.Object({
-            didin: t.Optional(t.String())
+            didin: t.Optional(t.Number())
         })
     })
 
@@ -380,12 +396,7 @@ const app = new Elysia()
     .get("/api/course_test", async ({ 
         query: {} 
     }) => {
-        const count = await prisma.user.count({
-            where: {
-                did : 1
-            },
-        });
-        return count;
+
     })
     //carolyn's test zone
     .get("/api/caro_test", async ({ 

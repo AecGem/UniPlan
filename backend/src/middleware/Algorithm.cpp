@@ -6,109 +6,97 @@
 #include <string>
 
 using namespace std;
-
-// for convenience
 using json = nlohmann::json;
 
-//Class definitions:
+// Class definitions
+class Course {
+public:
+    int id;
+    string name;
+    vector<string> prerequisites;
 
-//Semester, has id, timeslot (as an integer), and a vector of course objects.
-class Semester{
-    public:
-        int id;
-        int timeslot;
-        vector<Course> courses;
-    //Constructor for semester, takes in int id, string timeslot in the format of "Fall 2024, Winter 2025, Spring 2025, Summer 2025" etc.
-    Semester(int id, string timeslot){
-        this->id = id;
-        //First, split string into two parts (the season and the year)
-        string season = timeslot.substr(0, timeslot.find(" "));
-        string year = timeslot.substr(timeslot.find(" ")+1, timeslot.length());
-        //Parse year into an integer, then multiply by 10 to make room for season.
-        int year_int = stoi(year)*10;
-        //Parse season into an integer via lookup.
-        int season_int;
-        if (season == "Winter"){
-            season_int = 0;
-        }
-        else if (season == "Spring"){
-            season_int = 2;
-        }
-        else if (season == "Summer"){
-            season_int = 3;
-        }
-        else if (season == "Fall"){
-            season_int = 4;
-        }
-        //Add the two together to get the timeslot.
-        this->timeslot = year_int + season_int;
+    Course(int id) : id(id) {}
 
+    void addPrerequisite(const string& prereq) {
+        prerequisites.push_back(prereq);
     }
-    //Add course to the semester
-    void addCourse(Course course){
-        this->courses.push_back(course);
-    }
-};
 
-//Courses, has id, name, and a vector of prerequisites represented as strings
-class Course{
-    public:
-        int id;
-        string name;
-        vector<string> prerequisites;
-    //Constructor for course, takes in int id, nothing else.
-    Course(int id){
-        this->id = id;
-    }
-    //Add a prerequisite to the course
-    void addPrerequisite(string prereq){
-        this->prerequisites.push_back(prereq);
-    }
-    //Add a name to the course
-    void addName(string name){
+    void addName(const string& name) {
         this->name = name;
     }
 };
 
-//JSON output object, has a number of errors and a list of errors
-class Output{
-    public:
-        int num_errors;
-        vector<string> error_list;
-        //Constructor for Output, takes in nothing.
-        Output(){
-            this->num_errors = 0;
-        }
-    //Add an error to the error list
-    void addError(string error){
-        this->num_errors++;
-        this->error_list.push_back(error);
+class Semester {
+public:
+    int id;
+    int timeslot;
+    vector<Course> courses;
+
+    Semester(int id, const string& timeslot) : id(id) {
+        string season = timeslot.substr(0, timeslot.find(" "));
+        string year = timeslot.substr(timeslot.find(" ") + 1);
+        int year_int = stoi(year) * 10;
+        int season_int = 0;
+
+        if (season == "Winter") season_int = 0;
+        else if (season == "Spring") season_int = 2;
+        else if (season == "Summer") season_int = 3;
+        else if (season == "Fall") season_int = 4;
+
+        this->timeslot = year_int + season_int;
     }
-    //Write the output to a JSON file.
-    void writeOutput(string file_path){
+
+    void addCourse(const Course& course) {
+        courses.push_back(course);
+    }
+
+    bool operator<(const Semester& other) const {
+        return timeslot < other.timeslot;
+    }
+};
+
+class Output {
+public:
+    int num_errors;
+    vector<string> error_list;
+
+    Output() : num_errors(0) {}
+
+    void addError(const string& error) {
+        num_errors++;
+        error_list.push_back(error);
+    }
+
+    void writeOutput(const string& file_path) {
         json output_json = {
-            {"Number of Errors:", this->num_errors},
-            {"Error List", this->error_list}
+            {"Number of Errors", num_errors},
+            {"Error List", error_list}
         };
-        std::ofstream out_stream (file_path);
-        out_stream << output_json;
+        ofstream out_stream(file_path);
+        out_stream << output_json.dump(4); // Pretty print with 4 spaces
         out_stream.close();
     }
 };
 
-int main(int argc, char *argv[])
-{
-    //Set up the file paths (see: )
+int main(int argc, char* argv[]) {
+    if (argc < 4) {
+        cerr << "Usage: " << argv[0] << " <reqs_filePath> <sems_filePath> <out_filePath>" << endl;
+        return 1;
+    }
+
     string reqs_filePath = argv[1];
     string sems_filePath = argv[2];
     string out_filePath = argv[3];
 
-    //Open the files
-    std::ifstream reqs_stream (reqs_filePath);
-    std::ifstream sems_stream (sems_filePath);
-    std::ofstream out_stream (out_filePath);
+    ifstream reqs_stream(reqs_filePath);
+    ifstream sems_stream(sems_filePath);
+    ifstream lexicon("/var/www/temp/lexicon/lexicon.json");
 
-    //Parse JSON
+    if (!reqs_stream.is_open() || !sems_stream.is_open() || !lexicon.is_open()) {
+        cerr << "Error opening input files." << endl;
+        return 1;
+    }
+
     json r_input;
     reqs_stream >> r_input;
     reqs_stream.close();
@@ -117,59 +105,76 @@ int main(int argc, char *argv[])
     sems_stream >> s_input;
     sems_stream.close();
 
-    //Take in the json array of degree requirements and put it in as a c++ array //This must be done because JSON integers isn't necessarilly the same as C++ integers
-    //Take in the json array of saved semesters and put it in as a c++ array
-    //(see: https://stackoverflow.com/questions/54389742/use-nlohmann-json-to-unpack-list-of-integers-to-a-stdvectorint)
+    json lexicon_input;
+    lexicon >> lexicon_input;
+    lexicon.close();
 
-
-    //you have to loop through each object in the array to get the required courses list
     vector<int> degree_reqs;
-    for (auto req_courses : r_input){
-        int temp_course_req = r_input["courses"].get<int>();
-        degree_reqs.push_back(temp_course_req);
+    for (const auto& req_courses : r_input["courses"]) {
+        degree_reqs.push_back(req_courses.get<int>());
     }
 
     vector<int> saved_plan;
-    for (auto saved_sems : s_input){
-        int temp_sem = s_input["sem_id"].get<int>();
-        saved_plan.push_back(temp_sem);
+    for (const auto& saved_sems : s_input["semesters"]) {
+        saved_plan.push_back(saved_sems["sem_id"].get<int>());
     }
-    
-    vector<int> saved_plan = s_input["courses"].get<vector<int>>();
+
     vector<Semester> semester_array;
-
-    //Populate the semester objects
-    for (int i = 0; i < saved_plan.size(); i++){
-        //call the constructor to create semesters
-        Semester temp (saved_plan[0], saved_plan[0]["sname"]);
+    for (const auto& sem : s_input["semesters"]) {
+        int temp_sem_id = sem["sem_id"].get<int>();
+        Semester temp(temp_sem_id, sem["sname"].get<string>());
+        for (const auto& course : sem["courses"]) {
+            int temp_course_id = course["course_id"].get<int>();
+            Course added_course(temp_course_id);
+            added_course.addName(course["name"].get<string>());
+            for (const auto& prereq : course["prerequisites"]) {
+                added_course.addPrerequisite(prereq.get<string>());
+            }
+            temp.addCourse(added_course);
+        }
         semester_array.push_back(temp);
-
-        for (auto course_id : )
     }
-    
-    //_________NEW: AecGem codes the validity checks here___________
 
+    sort(semester_array.begin(), semester_array.end());
 
+    Output output;
 
-
-    //NEW: Will edit the Degree Validity check to output the json error using the output class
-    //For every element in the requirements list, check that it exists in the saved plan array. 
-    //If one of them is not there, it is not valid. Exit.
-    for (auto reqs : degree_reqs){
-
-        //set a current target for the search
-        int temp_target = reqs;
-
-        //if reqs has not been matched, even after the end of the list, return an error
-        //sort and then do a binary search
-        sort(saved_plan.begin(), saved_plan.end());
-        if (binary_search(saved_plan.begin(), saved_plan.end(), temp_target) == false)
-        {
-            cout << "Degree Plan Invalid. At least one course is missing." << endl;
-            out_stream << missing_course_messg;
+    for (int i = semester_array.size() - 1; i >= 0; i--) {
+        for (const auto& course : semester_array[i].courses) {
+            for (const auto& prereq : course.prerequisites) {
+                bool found = false;
+                for (int l = 0; l < i; l++) {
+                    for (const auto& prev_course : semester_array[l].courses) {
+                        if (prev_course.name == prereq) {
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (found) break;
+                }
+                if (!found) {
+                    output.addError("Prerequisite " + prereq + " for course " + course.name + " has not been taken.");
+                }
+            }
         }
     }
 
-    out_stream.close();
+    for (const auto& req : degree_reqs) {
+        bool found = false;
+        for (const auto& sem : semester_array) {
+            for (const auto& course : sem.courses) {
+                if (course.id == req) {
+                    found = true;
+                    break;
+                }
+            }
+            if (found) break;
+        }
+        if (!found) {
+            output.addError("Degree requirement " + to_string(req) + " has not been met.");
+        }
+    }
 
+    output.writeOutput(out_filePath);
+    return 0;
 }
