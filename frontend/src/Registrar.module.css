@@ -197,7 +197,7 @@ button {
 }
 .buttonStyle
 {
-  background-color: #078b64;
+  background-color: #087459;
   color: #fff;
   border: 2px solid #0a505c;
   border-radius: 6px;
@@ -206,11 +206,11 @@ button {
   font-size: 1rem;
   outline: none;
 }
-button:hover {
+.buttonStyle:hover {
   background-color: #09a777;
   color: #078b64;
 }
-button:focus {
+.buttonStyle:focus {
   outline: none;
   box-shadow: 0 0 0 3px #054e38;
 }
@@ -222,10 +222,6 @@ button:focus {
   color: #004640;
   outline: none;
   position: relative;
-}
-.signOut
-{
-  justify-content: right;
 }
 
 .footer {
