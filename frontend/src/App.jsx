@@ -21,7 +21,9 @@ export function App({ context }) {
     confirmPassword: "", //required input
     userType: "", // required radio input
   });
-  console.log(context)
+  console.log(context);
+  //Log signupform user type
+  console.log(signupForm.userType);
 
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate(); // Get the navigate function from TanStack Router
@@ -225,10 +227,9 @@ export function App({ context }) {
                         name="userType"
                         value="user"
                         checked={signUpUserType === "user"}
-                        onChange={(e) => {
-                          setUserType(e.target.value);
-                          console.log(signUpUserType);
-                        }}
+                        onChange={(e) => 
+                          setUserType(e.target.value)
+                        }
                       />
                       Student
                     </label>
