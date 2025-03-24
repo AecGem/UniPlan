@@ -3,23 +3,72 @@
 #include <vector>
 #include <algorithm>
 #include "json.hpp"
+#include <string>
 
 using namespace std;
 
 // for convenience
 using json = nlohmann::json;
 
-// class Semester_class {
-//     //enter stuff here
-// };
+//Class definitions:
 
-// class Course_class {
-//     //enter stuff here
-// };
+//Semester, has id, timeslot (as an integer), and a vector of courses represented as ints
+class Semester{
+    public:
+        int id;
+        int timeslot;
+        vector<int> courses;
+    //Constructor for semester, takes in int id, string timeslot in the format of "Fall 2024, Winter 2025, Spring 2025, Summer 2025" etc.
+    Semester(int id, string timeslot){
+        this->id = id;
+        //First, split string into two parts (the season and the year)
+        string season = timeslot.substr(0, timeslot.find(" "));
+        string year = timeslot.substr(timeslot.find(" ")+1, timeslot.length());
+        //Parse year into an integer, then multiply by 10 to make room for season.
+        int year_int = stoi(year)*10;
+        //Parse season into an integer via lookup.
+        int season_int;
+        if (season == "Winter"){
+            season_int = 0;
+        }
+        else if (season == "Spring"){
+            season_int = 2;
+        }
+        else if (season == "Summer"){
+            season_int = 3;
+        }
+        else if (season == "Fall"){
+            season_int = 4;
+        }
+        //Add the two together to get the timeslot.
+        this->timeslot = year_int + season_int;
 
-// class Requirements_class {
-//     //enter stuff here
-// };
+    }
+    //Add course to the semester
+    void addCourse(int course){
+        this->courses.push_back(course);
+    }
+};
+
+//Courses, has id, name, and a vector of prerequisites represented as strings
+class Course{
+    public:
+        int id;
+        string name;
+        vector<string> prerequisites;
+    //Constructor for course, takes in int id, nothing else.
+    Course(int id){
+        this->id = id;
+    }
+    //Add a prerequisite to the course
+    void addPrerequisite(string prereq){
+        this->prerequisites.push_back(prereq);
+    }
+    //Add a name to the course
+    void addName(string name){
+        this->name = name;
+    }
+};
 
 int main(int argc, char *argv[])
 {
