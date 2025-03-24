@@ -46,7 +46,6 @@ export function App({ context }) {
       return;
     }
 
-    // 3) Now we can check logInData.errorMessage (if your backend sets it)
     if (logInData && logInData.errorMessage === "INVALID_EMAIL_OR_PASSWORD") {
       setErrorMessage("Incorrect Email or Password");
       return;
