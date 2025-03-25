@@ -296,7 +296,7 @@ int main(int argc, char *argv[])
                     {
                         output.addError("Prerequisite " + prereq + " for course " + course->name + " has not been taken.");
                     }
-                    continue;
+                    
                 }
                 //If the prereq string is of the form MATH110/MATH102/(...), check if any course matches ANY of the OR conditions.
                 else if (prereq.find("/") != string::npos)
@@ -345,7 +345,7 @@ int main(int argc, char *argv[])
                     {
                         output.addError("Prerequisite " + prereq + " for course " + course->name + " has not been taken.");
                     }
-                    continue;
+                    
                 }
                 else
                 {
