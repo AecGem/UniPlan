@@ -271,8 +271,9 @@ int main(int argc, char *argv[])
                     std::cout << "\t\t\t\t>Checking above..." << std::endl;
                     // Get the prefix of the prereq string
                     string prefix = prereq.substr(0, prereq.find("above") - 1);
+
                     // Get the number of the prereq string
-                    std::cout << "Debug_stoi: " << prereq.find("above") << endl;
+                    std::cout << prereq.substr(prereq.find("above") + 6) <<endl;
                     int number = stoi(prereq.substr(prereq.find("above") + 6));
                     // Check all previous semesters...
                     bool found = false;
