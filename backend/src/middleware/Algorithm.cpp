@@ -257,7 +257,7 @@ int main(int argc, char *argv[])
                     std::cout <<"MATH 221 found as prereq in semester "<< semester_array[i]->timeslot << std::endl;
                     mathstat_DEBUG = true;
                 }
-                if(prereq == "STAT 160"){
+                if(prereq == "STAT 160"){   
                     mathstat_DEBUG = true;
                     std::cout <<"STAT 160 found as prereq in semester "<< semester_array[i]->timeslot << std::endl;
                 }
@@ -265,10 +265,11 @@ int main(int argc, char *argv[])
                 // If the prereq string is of the form "MATH above 102", check if any course satisfy the prefix number requirement.
                 if (prereq.find("above") != std::string::npos)
                 {
+                    std::cout << "Triggered due to value: " << prereq.find("above") << std::endl;
                     if(mathstat_DEBUG){
                         std::cout << "Checking above, found mathstat_DEBUG" << std::endl;
                         std::cout << "Finding prereq: " << prereq << std::endl;
-                        std::cout << "Triggered due to value: " << prereq.find("above") << std::endl;
+                        
                     }
                     std::cout << "\t\t\t\t>Checking above..." << std::endl;
                     // Get the prefix of the prereq string
