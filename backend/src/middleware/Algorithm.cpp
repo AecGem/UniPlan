@@ -252,16 +252,22 @@ int main(int argc, char *argv[])
             // For every prerequisite of the course, if any...
             for (const auto &prereq : course->prerequisites)
             {
+                bool mathstat_DEBUG = false;
                 if(prereq == "MATH 221"){
                     std::cout <<"MATH 221 found as prereq in semester "<< semester_array[i]->timeslot << std::endl;
+                    mathstat_DEBUG = true;
                 }
                 if(prereq == "STAT 160"){
+                    mathstat_DEBUG = true;
                     std::cout <<"STAT 160 found as prereq in semester "<< semester_array[i]->timeslot << std::endl;
                 }
                 std::cout << "\t\t\t>Checking prereqs..." << std::endl;
                 // If the prereq string is of the form "MATH above 102", check if any course satisfy the prefix number requirement.
                 if (prereq.find("above") != string::npos)
                 {
+                    if(mathstat_DEBUG){
+                        std::cout << "Checking above, found mathstat_DEBUG" << std::endl;
+                    }
                     std::cout << "\t\t\t\t>Checking above..." << std::endl;
                     // Get the prefix of the prereq string
                     string prefix = prereq.substr(0, prereq.find("above") - 1);
@@ -295,6 +301,9 @@ int main(int argc, char *argv[])
                 //If the prereq string is of the form MATH110/MATH102/(...), check if any course matches ANY of the OR conditions.
                 else if (prereq.find("/") != string::npos)
                 {
+                    if(mathstat_DEBUG){
+                        std::cout << "Checking above, found mathstat_DEBUG" << std::endl;
+                    }
                     string reqString = prereq;
                     std::cout << "\t\t\t\t>Checking OR..." << std::endl;
                     // Split the OR conditions into a vector
@@ -340,6 +349,9 @@ int main(int argc, char *argv[])
                 }
                 else
                 {
+                    if(mathstat_DEBUG){
+                        std::cout << "Checking above, found mathstat_DEBUG" << std::endl;
+                    }
                     // Check all previous semesters...
                     bool found = false;
                     for (int l = i; l >= 0; l--)
