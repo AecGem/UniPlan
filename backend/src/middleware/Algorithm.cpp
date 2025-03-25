@@ -268,7 +268,7 @@ int main(int argc, char *argv[])
                     if(mathstat_DEBUG){
                         std::cout << "Checking above, found mathstat_DEBUG" << std::endl;
                         std::cout << "Finding prereq: " << prereq << std::endl;
-                        std::cout << "Triggered due to value: " << prereq.find("above") << endl;
+                        std::cout << "Triggered due to value: " << prereq.find("above") << std::endl;
                     }
                     std::cout << "\t\t\t\t>Checking above..." << std::endl;
                     // Get the prefix of the prereq string
