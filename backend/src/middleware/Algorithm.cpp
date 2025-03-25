@@ -206,7 +206,7 @@ int main(int argc, char *argv[])
                 if (lexicon_course["cid"] == course_id)
                 {
                     // Create new course from fields "cid" and "shortname"
-                    Course* new_course = new (lexicon_course["cid"]);
+                    Course* new_course = new Course(lexicon_course["cid"]);
                     new_course->addName(lexicon_course["shortname"]);
                     // Add prerequisites to course
                     std::cout << "\tAdding prerequisites..." << std::endl;
