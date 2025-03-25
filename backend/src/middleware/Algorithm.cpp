@@ -211,6 +211,12 @@ int main(int argc, char *argv[])
                     // Create new course from fields "cid" and "shortname"
                     Course *new_course = new Course(lexicon_course["cid"]);
                     new_course->addName(lexicon_course["shortname"]);
+                    if(new_course->name=="MATH 221"){
+                        std::cout <<"MATH 221 found as course in semester "<< new_semester->timeslot << std::endl;
+                    }
+                    if(new_course->name=="STAT 160"){
+                        std::cout <<"STAT 160 found as course in semester "<< new_semester->timeslot << std::endl;
+                    }
                     // Add prerequisites to course
                     std::cout << "\tAdding prerequisites..." << std::endl;
                     for (const auto &prereq : lexicon_course["prereq"])
@@ -247,10 +253,10 @@ int main(int argc, char *argv[])
             for (const auto &prereq : course->prerequisites)
             {
                 if(prereq == "MATH 221"){
-                    std::cout <<"Math 221 found as prereq" << std::endl;
+                    std::cout <<"MATH 221 found as prereq in semester "<< semester_array[i]->timeslot << std::endl;
                 }
                 if(prereq == "STAT 160"){
-                    std::cout <<"STAT 160 found as prereq" << std::endl;
+                    std::cout <<"STAT 160 found as prereq in semester "<< semester_array[i]->timeslot << std::endl;
                 }
                 std::cout << "\t\t\t>Checking prereqs..." << std::endl;
                 // If the prereq string is of the form "MATH above 102", check if any course satisfy the prefix number requirement.
