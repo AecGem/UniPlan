@@ -262,6 +262,7 @@ int main(int argc, char *argv[])
                     std::cout <<"STAT 160 found as prereq in semester "<< semester_array[i]->timeslot << std::endl;
                 }
                 std::cout << "\t\t\t>Checking prereqs..." << std::endl;
+                std::cout <<"RIGHT BEFORE EXECUTION OF THE IF" << std::endl;
                 // If the prereq string is of the form "MATH above 102", check if any course satisfy the prefix number requirement.
                 if ((mathstat_DEBUG == false) && (prereq.find("above") != std::string::npos))
                 {
