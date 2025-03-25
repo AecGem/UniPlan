@@ -55,7 +55,7 @@ export function App({ context }) {
     }
 
     //Check error before
-    if (signUpUserType === "admin") {
+    if (signupForm.signUpUserType === "admin") {
       router.invalidate({session: logInData.data.user});
       navigate({ to: "/registrar" });
     } else {
@@ -90,7 +90,7 @@ export function App({ context }) {
       signupForm.firstName.concat(" ", signupForm.lastName),
       signupForm.userType === "admin"
     );
-    if (signUpUserType === "admin") {
+    if (signupForm.signUpUserType === "admin") {
       router.invalidate({session : signUpData.data.user});
       navigate({ to: "/registrar" });
     } else {
