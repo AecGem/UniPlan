@@ -356,7 +356,9 @@ int main(int argc, char *argv[])
                 {
                     if(mathstat_DEBUG){
                         std::cout << "Checking courses, found mathstat_DEBUG" << std::endl;
+                        std::cout << "Looking for:" << prereq << std::endl;
                     }
+
                     // Check all previous semesters...
                     bool found = false;
                     for (int l = i; l >= 0; l--)
@@ -364,6 +366,9 @@ int main(int argc, char *argv[])
                         // For each course in previous semester...
                         for (const auto &prev_course : semester_array[l]->courses)
                         {
+                            if(mathstat_DEBUG){
+                                std::cout << "prev_course name = " << prev_course->name << endl;
+                            }
                             // If the prereq name matches, break and continue to next prereq
                             if (prev_course->name == prereq)
                             {
