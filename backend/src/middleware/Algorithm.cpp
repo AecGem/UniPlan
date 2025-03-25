@@ -273,6 +273,7 @@ int main(int argc, char *argv[])
                     string prefix = prereq.substr(0, prereq.find("above") - 1);
 
                     // Get the number of the prereq string
+                    std::cout << "stoi debug" << endl;
                     std::cout << prereq.substr(prereq.find("above") + 6) <<endl;
                     int number = stoi(prereq.substr(prereq.find("above") + 6));
                     // Check all previous semesters...
