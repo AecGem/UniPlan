@@ -328,7 +328,6 @@ function CollapsibleSection({ title, items, onDragStartAside }) {
   };
 
   const handleConfirmAddSemester = async () => {
-    console.time(handleConfirmAddSemester.name); // logs "handleConfirmAddSemester"
     const semesterName = `${selectedType} ${selectedYear}`;
     const payload = {
       userid: userInfo.session ? userInfo.session.userId : null,
@@ -357,8 +356,6 @@ function CollapsibleSection({ title, items, onDragStartAside }) {
       setShowModal(false);
     } catch (err) {
       console.error("Error creating semester:", err);
-    } finally {
-      console.timeEnd(handleConfirmAddSemester.name); // ends the timer with the same label
     }
   };
 
@@ -476,8 +473,8 @@ function CollapsibleSection({ title, items, onDragStartAside }) {
       })
       .catch((err) => {
         console.error("Error saving semester:", err);
-        console.timeEnd(handleSaveSemesterToDB.name);
       });
+      console.timeEnd(handleSaveSemesterToDB.name);
   };
 
 
