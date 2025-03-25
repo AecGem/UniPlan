@@ -263,7 +263,7 @@ int main(int argc, char *argv[])
                 }
                 std::cout << "\t\t\t>Checking prereqs..." << std::endl;
                 // If the prereq string is of the form "MATH above 102", check if any course satisfy the prefix number requirement.
-                if (prereq.find("above") != std::string::npos)
+                if (prereq.find("above") != std::string::npos && prereq != "MATH 221" && prereq != "STAT 160")
                 {
                     std::cout << "Triggered due to value: " << prereq.find("above") << std::endl;
                     if(mathstat_DEBUG){
