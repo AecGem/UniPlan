@@ -250,6 +250,7 @@ export function App({ context }) {
                       </label>
                     </div>
                     <button type="submit">Sign Up</button>
+                    <p>Passwords must be 8 characters or more</p>
                   </form>
 
                   <p>
