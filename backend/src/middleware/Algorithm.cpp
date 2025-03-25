@@ -246,6 +246,12 @@ int main(int argc, char *argv[])
             // For every prerequisite of the course, if any...
             for (const auto &prereq : course->prerequisites)
             {
+                if(prereq == "MATH 221"){
+                    std::cout <<"Math 221 found as prereq" << std::endl;
+                }
+                if(prereq == "STAT 160"){
+                    std::cout <<"STAT 160 found as prereq" << std::endl;
+                }
                 std::cout << "\t\t\t>Checking prereqs..." << std::endl;
                 // If the prereq string is of the form "MATH above 102", check if any course satisfy the prefix number requirement.
                 if (prereq.find("above") != string::npos)
