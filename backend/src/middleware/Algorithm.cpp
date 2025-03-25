@@ -308,7 +308,7 @@ int main(int argc, char *argv[])
                 else if (prereq.find("/") != string::npos)
                 {
                     if(mathstat_DEBUG){
-                        std::cout << "Checking above, found mathstat_DEBUG" << std::endl;
+                        std::cout << "Checking ors, found mathstat_DEBUG" << std::endl;
                     }
                     string reqString = prereq;
                     std::cout << "\t\t\t\t>Checking OR..." << std::endl;
@@ -356,7 +356,7 @@ int main(int argc, char *argv[])
                 else
                 {
                     if(mathstat_DEBUG){
-                        std::cout << "Checking above, found mathstat_DEBUG" << std::endl;
+                        std::cout << "Checking courses, found mathstat_DEBUG" << std::endl;
                     }
                     // Check all previous semesters...
                     bool found = false;
