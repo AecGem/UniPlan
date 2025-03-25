@@ -449,7 +449,11 @@ function CollapsibleSection({ title, items, onDragStartAside }) {
   const handleSaveSemesterToDB = (localSemesterId) => {
     console.time(handleSaveSemesterToDB.name); // logs "handleSaveSemesterToDB"
     const semesterToSave = semesters.find((s) => s.id === localSemesterId);
-    if (!semesterToSave) return console.error("Semester not found in local state");
+    if (!semesterToSave) {
+      console.error("Semester not found in local state");
+      console.timeEnd(handleSaveSemesterToDB.name);
+      return;
+    }
 
     const payload = {
       semId: semesterToSave.sem_id,
@@ -470,11 +474,11 @@ function CollapsibleSection({ title, items, onDragStartAside }) {
       .then((data) => {
         setSavedPopup(true);
         setTimeout(() => setSavedPopup(false), 5000);
+        console.timeEnd(handleSaveSemesterToDB.name);
       })
       .catch((err) => {
         console.error("Error saving semester:", err);
       });
-      console.timeEnd(handleSaveSemesterToDB.name);
   };
 
 
