@@ -267,14 +267,19 @@ int main(int argc, char *argv[])
                 {
                     if(mathstat_DEBUG){
                         std::cout << "Checking above, found mathstat_DEBUG" << std::endl;
+                        std::cout << "Finding prereq: " << prereq <<endl;
                     }
                     std::cout << "\t\t\t\t>Checking above..." << std::endl;
                     // Get the prefix of the prereq string
                     string prefix = prereq.substr(0, prereq.find("above") - 1);
 
+                    
                     // Get the number of the prereq string
                     std::cout << "stoi debug" << endl;
                     int number = stoi(prereq.substr(prereq.find("above") + 6));
+                    if(mathstat_DEBUG){
+                        std::cout << "Matching on: |"<<prefix<<"|"<<number<<endl;
+                    }
                     // Check all previous semesters...
                     bool found = false;
                     for (int l = i; l >= 0; l--)
