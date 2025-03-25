@@ -363,6 +363,9 @@ int main(int argc, char *argv[])
                     bool found = false;
                     for (int l = i; l >= 0; l--)
                     {
+                        if(mathstat_DEBUG){
+                            std::cout << "l value = " << l << endl;
+                        }
                         // For each course in previous semester...
                         for (const auto &prev_course : semester_array[l]->courses)
                         {
