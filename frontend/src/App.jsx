@@ -43,22 +43,24 @@ export function App({ context }) {
     try {
       logInData = await AuthAPI.login(loginEmail, loginPassword);
       console.log("logInData returned:", logInData);
-      //Check error before
-      if (signupForm.signUpUserType === "admin") {
-        router.invalidate({ session: logInData.data.user });
-        navigate({ to: "/registrar" });
-      } else {
-        router.invalidate({ session: logInData.data.user });
-        navigate({ to: "/registrant" });
-      }
     } catch (err) {
       console.error("AuthAPI.login error:", err);
       setErrorMessage("Something went wrong during login!");
-      if (logInData && logInData.errorMessage === "INVALID_EMAIL_OR_PASSWORD") {
-        setErrorMessage("Incorrect Email or Password");
-        return;
-      }
       return;
+    }
+
+    if (logInData && logInData.errorMessage === "INVALID_EMAIL_OR_PASSWORD") {
+      setErrorMessage("Incorrect Email or Password");
+      return;
+    }
+
+    //Check error before
+    if (signupForm.signUpUserType === "admin") {
+      router.invalidate({session: logInData.data.user});
+      navigate({ to: "/registrar" });
+    } else {
+      router.invalidate({session: logInData.data.user});
+      navigate({ to: "/registrant" });
     }
 
     setLoginEmail("");
@@ -88,34 +90,25 @@ export function App({ context }) {
       signupForm.firstName.concat(" ", signupForm.lastName),
       signupForm.userType === "admin"
     );
-    try {
-      if (signupForm.signUpUserType === "admin") {
-        router.invalidate({ session: signUpData.data.user });
-        navigate({ to: "/registrar" });
-      } else {
-        router.invalidate({ session: signUpData.data.user });
-        navigate({ to: "/registrant" });
-      }
-    } catch (err) {
-      console.error("AuthAPI.signup error:", err);
-      setErrorMessage("Something went wrong during signup!");
-      if (signUpData && signUpData.errorMessage === "EMAIL_ALREADY_EXISTS") {
-        setErrorMessage("Email already exists");
-        return;
+    if (signupForm.signUpUserType === "admin") {
+      router.invalidate({session : signUpData.data.user});
+      navigate({ to: "/registrar" });
+    } else {
+      router.invalidate({session : signUpData.data.user});
+      navigate({ to: "/registrant" });
     }
 
-
-      setSignupForm({
-        userEmail: "",
-        password: "",
-        confirmPassword: "",
-        firstName: "",
-        lastName: "",
-        userType: "user",
-      });
-      setErrorMessage("");
-      setShowModal(false);
-    };
+    setSignupForm({
+      userEmail: "",
+      password: "",
+      confirmPassword: "",
+      firstName: "",
+      lastName: "",
+      userType: "user",
+    });
+    setErrorMessage("");
+    setShowModal(false);
+  };
 
     const handleSignupChange = (e) => {
       const { name, value } = e.target;
@@ -250,6 +243,7 @@ export function App({ context }) {
                       </label>
                     </div>
                     <button type="submit">Sign Up</button>
+                    <p>Passwords must be 8 characters or more</p>
                   </form>
 
                   <p>
