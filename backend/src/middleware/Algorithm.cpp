@@ -280,6 +280,52 @@ int main(int argc, char *argv[])
                     }
                     continue;
                 }
+                //If the prereq string is of the form MATH110/MATH102/(...), check if any course matches ANY of the OR conditions.
+                else if (prereq.find("/") != string::npos)
+                {
+                    string reqString = prereq;
+                    std::cout << "\t\t\t\t>Checking OR..." << std::endl;
+                    // Split the OR conditions into a vector
+                    vector<string> or_conditions;
+                    size_t pos = 0;
+                    // Split the string by '/'
+                    while ((pos = reqString.find("/")) != string::npos)
+                    {
+                        or_conditions.push_back(prereq.substr(0, pos));
+                        reqString.erase(0, pos + 1);
+                    }
+                    or_conditions.push_back(prereq);
+                    // Check all previous semesters...
+                    bool found = false;
+                    for (int l = i; l >= 0; l--)
+                    {
+                        // For each course in previous semester...
+                        for (const auto &prev_course : semester_array[l]->courses)
+                        {
+                            // For each OR condition...
+                            for (const auto &or_condition : or_conditions)
+                            {
+                                // If the course name matches the OR condition, break and continue to next prereq
+                                if (prev_course->name == or_condition)
+                                {
+                                    std::cout << "\t\t\t\t>Found prereq " << prereq << " for course " << course->name << std::endl;
+                                    found = true;
+                                    break;
+                                }
+                            }
+                            if (found)
+                                break;
+                        }
+                        if (found)
+                            break;
+                    }
+                    // If not found, spit out an error and check the next.
+                    if (!found)
+                    {
+                        output.addError("Prerequisite " + prereq + " for course " + course->name + " has not been taken.");
+                    }
+                    continue;
+                }
                 else
                 {
                     // Check all previous semesters...
