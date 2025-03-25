@@ -161,18 +161,19 @@ int main(int argc, char *argv[])
 
     vector<Course*> degree_reqs;
     // Parse degree requirements:
-
     //Single JSON object with 4 fields: {"did" = 1, "degree" = "Computer Science", "reqs" = [1,2,3,4,15,26]}
-    for(int i = 0; i < r_input["reqs"].size(); i++)
+    for(int i = 0; i < r_input["courses"].size(); i++)
     {
+        std::cout << "\t>Adding course..." << std::endl;
         // Create new course from req id's.
-        Course* new_course = new Course(r_input["reqs"][i]);
+        Course* new_course = new Course(r_input["courses"][i]);
         //Search up course id in lexicon
         for (const auto &lexicon_course : lexicon_input)
         {
             
-            if (lexicon_course["cid"] == r_input["reqs"][i])
+            if (lexicon_course["cid"] == r_input["courses"][i])
             {
+
                 // Add course name to course object
                 new_course->addName(lexicon_course["shortname"]);
 
@@ -188,7 +189,7 @@ int main(int argc, char *argv[])
         // Add course to degree requirements.
         degree_reqs.push_back(new_course);
     }
-    std::cout <<"Degree reqs size: ";
+    //Print length of degree_reqs
     std::cout << degree_reqs.size() << std::endl;
 
     vector<Semester*> semester_array;
