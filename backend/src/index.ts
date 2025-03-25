@@ -46,12 +46,12 @@ const app = new Elysia()
             //its like 199 degrees
             let response = "hai";
             let directory = '/var/www/temp/UniPlan/'.concat(id);
-            await $`mkdir ${directory}`.nothrow();
-            await $`curl https://localhost:443/api/degree_specific?did=${did} -k > ${directory}/req.json`.nothrow();
-            await $`curl https://localhost:443/api/get_saved_sem?userid=${id} -k > ${directory}/sem.json`.nothrow();
+            $`mkdir ${directory}`.nothrow();
+            $`curl https://uniplanner.ca/api/degree_specific?did=${did} -k > ${directory}/req.json`.nothrow();
+            $`curl https://uniplanner.ca/api/get_saved_sem?userid=${id} -k > ${directory}/sem.json`.nothrow();
 
             //when you're doin it with me, doin it with me~!
-            await $`/var/www/UniPlan/backend/src/middleware/verifier ${directory}/req.json ${directory}/sem.json ${directory}/out.json`
+            $`/var/www/UniPlan/backend/src/middleware/verifier ${directory}/req.json ${directory}/sem.json ${directory}/out.json`
             let file = Bun.file(`${directory}/out.json`);
             response = await file.json();
             rmSync(directory, { recursive: true, force: true });
