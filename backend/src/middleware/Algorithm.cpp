@@ -278,7 +278,7 @@ int main(int argc, char *argv[])
                     std::cout << "stoi debug" << endl;
                     int number = stoi(prereq.substr(prereq.find("above") + 6));
                     if(mathstat_DEBUG){
-                        std::cout << "Matching on: |"<<prefix<<"|"<<number<<endl;
+                        std::cout << "Matching on found: |"<<prefix<<"|"<<number<<endl;
                     }
                     // Check all previous semesters...
                     bool found = false;
