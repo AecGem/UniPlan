@@ -47,7 +47,7 @@ const app = new Elysia()
             let response = "hai";
             let directory = '/var/www/temp/UniPlan/'.concat(id);
             await $`mkdir ${directory}`;
-            await $`curl https://uniplanner.ca/api/degree_specific?did=${did} -k > ${directory}/req.json`.nothrow();
+            await $`curl https://uniplanner.ca/api/degree_specific?didin=${did} -k > ${directory}/req.json`.nothrow();
             await $`curl https://uniplanner.ca/api/get_saved_sem?userid=${id} -k > ${directory}/sem.json`.nothrow();
 
             //when you're doin it with me, doin it with me~!
