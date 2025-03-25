@@ -97,8 +97,12 @@ export function App({ context }) {
         navigate({ to: "/registrant" });
       }
     } catch (err) {
+      console.error("AuthAPI.signup error:", err);
+      setErrorMessage("Something went wrong during signup!");
       if (signUpData && signUpData.errorMessage === "EMAIL_ALREADY_EXISTS") {
-      }
+        setErrorMessage("Email already exists");
+        return;
+    }
 
 
       setSignupForm({
