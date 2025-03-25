@@ -46,7 +46,7 @@ const app = new Elysia()
             //its like 199 degrees
             let response = "hai";
             let directory = '/var/www/temp/UniPlan/'.concat(id);
-            $`mkdir ${directory}`.nothrow();
+            $`mkdir ${directory}`;
             $`curl https://uniplanner.ca/api/degree_specific?did=${did} -k > ${directory}/req.json`.nothrow();
             $`curl https://uniplanner.ca/api/get_saved_sem?userid=${id} -k > ${directory}/sem.json`.nothrow();
 
