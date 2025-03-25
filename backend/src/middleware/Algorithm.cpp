@@ -236,6 +236,11 @@ int main(int argc, char *argv[])
     // Sort semesters in ascending order
     sort(semester_array.begin(), semester_array.end());
 
+    //Go through each semester and print their timeslots.
+    for(const auto &semester : semester_array){
+        std::cout << semester->timeslot<<std::endl;
+    }
+
     // Define output and begin validation checks
     Output output;
 
