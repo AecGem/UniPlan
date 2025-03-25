@@ -328,6 +328,7 @@ function CollapsibleSection({ title, items, onDragStartAside }) {
   };
 
   const handleConfirmAddSemester = async () => {
+    console.time(handleConfirmAddSemester.name); // logs "handleConfirmAddSemester"
     const semesterName = `${selectedType} ${selectedYear}`;
     const payload = {
       userid: userInfo.session ? userInfo.session.userId : null,
@@ -356,6 +357,8 @@ function CollapsibleSection({ title, items, onDragStartAside }) {
       setShowModal(false);
     } catch (err) {
       console.error("Error creating semester:", err);
+    } finally {
+      console.timeEnd(handleConfirmAddSemester.name); // ends the timer with the same label
     }
   };
 
@@ -447,6 +450,7 @@ function CollapsibleSection({ title, items, onDragStartAside }) {
   const [savedPopup, setSavedPopup] = useState(false);
 
   const handleSaveSemesterToDB = (localSemesterId) => {
+    console.time(handleSaveSemesterToDB.name); // logs "handleSaveSemesterToDB"
     const semesterToSave = semesters.find((s) => s.id === localSemesterId);
     if (!semesterToSave) return console.error("Semester not found in local state");
 
@@ -470,7 +474,10 @@ function CollapsibleSection({ title, items, onDragStartAside }) {
         setSavedPopup(true);
         setTimeout(() => setSavedPopup(false), 5000);
       })
-      .catch((err) => console.error("Error saving semester:", err));
+      .catch((err) => {
+        console.error("Error saving semester:", err);
+        console.timeEnd(handleSaveSemesterToDB.name);
+      });
   };
 
 
