@@ -43,24 +43,22 @@ export function App({ context }) {
     try {
       logInData = await AuthAPI.login(loginEmail, loginPassword);
       console.log("logInData returned:", logInData);
+      //Check error before
+      if (signupForm.signUpUserType === "admin") {
+        router.invalidate({ session: logInData.data.user });
+        navigate({ to: "/registrar" });
+      } else {
+        router.invalidate({ session: logInData.data.user });
+        navigate({ to: "/registrant" });
+      }
     } catch (err) {
       console.error("AuthAPI.login error:", err);
       setErrorMessage("Something went wrong during login!");
+      if (logInData && logInData.errorMessage === "INVALID_EMAIL_OR_PASSWORD") {
+        setErrorMessage("Incorrect Email or Password");
+        return;
+      }
       return;
-    }
-
-    if (logInData && logInData.errorMessage === "INVALID_EMAIL_OR_PASSWORD") {
-      setErrorMessage("Incorrect Email or Password");
-      return;
-    }
-
-    //Check error before
-    if (signupForm.signUpUserType === "admin") {
-      router.invalidate({session: logInData.data.user});
-      navigate({ to: "/registrar" });
-    } else {
-      router.invalidate({session: logInData.data.user});
-      navigate({ to: "/registrant" });
     }
 
     setLoginEmail("");
@@ -90,185 +88,190 @@ export function App({ context }) {
       signupForm.firstName.concat(" ", signupForm.lastName),
       signupForm.userType === "admin"
     );
-    if (signupForm.signUpUserType === "admin") {
-      router.invalidate({session : signUpData.data.user});
-      navigate({ to: "/registrar" });
-    } else {
-      router.invalidate({session : signUpData.data.user});
-      navigate({ to: "/registrant" });
-    }
-
-    setSignupForm({
-      userEmail: "",
-      password: "",
-      confirmPassword: "",
-      firstName: "",
-      lastName: "",
-      userType: "user",
-    });
-    setErrorMessage("");
-    setShowModal(false);
-  };
-
-  const handleSignupChange = (e) => {
-    const { name, value } = e.target;
-    setSignupForm((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
+    try {
+      if (signupForm.signUpUserType === "admin") {
+        router.invalidate({ session: signUpData.data.user });
+        navigate({ to: "/registrar" });
+      } else {
+        router.invalidate({ session: signUpData.data.user });
+        navigate({ to: "/registrant" });
+      }
+    } catch (err) {
+      if (signUpData && signUpData.errorMessage === "EMAIL_ALREADY_EXISTS") {
+      }
 
 
+      setSignupForm({
+        userEmail: "",
+        password: "",
+        confirmPassword: "",
+        firstName: "",
+        lastName: "",
+        userType: "user",
+      });
+      setErrorMessage("");
+      setShowModal(false);
+    };
 
-  return (
-    <div className="app-container">
-      <h1 className="heading">UniPlan: A Degree Planner</h1>
-      <p className="description">
-        Welcome to UniPlan, your personal degree-planning tool. Drag and drop
-        courses, add semesters, and keep track of your journey-all in one place.
-      </p>
+    const handleSignupChange = (e) => {
+      const { name, value } = e.target;
+      setSignupForm((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    };
 
-      <div className="button-container">
-        <button
-          className="get-planning-btn"
-          onClick={() => {
-            if (context.check()) {
-              if (context.user.usertype === true) {
-                navigate({ to: "/registrar" });
+
+
+    return (
+      <div className="app-container">
+        <h1 className="heading">UniPlan: A Degree Planner</h1>
+        <p className="description">
+          Welcome to UniPlan, your personal degree-planning tool. Drag and drop
+          courses, add semesters, and keep track of your journey-all in one place.
+        </p>
+
+        <div className="button-container">
+          <button
+            className="get-planning-btn"
+            onClick={() => {
+              if (context.check()) {
+                if (context.user.usertype === true) {
+                  navigate({ to: "/registrar" });
+                } else {
+                  navigate({ to: "/registrant" });
+                }
               } else {
-                navigate({ to: "/registrant" });
+                setShowModal(true);
               }
-            } else {
-              setShowModal(true);
-            }
-          }}
-        >
-          Get Planning!
-        </button>
-      </div>
-
-      {/* If showModal is true, display the modal */}
-      {showModal && (
-        <div className="modal-backdrop">
-          <div className="modal-content">
-            {errorMessage && (
-              <div className="error-message">{errorMessage}</div>
-            )}
-
-            {isLoginMode ? (
-              <>
-                <h2>Log In</h2>
-                <form className="login-form" onSubmit={handleLoginSubmit}>
-                  <input
-                    type="email"
-                    placeholder="Email"
-                    value={loginEmail}
-                    onChange={(e) => setLoginEmail(e.target.value)}
-                  />
-                  <input
-                    type="password"
-                    placeholder="Password"
-                    value={loginPassword}
-                    onChange={(e) => setLoginPassword(e.target.value)}
-                  />
-                  <button type="submit">Log In</button>
-                </form>
-
-                <p>
-                  Don't have an account? &nbsp;
-                  <button className="switch-button" onClick={toggleMode}>
-                    Sign Up
-                  </button>
-                </p>
-              </>
-            ) : (
-              <>
-                <h2>Sign Up</h2>
-                <form className="signup-form" onSubmit={handleSignupSubmit}>
-                  <input
-                    type="email"
-                    placeholder="Email (required)"
-                    name="userEmail"
-                    value={signupForm.userEmail}
-                    onChange={handleSignupChange}
-                  />
-                  <input
-                    type="text"
-                    placeholder="First Name (optional)"
-                    name="firstName"
-                    value={signupForm.firstName}
-                    onChange={handleSignupChange}
-                  />
-                  <input
-                    type="text"
-                    placeholder="Last Name (optional)"
-                    name="lastName"
-                    value={signupForm.lastName}
-                    onChange={handleSignupChange}
-                  />
-                  <input
-                    type="password"
-                    placeholder="Password (required)"
-                    name="password"
-                    value={signupForm.password}
-                    onChange={handleSignupChange}
-                  />
-                  <input
-                    type="password"
-                    placeholder="Re-Enter Password"
-                    name="confirmPassword"
-                    value={signupForm.confirmPassword}
-                    onChange={handleSignupChange}
-                  />
-                  <div className="user-type-options">
-                    <label>
-                      <input
-                        type="radio"
-                        name="userType"
-                        value="user"
-                        checked={signupForm.userType === "user"}
-                        onChange={handleSignupChange}
-                      />
-                      Student
-                    </label>
-                    <label>
-                      <input
-                        type="radio"
-                        name="userType"
-                        value="admin"
-                        checked={signupForm.userType === "admin"}
-                        onChange={handleSignupChange}
-                      />
-                      Admin
-                    </label>
-                  </div>
-                  <button type="submit">Sign Up</button>
-                </form>
-
-                <p>
-                  Already have an account? &nbsp;
-                  <button className="switch-button" onClick={toggleMode}>
-                    Log In
-                  </button>
-                </p>
-              </>
-            )}
-
-            {/* Close modal button */}
-            <button
-              className="close-button"
-              onClick={() => {
-                setShowModal(false);
-                setErrorMessage("");
-              }}
-            >
-              Close
-            </button>
-          </div>
+            }}
+          >
+            Get Planning!
+          </button>
         </div>
-      )}
-    </div>
-  );
-}
 
-export default App;
+        {/* If showModal is true, display the modal */}
+        {showModal && (
+          <div className="modal-backdrop">
+            <div className="modal-content">
+              {errorMessage && (
+                <div className="error-message">{errorMessage}</div>
+              )}
+
+              {isLoginMode ? (
+                <>
+                  <h2>Log In</h2>
+                  <form className="login-form" onSubmit={handleLoginSubmit}>
+                    <input
+                      type="email"
+                      placeholder="Email"
+                      value={loginEmail}
+                      onChange={(e) => setLoginEmail(e.target.value)}
+                    />
+                    <input
+                      type="password"
+                      placeholder="Password"
+                      value={loginPassword}
+                      onChange={(e) => setLoginPassword(e.target.value)}
+                    />
+                    <button type="submit">Log In</button>
+                  </form>
+
+                  <p>
+                    Don't have an account? &nbsp;
+                    <button className="switch-button" onClick={toggleMode}>
+                      Sign Up
+                    </button>
+                  </p>
+                </>
+              ) : (
+                <>
+                  <h2>Sign Up</h2>
+                  <form className="signup-form" onSubmit={handleSignupSubmit}>
+                    <input
+                      type="email"
+                      placeholder="Email (required)"
+                      name="userEmail"
+                      value={signupForm.userEmail}
+                      onChange={handleSignupChange}
+                    />
+                    <input
+                      type="text"
+                      placeholder="First Name (optional)"
+                      name="firstName"
+                      value={signupForm.firstName}
+                      onChange={handleSignupChange}
+                    />
+                    <input
+                      type="text"
+                      placeholder="Last Name (optional)"
+                      name="lastName"
+                      value={signupForm.lastName}
+                      onChange={handleSignupChange}
+                    />
+                    <input
+                      type="password"
+                      placeholder="Password (required)"
+                      name="password"
+                      value={signupForm.password}
+                      onChange={handleSignupChange}
+                    />
+                    <input
+                      type="password"
+                      placeholder="Re-Enter Password"
+                      name="confirmPassword"
+                      value={signupForm.confirmPassword}
+                      onChange={handleSignupChange}
+                    />
+                    <div className="user-type-options">
+                      <label>
+                        <input
+                          type="radio"
+                          name="userType"
+                          value="user"
+                          checked={signupForm.userType === "user"}
+                          onChange={handleSignupChange}
+                        />
+                        Student
+                      </label>
+                      <label>
+                        <input
+                          type="radio"
+                          name="userType"
+                          value="admin"
+                          checked={signupForm.userType === "admin"}
+                          onChange={handleSignupChange}
+                        />
+                        Admin
+                      </label>
+                    </div>
+                    <button type="submit">Sign Up</button>
+                  </form>
+
+                  <p>
+                    Already have an account? &nbsp;
+                    <button className="switch-button" onClick={toggleMode}>
+                      Log In
+                    </button>
+                  </p>
+                </>
+              )}
+
+              {/* Close modal button */}
+              <button
+                className="close-button"
+                onClick={() => {
+                  setShowModal(false);
+                  setErrorMessage("");
+                }}
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  export default App;
