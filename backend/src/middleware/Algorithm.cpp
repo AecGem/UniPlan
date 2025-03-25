@@ -361,7 +361,7 @@ int main(int argc, char *argv[])
 
                     // Check all previous semesters...
                     bool found = false;
-                    for (int l = i; l >= 0; l--)
+                    for (int l = i + 1; l >= 0; l--)
                     {
                         if(mathstat_DEBUG){
                             std::cout << "l value = " << l << endl;
