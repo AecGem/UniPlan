@@ -1,7 +1,7 @@
 #!/bin/bash
 echo "Current user: $USER "
 export HOME="/var/www"
-BUILDDIR="/var/www/frontend/dist"
+BUILDDIR="/var/www/UniPlan/frontend/dist"
 git config --global --add safe.directory /var/www/UniPlan
 cd /var/www/UniPlan
 echo $PWD
