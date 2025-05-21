@@ -1,3 +1,5 @@
+@import "tailwindcss";
+
 body {
   background: url(/src/image2.jpg) no-repeat center center fixed;
   background-size: cover;
